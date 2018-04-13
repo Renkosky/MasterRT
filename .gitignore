@@ -9,6 +9,7 @@ typings/
 dist/
 package-lock.json
 
+pub/
 .umi/
 
 #---------------------------------
