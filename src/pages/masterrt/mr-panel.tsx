@@ -1,5 +1,5 @@
 import * as  React from 'react';
-import {MrPanel, MrIcon} from 'masterrt';
+import {MrPanel, MrIcon} from '../../lib';
 import './masterrt.less';
 
 import MrsCode from '../../components/MrsCode';

@@ -1,11 +1,9 @@
 import * as  React from 'react';
-import {MrFill, MrCol, MrIcon} from 'masterrt';
+import {MrFill, MrCol, MrIcon} from '../../lib';
 import './masterrt.less';
-import MrsHTML from '../../components/MrsHTML';
 
 import MrsCode from '../../components/MrsCode';
 
-import renderHTML from 'react-render-html';
 import JsxParser from 'react-jsx-parser';
 
 interface MrsMrFillProps {

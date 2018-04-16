@@ -1,5 +1,5 @@
 import React from 'react';
-import {MrCol, MrFill} from 'masterrt';
+import {MrCol, MrFill} from '../../lib';
 import './layout.less';
 import {Layout, Menu, Icon} from 'antd';
 import Link from 'umi/link';

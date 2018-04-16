@@ -39,11 +39,11 @@ export class MrPanel extends React.Component<MrPanelProps, {}> {
                     </div>
                 </header>
 
-                <section>
+                <main>
                     <div style={bodyStyle} className={'ms-panel-body'}>
                         {this.props.children}
                     </div>
-                </section>
+                </main>
             </article>
         );
     }
