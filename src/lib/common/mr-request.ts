@@ -1,4 +1,4 @@
-import fetch from 'dva/fetch';
+import * as fetch from 'dva/fetch';
 import MrServices from './mr.services';
 import * as mu from 'mzmu';
 
