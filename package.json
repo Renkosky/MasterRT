@@ -3,7 +3,7 @@
     "version": "0.0.5",
     "license": "MIT",
     "scripts": {
-        "start": "umi dev",
+        "start": "PORT=6001 umi dev",
         "build": "umi build",
         "clean": "rm -rf ./pub",
         "compile": "tsc -p ./pub/tsconfig.pub.json",

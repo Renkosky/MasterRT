@@ -38,8 +38,8 @@ export class MrIf extends React.Component<MrIfProps, {}> {
         this.getResult(this.props);
     }
 
-    componentWillReceiveProps(prop: MrIfProps) {
-        this.getResult(this.props);
+    componentWillReceiveProps(nextProps: MrIfProps) {
+        this.getResult(nextProps);
     }
 
     render() {
