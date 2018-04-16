@@ -154,7 +154,7 @@ export class MrEcharts extends React.Component<MrEchartsProps, {}> {
     }
 
     windowResize = mu.bind(() => {
-        this._chart.resize();
+        this._chart && this._chart.resize();
     }, this);
 
     componentWillReceiveProps(props: MrEchartsProps) {
