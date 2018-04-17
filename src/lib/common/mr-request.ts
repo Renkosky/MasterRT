@@ -2,6 +2,8 @@ import * as fetch from 'dva/fetch';
 import MrServices from './mr.services';
 import * as mu from 'mzmu';
 
+// https://www.cnblogs.com/huilixieqi/p/6494380.html
+
 function responseHandler(response) {
     let headers = response.headers;
     let contentType = headers.get('Content-Type').split(';')[0];
@@ -22,7 +24,7 @@ function checkStatus(response) {
 
     const error = new Error(response.statusText);
     error['response'] = response;
-    throw error;
+    return Promise.reject(error);
 }
 
 /**
@@ -34,10 +36,10 @@ function checkStatus(response) {
  */
 export default function MrRequest(url, options: any = {}) {
     let headers: any = MrServices.getHeaders();
-    options.headers = mu.extend(true, {headers}, options.headers);
+    options.headers = mu.extend(true, headers, options.headers);
     return fetch(url, options)
     .then(checkStatus)
     .then(responseHandler)
-    .then(data => data.data || data)
+    .then(data => data)
     .catch(err => ({err}));
 }

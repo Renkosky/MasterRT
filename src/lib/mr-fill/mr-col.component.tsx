@@ -23,7 +23,7 @@ export class MrCol extends React.Component<MrColProps, {}> {
             [`mr-col-${span}`]: !!span
         }, className);
 
-        return (<div style={style} className={classString} onClick={onClick.bind(this)}>
+        return (<div style={style} className={classString} onClick={onClick}>
             { scroll ? <div className="mr-col-scroll">{children}</div> : children }
         </div>);
     }
