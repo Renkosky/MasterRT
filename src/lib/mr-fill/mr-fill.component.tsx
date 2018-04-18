@@ -19,6 +19,7 @@ interface MrFillProps {
 export class MrFill extends React.Component<MrFillProps, {}> {
 
     cloneCol(col, gunter) {
+        console.debug(col);
         return cloneElement(col, {
             style: {
                 paddingLeft: gunter,
@@ -53,7 +54,7 @@ export class MrFill extends React.Component<MrFillProps, {}> {
                     return this.cloneCol(col, _gutter);
                 } else {
                     const _cols = Children.map(col.props.children, (col: React.ReactElement<HTMLDivElement>) => {
-                        return this.cloneCol(col, _gutter);
+                        return col.props ? this.cloneCol(col, _gutter) : col;
                     });
                     return cloneElement(col, {}, _cols);
                 }
