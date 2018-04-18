@@ -12,11 +12,17 @@
         }
     }
     
+    &.mr-fill-h100 {
+        height: 100% !important;
+    }
+    
     > .mr-col {
-        flex: 1;
         overflow-x: hidden;
         overflow-y: auto;
         
+        &.mr-col-span {
+            flex: 1;
+        }
         > .mr-col-scroll {
             overflow: auto;
         }

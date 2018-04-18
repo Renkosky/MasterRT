@@ -1,5 +1,6 @@
 import * as download from '../assets/js/download';
 import * as mu from 'mzmu';
+import * as classNames from 'classnames';
 declare var require: any;
 const _commonStyles = require('../assets/styles/common.less');
 
@@ -21,8 +22,8 @@ class MrServices {
         return this.REG_CHINESE.test(str);
     }
 
-    cls(...keys: string[]) {
-        return keys.join(' ');
+    cls(...args) {
+        return classNames(...args);
     }
 
     /**
@@ -60,6 +61,20 @@ class MrServices {
 
     getRules() {
         return this._rules;
+    }
+
+    /**
+     * resource pool
+     */
+
+    _resourcePool: any;
+
+    setResourcePool(resource: any) {
+        this._resourcePool = resource;
+    }
+
+    getResourcePool() {
+        return this._resourcePool;
     }
 
 }

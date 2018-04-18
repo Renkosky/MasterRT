@@ -1,8 +1,9 @@
 import * as fetch from 'dva/fetch';
 import MrServices from './mr.services';
 import * as mu from 'mzmu';
-
 // https://www.cnblogs.com/huilixieqi/p/6494380.html
+
+// @todo 封装成类 
 
 function responseHandler(response) {
     let headers = response.headers;
@@ -27,6 +28,11 @@ function checkStatus(response) {
     return Promise.reject(error);
 }
 
+function preErrorHandler(error) {
+    // 设置reject, 表示该 catch 后，不再接受 then
+    return Promise.reject(error);
+}
+
 /**
  * Requests a URL, returning a promise.
  *
@@ -34,6 +40,8 @@ function checkStatus(response) {
  * @param  {object} [options] The options we want to pass to "fetch"
  * @return {object}           An object containing either "data" or "err"
  */
+
+ // @todo 接收option自定义值，配置可接受参数，控制报错流程
 export default function MrRequest(url, options: any = {}) {
     let headers: any = MrServices.getHeaders();
     options.headers = mu.extend(true, headers, options.headers);
@@ -41,5 +49,5 @@ export default function MrRequest(url, options: any = {}) {
     .then(checkStatus)
     .then(responseHandler)
     .then(data => data)
-    .catch(err => ({err}));
+    .catch(preErrorHandler);
 }

@@ -15,9 +15,13 @@ interface MrEchartsPanelProps extends MrEchartsProps {
     style?: any;
     title?: string;
     downloadName?: string;
+    data?: any;
+    dataType?: any;
+    dataModel?: any;
+    chartTypes?: any;
 }
 
-export class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
+export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
     state = {
         fullScreen: false,
         xyExchange: false,

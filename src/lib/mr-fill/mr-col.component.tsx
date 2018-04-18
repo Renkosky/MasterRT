@@ -11,16 +11,17 @@ interface MrColProps {
     // 是否可以在区块内滚动，默认不滚动
     scroll?: boolean;
     onClick?: React.MouseEventHandler<any>;
+    test?: any;
 }
 
 export class MrCol extends React.Component<MrColProps, {}> {
 
     render() {
-        const {className = '', children, style, span, scroll, onClick } = this.props;
+        const {className = '', children, style = {}, span, scroll, onClick } = this.props;
 
         const classString = classNames({
             'mr-col': true,
-            [`mr-col-${span}`]: !!span
+            [`mr-col-span mr-col-${span}`]: !!span
         }, className);
 
         return (<div style={style} className={classString} onClick={onClick}>

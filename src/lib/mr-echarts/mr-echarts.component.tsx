@@ -161,7 +161,7 @@ export class MrEcharts extends React.Component<MrEchartsProps, {}> {
         // 判断两次 props 是否一致
         // 避免 react 本身机制问题，每次setState 重新渲染页面
 
-        console.debug(mu.clone(props), mu.clone(this.props), _.isEqual(props, this.props));
+
 
         if (!_.isEqual(props, this.props)) {
             this.drawCharts(props);

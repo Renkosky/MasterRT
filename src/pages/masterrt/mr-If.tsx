@@ -25,7 +25,7 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
     code: string = `
         <section>
         
-            <MrIf condition="{showPanel}">
+            <MrIf condition={showPanel}>
                 <MrPanel title="静夜思::李白">
                     床前明月光<br />
                     疑是地上霜<br />
@@ -34,9 +34,9 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
                 </MrPanel>
             </MrIf>
             
-            <MrPanel title="按权限规则判断::rule" bodyStyle="{{'padding':" 8}}>
-                <MrFill gutter="{16}" style={{}}>
-                    <MrIf rules="{'show.jingyesi-1'}">
+            <MrPanel title="按权限规则判断::rule" bodyStyle={{'padding': 8}}>
+                <MrFill gutter={16} style={{}}>
+                    <MrIf rules={'show.jingyesi-1'}>
                         <MrCol span="1">
                             <MrPanel title="静夜思::show.jingyesi">
                                 床前明月光<br />
@@ -46,7 +46,7 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
                             </MrPanel>
                         </MrCol>
                     </MrIf>
-                    <MrIf rules="{'show.dengguanquelou'}">
+                    <MrIf rules={'show.dengguanquelou'}>
                         <MrCol span="1">
                             <MrPanel title="登鹳雀楼::show.dengguanquelou">
                                 白日依山尽，黄河入海流。<br />
@@ -54,7 +54,7 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
                             </MrPanel>
                         </MrCol>
                     </MrIf>
-                    <MrIf rules="{'show.minnong'}">
+                    <MrIf rules={'show.minnong'}>
                         <MrCol span="1">
                             <MrPanel title="悯农::show.minnong">
                                 锄禾日当午 汗滴禾下土<br />
@@ -85,19 +85,28 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
                 <header>MrPanel <small>一个集成的盒子</small></header>
                 <ins>一个拥有标题，子标题，工具条的容器</ins>
                 <main>
-                    <Button type="primary" onClick={this.showPanel.bind(this)}>{showPanel ? '隐藏' : '显示'}::静夜思</Button>
+                    {/*<Button type="primary" onClick={this.showPanel.bind(this)}>{showPanel ? '隐藏' : '显示'}::静夜思</Button>*/}
 
-                    <JsxParser
-                        bindings={{showPanel}}
-                        components={{
-                            MrIf,
-                            MrPanel,
-                            MrFill,
-                            MrCol,
-                            MrsCode
-                        }}
-                        jsx={this.code}
-                    ></JsxParser>
+                    {/*<JsxParser*/}
+                        {/*bindings={{showPanel}}*/}
+                        {/*components={{*/}
+                            {/*MrIf,*/}
+                            {/*MrPanel,*/}
+                            {/*MrFill,*/}
+                            {/*MrCol,*/}
+                            {/*MrsCode*/}
+                        {/*}}*/}
+                        {/*jsx={this.code}*/}
+                    {/*></JsxParser>*/}
+
+                    <MrFill gutter={16}>
+                        <MrIf condition={true}>
+                            <MrCol span={1}>11111</MrCol>
+                        </MrIf>
+
+                        <MrCol span={2}>222222</MrCol>
+                    </MrFill>
+
                 </main>
 
                 <details className="mt-16">
