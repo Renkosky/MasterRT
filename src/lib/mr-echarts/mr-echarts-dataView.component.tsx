@@ -14,7 +14,7 @@ export class MrEchartsDataView extends React.Component<MrEchartsDataViewProps, {
                     {data.map((item, inx)=> {
                         return <tr key={inx}>
                             {item.map((o, inx)=> {
-                                return <td key={`${o}-${inx}`}>{mu.format(o)}</td>
+                                return <td key={inx}>{mu.format(o) || '-'}</td>
                             })}
                         </tr>
                     })}

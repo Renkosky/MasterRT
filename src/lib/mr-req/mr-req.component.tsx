@@ -31,6 +31,7 @@ interface MrReqProps {
 
     // 容器高度 height: 100%
     h100?: boolean;
+
     // 数据传递到子元素的 props key
     transmit?: string;
 }
@@ -78,7 +79,7 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
         if(React.Children.count(children)){
             mu.run(transmit, (key) => {
                 children = React.Children.map(children, (col: any) => {
-                    return col.props ? React.cloneElement(col, {
+                    return (col.props && _.isNil(col.props[key])) ? React.cloneElement(col, {
                         [key]: data
                     }) : col;
                 });
@@ -87,7 +88,7 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
             return children;
         }
 
-        return null;
+        return children;
     }
 
     componentWillMount() {
@@ -108,7 +109,6 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
         }, className);
 
         let children = this.transmit(data);
-
 
         return (<div className={cls} style={style}>{children}</div>);
     }

@@ -1,12 +1,13 @@
 import * as React from 'react';
 import {MrEcharts, MrEchartsProps} from './mr-echarts.component';
-import {MrIcon, MrPanel} from '../';
+import {MrIcon, MrPanel, MrServices} from '../';
 import _mrEchartServices from './mr-echarts.services';
 import _mrServices from '../common/mr.services';
 import * as _ from 'lodash';
 import * as mu from 'mzmu';
 import {MrEchartsDataView} from './mr-echarts-dataView.component';
 import * as classNames from 'classnames';
+import MrReq from '../mr-req/mr-req.component';
 
 declare var require: any;
 require('../assets/styles/mr-echarts-panel.less');
@@ -18,7 +19,10 @@ interface MrEchartsPanelProps extends MrEchartsProps {
     data?: any;
     dataType?: any;
     dataModel?: any;
-    chartTypes?: any;
+    chartTypes?: string;
+    req?: any;
+    h100?: boolean;
+    className?: string;
 }
 
 export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
@@ -55,7 +59,7 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
     toolSetFn(key: string, value?: any) {
         let status = this.state[key];
         let fnName = `@@${key}`;
-        let {setting} = this.state;
+        let {setting = []} = this.state;
 
         status = !status;
 
@@ -96,11 +100,18 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
 
     // 刷新数据
     reload() {
-        let {setting} = this.props;
+        let {setting, req, data} = this.props;
         setting = _mrEchartServices.serialize(setting);
         this.setState({
+            req,
+            data,
             setting,
-            dataView: false
+            fullScreen: false,
+            xyExchange: false,
+            xAxisShowAll: false,
+            legendShow: false,
+            dataView: false,
+            lineBarExchange: false
         });
     }
 
@@ -110,9 +121,10 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
     }
 
     render() {
-        const {title, style} = this.props;
-        const {data, dataType, dataModel, chartTypes} = this.props;
+        const {title, style, className, h100} = this.props;
+        const {chartTypes, data, dataType, dataModel} = this.props;
         const {options, renderType, theme} = this.props;
+        const {req} = this.props;
         let {fullScreen, dataView, setting} = this.state;
         setting = mu.clone(setting);
         const echartsProps = {
@@ -126,15 +138,23 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
             theme
         };
 
+        let classString = MrServices.cls({
+            'ms-fullScreen': fullScreen,
+            'ms-echarts-panel': true,
+            'h-100-i': h100
+        }, className);
+
         return (
-            <MrPanel title={title} extra={this.tools()} style={style} className={[fullScreen ? 'ms-fullScreen' : '', 'ms-echarts-panel'].join(' ')}>
-                {dataView ? (
-                    <div>
-                        <MrEchartsDataView data={this._dataView} />
-                    </div>
-                ) : (
-                    <MrEcharts {...echartsProps} result={this.getResult.bind(this)} />
-                )}
+            <MrPanel title={title} extra={this.tools()} style={style} className={classString}>
+                <MrReq h100={true} req={req} transmit="data">
+                    {dataView ? (
+                        <div>
+                            <MrEchartsDataView data={this._dataView} />
+                        </div>
+                    ) : (
+                        <MrEcharts {...echartsProps} result={this.getResult.bind(this)} />
+                    )}
+                </MrReq>
             </MrPanel>
         );
     }
