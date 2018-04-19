@@ -201,13 +201,17 @@ export default {
         let _dataView = mu.map(_series, (arr, inx) => {
             let legend = _legend[inx] || {};
             let legendName = legend.name || legend;
-            arr.unshift(legendName);
+            arr.unshift(mu.isEmpty(_x) ? '' : legendName);
             arr = mu.map(arr, (o) => o.value || o);
             return arr;
         });
 
         if(mu.isEmpty(_x)) {
-            _x = mu.map(_dataView[0].length - 1, () => void 0, []);
+            _x = mu.map(_dataView[0].length - 1, (i, inx) => {
+                let x = legend[inx] || 0;
+                x = x.name || x;
+                return x;
+            }, []);
         }
 
         _x.unshift('');

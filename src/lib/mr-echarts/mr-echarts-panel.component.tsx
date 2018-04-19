@@ -93,8 +93,9 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
 
     // download 下载数据
     download() {
-        let {title, downloadName} = this.props;
+        let {title = '', downloadName} = this.props;
         downloadName = downloadName || `${title}_${+new Date()}`;
+        // console.debug(this._dataView, this._dataView.join('\n'));
         _mrServices.download(this._dataView.join('\n'), downloadName + '.csv');
     }
 
