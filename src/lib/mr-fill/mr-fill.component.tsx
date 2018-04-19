@@ -19,7 +19,6 @@ interface MrFillProps {
 export class MrFill extends React.Component<MrFillProps, {}> {
 
     cloneCol(col, gunter) {
-        console.debug(col);
         return cloneElement(col, {
             style: {
                 paddingLeft: gunter,
@@ -53,31 +52,14 @@ export class MrFill extends React.Component<MrFillProps, {}> {
                 if( col.type as any === MrCol ) {
                     return this.cloneCol(col, _gutter);
                 } else {
-                    const _cols = Children.map(col.props.children, (col: React.ReactElement<HTMLDivElement>) => {
-                        return col.props ? this.cloneCol(col, _gutter) : col;
+                    mu.run(col.props.children, (children) => {
+                        const _cols = Children.map(children, (col: React.ReactElement<HTMLDivElement>) => {
+                            return col.props ? this.cloneCol(col, _gutter) : col;
+                        });
+                        return cloneElement(col, {}, _cols);
                     });
-                    return cloneElement(col, {}, _cols);
                 }
             }
-
-            // else {
-            //
-            //     // 判断是否唯一子元素
-            //     // console.debug(React.Children.only(col));
-            //
-            //
-            //     // console.debug(col, col.type.toString(), col);
-            //
-            //     if( col.type as any === MrIf ) {
-            //         console.debug(1111111);
-            //     }
-            //
-            //     let abc: any = {
-            //         test: 12345
-            //     };
-            //
-            //     return React.cloneCol(col, abc);
-            // }
 
             return col;
         });

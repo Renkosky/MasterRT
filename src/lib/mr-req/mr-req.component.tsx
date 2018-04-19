@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as mu from 'mzmu';
 import MrServices from '../common/mr.services';
 import * as _ from 'lodash';
-import classNames from 'classNames';
 
 interface iMrReq {
     // resource
@@ -24,12 +23,21 @@ interface iMrReq {
 interface MrReqProps {
     req?: iMrReq;
     result?: any;
-    pool?: any;
-    h100?: boolean;
     className?: string;
     style?: React.CSSProperties;
+
+    // resource pool
+    pool?: any;
+
+    // 容器高度 height: 100%
+    h100?: boolean;
+    // 数据传递到子元素的 props key
+    transmit?: string;
 }
 
+/**
+ * 仅对 MrResource 支持的一种异步加载方式
+ */
 export default class MrReq extends React.Component<MrReqProps, {}> {
 
     state: any = {
@@ -37,7 +45,7 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
     };
 
     getRequest(props) {
-        let {req, pool, result} = props;
+        let {req, pool, result, transmit} = props;
         mu.run(req, () => {
             pool = pool || MrServices.getResourcePool();
 
@@ -52,7 +60,8 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
                     let data = _.get(res, key);
 
                     data = transform ? transform(data) : data;
-                    this.setState({
+
+                    transmit && this.setState({
                         data
                     });
 
@@ -60,6 +69,21 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
                 });
             });
         });
+    }
+
+    // 向子元素传递数据
+    transmit(data) {
+        let {transmit, children} = this.props;
+
+        mu.run(transmit, (key) => {
+            children = React.Children.map(children, (col: any) => {
+                return col.props ? React.cloneElement(col, {
+                    [key]: data
+                }) : col;
+            });
+        });
+
+        return children;
     }
 
     componentWillMount() {
@@ -72,12 +96,16 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
 
     render() {
         let {className, h100, style} = this.props;
+        let {data} = this.state;
 
         const cls = MrServices.cls({
             'mr-req': true,
             'h-100-i': h100
         }, className);
 
-        return (<div className={cls} style={style}>{this.props.children}</div>);
+        let children = this.transmit(data);
+
+
+        return (<div className={cls} style={style}>{children}</div>);
     }
 }

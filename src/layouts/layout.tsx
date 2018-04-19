@@ -12,7 +12,7 @@ interface MrsLayoutProps {
 
 export default class MrsLayout extends React.Component<MrsLayoutProps, {}> {
 
-    ignoreLayout=['/login','/plan', '/masterrt/mr-if'];
+    ignoreLayout=['/login','/plan'];
 
     isIgnoreLayout() {
         let ignoreLayout: any= this.ignoreLayout;

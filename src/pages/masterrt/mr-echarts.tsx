@@ -1,9 +1,8 @@
 import * as  React from 'react';
 import {MrIcon, MrPanel, MrEcharts} from '../../lib';
 import './masterrt.less';
-
+import * as _ from 'lodash';
 import MrsCode from '../../components/MrsCode';
-
 import JsxParser from 'react-jsx-parser';
 
 interface MrsMrEchartsProps {
@@ -92,8 +91,16 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
         </section>
     `;
 
+    shouldComponentUpdate(nextProps, nextStates) {
+        if(_.isEqual(nextStates, this.state)){
+            return false;
+        }
+    }
+
     render() {
         let _data = JSON.stringify(this.data.pie).replace(/}\,/g, '},\n');
+
+        console.debug(22222222);
 
         return (
             <article className="mrs-article mrs-MrFill">

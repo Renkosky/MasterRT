@@ -23,14 +23,12 @@ function checkStatus(response) {
         return response;
     }
 
-    const error = new Error(response.statusText);
-    error['response'] = response;
-    return Promise.reject(error);
+    return Promise.reject(response);
 }
 
-function preErrorHandler(error) {
+function preErrorHandler(response) {
     // 设置reject, 表示该 catch 后，不再接受 then
-    return Promise.reject(error);
+    return Promise.reject(response);
 }
 
 /**

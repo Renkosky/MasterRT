@@ -80,6 +80,8 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
     render() {
         let {showPanel} = this.state;
 
+        console.log('ifififiififi')
+
         return (
             <article className="mrs-article mrs-MrFill">
                 <header>MrPanel <small>一个集成的盒子</small></header>

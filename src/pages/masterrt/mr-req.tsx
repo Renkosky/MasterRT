@@ -3,7 +3,8 @@ import * as mu from 'mzmu';
 import * as _ from 'lodash';
 import MrReq from '../../lib/mr-req/mr-req.component';
 import MrResource from '../../lib/common/mr-resource';
-import {MrAutoBind, MrEcharts} from '../../lib';
+import {MrAutoBind, MrEcharts, MrPanel, MrIf} from '../../lib';
+import {Button} from 'antd';
 
 interface MrsReqProps {
 }
@@ -11,41 +12,80 @@ interface MrsReqProps {
 @MrAutoBind
 export default class MrsReq extends React.Component<MrsReqProps, {}> {
 
-    state: any = {
-        data: []
+    req: any = {
+        pie: {
+            resource: MrResource.pool('/assets/pie.json'),
+            method: 'get'
+        },
+
+        line: {
+            resource: MrResource.pool('/assets/line.json'),
+            method: 'get',
+            // 数据修改
+            transform: (data) => {
+                return mu.map(data, (o) => {
+                    o.name = o.type;
+                    o.x = o.date;
+                    o.value = o.volume;
+                    return o;
+                });
+            }
+        }
     };
 
-    data: any;
+    chartTypes: any = {
+        pie: 'pie::ring::rose',
+        line: 'line',
+    };
 
     result(data) {
+        this.setState({data});
+    }
 
-        this.data = data;
+    changeReq(type: string) {
+        let req = this.req[type];
+        let chartTypes = this.chartTypes[type];
+        this.setState({req, chartTypes});
+    }
 
-        console.log(22222);
+    state: any = {
+        data: [],
+        req: this.req['pie'],
+        chartTypes: this.chartTypes['pie']
+    };
 
-        // this.setState({data});
+    shouldComponentUpdate(nextProps, nextStates) {
+        return !_.isEqual(nextStates, this.state);
     }
 
     render() {
 
-        // MrResource.pool()
+        let {data = {}, req, chartTypes} = this.state;
 
-        console.log(111111111);
 
-        let {data = {}} = this.state;
+        return (<div style={{height: 400}}>
 
-        return (<div style={{height: 300}}>
-            <MrReq req={{
-                resource: MrResource.pool('/assets/test.json'),
-                method: 'get'
-            }} h100={true} result={this.result}>
+            <Button type={'primary'} onClick={this.changeReq.bind(this, 'pie')}> Pie </Button>
+            <Button type={'primary'} onClick={this.changeReq.bind(this, 'line')} className="ml-8"> Line </Button>
 
-                <MrEcharts
-                    data={this.data}
-                    chartTypes={'pie::ring::rose'}
-                ></MrEcharts>
+            <MrPanel title="回调::通过setState进行重新渲染" bodyStyle={{height: 300}} className="mt-16">
+                <MrReq req={req} h100={true} result={this.result}>
+                    <MrEcharts
+                        data={data}
+                        chartTypes={chartTypes}
+                    ></MrEcharts>
+                </MrReq>
+            </MrPanel>
 
-            </MrReq>
+            <MrPanel title="传递::通过transmit传递数据，无渲染" bodyStyle={{height: 300}} className="mt-16">
+                <MrReq req={req} h100={true} transmit="data">
+                    <MrIf condition={true}>
+                    <MrEcharts
+                        chartTypes={chartTypes}
+                    ></MrEcharts>
+                    </MrIf>
+                </MrReq>
+            </MrPanel>
         </div>);
     }
 }
