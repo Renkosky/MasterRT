@@ -44,10 +44,22 @@ export class MrIf extends React.Component<MrIfProps, {}> {
         if(React.Children.count(children)){
             children = React.Children.map(children, (col: any) => {
                 let _props = mu.clone(props);
-                if(mu.isNotExist(_.get(col, 'props.condition')) && col.type as any === MrElse){
-                    _props['condition'] = !condition;
+
+                if(col.type as any === MrElse) {
+                    if(mu.isNotExist(_.get(col, 'props.condition'))) {
+                        _props['condition'] = !condition;
+                    }
+
+                    return  React.cloneElement(col, _props);
+                } else if(this._result) {
+                    if(col.props) {
+                        return React.cloneElement(col, _props);
+                    } else {
+                        return col;
+                    }
+                } else {
+                    return null;
                 }
-                return col.props ? React.cloneElement(col, _props) : col;
             });
 
             return children;
@@ -66,6 +78,6 @@ export class MrIf extends React.Component<MrIfProps, {}> {
 
     render() {
         let children = this.transmit();
-        return this._result ? children : null;
+        return (children);
     }
 }

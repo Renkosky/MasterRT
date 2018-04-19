@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as mu from 'mzmu';
 import * as _ from 'lodash';
 
 interface MrElseProps {
@@ -13,7 +12,7 @@ export default class MrElse extends React.Component<MrElseProps, {}> {
 
         let props: any = _.omit(this.props, 'condition', 'children');
 
-        if(React.Children.count(children)){
+        if (React.Children.count(children)) {
             children = React.Children.map(children, (col: any) => {
                 return col.props ? React.cloneElement(col, props) : col;
             });
@@ -25,9 +24,8 @@ export default class MrElse extends React.Component<MrElseProps, {}> {
     }
 
     render() {
-
+        let {condition} = this.props;
         let children = this.transmit();
-
-        return (this.props.condition ? children : null);
+        return (condition ? children : null);
     }
 }

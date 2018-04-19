@@ -6,6 +6,7 @@ import MrsCode from '../../components/MrsCode';
 
 import JsxParser from 'react-jsx-parser';
 import {Button} from 'antd';
+import MrElse from '../../lib/mr-if/mr-else.component';
 
 interface MrsPanelProps {
 }
@@ -23,7 +24,7 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
     };
 
     code: string = `
-        <section>
+        <section className="mt-16">
         
             <MrIf condition={showPanel}>
                 <MrPanel title="静夜思::李白">
@@ -32,9 +33,18 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
                     举头望明月<br />
                     低头思故乡<br />
                 </MrPanel>
+                
+                <MrElse>
+                    <MrPanel title="悯农">
+                        锄禾日当午 汗滴禾下土<br />
+                        谁知盘中餐 粒粒皆辛苦<br />
+                    </MrPanel>
+                </MrElse>
             </MrIf>
             
-            <MrPanel title="按权限规则判断::rule" bodyStyle={{'padding': 8}}>
+            <hr />
+            
+            <MrPanel title="按权限规则判断::rule" className="mt-16" bodyStyle={{'padding': 8}}>
                 <MrFill gutter={16} style={{}}>
                     <MrIf rules={'show.jingyesi-1'}>
                         <MrCol span={1}>
@@ -80,19 +90,18 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
     render() {
         let {showPanel} = this.state;
 
-        console.log('ifififiififi')
-
         return (
             <article className="mrs-article mrs-MrFill">
                 <header>MrPanel <small>一个集成的盒子</small></header>
                 <ins>一个拥有标题，子标题，工具条的容器</ins>
                 <main>
-                    <Button type="primary" onClick={this.showPanel.bind(this)}>{showPanel ? '隐藏' : '显示'}::静夜思</Button>
+                    <Button type="primary" onClick={this.showPanel.bind(this)}>{showPanel ? '显示::悯农' : '显示::静夜思'}</Button>
 
                     <JsxParser
                         bindings={{showPanel}}
                         components={{
                             MrIf,
+                            MrElse,
                             MrPanel,
                             MrFill,
                             MrCol,
