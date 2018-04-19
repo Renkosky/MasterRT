@@ -3,7 +3,7 @@ import * as mu from 'mzmu';
 import * as _ from 'lodash';
 import MrReq from '../../lib/mr-req/mr-req.component';
 import MrResource from '../../lib/common/mr-resource';
-import {MrAutoBind, MrEcharts, MrPanel, MrIf} from '../../lib';
+import {MrAutoBind, MrEcharts, MrPanel, MrIf, MrFill} from '../../lib';
 import {Button} from 'antd';
 
 interface MrsReqProps {
@@ -80,10 +80,12 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
             <MrPanel title="传递::通过transmit传递数据，无渲染" bodyStyle={{height: 300}} className="mt-16">
                 <MrReq req={req} h100={true} transmit="data">
                     <MrIf condition={true}>
-                    <MrEcharts
-                        chartTypes={chartTypes}
-                    ></MrEcharts>
+                        <MrEcharts
+                            chartTypes={chartTypes}
+                        ></MrEcharts>
                     </MrIf>
+
+                    <MrIf condition={true}></MrIf>
                 </MrReq>
             </MrPanel>
         </div>);

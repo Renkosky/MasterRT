@@ -2,6 +2,7 @@ import * as React from 'react';
 import MrServices from '../common/mr.services';
 import * as mu from 'mzmu';
 import * as _ from 'lodash';
+import MrElse from './mr-else.component';
 
 export interface MrIfProps {
     condition?: any;
@@ -36,15 +37,23 @@ export class MrIf extends React.Component<MrIfProps, {}> {
     }
 
     transmit(): any {
-        let {children} = this.props;
+        let {children, condition} = this.props;
 
-        let props = _.omit(this.props, 'condition', 'rules', 'children');
+        let props: any = _.omit(this.props, 'condition', 'rules', 'children');
 
-        children = React.Children.map(children, (col: any) => {
-            return col.props ? React.cloneElement(col, props) : col;
-        });
+        if(React.Children.count(children)){
+            children = React.Children.map(children, (col: any) => {
+                let _props = mu.clone(props);
+                if(mu.isNotExist(_.get(col, 'props.condition')) && col.type as any === MrElse){
+                    _props['condition'] = !condition;
+                }
+                return col.props ? React.cloneElement(col, _props) : col;
+            });
 
-        return children;
+            return children;
+        }
+
+        return null;
     }
 
     componentWillMount() {

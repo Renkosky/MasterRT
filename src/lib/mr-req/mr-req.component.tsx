@@ -75,15 +75,19 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
     transmit(data) {
         let {transmit, children} = this.props;
 
-        mu.run(transmit, (key) => {
-            children = React.Children.map(children, (col: any) => {
-                return col.props ? React.cloneElement(col, {
-                    [key]: data
-                }) : col;
+        if(React.Children.count(children)){
+            mu.run(transmit, (key) => {
+                children = React.Children.map(children, (col: any) => {
+                    return col.props ? React.cloneElement(col, {
+                        [key]: data
+                    }) : col;
+                });
             });
-        });
 
-        return children;
+            return children;
+        }
+
+        return null;
     }
 
     componentWillMount() {
