@@ -14,9 +14,10 @@ export const defOptions = {
 
     bar: {
         grid: {
-            left: 20,
+            left: 'left',
             right: 20,
             bottom: 20,
+            width: '100%',
             containLabel: true
         },
         legend: {},
@@ -29,9 +30,10 @@ export const defOptions = {
 
     line: {
         grid: {
-            left: 50,
+            left: 'left',
             right: 20,
             bottom: 20,
+            width: '100%',
             containLabel: true
         },
         legend: {},
@@ -50,7 +52,7 @@ export const defOptions = {
     scatter: {
         grid: {
             bottom: 20,
-            left: 40
+            left: 'left'
         },
         tooltip: {},
         dataset: {},
