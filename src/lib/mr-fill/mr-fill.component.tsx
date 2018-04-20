@@ -29,13 +29,13 @@ export class MrFill extends React.Component<MrFillProps, {}> {
     }
 
     render() {
-        let {className = '', style = {}, children, gutter, type} = this.props;
+        let {className = '', style = {}, children, gutter, type, h100} = this.props;
         type = mu.ifnvl(type, 'full');
         style = style || {};
 
         const classString = MrServices.cls({
             'mr-fill': true,
-            'h-100-i': true,
+            'h-100-i': h100,
             [`mr-fill-${type}`]: true,
         }, className);
 
