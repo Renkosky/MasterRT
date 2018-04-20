@@ -6,29 +6,50 @@ import * as mu from 'mzmu';
 // @todo 封装成类 
 
 function responseHandler(response) {
-    let headers = response.headers;
-    let contentType = headers.get('Content-Type').split(';')[0];
+    return mu.run(MrServices.reqResponse, (handler) => {
+        return handler(response);
+    }, () => {
+        let headers = response.headers;
+        let contentType = headers.get('Content-Type').split(';')[0];
 
-    if (contentType === 'application/json') {
-        return response.json();
-    } else if (contentType === 'text/html') {
-        return response.text();
-    } else {
-        return response.blob();
-    }
+        if (contentType === 'application/json') {
+            return response.json();
+        } else if (contentType === 'text/html') {
+            return response.text();
+        } else {
+            return response.blob();
+        }
+    });
 }
 
 function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
         return response;
     }
-
     return Promise.reject(response);
 }
 
 function preErrorHandler(response) {
     // 设置reject, 表示该 catch 后，不再接受 then
-    return Promise.reject(response);
+
+    let error: any = {};
+    let {headers, status, statusText, ok} = response;
+    error.response = responseHandler(response);
+
+    let self = MrServices.reqCatch;
+
+    if(self) {
+        // todo
+        self(error);
+    } else {
+        // system handler
+
+        // mu.run(MrServices.setExtendCatch, (ex) => {
+        //     let a = ex(error);
+        // });
+    }
+
+    return Promise.reject(error);
 }
 
 /**
