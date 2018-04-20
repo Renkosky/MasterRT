@@ -10,7 +10,7 @@ interface MrsEchartsPanelProps {
 export default class MrsEchartsPanel extends React.Component<MrsEchartsPanelProps, {}> {
 
     req: any = {
-        resource: MrResource.pool('/assets/line.json'),
+        api: 'line',
         method: 'get',
         // 数据修改
         transform: (data) => {
