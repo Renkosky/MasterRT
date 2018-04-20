@@ -14,7 +14,7 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
 
     req: any = {
         pie: {
-            resource: MrResource.pool('/assets/pie.json'),
+            resource: MrResource.pool('/assets/pie1.json'),
             method: 'get'
         },
 

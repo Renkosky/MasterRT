@@ -20,6 +20,10 @@ export function config() {
 
     MrServices.setResourcePool(brp);
 
+    MrServices.reqCatch ( (res) => {
+        console.debug('::::::::::', res);
+    });
+
     return {
         onError(err) {
             err.preventDefault();

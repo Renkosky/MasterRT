@@ -63,7 +63,12 @@ class MrServices {
     }
 
     // user self handler fetch error
-    reqCatch: any = false;
+    _reqCatch: any = false;
+
+    reqCatch(catchHandler: any) {
+        this._reqCatch = catchHandler;
+    };
+
     reqResponse: any = false;
 
     /**

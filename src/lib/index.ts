@@ -1,5 +1,3 @@
-
-
 export {default as MrServices} from './common/mr.services';
 export {default as MrRequest} from './common/mr-request';
 export {default as MrResource} from './common/mr-resource';
@@ -13,8 +11,8 @@ export {MrIcon} from './mr-icon/mr-icon.component';
 export {MrFill} from './mr-fill/mr-fill.component';
 export {MrCol} from './mr-fill/mr-col.component';
 export {default as MrReq} from './mr-req/mr-req.component';
-import {default as MrElse} from './mr-if/mr-else.component';
-import {default as MrHtml} from './mr-code/mr-html.compontent';
+export {default as MrElse} from './mr-if/mr-else.component';
+export {default as MrHtml} from './mr-code/mr-html.component';
 
 
 

@@ -27,7 +27,7 @@ class MrResource {
             }) || (isReplace ? '' : m);
         });
 
-        url = url.replace(/\/$/, '');
+        // url = url.replace(/\/$/, '');
 
         mu.run(sp, () => {
             let arr: any = mu.map(sp, (o, key) => {
@@ -169,7 +169,7 @@ class MrResource {
             download(search: any, options?: any) {
                 const args: any = Array.from(arguments);
                 args.unshift(url);
-                vm.get.apply(vm, args).then((rst) => {
+                return vm.get.apply(vm, args).then((rst) => {
                     MrServices.download(rst, search.downloadName);
                 });
             },
@@ -178,7 +178,7 @@ class MrResource {
                 search['directDownload'] = true;
                 const args: any = Array.from(arguments);
                 args.unshift(url);
-                vm.post.apply(vm, args).then((rst) => {
+                return vm.post.apply(vm, args).then((rst) => {
                     MrServices.download(rst, search.downloadName);
                 });
             }

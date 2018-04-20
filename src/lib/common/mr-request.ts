@@ -6,13 +6,14 @@ import * as mu from 'mzmu';
 // @todo 封装成类 
 
 function responseHandler(response) {
+
     return mu.run(MrServices.reqResponse, (handler) => {
         return handler(response);
     }, () => {
         let headers = response.headers;
         let contentType = headers.get('Content-Type').split(';')[0];
 
-        if (contentType === 'application/json') {
+        if (contentType === 'application/json' || contentType === 'application/hal+json') {
             return response.json();
         } else if (contentType === 'text/html') {
             return response.text();
@@ -34,9 +35,19 @@ function preErrorHandler(response) {
 
     let error: any = {};
     let {headers, status, statusText, ok} = response;
-    error.response = responseHandler(response);
 
-    let self = MrServices.reqCatch;
+    let _response = responseHandler(response);
+    _response.then((response) => {
+        error.response = response;
+    });
+
+    error.headers = headers;
+    error.status = status;
+    error.statusText = statusText;
+    error.ok = ok;
+    error._response = _response;
+
+    let self = MrServices._reqCatch;
 
     if(self) {
         // todo
@@ -68,5 +79,5 @@ export default function MrRequest(url, options: any = {}) {
     .then(checkStatus)
     .then(responseHandler)
     .then(data => data)
-    .catch(preErrorHandler);
+    .catch(preErrorHandler)
 }
