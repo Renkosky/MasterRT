@@ -10,3 +10,8 @@ export {MrIf} from './mr-if/mr-if.component';
 export {MrIcon} from './mr-icon/mr-icon.component';
 export {MrFill} from './mr-fill/mr-fill.component';
 export {MrCol} from './mr-fill/mr-col.component';
+export {default as MrReq} from './mr-req/mr-req.component';
+import {default as MrElse} from './mr-if/mr-else.component';
+
+
+
