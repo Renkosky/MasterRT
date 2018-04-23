@@ -1,6 +1,6 @@
 import * as React from 'react';
-import * as classNames from 'classnames';
-import * as _ from 'lodash';
+import {MrServices} from 'masterrt';
+
 declare var require: any;
 require('../assets/styles/mr-fill.less');
 
@@ -12,20 +12,28 @@ interface MrColProps {
     scroll?: boolean;
     onClick?: React.MouseEventHandler<any>;
     test?: any;
+    contentType?: string;
 }
 
 export class MrCol extends React.Component<MrColProps, {}> {
 
     render() {
-        const {className = '', children, style = {}, span, scroll, onClick } = this.props;
+        const {className = '', children, style = {}, span, scroll = false, onClick} = this.props;
 
-        const classString = classNames({
+        const classString = MrServices.cls({
             'mr-col': true,
             [`mr-col-span mr-col-${span}`]: !!span
         }, className);
 
+        const contentClsString = MrServices.cls({
+            'mr-col-content': true,
+            'mr-col-scroll': scroll
+        });
+
         return (<div style={style} className={classString} onClick={onClick}>
-            { scroll ? <div className="mr-col-scroll">{children}</div> : children }
+            <div className={contentClsString}>
+                {children}
+            </div>
         </div>);
     }
 }

@@ -14,7 +14,8 @@ interface MrsPanelProps {
 export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
 
     state: any = {
-        showPanel: false
+        showPanel: false,
+        test: true,
     };
 
     rules: any = {
@@ -88,7 +89,7 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
     }
 
     render() {
-        let {showPanel} = this.state;
+        let {showPanel, test} = this.state;
 
         return (
             <article className="mrs-article mrs-MrFill">
@@ -98,7 +99,7 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
                     <Button type="primary" onClick={this.showPanel.bind(this)}>{showPanel ? '显示::悯农' : '显示::静夜思'}</Button>
 
                     <JsxParser
-                        bindings={{showPanel}}
+                        bindings={{showPanel, test}}
                         components={{
                             MrIf,
                             MrElse,
