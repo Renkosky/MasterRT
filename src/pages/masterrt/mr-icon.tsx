@@ -5,6 +5,7 @@ import './masterrt.less';
 import MrsCode from '../../components/MrsCode';
 
 import JsxParser from 'react-jsx-parser';
+import MrComponent from '../../lib/mr-component/mr-component.component';
 
 interface MrsMrIconProps {
 }
@@ -30,6 +31,8 @@ export default class MrsMrIcon extends React.Component<MrsMrIconProps, {}> {
                         components={{MrIcon}}
                         jsx={this.code}
                     ></JsxParser>
+
+                    <MrComponent component={MrIcon} type={'bar'}>abcdef</MrComponent>
                 </main>
 
                 <details className="mt-16">
