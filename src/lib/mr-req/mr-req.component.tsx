@@ -17,7 +17,7 @@ interface iMrReq {
     // 数据处理
     transform?: any,
     // data key, default 'data'
-    key?: string
+    dataPath?: string
 }
 
 interface MrReqProps {
@@ -46,19 +46,31 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
     };
 
     getRequest(props) {
+
+        /**
+         * pool: Resource pool (resources)
+         * resource: 单个资源 （single resource)
+         */
+
         let {req, pool, result, transmit} = props;
+
         mu.run(req, () => {
             pool = pool || MrServices.getResourcePool();
 
-            let {method = 'post', payload = {}, search = {}, transform, key = 'data', resource} = req;
+            let {method = 'post', payload = {}, search = {}, transform, dataPath, resource} = req;
 
-            resource = resource || pool[req.api];
+            dataPath = mu.ifnvl(dataPath, 'data');
 
-            mu.run(resource, (api) => {
-                method = method.toLowerCase();
-                let _promise = method === 'post' ? api[method](search, payload) : api[method](search);
+            method = method.toLowerCase();
+
+            // 调用距离越近，权限越大
+            // prop.resource > pool[api]
+            resource = mu.ifempty(resource, pool[req.api]);
+
+            mu.run(resource, (_resource) => {
+                let _promise = _resource[method](search, payload);
                 _promise.then((res) => {
-                    let data = _.get(res, key);
+                    let data = dataPath === '::res' ? res : _.get(res, dataPath);
 
                     data = transform ? transform(data) : data;
 
