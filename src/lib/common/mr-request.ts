@@ -11,7 +11,9 @@ function responseHandler(response) {
         return handler(response);
     }, () => {
         let headers = response.headers;
-        let contentType = headers.get('Content-Type').split(';')[0];
+        let contentType = headers.get('Content-Type') || 'text/html';
+        contentType = contentType.split(';')[0];
+        contentType = mu.trim(contentType);
 
         if (contentType === 'application/json' || contentType === 'application/hal+json') {
             return response.json();

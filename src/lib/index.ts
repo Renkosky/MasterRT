@@ -13,6 +13,6 @@ export {MrCol} from './mr-fill/mr-col.component';
 export {default as MrReq} from './mr-req/mr-req.component';
 export {default as MrElse} from './mr-if/mr-else.component';
 export {default as MrHtml} from './mr-code/mr-html.component';
-
+export {default as MrComponent} from './mr-component/mr-component.component';
 
 

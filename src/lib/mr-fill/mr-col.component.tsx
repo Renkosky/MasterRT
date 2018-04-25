@@ -13,12 +13,13 @@ interface MrColProps {
     onClick?: React.MouseEventHandler<any>;
     test?: any;
     contentType?: string;
+    contentClassName?: string;
 }
 
 export class MrCol extends React.Component<MrColProps, {}> {
 
     render() {
-        const {className = '', children, style = {}, span, scroll = false, onClick} = this.props;
+        const {className = '', contentClassName='', children, style = {}, span, scroll = false, onClick} = this.props;
 
         const classString = MrServices.cls({
             'mr-col': true,
@@ -28,7 +29,7 @@ export class MrCol extends React.Component<MrColProps, {}> {
         const contentClsString = MrServices.cls({
             'mr-col-content': true,
             'mr-col-scroll': scroll
-        });
+        }, contentClassName);
 
         return (<div style={style} className={classString} onClick={onClick}>
             <div className={contentClsString}>
