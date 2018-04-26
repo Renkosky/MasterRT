@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {MrServices} from 'masterrt';
+import {MrServices} from '..';
 
 declare var require: any;
 require('../assets/styles/mr-fill.less');
@@ -14,12 +14,14 @@ interface MrColProps {
     test?: any;
     contentType?: string;
     contentClassName?: string;
+    h100?: boolean
 }
 
 export class MrCol extends React.Component<MrColProps, {}> {
 
     render() {
-        const {className = '', contentClassName='', children, style = {}, span, scroll = false, onClick} = this.props;
+        const { children, span, scroll = false, onClick} = this.props;
+        const { className = '', contentClassName = '', style = {}, h100 = true } = this.props;
 
         const classString = MrServices.cls({
             'mr-col': true,
@@ -28,8 +30,11 @@ export class MrCol extends React.Component<MrColProps, {}> {
 
         const contentClsString = MrServices.cls({
             'mr-col-content': true,
-            'mr-col-scroll': scroll
+            'mr-col-scroll': scroll,
+            'h-100-i': h100
         }, contentClassName);
+
+
 
         return (<div style={style} className={classString} onClick={onClick}>
             <div className={contentClsString}>

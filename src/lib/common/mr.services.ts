@@ -23,7 +23,12 @@ class MrServices {
         return this.REG_CHINESE.test(str);
     }
 
+    /**
+     * 使用classNames生产class
+     * @param args
+     */
     cls(...args) {
+        console.debug(...args, classNames(...args));
         return classNames(...args);
     }
 

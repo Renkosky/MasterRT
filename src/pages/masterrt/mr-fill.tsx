@@ -1,5 +1,5 @@
 import * as  React from 'react';
-import {MrFill, MrCol, MrIcon} from '../../lib';
+import {MrFill, MrCol, MrIcon, MrPanel} from '../../lib';
 import './masterrt.less';
 
 import MrsCode from '../../components/MrsCode';
@@ -15,49 +15,66 @@ export default class MrsMrFill extends React.Component<MrsMrFillProps, {}> {
         <section>
             <MrFill gutter={8} style={{height: 100}}>
                 <MrCol span={4}>
-                    <div className="content">
-                        4
-                    </div>
+                    4
                 </MrCol>
                 <MrCol span={2}>
-                    <div className="content">
-                        2
-                    </div>
+                    2
                 </MrCol>
                 <MrCol span={8}>
-                    <div className="content">
-                        8
-                    </div>
+                    8
+                </MrCol>
+            </MrFill>
+
+            <MrFill gutter={8} style={{height: 100, marginTop: 8}}>
+                <MrCol span={2}>
+                    2
+                </MrCol>
+                <MrCol style={{width: 202}}>
+                    width: 202px
+                </MrCol>
+                <MrCol span={7} h100={false}>
+                     7
+                </MrCol>
+                <MrCol span={12}>
+                     12
                 </MrCol>
             </MrFill>
 
             <MrFill gutter={8} style={{height: 100, marginTop: 8}}>
                 <MrCol span={1}>
-                    <div className="content">
-                        1
-                    </div>
+                    静夜思<br />
+                    床前明月光<br />
+                    疑是地上霜<br />
+                    举头望明月<br />
+                    低头思故乡<br />
                 </MrCol>
-                <MrCol span={3}>
-                    <div className="content">
-                        3
-                    </div>
+                
+                <MrCol span={1} scroll={true}>
+                    静夜思<br />
+                    床前明月光<br />
+                    疑是地上霜<br />
+                    举头望明月<br />
+                    低头思故乡<br />
                 </MrCol>
-                <MrCol>
-                    <div className="content">
-                        7
+                
+                <MrCol span={1}>
+                    静夜思<br />
+                    <div style={{width: 500}}>
+                        床前明月光 
+                        疑是地上霜
+                        举头望明月
+                        低头思故乡
                     </div>
+                    
                 </MrCol>
-                <MrCol>
-                    <div className="content">
-                        12
-                    </div>
-                </MrCol>
-            </MrFill>
-
-            <MrFill gutter={8} style={{height: 100, marginTop: 8}}>
-                <MrCol>
-                    <div className="content">
-                        1
+                
+                <MrCol span={1} scroll={true}>
+                    静夜思<br />
+                    <div style={{width: 500}}>
+                        床前明月光 
+                        疑是地上霜
+                        举头望明月
+                        低头思故乡
                     </div>
                 </MrCol>
             </MrFill>
@@ -68,7 +85,7 @@ export default class MrsMrFill extends React.Component<MrsMrFillProps, {}> {
         return (
             <article className="mrs-article mrs-MrFill">
                 <header>MrFill <small>满格化布局</small></header>
-                <ins>区别于栅格化布局，其特色为不管有多少子模块，其宽度总和为100%</ins>
+                <ins>区别于栅格化布局，其特色为不管有多少MrCol，其宽度总和为100%</ins>
                 <main>
                     <JsxParser
                         components={{MrFill, MrCol}}
@@ -82,33 +99,45 @@ export default class MrsMrFill extends React.Component<MrsMrFillProps, {}> {
                 </details>
 
                 <aside className="mt-16">
-                    <h5>MrFill</h5>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>gutter?: number</td>
-                                <td>格子间隔</td>
-                            </tr>
-                        </tbody>
-                    </table>
 
-                    <h5 className="mt-8">MrCol</h5>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>span?: number</td>
-                                <td>格子占位值 （v / total）</td>
-                            </tr>
-                            <tr>
-                                <td>scroll?: boolean  =  false</td>
-                                <td>MrCol 默认 overflow: hidden, scroll = true 的时候 overflow: auto </td>
-                            </tr>
-                            <tr>
-                                <td>order?: number</td>
-                                <td>MrCol 排序 </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <MrPanel title="MrFill" border="none">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>gutter?: number</td>
+                                    <td>格子间隔</td>
+                                </tr>
+                                <tr>
+                                    <td>h100?: boolean = false</td>
+                                    <td>是否设置style.height = 100% !important</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </MrPanel>
+
+                    <MrPanel title="MrCol::子作为MrFill的子元素出现" border="none">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>span?: number</td>
+                                    <td>格子占位值 （v / total）</td>
+                                </tr>
+                                <tr>
+                                    <td>scroll?: boolean  =  false</td>
+                                    <td>MrCol 默认 overflow: hidden, scroll = true 的时候 overflow: auto </td>
+                                </tr>
+                                <tr>
+                                    <td>order?: number</td>
+                                    <td>MrCol 排序 </td>
+                                </tr>
+                                <tr>
+                                    <td>h100?: boolean = true</td>
+                                    <td>是否设置style.height = 100% !important</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </MrPanel>
+
                 </aside>
             </article>
         );
