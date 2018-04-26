@@ -20,7 +20,7 @@ interface MrIconProps {
 export class MrIcon extends React.Component<MrIconProps, {}> {
 
     render() {
-        const {type, className = '', shape = '', style = {}, size, children} = this.props;
+        const {type, className = '', shape = '', style = {}, size, children, onClick} = this.props;
         const classString = MrServices.cls({
             anticon: true,
             mricon: true,
@@ -50,6 +50,6 @@ export class MrIcon extends React.Component<MrIconProps, {}> {
             style.borderRadius = '50%';
         });
 
-        return (<i style={style} className={classString}>{children}</i>);
+        return (<i style={style} className={classString} onClick={onClick}>{children}</i>);
     }
 }

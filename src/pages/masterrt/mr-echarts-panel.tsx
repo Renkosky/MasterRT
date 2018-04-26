@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as mu from 'mzmu';
 import * as _ from 'lodash';
-import MrEchartsPanel from '../../lib/mr-echarts/mr-echarts-panel.component';
-import MrResource from '../../lib/common/mr-resource';
-
+import {MrCol, MrFill, MrPanel, MrEchartsPanel} from '../../lib';
+import JsxParser from 'react-jsx-parser';
+import MrsCode from '../../components/MrsCode';
 interface MrsEchartsPanelProps {
 }
 
@@ -58,17 +58,73 @@ export default class MrsEchartsPanel extends React.Component<MrsEchartsPanelProp
         }
     ];
 
-    render() {
-        return (<div>
-
-            <MrEchartsPanel
+    code = `
+        <MrEchartsPanel
                 title="Use Data"
-                style={{height: 400}} chartTypes={'pie::ring::rose'} data={this.pie} />
+                style={{height: 400}} chartTypes={'pie::ring::rose'} data={pie} />
 
-            <MrEchartsPanel
-                title="Use Req"
-                style={{height: 400}} chartTypes={'line'} req={this.req} />
+        <MrEchartsPanel
+            title="Use Req"
+            style={{height: 400}} chartTypes={'line'} req={req} />
+    `;
 
-        </div>);
+    render() {
+        let {pie, req} = this;
+        return (
+            <article className="mrs-article mrs-MrFill">
+                <header>MrEchartsPanel <small>一个基于MrPanel, MrReq, MrEcharts 集成的显示UI</small></header>
+                <ins>支持各种激活Echarts方式，以及使用Tool控制Echarts显示方式</ins>
+                <main>
+                    <JsxParser
+                        bindings={{pie, req}}
+                        components={{MrFill, MrCol, MrEchartsPanel}}
+                        jsx={this.code}
+                    ></JsxParser>
+                </main>
+
+                <details className="mt-16">
+                    <summary>查看源码</summary>
+                    <MrsCode code={(this.code)}></MrsCode>
+                </details>
+
+                <aside className="mt-16">
+
+                    <MrPanel title="MrEchartsPanel" border="none">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>title?: string</td>
+                                    <td>@MrPanel</td>
+                                </tr>
+                                <tr>
+                                    <td>downloadName?: string = $title + $timestamp  </td>
+                                    <td>Echarts DataView 数据下载文件名（需要后缀名）</td>
+                                </tr>
+                                <tr>
+                                    <td>data?: any[{}]</td>
+                                    <td>@MrEcharts</td>
+                                </tr>
+                                <tr>
+                                    <td>dataType?: string</td>
+                                    <td>@MrEcharts</td>
+                                </tr>
+                                <tr>
+                                    <td>dataModel?: string</td>
+                                    <td>@MrEcharts</td>
+                                </tr>
+                                <tr>
+                                    <td>chartTypes?: string</td>
+                                    <td>@MrEcharts</td>
+                                </tr>
+                                <tr>
+                                    <td>h100?: boolean = true</td>
+                                    <td>style.height = 100% !important</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </MrPanel>
+                </aside>
+            </article>
+        );
     }
 }

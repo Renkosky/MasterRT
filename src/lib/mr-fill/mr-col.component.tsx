@@ -17,7 +17,7 @@ interface MrColProps {
     h100?: boolean
 }
 
-export class MrCol extends React.Component<MrColProps, {}> {
+export default class MrCol extends React.Component<MrColProps, {}> {
 
     render() {
         const { children, span, scroll = false, onClick} = this.props;

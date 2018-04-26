@@ -3,7 +3,7 @@ import MrServices from '../common/mr.services';
 import * as _ from 'lodash';
 import * as mu from 'mzmu';
 import {Children, cloneElement} from 'react';
-import {MrCol} from './mr-col.component';
+import MrCol from './mr-col.component';
 declare var require: any;
 require('../assets/styles/mr-fill.less');
 
@@ -16,7 +16,7 @@ interface MrFillProps {
     h100?: boolean;
 }
 
-export class MrFill extends React.Component<MrFillProps, {}> {
+export default class MrFill extends React.Component<MrFillProps, {}> {
 
     cloneCol(col, gunter) {
         return cloneElement(col, {

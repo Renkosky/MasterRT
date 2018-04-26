@@ -1,3 +1,15 @@
+/**
+ * MrReq
+ *
+ * @update mizi.lin@20180426
+ * fixed bugs:  Can only update a mounted or mounting component. This usually means you called setState, replaceState, or forceUpdate on an unmounted component.
+ * 大概的意思是：只能更新已安装或安装的组件。这通常意味着您在卸载的组件上调用setState、replaceState或forceUpdate。
+ * 原因：在parent 重新渲染时，子元素为卸载状态（componentWillUnmount），
+ *  而此时 ajax 异步回调执行 setState，重新渲染该component,
+ *  但是 该component 已卸载，不能正常渲染，从而报错
+ * 解决方案：添加标记 _isMounted，标明component mount状态
+ */
+
 import * as React from 'react';
 import * as mu from 'mzmu';
 import MrServices from '../common/mr.services';
@@ -45,6 +57,9 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
         data: []
     };
 
+    // 标记标明当前 component mount 状态，避免 unmounted 的时候 setState
+    _isMounted: boolean = true;
+
     getRequest(props) {
 
         /**
@@ -70,15 +85,19 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
             mu.run(resource, (_resource) => {
                 let _promise = _resource[method](search, payload);
                 _promise.then((res) => {
-                    let data = dataPath === '::res' ? res : _.get(res, dataPath);
+                    if(this._isMounted) {
+                        let data = dataPath === '::res' ? res : _.get(res, dataPath);
 
-                    data = transform ? transform(data) : data;
+                        data = transform ? transform(data) : data;
 
-                    transmit && this.setState({
-                        data
-                    });
+                        transmit && this.setState({
+                            data
+                        });
 
-                    result && result(data);
+                        this.transmit(data);
+
+                        result && result(data);
+                    }
                 });
             });
         });
@@ -87,7 +106,6 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
     // 向子元素传递数据
     transmit(data) {
         let {transmit, children} = this.props;
-
         if(React.Children.count(children)){
             mu.run(transmit, (key) => {
                 children = React.Children.map(children, (col: any) => {
@@ -96,7 +114,6 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
                     }) : col;
                 });
             });
-
             return children;
         }
 
@@ -109,6 +126,10 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
 
     componentWillReceiveProps(nextProps) {
         this.getRequest(nextProps);
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     render() {

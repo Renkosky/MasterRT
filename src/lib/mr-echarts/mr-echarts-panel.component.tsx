@@ -23,6 +23,7 @@ interface MrEchartsPanelProps extends MrEchartsProps {
     req?: any;
     h100?: boolean;
     className?: string;
+    // todo tools
 }
 
 export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
@@ -79,6 +80,7 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
 
     // 全屏显示
     fullScreen() {
+        console.debug(1111111)
         this.setState({
             fullScreen: !this.state.fullScreen
         });

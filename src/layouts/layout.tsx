@@ -30,14 +30,12 @@ export default class MrsLayout extends React.Component<MrsLayoutProps, {}> {
     componentWillMount() {
         mu.run(this.props.location, (_location) => {
             let {pathname} = _location;
-            console.debug(pathname);
             let [root = '', parent = '', menu = ''] = pathname.split('/');
             menu = menu.replace(/-/g, '');
             this.setState({
                 parent, menu
             });
         });
-
     }
 
     render() {
