@@ -56,6 +56,11 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
 
     shouldComponentUpdate(nextProps, nextStates) {
         return !_.isEqual(nextStates, this.state);
+        // return true;
+    }
+
+    componentWillUnmount() {
+        this.setState = () => void 0;
     }
 
     render() {
@@ -84,8 +89,6 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
                             chartTypes={chartTypes}
                         ></MrEcharts>
                     </MrIf>
-
-                    <MrIf condition={true}></MrIf>
                 </MrReq>
             </MrPanel>
         </div>);

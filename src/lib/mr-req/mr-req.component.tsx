@@ -106,9 +106,15 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
         if(React.Children.count(children)){
             mu.run(transmit, (key) => {
                 children = React.Children.map(children, (col: any) => {
-                    return (col.props && _.isNil(col.props[key])) ? React.cloneElement(col, {
-                        [key]: data
-                    }) : col;
+                    if(col && typeof col.type === 'function') {
+                        let _props = {};
+                        // todo 条件组件判断
+                        _.set(_props, `_gene.${key}`, mu.ifnvl(_.get(col, `props._gene.${key}`), data));
+                        _.set(_props, key, mu.ifnvl(_.get(col, `props.${key}`), data));
+                        return React.cloneElement(col, _props);
+                    } else {
+                        return col;
+                    }
                 });
             });
             return children;
@@ -122,7 +128,9 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.getRequest(nextProps);
+        if(!_.isEqual(nextProps, this.props)){
+            this.getRequest(nextProps);
+        }
     }
 
     componentWillUnmount() {

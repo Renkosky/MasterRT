@@ -68,6 +68,12 @@ export default class MrsLayout extends React.Component<MrsLayoutProps, {}> {
                                             </Menu.Item>
                                         </MenuItemGroup>
                                         <MenuItemGroup key="g2" title="解决方案">
+                                            <Menu.Item key="mrif">
+                                                <Link to="/masterrt/mr-if">MrIf</Link>
+                                            </Menu.Item>
+                                            <Menu.Item key="mrreq">
+                                                <Link to="/masterrt/mr-req">MrReq</Link>
+                                            </Menu.Item>
                                             <Menu.Item key="mrecharts">
                                                 <Link to="/masterrt/mr-echarts">MrEcharts</Link>
                                             </Menu.Item>
@@ -76,12 +82,6 @@ export default class MrsLayout extends React.Component<MrsLayoutProps, {}> {
                                             </Menu.Item>
                                             <Menu.Item key="mrdownload">
                                                 <Link to="/masterrt/mr-download">MrDownload</Link>
-                                            </Menu.Item>
-                                            <Menu.Item key="mrif">
-                                                <Link to="/masterrt/mr-if">MrIf</Link>
-                                            </Menu.Item>
-                                            <Menu.Item key="mrreq">
-                                                <Link to="/masterrt/mr-req">MrReq</Link>
                                             </Menu.Item>
                                         </MenuItemGroup>
                                         <MenuItemGroup key="g3" title="服务及配置">

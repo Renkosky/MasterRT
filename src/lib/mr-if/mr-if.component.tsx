@@ -7,6 +7,8 @@ import MrElse from './mr-else.component';
 export interface MrIfProps {
     condition?: any;
     rules?: string | string[];
+    // 父组件传递给条件组件基因信息
+    _gene?: any;
 }
 
 export class MrIf extends React.Component<MrIfProps, {}> {
@@ -36,36 +38,49 @@ export class MrIf extends React.Component<MrIfProps, {}> {
         });
     }
 
+    // 传递基因信息
     transmit(): any {
-        let {children, condition} = this.props;
+        let {children, condition, _gene = {}} = this.props;
 
         let props: any = _.omit(this.props, 'condition', 'rules', 'children');
 
-        if(React.Children.count(children)){
-            children = React.Children.map(children, (col: any) => {
-                let _props = mu.clone(props);
+        return !children ? null : React.Children.map(children, (child: any) => {
+            let type: any, _props: any = {};
 
-                if(col.type as any === MrElse) {
-                    if(mu.isNotExist(_.get(col, 'props.condition'))) {
-                        _props['condition'] = !condition;
-                    }
+            if (!child) {
+                return null;
+            }
 
-                    return  React.cloneElement(col, _props);
-                } else if(this._result) {
-                    if(col.props) {
-                        return React.cloneElement(col, _props);
-                    } else {
-                        return col;
-                    }
-                } else {
-                    return null;
+            type = child.type;
+
+            // 如果是MrElse, 继承基因
+            // @todo MrElse 不带条件，只能是最后一个元素
+            if (type === MrElse) {
+                if (mu.isNotExist(child.props.condition)) {
+                    _props['condition'] = !condition;
                 }
-            });
 
-            return children;
-        }
+                _props['_gene'] = _gene;
 
-        return null;
+                return React.cloneElement(child, _props);
+            }
+
+            // result === true
+            else if(this._result) {
+
+                // 若为组件继续基因
+                if(typeof type === 'function'){
+                    _props['_gene'] = _gene;
+                    return React.cloneElement(child, _props);
+                } else {
+                    return child;
+                }
+
+            } else {
+                return null;
+            }
+
+        });
     }
 
     componentWillMount() {
@@ -77,7 +92,11 @@ export class MrIf extends React.Component<MrIfProps, {}> {
     }
 
     render() {
+        let {condition, _gene = {}} = this.props;
+
         let children = this.transmit();
+
+        // console.debug(this.props);
         return (children);
     }
 }

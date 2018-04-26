@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as _ from 'lodash';
 
 interface MrElseProps {
-    condition: boolean | any
+    condition?: boolean | any
 }
 
 export default class MrElse extends React.Component<MrElseProps, {}> {
@@ -25,6 +25,9 @@ export default class MrElse extends React.Component<MrElseProps, {}> {
 
     render() {
         let {condition} = this.props;
+
+        console.debug('elselselse', this.props);
+
         let children = this.transmit();
         return (condition ? children : null);
     }

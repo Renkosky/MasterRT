@@ -1,9 +1,10 @@
 import * as React from 'react';
-import MrServices from '../common/mr.services';
-import * as _ from 'lodash';
-import * as mu from 'mzmu';
 import {Children, cloneElement} from 'react';
+import MrServices from '../common/mr.services';
 import MrCol from './mr-col.component';
+import {MrElse, MrIf} from '../';
+import * as _ from 'lodash';
+
 declare var require: any;
 require('../assets/styles/mr-fill.less');
 
@@ -18,50 +19,57 @@ interface MrFillProps {
 
 export default class MrFill extends React.Component<MrFillProps, {}> {
 
-    cloneCol(col, gunter) {
-        return cloneElement(col, {
-            style: {
-                paddingLeft: gunter,
-                paddingRight: gunter,
-                ...col.props['style'],
-            }
-        });
+    isConditional (type: any) {
+        return typeof type === 'function' && (type === MrIf || type === MrElse);
+    }
+
+    // 向子组件传递基因信息
+    transmit(col, _gutter) {
+        let _gene = col.props._gene || {};
+        _gene['_gutter'] = _gutter;
+        return cloneElement(col, {_gene});
     }
 
     render() {
-        let {className = '', style = {}, children, gutter, type, h100} = this.props;
-        type = mu.ifnvl(type, 'full');
-        style = style || {};
+        let {className = '', style = {}, children, gutter = 0, h100} = this.props;
 
         const classString = MrServices.cls({
             'mr-fill': true,
-            'h-100-i': h100,
-            [`mr-fill-${type}`]: true,
+            'h-100-i': h100
         }, className);
 
+        if (gutter > 0) {
+            style['marginLeft'] = -gutter / 2;
+            style['marginRight'] = -gutter / 2;
+        }
+
         const cols = Children.map(children, (col: React.ReactElement<HTMLDivElement>) => {
+
             if (!col) {
                 return null;
             }
 
-            if (col.props && gutter > 0) {
-                let _gutter = gutter / 2;
-                style['marginLeft'] = -_gutter;
-                style['marginRight'] = -_gutter;
+            let type: any = col.type;
 
-                if( col.type as any === MrCol ) {
-                    return this.cloneCol(col, _gutter);
-                } else {
-                    mu.run(col.props.children, (children) => {
-                        const _cols = Children.map(children, (col: React.ReactElement<HTMLDivElement>) => {
-                            return col.props ? this.cloneCol(col, _gutter) : col;
-                        });
-                        return cloneElement(col, {}, _cols);
-                    });
-                }
+            // 子元素不能包裹非组件
+            if (typeof type === 'string') {
+                console.error('MrFill与MrCol是父子组件，只允许条件组件(MrIf, MrFor等)包裹MrCol', type);
+                return null;
             }
 
-            return col;
+            if (typeof type === 'symbol') {
+                return col;
+            }
+
+            // 子元素不能包裹非MrCol 和 条件组件 MrIf
+            if (!(type === MrCol || this.isConditional(type))) {
+                console.debug( typeof type );
+                console.error('MrFill与MrCol是父子组件，只允许条件组件(MrIf, MrFor等)包裹MrCol');
+                return null;
+            } else {
+                return this.transmit(col, gutter);
+            }
+
         });
 
         return (<div style={style} className={classString}>{cols}</div>);

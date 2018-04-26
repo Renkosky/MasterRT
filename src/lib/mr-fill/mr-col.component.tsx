@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {MrServices} from '..';
+import * as mu from 'mzmu';
 
 declare var require: any;
 require('../assets/styles/mr-fill.less');
@@ -14,14 +15,18 @@ interface MrColProps {
     test?: any;
     contentType?: string;
     contentClassName?: string;
-    h100?: boolean
+    h100?: boolean;
+    _gutter?: number;
+    _gene?: number;
+
 }
 
 export default class MrCol extends React.Component<MrColProps, {}> {
 
     render() {
-        const { children, span, scroll = false, onClick} = this.props;
-        const { className = '', contentClassName = '', style = {}, h100 = true } = this.props;
+        const {children, span, scroll = false, onClick} = this.props;
+        const {className = '', contentClassName = '', style = {}, h100 = true} = this.props;
+        const {_gene = {}} = this.props;
 
         const classString = MrServices.cls({
             'mr-col': true,
@@ -34,7 +39,10 @@ export default class MrCol extends React.Component<MrColProps, {}> {
             'h-100-i': h100
         }, contentClassName);
 
-
+        mu.run(_gene['_gutter'], (_gutter) => {
+            style['paddingLeft'] = _gutter / 2;
+            style['paddingRight'] = _gutter / 2;
+        });
 
         return (<div style={style} className={classString} onClick={onClick}>
             <div className={contentClsString}>

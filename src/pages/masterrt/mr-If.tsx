@@ -45,8 +45,8 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
             
             <hr />
             
-            <MrPanel title="按权限规则判断::rule" className="mt-16" bodyStyle={{'padding': 8}}>
-                <MrFill gutter={16} style={{}}>
+            <MrPanel title="按权限规则判断::rule" className="mt-16" bodyStyle={{'padding': '8px 16px'}}>
+                <MrFill gutter={16}>
                     <MrIf rules={'show.jingyesi-1'}>
                         <MrCol span={1}>
                             <MrPanel title="静夜思::show.jingyesi">
@@ -92,9 +92,9 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
         let {showPanel, test} = this.state;
 
         return (
-            <article className="mrs-article mrs-MrFill">
-                <header>MrPanel <small>一个集成的盒子</small></header>
-                <ins>一个拥有标题，子标题，工具条的容器</ins>
+            <article className="mrs-article mrs-mrif">
+                <header>MrIf <small>条件判断</small></header>
+                <ins>条件判断，包含了子组件MrElse </ins>
                 <main>
                     <Button type="primary" onClick={this.showPanel.bind(this)}>{showPanel ? '显示::悯农' : '显示::静夜思'}</Button>
 

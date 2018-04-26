@@ -25,6 +25,7 @@ export interface MrEchartsProps {
     renderType?: string;
     style?: any;
     result?: any;
+    _gene?: any;
 }
 
 export class MrEcharts extends React.Component<MrEchartsProps, {}> {
@@ -38,8 +39,14 @@ export class MrEcharts extends React.Component<MrEchartsProps, {}> {
      * @type {Function}
      */
     drawCharts = _.debounce((props: any) => {
+        let {_gene = {}} = props;
+
         let {data, dataType, dataModel, chartTypes, setting = {}} = props;
         let {options, renderType, theme} = props;
+
+        // todo 继承基因算法
+        data = mu.ifnvl(data, _.get(props, '_gene.data'));
+
         let {result} = props;
         let _dom = this._chartRef;
         // _dom 不存在时不渲染
@@ -187,13 +194,21 @@ export class MrEcharts extends React.Component<MrEchartsProps, {}> {
         // if(this._width !== offsetWidth || this._height !== offsetHeight) {
         //     this.windowResize();
         // }
+
+
     }
 
     componentWillUnmount() {
         window.removeEventListener('reszie', this.windowResize.bind(this));
+
+        console.debug(':::::will unmounted')
+
+
     }
 
     render() {
         return <div className={'mr-echarts'} style={this.props.style} ref={(div) => (this._chartRef = div)} />;
     }
+
+
 }
