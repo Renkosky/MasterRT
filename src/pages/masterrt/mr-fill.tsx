@@ -7,6 +7,7 @@ import MrsCode from '../../components/MrsCode';
 import JsxParser from 'react-jsx-parser';
 
 interface MrsMrFillProps {
+    location: any;
 }
 
 export default class MrsMrFill extends React.Component<MrsMrFillProps, {}> {
@@ -80,6 +81,8 @@ export default class MrsMrFill extends React.Component<MrsMrFillProps, {}> {
             </MrFill>
         </section>
     `;
+
+
 
     render() {
         return (

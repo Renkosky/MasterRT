@@ -6,11 +6,18 @@ import Link from 'umi/link';
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 const {Header, Footer, Sider, Content} = Layout;
+import * as mu from 'mzmu';
 
 interface MrsLayoutProps {
+    location: any;
 }
 
 export default class MrsLayout extends React.Component<MrsLayoutProps, {}> {
+
+    state: any = {
+        menu: 'mrfill',
+        parent: 'masterrt'
+    };
 
     ignoreLayout=['/login','/plan'];
 
@@ -20,7 +27,23 @@ export default class MrsLayout extends React.Component<MrsLayoutProps, {}> {
         return ignoreLayout && ignoreLayout.includes(pathname);
     }
 
+    componentWillMount() {
+        mu.run(this.props.location, (_location) => {
+            let {pathname} = _location;
+            console.debug(pathname);
+            let [root = '', parent = '', menu = ''] = pathname.split('/');
+            menu = menu.replace(/-/g, '');
+            this.setState({
+                parent, menu
+            });
+        });
+
+    }
+
     render() {
+
+        let {menu, parent} = this.state;
+
         return (
             <div className="wrapper">
                 { this.isIgnoreLayout() ? this.props.children
@@ -30,60 +53,60 @@ export default class MrsLayout extends React.Component<MrsLayoutProps, {}> {
                             <Sider className="mrs-sider">
                                 <Menu
                                     style={{ width: '100%' }}
-                                    defaultSelectedKeys={['MrFill']}
-                                    defaultOpenKeys={['sub1']}
+                                    defaultSelectedKeys={[menu]}
+                                    defaultOpenKeys={[parent]}
                                     mode="inline"
                                 >
-                                    <SubMenu key="sub1" title={<span><Icon type="appstore" /><span>MasterRT</span></span>}>
+                                    <SubMenu key="masterrt" title={<span><Icon type="appstore" /><span>MasterRT</span></span>}>
                                         <MenuItemGroup key="g1" title="UI">
-                                            <Menu.Item key="MrFill">
+                                            <Menu.Item key="mrfill">
                                                 <Link to="/masterrt/mr-fill">MrFill</Link>
                                             </Menu.Item>
-                                            <Menu.Item key="12">
+                                            <Menu.Item key="mrpanel">
                                                 <Link to="/masterrt/mr-panel">MrPanel</Link>
                                             </Menu.Item>
-                                            <Menu.Item key="13">
+                                            <Menu.Item key="mricon">
                                                 <Link to="/masterrt/mr-icon">MrIcon</Link>
                                             </Menu.Item>
                                         </MenuItemGroup>
                                         <MenuItemGroup key="g2" title="解决方案">
-                                            <Menu.Item key="MrEcharts">
+                                            <Menu.Item key="mrecharts">
                                                 <Link to="/masterrt/mr-echarts">MrEcharts</Link>
                                             </Menu.Item>
-                                            <Menu.Item key="MrEchartsPanel">
+                                            <Menu.Item key="mrechartspanel">
                                                 <Link to="/masterrt/mr-echarts-panel">MrEchartsPanel</Link>
                                             </Menu.Item>
-                                            <Menu.Item key="MrDownload">
+                                            <Menu.Item key="mrdownload">
                                                 <Link to="/masterrt/mr-download">MrDownload</Link>
                                             </Menu.Item>
-                                            <Menu.Item key="MrIf">
+                                            <Menu.Item key="mrif">
                                                 <Link to="/masterrt/mr-if">MrIf</Link>
                                             </Menu.Item>
-                                            <Menu.Item key="MrReq">
+                                            <Menu.Item key="mrreq">
                                                 <Link to="/masterrt/mr-req">MrReq</Link>
                                             </Menu.Item>
                                         </MenuItemGroup>
                                         <MenuItemGroup key="g3" title="服务及配置">
-                                            <Menu.Item key="MrService">
+                                            <Menu.Item key="mrservice">
                                                 MrService
                                             </Menu.Item>
-                                            <Menu.Item key="MrRequest">
+                                            <Menu.Item key="mrrequest">
                                                 MrRequest
                                             </Menu.Item>
-                                            <Menu.Item key="MrResource">
+                                            <Menu.Item key="mrresource">
                                                 MrResource
                                             </Menu.Item>
                                         </MenuItemGroup>
                                     </SubMenu>
                                     <SubMenu key="sub2" title={<span><Icon type="appstore" /><span>代码规范</span></span>}>
-                                        <Menu.Item key="41">编程规范</Menu.Item>
-                                        <Menu.Item key="42">最佳实践</Menu.Item>
+                                        <Menu.Item key="standard">编程规范</Menu.Item>
+                                        <Menu.Item key="practice">最佳实践</Menu.Item>
                                     </SubMenu>
                                     <SubMenu key="sub4" title={<span><Icon type="setting" /><span>Mzmu</span></span>}>
-                                        <Menu.Item key="51">mu.run</Menu.Item>
-                                        <Menu.Item key="52">mu.if</Menu.Item>
-                                        <Menu.Item key="53">mu.map</Menu.Item>
-                                        <Menu.Item key="54">mu.debounce</Menu.Item>
+                                        <Menu.Item key="murun">mu.run</Menu.Item>
+                                        <Menu.Item key="muif">mu.if</Menu.Item>
+                                        <Menu.Item key="mumap">mu.map</Menu.Item>
+                                        <Menu.Item key="mudebounce">mu.debounce</Menu.Item>
                                     </SubMenu>
                                 </Menu>
                             </Sider>

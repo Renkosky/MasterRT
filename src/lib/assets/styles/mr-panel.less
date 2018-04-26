@@ -1,11 +1,11 @@
-.ms-panel {
+.mr-panel {
     display: table;
     width: 100%;
     height: 100%;
     
     border: 1px solid transparent;
     
-    + .ms-panel {
+    + .mr-panel {
         margin-top: 8px;
     }
     
@@ -18,23 +18,23 @@
         }
     }
     
-    .ms-panel-header {
+    .mr-panel-header {
         position: relative;
         padding: 8px;
         vertical-align: middle;
         
-        .ms-panel-title {
+        .mr-panel-title {
             font-size: 16px;
         }
     
-        .ms-panel-subTitle {
+        .mr-panel-subTitle {
             margin-left: 4px;
             opacity: .6;
             font-size: 14px;
             font-style: normal;
         }
         
-        .ms-panel-headerExtra {
+        .mr-panel-headerExtra {
             position: absolute;
             top: 4px;
             bottom: 4px;
@@ -43,24 +43,31 @@
         }
     }
     
-    .ms-panel-body {
+    .mr-panel-body {
         padding: 8px;
         height: 100%;
     }
     
-    &.ms-border-wrapper {
+    &.mr-border-wrapper {
         border: 1px solid #eee;
     }
     
-    &.ms-border-title {
-        .ms-panel-header {
+    &.mr-border-transparent {
+        border: 1px solid transparent;
+        .mr-panel-header {
+            border-bottom: 1px solid transparent;
+        }
+    }
+    
+    &.mr-border-title {
+        .mr-panel-header {
             border-bottom: 1px solid #eee;
         }
     }
     
-    &.ms-border-all {
+    &.mr-border-all {
         border: 1px solid #eee;
-        .ms-panel-header {
+        .mr-panel-header {
             border-bottom: 1px solid #eee;
         }
     }

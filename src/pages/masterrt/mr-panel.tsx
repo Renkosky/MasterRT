@@ -13,7 +13,7 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
 
     code: string = `
         <section>
-            <MrPanel title="静夜思::李白">
+            <MrPanel title="静夜思::李白" border="title">
                 床前明月光<br />
                 疑是地上霜<br />
                 举头望明月<br />
@@ -49,31 +49,38 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
                 </details>
 
                 <aside className="mt-16">
-                    <h5>MrPanel</h5>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>title?: string</td>
-                                <td>标题，title::subTitle, 以'::'区分主从标题</td>
-                            </tr>
-                            <tr>
-                                <td>extra?: ReactDOM</td>
-                                <td>附加栏</td>
-                            </tr>
-                            <tr>
-                                <td>border?: string</td>
-                                <td>
-                                    wrapper: 显示 panel border <br />
-                                    title: 显示 title border-bottom <br />
-                                    all: 同事显示 wrapper 跟 title 效果 <br />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>bodyStyle?: React.CSSProperties</td>
-                                <td>负责panel body 样式</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <MrPanel title="MrPanel" border="none">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>title?: string</td>
+                                    <td>标题，title::subTitle, 以'::'区分主从标题</td>
+                                </tr>
+                                <tr>
+                                    <td>extra?: ReactDOM</td>
+                                    <td>附加栏</td>
+                                </tr>
+                                <tr>
+                                    <td>border?: string</td>
+                                    <td>
+                                        wrapper: 显示 panel border <br />
+                                        title: 显示 title border-bottom <br />
+                                        all: 同时显示 wrapper 跟 title 效果 <br />
+                                        transparent: borderColor: transparent <br />
+                                        none: 无border <br />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>bodyStyle?: any</td>
+                                    <td>负责panel body 样式</td>
+                                </tr>
+                                <tr>
+                                    <td>h100?: boolean = false</td>
+                                    <td>style.height = 100% !important</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </MrPanel>
                 </aside>
             </article>
         );

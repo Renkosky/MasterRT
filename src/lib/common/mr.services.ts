@@ -28,7 +28,6 @@ class MrServices {
      * @param args
      */
     cls(...args) {
-        console.debug(...args, classNames(...args));
         return classNames(...args);
     }
 

@@ -140,8 +140,8 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
         };
 
         let classString = MrServices.cls({
-            'ms-fullScreen': fullScreen,
-            'ms-echarts-panel': true,
+            'mr-fullScreen': fullScreen,
+            'mr-echarts-panel': true,
             'h-100-i': h100
         }, className);
 

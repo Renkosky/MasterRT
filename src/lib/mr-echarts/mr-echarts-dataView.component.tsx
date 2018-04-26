@@ -8,7 +8,7 @@ interface MrEchartsDataViewProps {
 export class MrEchartsDataView extends React.Component<MrEchartsDataViewProps, {}> {
     render() {
         let {data} = this.props;
-        return <section className="ms-echarts-dataView">
+        return <section className="mr-echarts-dataView">
             <table>
                 <tbody>
                     {data.map((item, inx)=> {
