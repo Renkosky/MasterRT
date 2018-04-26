@@ -5,9 +5,10 @@
  * fixed bugs:  Can only update a mounted or mounting component. This usually means you called setState, replaceState, or forceUpdate on an unmounted component.
  * 大概的意思是：只能更新已安装或安装的组件。这通常意味着您在卸载的组件上调用setState、replaceState或forceUpdate。
  * 原因：在parent 重新渲染时，子元素为卸载状态（componentWillUnmount），
- *  而此时 ajax 异步回调执行 setState，重新渲染该component,
- *  但是 该component 已卸载，不能正常渲染，从而报错
- * 解决方案：添加标记 _isMounted，标明component mount状态
+ *      而此时 ajax 异步回调执行 setState，重新渲染该component,
+ *      但是 该component 已卸载，不能正常渲染，从而报错
+ * 解决方案：1. 添加标记 _isMounted，标明component mount状态
+ *          2. 设置setState为空函数，避免调用
  */
 
 import * as React from 'react';
@@ -85,19 +86,15 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
             mu.run(resource, (_resource) => {
                 let _promise = _resource[method](search, payload);
                 _promise.then((res) => {
-                    if(this._isMounted) {
-                        let data = dataPath === '::res' ? res : _.get(res, dataPath);
+                    let data = dataPath === '::res' ? res : _.get(res, dataPath);
 
-                        data = transform ? transform(data) : data;
+                    data = transform ? transform(data) : data;
 
-                        transmit && this.setState({
-                            data
-                        });
+                    transmit && this.setState({
+                        data
+                    });
 
-                        this.transmit(data);
-
-                        result && result(data);
-                    }
+                    result && result(data);
                 });
             });
         });
@@ -129,7 +126,11 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
     }
 
     componentWillUnmount() {
-        this._isMounted = false;
+        // this._isMounted = false;
+
+        // 将 setState 设置成空函数
+        // 避免 unmounted 的时候 setState
+        this.setState = ()=> void 0;
     }
 
     render() {
