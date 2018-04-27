@@ -6,7 +6,6 @@
 tmp/
 typings/
 
-dist/
 package-lock.json
 
 pub/
