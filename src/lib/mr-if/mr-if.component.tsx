@@ -11,7 +11,7 @@ export interface MrIfProps {
     _gene?: any;
 }
 
-export class MrIf extends React.Component<MrIfProps, {}> {
+export default class MrIf extends React.Component<MrIfProps, {}> {
 
     _result: boolean = true;
 

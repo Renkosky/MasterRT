@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {MrEcharts, MrEchartsProps} from './mr-echarts.component';
-import {MrIcon, MrPanel, MrServices} from '../';
+import {MrEchartsProps} from './mr-echarts.component';
+import {MrIcon, MrPanel, MrServices, MrEcharts} from '../';
 import _mrEchartServices from './mr-echarts.services';
 import _mrServices from '../common/mr.services';
 import * as _ from 'lodash';

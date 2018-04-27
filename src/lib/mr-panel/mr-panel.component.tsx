@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {MrIf} from '../mr-if/mr-if.component';
+import {MrIf} from '../';
 declare var require: any;
 require('../assets/styles/mr-panel.less');
-import * as classNames from 'classnames';
 import {MrServices} from '..';
 
 interface MrPanelProps {
@@ -16,8 +15,7 @@ interface MrPanelProps {
     h100?: string;
 }
 
-export class MrPanel extends React.Component<MrPanelProps, {}> {
-
+export default class MrPanel extends React.Component<MrPanelProps, {}> {
 
     render() {
 

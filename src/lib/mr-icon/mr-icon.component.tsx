@@ -17,7 +17,7 @@ interface MrIconProps {
     size?: string | number
 }
 
-export class MrIcon extends React.Component<MrIconProps, {}> {
+export default class MrIcon extends React.Component<MrIconProps, {}> {
 
     render() {
         const {type, className = '', shape = '', style = {}, size, children, onClick} = this.props;

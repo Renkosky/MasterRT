@@ -28,7 +28,7 @@ export interface MrEchartsProps {
     _gene?: any;
 }
 
-export class MrEcharts extends React.Component<MrEchartsProps, {}> {
+export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
     _chart: any;
     _chartRef: any;
     _width: number;
