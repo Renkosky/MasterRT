@@ -58,6 +58,10 @@ export default class MrsEchartsPanel extends React.Component<MrsEchartsPanelProp
         }
     ];
 
+    state: any = {
+        req: this.req
+    };
+
     code = `
         <MrEchartsPanel
                 title="Use Data"
@@ -69,7 +73,8 @@ export default class MrsEchartsPanel extends React.Component<MrsEchartsPanelProp
     `;
 
     render() {
-        let {pie, req} = this;
+        let {pie} = this;
+        let {req} = this.state;
         return (
             <article className="mrs-article mrs-MrFill">
                 <header>MrEchartsPanel <small>一个基于MrPanel, MrReq, MrEcharts 集成的显示UI</small></header>

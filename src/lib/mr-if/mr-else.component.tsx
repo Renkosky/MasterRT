@@ -25,9 +25,6 @@ export default class MrElse extends React.Component<MrElseProps, {}> {
 
     render() {
         let {condition} = this.props;
-
-        console.debug('elselselse', this.props);
-
         let children = this.transmit();
         return (condition ? children : null);
     }

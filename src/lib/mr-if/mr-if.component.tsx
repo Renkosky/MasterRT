@@ -92,11 +92,7 @@ export class MrIf extends React.Component<MrIfProps, {}> {
     }
 
     render() {
-        let {condition, _gene = {}} = this.props;
-
         let children = this.transmit();
-
-        // console.debug(this.props);
-        return (children);
+        return <React.Fragment>{children}</React.Fragment>;
     }
 }

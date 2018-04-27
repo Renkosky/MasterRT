@@ -200,10 +200,9 @@ export class MrEcharts extends React.Component<MrEchartsProps, {}> {
 
     componentWillUnmount() {
         window.removeEventListener('reszie', this.windowResize.bind(this));
-
-        console.debug(':::::will unmounted')
-
-
+        mu.run(this._chart, () => {
+            this._chart.dispose();
+        });
     }
 
     render() {
