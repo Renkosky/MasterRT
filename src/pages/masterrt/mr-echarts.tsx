@@ -196,6 +196,10 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
                                 <td>result?: function(options, result)</td>
                                 <td>Echarts 即将渲染前返回数据，包含 options, data, dataView</td>
                             </tr>
+                            <tr>
+                                <td>h100?:number = false</td>
+                                <td>style.height = 100% !important</td>
+                            </tr>
                         </tbody>
                     </table>
                 </aside>

@@ -16,6 +16,6 @@ export default {
         'primary-color': '#1890ff'
     },
 
-    publicPath: '.',
+    // publicPath: '.',
     disableCSSModules: true
 };
