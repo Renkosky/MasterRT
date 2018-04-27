@@ -4,6 +4,8 @@ import * as _ from 'lodash';
 import MrResource from '../../lib/common/mr-resource';
 import {MrAutoBind, MrEcharts, MrPanel, MrIf, MrFill, MrIcon, MrReq} from '../../lib';
 import {Button} from 'antd';
+import {default as BaseResourcePool} from '../../services/base-resource-pool';
+
 
 import './masterrt.less';
 
@@ -25,12 +27,12 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
 
     req: any = {
         pie: {
-            resource: MrResource.pool('/assets/pie.json'),
+            resource: BaseResourcePool.pie,
             method: 'get'
         },
 
         line: {
-            resource: MrResource.pool('/assets/line.json'),
+            resource: BaseResourcePool.line,
             method: 'get',
             // 数据修改
             transform: (data) => {
