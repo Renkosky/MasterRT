@@ -137,7 +137,7 @@ class MrResource {
         const vm = this;
         return {
             // hack, 支持三参数 与 post 等模式调用方式一致
-            // 提高不行method时，判定效率
+            // 提高判断method时，提交使用效率
             get(search?: any, hack?: any, options?: any) {
 
                 mu.run(hack, () => {
@@ -182,6 +182,10 @@ class MrResource {
             },
 
             mrdown(search: any = {}, data?: any, options?: any) {
+                if(!search.downloadName){
+                    console.error('downloadName 未设置');
+                    return false;
+                }
                 search['directDownload'] = true;
                 const args: any = Array.from(arguments);
                 args.unshift(url);

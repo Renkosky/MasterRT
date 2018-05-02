@@ -9,19 +9,19 @@ const _commonStyles = require('../assets/styles/common.less');
  */
 class MrServices {
 
-    REG_CHINESE = /[\u3300-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF\uFE30-\uFE4F]|[\uD840-\uD868\uD86A-\uD872][\uDC00-\uDFFF]|\uD869[\uDC00-\uDEDF\uDF00-\uDFFF]|\uD873[\uDC00-\uDEAF]|\uD87E[\uDC00-\uDE1F]/g;
+    // REG_CHINESE = /[\u3300-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF\uFE30-\uFE4F]|[\uD840-\uD868\uD86A-\uD872][\uDC00-\uDFFF]|\uD869[\uDC00-\uDEDF\uDF00-\uDFFF]|\uD873[\uDC00-\uDEAF]|\uD87E[\uDC00-\uDE1F]/g;
 
-    // REG_CHINESE = /[\u3300-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF\uFE30-\uFE4F]/g;
+    // // REG_CHINESE = /[\u3300-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF\uFE30-\uFE4F]/g;
 
-    /**
-     * 判断文本中是否有中文字符
-     * @param {string} str
-     * @return {boolean}
-     */
-    isChinese(str: string) {
-        // console.debug(str, this.REG_CHINESE.test(str));
-        return this.REG_CHINESE.test(str);
-    }
+    // /**
+    //  * 判断文本中是否有中文字符
+    //  * @param {string} str
+    //  * @return {boolean}
+    //  */
+    // isChinese(str: string) {
+    //     // console.debug(str, this.REG_CHINESE.test(str));
+    //     return this.REG_CHINESE.test(str);
+    // }
 
     /**
      * 使用classNames生产class
@@ -52,7 +52,6 @@ class MrServices {
      * @param {string} type
      */
     setHeaders(headers: any, type: string = 'extends') {
-
         if(type === 'extends') {
             this._headers = mu.extend(true, this._headers, headers);
         } else if(type === 'news') {
@@ -95,8 +94,8 @@ class MrServices {
 
     _resourcePool: any;
 
-    setResourcePool(resource: any) {
-        this._resourcePool = resource;
+    setResourcePool(pool: any) {
+        this._resourcePool = pool;
     }
 
     getResourcePool() {
@@ -106,6 +105,5 @@ class MrServices {
 
 
 }
-
 
 export default new MrServices();

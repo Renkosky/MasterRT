@@ -42,6 +42,10 @@ export default class MrsLayout extends React.Component<MrsLayoutProps, {}> {
 
         let {menu, parent} = this.state;
 
+
+
+
+
         return (
             <div className="wrapper">
                 { this.isIgnoreLayout() ? this.props.children
@@ -80,19 +84,17 @@ export default class MrsLayout extends React.Component<MrsLayoutProps, {}> {
                                             <Menu.Item key="mrechartspanel">
                                                 <Link to="/masterrt/mr-echarts-panel">MrEchartsPanel</Link>
                                             </Menu.Item>
-                                            <Menu.Item key="mrdownload">
-                                                <Link to="/masterrt/mr-download">MrDownload</Link>
-                                            </Menu.Item>
                                         </MenuItemGroup>
                                         <MenuItemGroup key="g3" title="服务及配置">
-                                            <Menu.Item key="mrservice">
-                                                MrService
-                                            </Menu.Item>
                                             <Menu.Item key="mrrequest">
-                                                MrRequest
+                                                <Link to="/masterrt/mr-request">MrRequest</Link>
                                             </Menu.Item>
                                             <Menu.Item key="mrresource">
-                                                MrResource
+                                                <Link to="/masterrt/mr-resource">MrResource</Link>
+
+                                            </Menu.Item>
+                                            <Menu.Item key="mrservices">
+                                                <Link to="/masterrt/mr-services">MrServices</Link>
                                             </Menu.Item>
                                         </MenuItemGroup>
                                     </SubMenu>
