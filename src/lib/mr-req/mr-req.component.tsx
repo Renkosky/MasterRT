@@ -46,7 +46,10 @@ interface MrReqProps {
     h100?: boolean;
 
     // 数据传递到子元素的 props key
-    transmit?: string;
+    transmit?: string | string[];
+
+    // 是否强制刷新
+    force?: boolean
 }
 
 /**
@@ -55,7 +58,8 @@ interface MrReqProps {
 export default class MrReq extends React.Component<MrReqProps, {}> {
 
     state: any = {
-        data: []
+        data: [],
+        loaded: false
     };
 
     // 标记标明当前 component mount 状态，避免 unmounted 的时候 setState
@@ -86,19 +90,42 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
             mu.run(resource, (_resource) => {
                 let _promise = _resource[method](search, payload);
                 _promise.then((res) => {
+                    // 根据 req.dataPath 从数据源中截取数据
                     let data = dataPath === '::res' ? res : _.get(res, dataPath);
 
+                    // 通过Req.transform 处理数据后返回给 transmit && result
                     data = transform ? transform(data) : data;
 
+                    // 向子组件传递数据，渲染组件，激活子组件获取数据
                     transmit && this.setState({
                         data
                     });
 
+                    // 回调函数，向父组件传递数据
                     result && result(data);
                 });
             });
         });
     }
+
+    // 暗暗的传给子元素，实现父元素reload
+    _childEmitReload: any = mu.bind((fn) => {
+        let res = fn();
+        if(res === true){
+            this.getRequest(this.props);
+        }
+    }, this);
+
+    // _reload(fn) {
+    //     let vm = this;
+    //     console.log(':::::::', 'children bind fn', arguments);
+    //
+    //     let res = fn();
+    //
+    //     console.debug(vm);
+    //
+    //     // this.getRequest(vm);
+    // }
 
     // 向子元素传递数据
     transmit(data) {
@@ -111,6 +138,8 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
                         // todo 条件组件判断
                         _.set(_props, `_gene.${key}`, mu.ifnvl(_.get(col, `props._gene.${key}`), data));
                         _.set(_props, key, mu.ifnvl(_.get(col, `props.${key}`), data));
+                        _.set(_props, '_mrReqReload', this._childEmitReload);
+
                         return React.cloneElement(col, _props);
                     } else {
                         return col;
@@ -128,14 +157,13 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(!_.isEqual(nextProps, this.props)){
+        if(!_.isEqual(nextProps.req, this.props.req)){
             this.getRequest(nextProps);
         }
     }
 
     componentWillUnmount() {
         // this._isMounted = false;
-
         // 将 setState 设置成空函数
         // 避免 unmounted 的时候 setState
         this.setState = ()=> void 0;

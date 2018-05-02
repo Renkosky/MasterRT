@@ -11,6 +11,7 @@ import './masterrt.less';
 import MrsCode from '../../components/MrsCode';
 
 import JsxParser from 'react-jsx-parser';
+import Test from '../../components/test';
 
 interface MrsReqProps {
     a: number;
@@ -132,6 +133,9 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
                     ></JsxParser>
                 </main>
 
+                <MrReq req={req} h100={true} transmit="data">
+                    <Test emitMrq={() => {return true}}>------</Test>
+                </MrReq>
 
                 <details className="mt-16">
                     <summary>查看源码</summary>
