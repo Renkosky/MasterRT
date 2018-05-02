@@ -136,6 +136,9 @@ class MrResource {
     pool(url: string) {
         const vm = this;
         return {
+
+            _url: url,
+
             // hack, 支持三参数 与 post 等模式调用方式一致
             // 提高判断method时，提交使用效率
             get(search?: any, hack?: any, options?: any) {

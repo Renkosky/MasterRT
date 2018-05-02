@@ -9,6 +9,8 @@
  *      但是 该component 已卸载，不能正常渲染，从而报错
  * 解决方案：1. 添加标记 _isMounted，标明component mount状态
  *          2. 设置setState为空函数，避免调用
+ *
+ * @todo immutable 使用持久化数据 加快判断 showComponentUpdate, 进行性能优化
  */
 
 import * as React from 'react';
@@ -55,12 +57,14 @@ interface MrReqProps {
 /**
  * 仅对 MrResource 支持的一种异步加载方式
  */
+
 export default class MrReq extends React.Component<MrReqProps, {}> {
 
     state: any = {
-        data: [],
         loaded: false
     };
+
+    _data: any[];
 
     // 标记标明当前 component mount 状态，避免 unmounted 的时候 setState
     _isMounted: boolean = true;
@@ -94,15 +98,13 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
                     let data = dataPath === '::res' ? res : _.get(res, dataPath);
 
                     // 通过Req.transform 处理数据后返回给 transmit && result
-                    data = transform ? transform(data) : data;
+                    this._data = transform ? transform(data) : data;
 
                     // 向子组件传递数据，渲染组件，激活子组件获取数据
-                    transmit && this.setState({
-                        data
-                    });
+                    transmit && this.forceUpdate();
 
                     // 回调函数，向父组件传递数据
-                    result && result(data);
+                    result && result(this._data);
                 });
             });
         });
@@ -152,6 +154,10 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
         return children;
     }
 
+    shouldComponentUpdate(nextProps) {
+        return !_.isEqual(nextProps.req, this.props.req);
+    }
+
     componentWillMount() {
         this.getRequest(this.props);
     }
@@ -167,6 +173,7 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
         // 将 setState 设置成空函数
         // 避免 unmounted 的时候 setState
         this.setState = ()=> void 0;
+        this.forceUpdate = ()=> void 0;
     }
 
     render() {
@@ -178,8 +185,7 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
             'h-100-i': h100
         }, className);
 
-        let children = this.transmit(data);
-
+        let children = this.transmit(this._data);
         return (<div className={cls} style={style}>{children}</div>);
     }
 }

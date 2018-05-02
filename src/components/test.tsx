@@ -9,8 +9,15 @@ interface TestProps {
 }
 
 export default class Test extends React.Component<TestProps, {}> {
+    constructor(props) {
+        super(props);
+        this.abc = this.abc.bind(this)
+    }
+
     abc() {
-        this.props._mrReqReload(this.props.emitMrq)
+        this.props._mrReqReload(() => {
+            return false;
+        })
     }
 
     componentWillReceiveProps(nextProps) {
@@ -21,8 +28,9 @@ export default class Test extends React.Component<TestProps, {}> {
     }
 
     render() {
+        console.debug('--------');
         return (<div>
-            <button onClick={this.abc.bind(this)}>TestAAA</button>
+            <button onClick={this.abc}>TestAAA</button>
             {this.props.children}
             </div>);
     }
