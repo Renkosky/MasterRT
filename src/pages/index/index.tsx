@@ -3,7 +3,7 @@ import Link from 'umi/link';
 import Count from './components/Count';
 import './index.less';
 import MrAutoBind from '../../lib/common/mr-auto-bind';
-import {MrFill, MrIf, MrCol, MrElse} from '../../lib';
+import {MrFill, MrIf, MrCol, MrElse, MrPanel} from '../../lib';
 
 interface IndexProps {
 }
@@ -31,50 +31,13 @@ export default class MrsIndex extends React.Component<IndexProps, {}> {
     render() {
         return (
             <div className={'mrs-index'}>
-                <MrFill gutter={16} style={{height: 300}}>
-                    <MrIf>
-                        <MrCol span={1}>
-                            1
-                        </MrCol>
-                    </MrIf>
-
-                    <MrCol span={1}>
-                        2 ~
-                    </MrCol>
-
-                    <div>
-                        <MrCol span={3}>
-                            3
-                        </MrCol>
-                    </div>
-
-                    <MrIf condition={true}>
-                        <MrCol span={1}>
-                            4
-                        </MrCol>
-                        <MrIf condition={true}>
-                            <MrCol span={1}>
-                                5
-                            </MrCol>
-                        </MrIf>
-                        <MrElse condition={true}>
-                            <MrCol span={1}>
-                                6
-                            </MrCol>
-                        </MrElse>
-                        <MrElse>
-                            <MrCol span={1}>
-                                7
-                            </MrCol>
-                        </MrElse>
-                    </MrIf>
-
-                    <MrIf condition={false}>
-                        <MrCol span={1}>
-                            8
-                        </MrCol>
-                    </MrIf>
-                </MrFill>
+                <MrPanel title="MRI::MasterRT Integrated development environment">
+                    <div>MRI是一套集成开发环境</div>
+                    <div>以 React + UMI + TypeScript + LESS 构成</div>
+                    <div>以 Ant Design (React) 提供UI控件和设计风格</div>
+                    <div>以 MasterRT补充部分UI和大部分的解决方案</div>
+                    <div>以 THEME配置集成开发的前端研发项目</div>
+                </MrPanel>
             </div>
         );
     }

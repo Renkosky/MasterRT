@@ -75,14 +75,12 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
     componentWillMount() {
     }
 
-    // shouldComponentUpdate(nextProps, nextStates) {
-    //
-    //     // console.debug( _.cloneDeep(nextStates), _.cloneDeep(this.state) )
-    //     // console.debug(shallowEqualImmutable(this.state, nextStates), _.isEqual(nextStates, this.state));
-    //
-    //     return !_.isEqual(nextStates, this.state);
-    //     // return true;
-    // }
+    shouldComponentUpdate(nextProps, nextStates) {
+        // console.debug( _.cloneDeep(nextStates), _.cloneDeep(this.state) )
+        // console.debug(shallowEqualImmutable(this.state, nextStates), _.isEqual(nextStates, this.state));
+        return !_.isEqual(nextStates, this.state);
+        // return true;
+    }
 
     componentWillUnmount() {
         this.setState = () => void 0;
@@ -92,7 +90,14 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
         <Button type={'primary'} onClick={changeReqPie}> Pie </Button>
         <Button type={'primary'} onClick={changeReqLine} className="ml-8"> Line </Button>
 
-        
+        <MrPanel title="回调::通过setState进行重新渲染" bodyStyle={{height: 300}} className="mt-16">
+            <MrReq req={req} h100={true} result={result}>
+                <MrEcharts
+                    data={data}
+                    chartTypes={chartTypes}
+                ></MrEcharts>
+            </MrReq>
+        </MrPanel>
         
         {/*// 典型的基因传递调用方案*/}
         {/*// 其中MrReq通过transmit向子组件MrEcharts传递基因data片段*/}
@@ -115,14 +120,7 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
 
         return (
             <article className="mrs-article">
-                {/*<MrPanel title="回调::通过setState进行重新渲染" bodyStyle={{height: 300}} className="mt-16">*/}
-                    {/*<MrReq req={req} h100={true} result={result}>*/}
-                        {/*<MrEcharts*/}
-                            {/*data={data}*/}
-                            {/*chartTypes={chartTypes}*/}
-                        {/*></MrEcharts>*/}
-                    {/*</MrReq>*/}
-                {/*</MrPanel>*/}
+
                 <header>MrReq <small>一个可以异步请求的组件</small></header>
                 <ins>使用Resource Pool进行异步请求</ins>
                 <main>
