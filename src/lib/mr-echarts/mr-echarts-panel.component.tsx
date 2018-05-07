@@ -23,6 +23,8 @@ interface MrEchartsPanelProps extends MrEchartsProps {
     req?: any;
     h100?: boolean;
     className?: string;
+    // 返回值
+    result?: any;
     // todo tools
 }
 
@@ -120,7 +122,11 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
 
     // 获得 echart callback data
     getResult(options, rst) {
+        let {result} = this.props;
+
         this._dataView = _.get(rst, 'data._dataView');
+
+        result && result(options, rst);
     }
 
     render() {
