@@ -23,8 +23,12 @@ interface MrEchartsPanelProps extends MrEchartsProps {
     req?: any;
     h100?: boolean;
     className?: string;
+
+    bodyStyle?: any;
     // 返回值
     result?: any;
+    // border
+    border?: any;
     // todo tools
 }
 
@@ -130,7 +134,7 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
     }
 
     render() {
-        const {title, style, className, h100} = this.props;
+        const {title, style, className, h100, bodyStyle, border} = this.props;
         const {chartTypes, data, dataType, dataModel} = this.props;
         const {options, renderType, theme} = this.props;
         const {req} = this.props;
@@ -154,7 +158,13 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
         }, className);
 
         return (
-            <MrPanel title={title} extra={this.tools()} style={style} className={classString}>
+            <MrPanel
+                title={title}
+                extra={this.tools()}
+                style={style}
+                className={classString}
+                bodyStyle={bodyStyle}
+                border={border}>
                 <MrReq h100={true} req={req} transmit="data">
                     {dataView ? (
                         <div>

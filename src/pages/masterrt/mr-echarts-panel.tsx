@@ -125,6 +125,24 @@ export default class MrsEchartsPanel extends React.Component<MrsEchartsPanelProp
                                     <td>h100?: boolean = true</td>
                                     <td>style.height = 100% !important</td>
                                 </tr>
+                                <tr>
+                                    <td>result?: function(options, result)</td>
+                                    <td>Echarts 即将渲染前返回数据，包含 options, data, dataView</td>
+                                </tr>
+                                <tr>
+                                    <td>border?: string</td>
+                                    <td>
+                                        wrapper: 显示 panel border <br />
+                                        title: 显示 title border-bottom <br />
+                                        all: 同时显示 wrapper 跟 title 效果 <br />
+                                        transparent: borderColor: transparent <br />
+                                        none: 无border <br />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>bodyStyle?: any</td>
+                                    <td>负责panel body 样式</td>
+                                </tr>
                             </tbody>
                         </table>
                     </MrPanel>
