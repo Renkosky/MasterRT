@@ -49,3 +49,13 @@ MrChartsPanel 添加 tools
 ### 0.1.17
 
 添加 MrHtml
+
+### 0.1.18
+
+添加 MrEcharsPanel工具条，显示模式，按图表显示工具，移除工具
+
+MrReq 添加 force 控制渲染
+
+MrService 添加对 Echarts 配置支持 setEchartsTheme, setEchartsColors
+
+MrEcharts 支持按name显示颜色
