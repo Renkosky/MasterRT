@@ -1,55 +1,104 @@
 import * as React from 'react';
-import * as _ from 'lodash';
 import {MrServices} from '..';
+import {Icon} from 'antd';
+import * as mu from 'mzmu';
 
 declare var require: any;
 require('../assets/styles/mr-icon.less');
-import * as mu from 'mzmu';
 
 interface MrIconProps {
+    /**
+     * type?: string
+     * 图标类型
+     * @extends <antd> Icon.type
+     *
+     * 相应图标的class name
+     * ${family}-${type}, 如::: anticon-bar | mricon-user
+     */
     type: string;
-    className?: string;
-    title?: string;
-    onClick?: React.MouseEventHandler<any>;
+
+    /**
+     * spin?: boolean = false
+     * 是否有旋转动画
+     * @extends <antd> Icon.spin
+     */
     spin?: boolean;
-    style?: React.CSSProperties;
+
+    /**
+     * shape?: string = ifnvl(null, 'square')
+     * icon 形状
+     * @values: square, circle
+     */
     shape?: string
-    size?: string | number
+
+    /**
+     * size?: string | number
+     * 图标大小
+     * @values: {string} 带单位长度单位，{number} 如果为数字，默认单位长度为 'px'
+     */
+    size?: string | number,
+
+    /**
+     * family?: string = ifnvl(null, 'anticon')
+     * 自定义图标框名称
+     *
+     * @ps: 若使用自定义图标库，请加重自定义图标class的权重值来覆盖anticon设定的fontFamily
+     * exp.
+     *
+     *   body i.mricon {
+     *       font-family: "mricon", serif !important;
+     *   }
+     *
+     *   body i.mricon:before {
+     *       font-family: "mricon", serif !important;
+     *   }
+     *
+     */
+    family?: string
+
+    style?: React.CSSProperties;
+    className?: string;
+    onClick?: React.MouseEventHandler<any>;
 }
 
 export default class MrIcon extends React.Component<MrIconProps, {}> {
 
     render() {
-        const {type, className = '', shape = '', style = {}, size, children, onClick} = this.props;
+        const {type, className = '', shape = '', size, children, onClick, family} = this.props;
         const classString = MrServices.cls({
-            anticon: true,
-            mricon: true,
-            [`mr-icon-${type}`]: true,
+            [family]: !!family,
+            [`${family}-${type}`]: !!family,
         }, className);
 
-        mu.run(size, (size) => {
-            let _size = size, _fontSize;
+        let {style = {}} = this.props;
+        let _style: any = {};
 
-            if(typeof size === 'object') {
-                [_size, _fontSize] = size;
-            }
+        _style.verticalAlign = 'middle';
 
-            if(typeof _size === 'number') {
-                _size = _size + 'px';
-            }
+        mu.exist(size, (size) => {
+            _style.width = size;
+            _style.height = size;
 
-            style.width = _size;
-            style.height = _size;
-            style.lineHeight = _size;
-            if(_fontSize){
-                style.fontSize = _fontSize;
+            if (size == +size) {
+                _style.lineHeight = size + 'px';
+            } else {
+                _style.lineHeight = size;
             }
         });
+
+        style = mu.extend(_style, style);
 
         mu.run(shape === 'circle', (size) => {
             style.borderRadius = '50%';
         });
 
-        return (<i style={style} className={classString} onClick={onClick}>{children}</i>);
+        const iconProps = {
+            type,
+            className: classString,
+            style,
+            onClick
+        };
+
+        return (<Icon {...iconProps}>{children}</Icon>);
     }
 }

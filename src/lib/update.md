@@ -45,3 +45,7 @@ MrChartsPanel 添加 tools
 ### 0.1.15
 
 添加 动态引入 component::-> MrComponent
+
+### 0.1.17
+
+添加 MrHtml
