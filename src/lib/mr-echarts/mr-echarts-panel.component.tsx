@@ -54,14 +54,14 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
 
         return (
             <div className="mr-echars-panle-tools">
-                <MrIcon type="xiazai" onClick={this.download.bind(this)} />
-                <MrIcon type="table" onClick={this.dataView.bind(this)} className={classNames({selected: dataView})} />
-                <MrIcon type="rotate" onClick={this.toolSetFn.bind(this, 'xyExchange', true)} className={classNames({selected: xyExchange})} />
-                <MrIcon type="bar" onClick={this.toolSetFn.bind(this, 'lineBarExchange', true)} className={classNames({selected: lineBarExchange})} />
-                <MrIcon type="liebiaodanchu" onClick={this.toolSetFn.bind(this, 'xAxisShowAll', true)} className={classNames({selected: xAxisShowAll})} />
-                <MrIcon type="yincang" onClick={this.toolSetFn.bind(this, 'legendShow', true)} className={classNames({selected: legendShow})} />
-                <MrIcon type="shuaxin" onClick={this.reload.bind(this)} />
-                <MrIcon type={fullScreen ? 'suoxiao' : 'fangda'} onClick={this.fullScreen.bind(this)} className={classNames({selected: fullScreen})} />
+                <MrIcon family="mricon" type="xiazai" onClick={this.download.bind(this)} />
+                <MrIcon family="mricon" type="table" onClick={this.dataView.bind(this)} className={classNames({selected: dataView})} />
+                <MrIcon family="mricon" type="rotate" onClick={this.toolSetFn.bind(this, 'xyExchange', true)} className={classNames({selected: xyExchange})} />
+                <MrIcon family="mricon" type="bar" onClick={this.toolSetFn.bind(this, 'lineBarExchange', true)} className={classNames({selected: lineBarExchange})} />
+                <MrIcon family="mricon" type="liebiaodanchu" onClick={this.toolSetFn.bind(this, 'xAxisShowAll', true)} className={classNames({selected: xAxisShowAll})} />
+                <MrIcon family="mricon" type="yincang" onClick={this.toolSetFn.bind(this, 'legendShow', true)} className={classNames({selected: legendShow})} />
+                <MrIcon family="mricon" type="shuaxin" onClick={this.reload.bind(this)} />
+                <MrIcon family="mricon" type={fullScreen ? 'suoxiao' : 'fangda'} onClick={this.fullScreen.bind(this)} className={classNames({selected: fullScreen})} />
             </div>
         );
     }
