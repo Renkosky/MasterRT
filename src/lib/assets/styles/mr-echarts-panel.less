@@ -4,7 +4,19 @@
         position: relative;
     }
     
-    .mr-echars-panle-tools {
+    &.mr-echarts-panel-tools-toggle {
+        .mr-echarts-panel-tools {
+            display: none;
+        }
+        
+        &:hover {
+            .mr-echarts-panel-tools {
+                display: block;
+            }
+        }
+    }
+    
+    .mr-echarts-panel-tools {
         i {
             cursor: pointer;
             

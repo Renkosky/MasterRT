@@ -3,6 +3,9 @@
  *
  * @update mizi.lin@20180508
  * 添加 MrAutoBind
+ * 按照图表类型显示工具条
+ * 可以移除工具条
+ * 工具条显示类型（toggle, hide, visible)
  */
 
 import * as React from 'react';
@@ -43,8 +46,18 @@ interface MrEchartsPanelProps extends MrEchartsProps {
     /**
      * omitTools?: string
      * 从工具条中摘除工具
+     * @values 若 omitTools === __all__, 则移除工具条
      */
-    omitTools?: string[]
+    omitTools?: string[] | string;
+
+    /**
+     * showToolbar?: string = 'toggle'
+     * 显示工具条类型
+     * @values toggle => 鼠标hover panel 显示
+     *         visible => 一直显示
+     *         hide => 不显示
+     */
+    showToolbar?: string;
 
     /**
      * result?: function(options: EchartOption, result: any)
@@ -82,20 +95,29 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
     };
 
     tools() {
-        let {chartTypes, omitTools} = this.props;
+        let {chartTypes, omitTools, showToolbar} = this.props;
         let [type] = chartTypes.split('::');
         let icons = this.icons();
         let tools = this.typeTools[type];
 
+        // 不显示工具条
+        if(showToolbar === 'hide') {
+            return null;
+        }
+
         // 移除小工具
         mu.run(omitTools, () => {
-            mu.each(omitTools, (tool) => {
-                _.remove(tools, (_tool) => _tool === tool);
-            });
+            if(omitTools === '__all__') {
+                tools = [];
+            } else {
+                mu.each(omitTools, (tool) => {
+                    _.remove(tools, (_tool) => _tool === tool);
+                });
+            }
         });
 
         return (
-            <div className="mr-echars-panle-tools">
+            <div className="mr-echarts-panel-tools">
                 {
                     mu.map(tools, (type) => {
                         return <React.Fragment key={type}>
@@ -176,6 +198,11 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
         result && result(options, rst);
     }
 
+    static defaultProps = {
+        showToolbar: 'toggle',
+        omitTools: []
+    };
+
     state = {
         fullScreen: false,
         xyExchange: false,
@@ -187,7 +214,7 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
     };
 
     render() {
-        const {title, style, className, h100, bodyStyle, border} = this.props;
+        const {title, style, className, h100, bodyStyle, border, showToolbar} = this.props;
         const {chartTypes, data, dataType, dataModel} = this.props;
         const {options, renderType, theme} = this.props;
         const {req} = this.props;
@@ -209,7 +236,8 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
         let panelClass = MrServices.cls({
             'mr-full-screen': fullScreen,
             'mr-echarts-panel': true,
-            'h-100-i': h100
+            'h-100-i': h100,
+            [`mr-echarts-panel-tools-${showToolbar}`]: true
         }, className);
 
         return (
