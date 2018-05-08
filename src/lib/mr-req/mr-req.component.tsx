@@ -10,6 +10,13 @@
  * 解决方案：1. 添加标记 _isMounted，标明component mount状态
  *          2. 设置setState为空函数，避免调用
  *
+ * @update mizi.lin@20180508
+ *
+ * 添加showComponentUpdate, 对req未产生变化，阻止渲染, 便于数据传递给子组件
+ * 同时添加force模式，若 force = true, 则阻止失效
+ *
+ *
+ *
  * @todo immutable 使用持久化数据 加快判断 showComponentUpdate, 进行性能优化
  */
 
@@ -38,20 +45,21 @@ interface iMrReq {
 interface MrReqProps {
     req?: iMrReq;
     result?: any;
-    className?: string;
-    style?: React.CSSProperties;
 
     // resource pool
     pool?: any;
 
-    // 容器高度 height: 100%
-    h100?: boolean;
-
     // 数据传递到子元素的 props key
     transmit?: string | string[];
 
-    // 是否强制刷新
+    /**
+     * force?: boolean = ifnvl(null, false)
+     * 是否解除 MrReq设计req未产生变化阻止渲染的行为
+     *
+     * @values true ::-> 解除阻止渲染
+     */
     force?: boolean
+
 }
 
 /**
@@ -59,8 +67,6 @@ interface MrReqProps {
  */
 
 export default class MrReq extends React.Component<MrReqProps, {}> {
-
-
 
     _data: any[];
 
@@ -180,14 +186,6 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
     }
 
     render() {
-        let {className, h100, style} = this.props;
-        let {data} = this.state;
-
-        const cls = MrServices.cls({
-            'mr-req': true,
-            'h-100-i': h100
-        }, className);
-
         let children = this.transmit(this._data);
         return (<React.Fragment>{children}</React.Fragment>);
     }
