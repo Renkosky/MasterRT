@@ -9,7 +9,7 @@ import * as mu from 'mzmu';
 import * as _ from 'lodash';
 import {defDataModel, defOptions, defSubType, subSetting} from './mr-echarts.setting';
 import * as _colors from '../assets/js/theme.customed.js';
-import {MrServices} from '../../lib';
+import {default as MrServices} from '../../lib/common/mr.services';
 
 // CHART_NAME 决定 legend
 const CHART_NAME = 'name';
