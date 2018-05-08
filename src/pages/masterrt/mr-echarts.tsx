@@ -102,11 +102,8 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
     render() {
         let _data = JSON.stringify(this.data.pie).replace(/}\,/g, '},\n');
 
-        console.debug(22222222);
-
         return (
             <article className="mrs-article mrs-MrFill">
-
 
                 <header>MrEcharts <small>echarts集成</small></header>
                 <ins>由data直接快速生成echarts图表，并有setting进行精细控制</ins>
@@ -239,6 +236,19 @@ setting = {
 
 // 当 @@, 则 xyExchange 为系统默认的处理方法, 其值为改方法函数的参数
 '@@xyExchange': true
+                        `}></MrsCode>
+                    </MrPanel>
+
+                    <MrPanel title={'Echarts Theme 主题以及颜色配置'}>
+                        <MrsCode code={`
+
+MrServices.setEchartsTheme(theme: string);
+
+MrServices.setEchartsColors(colors: any = {
+    base: string[],
+    names: any = {[name: string]: color}
+});
+
                         `}></MrsCode>
                     </MrPanel>
 
