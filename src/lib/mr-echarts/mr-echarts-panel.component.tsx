@@ -36,15 +36,8 @@ interface MrEchartsPanelProps extends MrEchartsProps {
 }
 
 export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
-    state = {
-        fullScreen: false,
-        xyExchange: false,
-        xAxisShowAll: false,
-        legendShow: false,
-        dataView: false,
-        lineBarExchange: false,
-        setting: _mrEchartServices.serialize(this.props.setting)
-    };
+
+
 
     // 缓存dataView数据
     _dataView: any = [];
@@ -135,11 +128,22 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
         result && result(options, rst);
     }
 
+    state = {
+        fullScreen: false,
+        xyExchange: false,
+        xAxisShowAll: false,
+        legendShow: false,
+        dataView: false,
+        lineBarExchange: false,
+        setting: _mrEchartServices.serialize(this.props.setting)
+    };
+
     render() {
         const {title, style, className, h100, bodyStyle, border} = this.props;
         const {chartTypes, data, dataType, dataModel} = this.props;
         const {options, renderType, theme} = this.props;
         const {req} = this.props;
+
         let {fullScreen, dataView, setting} = this.state;
         setting = mu.clone(setting);
 
@@ -155,7 +159,7 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
         };
 
         let classString = MrServices.cls({
-            'mr-fullScreen': fullScreen,
+            'mr-full-screen': fullScreen,
             'mr-echarts-panel': true,
             'h-100-i': h100
         }, className);
@@ -168,14 +172,10 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
                 className={classString}
                 bodyStyle={bodyStyle}
                 border={border}>
-                <MrReq h100={true} req={req} transmit="data">
-                    {dataView ? (
-                        <div>
-                            <MrEchartsDataView data={this._dataView} />
-                        </div>
-                    ) : (
-                        <MrEcharts {...echartsProps} result={this.getResult.bind(this)} />
-                    )}
+                <MrReq req={req} force={true} transmit="data" h100={true}>
+                    {dataView
+                        ? <MrEchartsDataView data={this._dataView} />
+                        :  <MrEcharts {...echartsProps} result={this.getResult.bind(this)} />}
                 </MrReq>
             </MrPanel>
         );

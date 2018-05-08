@@ -60,9 +60,7 @@ interface MrReqProps {
 
 export default class MrReq extends React.Component<MrReqProps, {}> {
 
-    state: any = {
-        loaded: false
-    };
+
 
     _data: any[];
 
@@ -154,8 +152,13 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
         return children;
     }
 
+    state: any = {
+        loaded: false
+    };
+
     shouldComponentUpdate(nextProps) {
-        return !_.isEqual(nextProps.req, this.props.req);
+        let {force} = this.props;
+        return force || !_.isEqual(nextProps.req, this.props.req);
     }
 
     componentWillMount() {
@@ -186,6 +189,6 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
         }, className);
 
         let children = this.transmit(this._data);
-        return (<div className={cls} style={style}>{children}</div>);
+        return (<React.Fragment>{children}</React.Fragment>);
     }
 }
