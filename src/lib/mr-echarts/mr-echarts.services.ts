@@ -1,7 +1,16 @@
+/**
+ * MrEchartsService
+ *
+ * @update mizi.lin@20180508
+ * => 支持按name匹配颜色
+ */
+
 import * as mu from 'mzmu';
 import * as _ from 'lodash';
 import {defDataModel, defOptions, defSubType, subSetting} from './mr-echarts.setting';
 import * as _colors from '../assets/js/theme.customed.js';
+import {MrServices} from 'src/lib';
+
 // CHART_NAME 决定 legend
 const CHART_NAME = 'name';
 // CHART_X 决定 x 轴
@@ -13,8 +22,9 @@ const CHART_X = 'x';
  * MrEcharts Services
  */
 export default {
-    _theme: 'customed',
-    _colors: _colors,
+    _theme:  mu.ifempty(MrServices.getEchartsTheme(), 'customed'),
+    _colors: mu.ifempty(MrServices.getEchartsColors(), _colors),
+
 
     CHART_RENDER_TYPE: 'canvas',
 
@@ -221,6 +231,45 @@ export default {
     },
 
     /**
+     * 初始调整options
+     * @param options
+     */
+    initOptions(options) {
+        let {names} = this._colors;
+
+        /**
+         * 按series name名称匹配颜色
+         */
+        mu.run(names, () => {
+            let series = options.series;
+
+            options.series = mu.map(series, (item) => {
+
+                let {name, type, data} = item;
+                let color = names[name];
+
+                if(mu.or(type, 'pie') || !color) {
+                    mu.each(data, (d) => {
+                        let name = d.name;
+                        let color = names[name];
+                        if(color){
+                            _.set(d, 'itemStyle.color', color);
+                        }
+                    });
+                } else {
+                    _.set(item, 'itemStyle.color', color);
+                }
+
+                return item;
+            });
+        });
+
+        // _.set(options, 'series[0].itemStyle.color', '#0f0');
+
+        return options;
+    },
+
+    /**
      * 根据数据配置series
      * 以及将data注入series
      * @param options
@@ -402,6 +451,9 @@ export default {
             }
         );
 
+
+
+
         return options;
     },
 
@@ -521,6 +573,10 @@ export default {
         // 根据数据设置series, 得到初始options
         _opts = this.injectOptions(_opts, _rst, _chartType, _dataModel, _setting);
 
+        // 初步调整options
+
+        _opts = this.initOptions(_opts);
+
         // 根据某些规则，重新配置options
         _opts = this.reOptions(_opts, _setting, _chartType, _dataModel);
 
@@ -528,13 +584,5 @@ export default {
             options: _opts,
             data: _rst
         };
-    },
-
-    setTheme(theme: string) {
-        this._theme = theme;
-    },
-
-    setColors(colors) {
-        this._colors = colors;
     }
 };

@@ -1,3 +1,19 @@
+/**
+ * MrService
+ *
+ * @update mizi.lin@20180508
+ *
+ * 重新规划并设定MrEcharts需要参数配置
+ * MrService.setEchartsTheme()
+ * MrService.setColors({
+ *  base: []
+ *  nameMap: {}
+ * });
+ *
+ */
+
+
+
 import * as download from '../assets/js/download';
 import * as mu from 'mzmu';
 import * as classNames from 'classnames';
@@ -102,8 +118,29 @@ class MrServices {
         return this._resourcePool;
     }
 
+    /**
+     * MrEcharts
+     */
 
+    _mrEchartsTheme: string;
 
+    setEchartsTheme(theme: string) {
+        this._mrEchartsTheme = theme;
+    }
+
+    getEchartsTheme(){
+        return this._mrEchartsTheme;
+    }
+
+    _mrEchartsColors: any;
+
+    setEchartsColors(colors: any){
+        this._mrEchartsColors = colors;
+    }
+
+    getEchartsColors(){
+        return this._mrEchartsColors;
+    }
 }
 
 export default new MrServices();
