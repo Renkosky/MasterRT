@@ -12,11 +12,10 @@
  *
  */
 
-
-
 import * as download from '../assets/js/download';
 import * as mu from 'mzmu';
 import * as classNames from 'classnames';
+
 declare var require: any;
 const _commonStyles = require('../assets/styles/common.less');
 
@@ -68,11 +67,11 @@ class MrServices {
      * @param {string} type
      */
     setHeaders(headers: any, type: string = 'extends') {
-        if(type === 'extends') {
+        if (type === 'extends') {
             this._headers = mu.extend(true, this._headers, headers);
-        } else if(type === 'news') {
+        } else if (type === 'news') {
             this._headers = headers;
-        } else if(type === 'append') {
+        } else if (type === 'append') {
 
         }
     }
@@ -122,23 +121,23 @@ class MrServices {
      * MrEcharts
      */
 
-    _mrEchartsTheme: string;
+    _mrEchartsTheme: string = '';
 
-    setEchartsTheme(theme: string) {
+    setEchartsTheme(theme: string): void {
         this._mrEchartsTheme = theme;
     }
 
-    getEchartsTheme(){
+    getEchartsTheme() {
         return this._mrEchartsTheme;
     }
 
-    _mrEchartsColors: any;
+    _mrEchartsColors: any = {};
 
-    setEchartsColors(colors: any){
+    setEchartsColors(colors: any): void {
         this._mrEchartsColors = colors;
     }
 
-    getEchartsColors(){
+    getEchartsColors(): any {
         return this._mrEchartsColors;
     }
 }

@@ -22,9 +22,13 @@ const CHART_X = 'x';
  * MrEcharts Services
  */
 export default {
-    _theme:  mu.ifempty(MrServices.getEchartsTheme(), 'customed'),
-    _colors: mu.ifempty(MrServices.getEchartsColors(), _colors),
+    _theme() {
+        return mu.ifempty(MrServices.getEchartsTheme(), 'customed');
+    },
 
+    _colors() {
+        return mu.ifempty(MrServices.getEchartsColors(), _colors);
+    },
 
     CHART_RENDER_TYPE: 'canvas',
 
@@ -235,7 +239,7 @@ export default {
      * @param options
      */
     initOptions(options) {
-        let {names} = this._colors;
+        let {names} = this._colors();
 
         /**
          * 按series name名称匹配颜色
