@@ -1,6 +1,6 @@
 {
     "name": "masterrt",
-    "version": "0.1.19-b4",
+    "version": "0.1.19-b5",
     "license": "MIT",
     "scripts": {
         "start": "umi dev",

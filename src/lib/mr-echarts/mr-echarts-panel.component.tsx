@@ -30,6 +30,7 @@ interface MrEchartsPanelProps extends MrEchartsProps {
      */
     chartTypes: string;
     setting?: any;
+    transform?: any;
     downloadName?: string;
     data?: any;
     dataType?: any;
@@ -214,7 +215,7 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
     };
 
     render() {
-        const {title, style, className, h100, bodyStyle, border, showToolbar} = this.props;
+        const {title, style, className, h100, bodyStyle, border, showToolbar, transform} = this.props;
         const {chartTypes, data, dataType, dataModel} = this.props;
         const {options, renderType, theme} = this.props;
         const {req} = this.props;
@@ -230,7 +231,8 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
             setting,
             options,
             renderType,
-            theme
+            theme,
+            transform
         };
 
         let panelClass = MrServices.cls({

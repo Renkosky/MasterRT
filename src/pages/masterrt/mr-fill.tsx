@@ -137,6 +137,10 @@ export default class MrsMrFill extends React.Component<MrsMrFillProps, {}> {
                                     <td>h100?: boolean = true</td>
                                     <td>是否设置style.height = 100% !important</td>
                                 </tr>
+                                <tr>
+                                    <td>contentClassName?: string</td>
+                                    <td>添加在自带子元素 div.mr-col-content 上的样式</td>
+                                </tr>
                             </tbody>
                         </table>
                     </MrPanel>

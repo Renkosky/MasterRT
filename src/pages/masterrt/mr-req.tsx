@@ -91,7 +91,7 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
         <Button type={'primary'} onClick={changeReqLine} className="ml-8"> Line </Button>
 
         <MrPanel title="回调::通过setState进行重新渲染" bodyStyle={{height: 300}} className="mt-16">
-            <MrReq req={req}  result={result}>
+            <MrReq req={req} h100={true} result={result}>
                 <MrEcharts
                     data={data}
                     chartTypes={chartTypes}
@@ -103,7 +103,7 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
         {/*// 其中MrReq通过transmit向子组件MrEcharts传递基因data片段*/}
         {/*// 而MrEcharts无需做任何配置，自然而然的获得父组件的遗传的基因片段信息*/}
         <MrPanel title="传递::通过transmit传递数据，无渲染" bodyStyle={{height: 300}} className="mt-16">
-            <MrReq req={req} transmit="data">
+            <MrReq req={req} h100={true} transmit="data">
                 <MrIf condition={true}>
                     <MrEcharts
                         chartTypes={chartTypes}
@@ -142,7 +142,7 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
                 </main>
 
                 {/*<MrReq req={req} h100={true} transmit="data">*/}
-                    {/*<Test>------</Test>*/}
+                {/*<Test>------</Test>*/}
                 {/*</MrReq>*/}
 
                 <details className="mt-16">
@@ -171,6 +171,11 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
                                 <tr>
                                     <td>pool?: Resource</td>
                                     <td>Resource Pool，可以由MrService.setResourcePool全局配置</td>
+                                </tr>
+
+                                <tr>
+                                    <td>h100?: true</td>
+                                    <td>style.height: 100% !important</td>
                                 </tr>
 
                                 <tr>

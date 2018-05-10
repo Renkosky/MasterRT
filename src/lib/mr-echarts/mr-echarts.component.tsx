@@ -5,7 +5,7 @@ import * as mu from 'mzmu';
 import 'echarts-wordcloud';
 import '../assets/js/china.js';
 import '../assets/js/theme.customed.js';
-import _sevr from './mr-echarts.services';
+import MrEchartsServices from './mr-echarts.services';
 declare var require: any;
 require('../assets/styles/mr-echarts.component.less');
 
@@ -18,9 +18,26 @@ export interface MrEchartsProps {
     data?: any[];
     dataType?: string;
     dataModel?: string;
+
+    /**
+     * transform?: any[]
+     * 对data进行数据处理
+     */
+    transform?: any;
+
     chartTypes?: string;
+
+    /**
+     * setting
+     * 对options值进行配置处理
+     */
     setting?: any;
     options?: any;
+    /**
+     * optionsSetting?: boolean = false;
+     * 默认setting不作用在options中
+     */
+    optionsSetting?: boolean;
     theme?: string;
     renderType?: string;
     style?: any;
@@ -41,23 +58,26 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
     drawCharts = _.debounce((props: any) => {
         let {_gene = {}} = props;
 
-        let {data, dataType, dataModel, chartTypes, setting = {}} = props;
+        let {data, dataType, dataModel, chartTypes} = props;
+        let {transform = [], setting = {}, optionsSetting} = props;
         let {options, renderType, theme} = props;
+        let {result} = props;
+        let _dom = this._chartRef;
+        // data 或 options 转换过程中的结果集
+        let rst: any = {};
+
+        // _dom 不存在时不渲染
+        if (!_dom) return;
 
         // todo 继承基因算法
         data = mu.ifnvl(data, _.get(props, '_gene.data'));
 
-        let {result} = props;
-        let _dom = this._chartRef;
-        // _dom 不存在时不渲染
-        if (!_dom) return;
-
-        // init echarts
+       // 判断 Echart DOM 是否已经初始化
         mu.empty(
             this._chart,
             () => {
-                this._chart = echarts.init(_dom, theme || _sevr._theme(), {
-                    renderer: renderType || _sevr.CHART_RENDER_TYPE
+                this._chart = echarts.init(_dom, theme || MrEchartsServices._theme(), {
+                    renderer: renderType || MrEchartsServices.CHART_RENDER_TYPE
                 });
             },
             () => {
@@ -70,15 +90,21 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
         );
 
         // set empty option for no data
-        if (_.isEmpty(data)) {
+        if (_.isEmpty(data) && _.isEmpty(options)) {
             this._chart.setOption({}, true);
             this._chart.resize();
             return;
         }
 
-        let rst: any = {};
+
+
+
+        if(mu.isNotEmpty(options) && optionsSetting) {
+            options = MrEchartsServices.reOptions(options, setting, chartTypes);
+        }
+
         mu.empty(options, () => {
-            rst = _sevr.getOptions(data, dataType, dataModel, chartTypes, setting);
+            rst = MrEchartsServices.getOptions(data, dataType, dataModel, chartTypes, setting, transform);
             options = rst.options;
         });
 
@@ -206,6 +232,7 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
     }
 
     render() {
+        console.debug(this.props);
         return <div className={'mr-echarts'} style={this.props.style} ref={(div) => (this._chartRef = div)} />;
     }
 

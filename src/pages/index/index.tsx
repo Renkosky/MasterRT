@@ -1,36 +1,96 @@
 import React from 'react';
-import Link from 'umi/link';
-import Count from './components/Count';
 import './index.less';
 import MrAutoBind from '../../lib/common/mr-auto-bind';
-import {MrFill, MrIf, MrCol, MrElse, MrPanel} from '../../lib';
+import {MrIf, MrPanel} from '../../lib';
 
 interface IndexProps {
 }
 
+/**
+ *
+ *
+ *
+
+
+
+ $MrIf(condition).then().else();
+
+ function MrIf() {
+
+        return {
+            then: function() {
+               return
+            },
+
+            else: function() {
+            }
+
+
+        }
+
+  }
+
+ *
+ *
+ *
+ *
+ */
+
 @MrAutoBind
 export default class MrsIndex extends React.Component<IndexProps, {}> {
 
+    // constructor(props, context?: any, private a: string) {
+    //     super(props, context);
+    // }
+
+    static defaultProps: any = {};
+
+    state: any = {
+        lily: {
+            name: 'Lily Xu',
+            age: 28,
+            school: {
+                address: 'NingBo',
+                name: 'NingBo 大学'
+            }
+        },
+
+        yuki: {
+            name: 'yuki Li',
+            age: 32,
+            school: {
+                address: 'Shanghai',
+                name: 'Shanghai 大学'
+            }
+        }
+    };
 
     componentWillMount() {
-        console.debug(111111);
     }
 
     componentWillReceiveProps() {
-        console.debug('00000000000000');
     }
 
     componentWillUnmount() {
-        console.debug(22222);
     }
 
     componentDidMount() {
-        console.debug(3333333);
     }
 
     render() {
+        let name;
+
         return (
             <div className={'mrs-index'}>
+
+                {/*{ true? null : this.state[name].name }*/}
+
+                {/*<If condition={true}>*/} {/*aaaaaa*/} {/*</If>*/}
+
+                <MrIf condition={false}>
+                    {() => <span>{this.state[name].name}</span>}
+                </MrIf>
+
                 <MrPanel title="MRI::MasterRT Integrated development environment">
                     <div>MRI是一套集成开发环境</div>
                     <div>以 React + UMI + TypeScript + LESS 构成</div>
@@ -42,4 +102,3 @@ export default class MrsIndex extends React.Component<IndexProps, {}> {
         );
     }
 }
-

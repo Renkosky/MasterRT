@@ -162,10 +162,6 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
         loaded: false
     };
 
-    shouldComponentUpdate(nextProps) {
-        let {force} = this.props;
-        return force || !_.isEqual(nextProps.req, this.props.req);
-    }
 
     componentWillMount() {
         this.getRequest(this.props);
@@ -177,6 +173,15 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
         }
     }
 
+    shouldComponentUpdate(nextProps) {
+        let {force} = this.props;
+        return force || !_.isEqual(nextProps.req, this.props.req);
+    }
+
+    componentWillUpdate(props){
+        console.debug(props);
+    }
+
     componentWillUnmount() {
         // this._isMounted = false;
         // 将 setState 设置成空函数
@@ -186,7 +191,7 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
     }
 
     render() {
-        let children = this.transmit(this._data);
+        let children = this.transmit(this._data) || null;
         return (<React.Fragment>{children}</React.Fragment>);
     }
 }

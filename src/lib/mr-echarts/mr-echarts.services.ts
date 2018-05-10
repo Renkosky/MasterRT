@@ -3,6 +3,8 @@
  *
  * @update mizi.lin@20180508
  * => 支持按name匹配颜色
+ *
+ * //todo 重写 echarts 实现方式
  */
 
 import * as mu from 'mzmu';
@@ -40,6 +42,20 @@ export default {
         return mu.type(setting, 'array') ? setting : mu.map(setting, (v, k) => {
             return {[k]: v};
         }, []);
+    },
+
+    /**
+     * 数据转换
+     * @param data
+     * @param rules
+     */
+    ['@convert'](data: any[], rules: object[]) {
+        return mu.map(data, (item) => {
+            mu.each(rules, (source, target) => {
+                item[target] = _.get(item, source);
+            });
+            return item;
+        });
     },
 
     /**
@@ -147,14 +163,28 @@ export default {
 
     /**
      * 数据转换
-     * @param data 数据来源
+     * @param data 数据源
+     * @param transform 数据处理
      * @param dataType 数据来源类型
      * @param dataModel 数据转换模型
      * @param setting 配置参数
      * @return {*}
      */
-    transform(data, dataType = 'dataSource', dataModel = 'group', setting = {}) {
+    transform(data, transform = [], dataType = 'dataSource', dataModel = 'group', setting = {}) {
         let $data = mu.clone(data);
+
+        mu.run(transform, () => {
+            mu.each(transform, (handle, key) => {
+                if(typeof handle === 'function'){
+                    data = handle(data);
+                } else {
+                    let [fnn] = _.keys(handle);
+                    mu.if(this[fnn], (fn) => {
+                        data = fn(data, handle[fnn]);
+                    });
+                }
+            });
+        });
 
         let _data = mu.run(dataModel === 'single', () => {
             return mu.map(data, (o) => {
@@ -555,9 +585,10 @@ export default {
      * @param dataModel 数据转换模型
      * @param chartTypes
      * @param setting
+     * @param transform
      * @return {*}
      */
-    getOptions(data = [], dataType = 'dataSource', dataModel, chartTypes = 'line', setting = {}) {
+    getOptions(data = [], dataType = 'dataSource', dataModel, chartTypes = 'line', setting = {}, transform) {
         console.debug('~~~~', chartTypes);
 
         let [_chartType] = chartTypes.split('::');
@@ -572,13 +603,12 @@ export default {
         let _opts = mu.clone(defOptions[_chartType]);
 
         // 数据转换结果
-        let _rst = this.transform(data, dataType, _dataModel);
+        let _rst = this.transform(data, transform, dataType, _dataModel);
 
         // 根据数据设置series, 得到初始options
         _opts = this.injectOptions(_opts, _rst, _chartType, _dataModel, _setting);
 
         // 初步调整options
-
         _opts = this.initOptions(_opts);
 
         // 根据某些规则，重新配置options

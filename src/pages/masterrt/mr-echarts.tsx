@@ -5,8 +5,6 @@ import * as _ from 'lodash';
 import MrsCode from '../../components/MrsCode';
 import JsxParser from 'react-jsx-parser';
 
-
-
 interface MrsMrEchartsProps {
 }
 
@@ -80,6 +78,8 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
                     // ? options 直接调用
                     // 图表的options配置，直接获得图表
                     options={null}
+                    
+                    transform={[{'@convert': {'__names': 'name'}}]}
 
                     // ? theme
                     // 图表的主体配色
@@ -94,7 +94,7 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
     `;
 
     shouldComponentUpdate(nextProps, nextStates) {
-        if(_.isEqual(nextStates, this.state)){
+        if (_.isEqual(nextStates, this.state)) {
             return false;
         }
     }
@@ -148,7 +148,8 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
                             <tr>
                                 <td>dataModel?: string</td>
                                 <td>
-                                    数据模型（处理数据方式）<br />
+                                    数据模型（处理数据方式）
+                                    <br />
                                     single: 用于简单的二维数据 <br />
                                     group: 需要对数据进行分组解析
                                 </td>
@@ -172,7 +173,8 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
                                     data会通过一系列的机制转为EchartOptions, <br />
                                     而setting设置最后规则对options进行构建，产生最终options <br />
                                     <br />
-                                    setting = {`{[key]: value}`} <br />
+                                    setting = {`{[key]: value}`}
+                                    <br />
                                     其中 key 为 options 扁平化key值, 如 aAxis.axisLabel.normal.style
                                     <br />
                                     setting = [{'{}, {}, {}'}] <br />
@@ -203,8 +205,7 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
 
                 <aside className="mt-16">
 
-                    <MrPanel title={'setting配置指南'}>
-                        <MrsCode code={`
+                    <MrPanel title={'setting配置指南'}> <MrsCode code={`
 // setting 有一组 key/value 组成
 setting = {
     'grid.top': 10,
@@ -236,11 +237,9 @@ setting = {
 
 // 当 @@, 则 xyExchange 为系统默认的处理方法, 其值为改方法函数的参数
 '@@xyExchange': true
-                        `}></MrsCode>
-                    </MrPanel>
+                        `}></MrsCode> </MrPanel>
 
-                    <MrPanel title={'Echarts Theme 主题以及颜色配置'}>
-                        <MrsCode code={`
+                    <MrPanel title={'Echarts Theme 主题以及颜色配置'}> <MrsCode code={`
 
 MrServices.setEchartsTheme(theme: string);
 
@@ -249,11 +248,32 @@ MrServices.setEchartsColors(colors: any = {
     names: any = {[name: string]: color}
 });
 
-                        `}></MrsCode>
-                    </MrPanel>
+                        `}></MrsCode> </MrPanel>
 
                 </aside>
             </article>
         );
     }
 }
+
+// import * as mu from 'mzmu';
+//
+//
+// let rst = mu.map(33, (ii, i) => {
+//     return `
+//         .m-${i} {
+//             margin: ${i}px;
+//         }
+//         .m-${i}-i {
+//             margin: ${i}px !important;
+//         }
+//         .p-${i} {
+//             padding: ${i}px;
+//         }
+//         .p-${i}-i {
+//             padding: ${i}px !important;
+//         }
+//     `
+// }, []);
+//
+// console.debug(rst.join(''));
