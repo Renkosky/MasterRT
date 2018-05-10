@@ -79,7 +79,7 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
                     // 图表的options配置，直接获得图表
                     options={null}
                     
-                    transform={[{'@convert': {'__names': 'name'}}]}
+                    transform={[{'@convert': {'__names': 'name', '__value': 'name'}}]}
 
                     // ? theme
                     // 图表的主体配色

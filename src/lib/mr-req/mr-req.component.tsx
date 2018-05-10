@@ -43,7 +43,7 @@ interface iMrReq {
 }
 
 interface MrReqProps {
-    req?: iMrReq;
+    req?: iMrReq | iMrReq[];
     result?: any;
 
     // resource pool
@@ -59,14 +59,27 @@ interface MrReqProps {
      * @values true ::-> 解除阻止渲染
      */
     force?: boolean
+}
 
+export default class MrReq extends React.Component<MrReqProps, {}> {
+    render() {
+        let {children, ...props} = this.props;
+        /**
+         * props clone 方便在MrReqInner进行req比较
+         * 阻止 MrReqInner 多次渲染，而造成多次Ajax请求
+         */
+        props = mu.clone(props);
+        return (
+            <MrReqInner {...props}>{children}</MrReqInner>
+        );
+    }
 }
 
 /**
  * 仅对 MrResource 支持的一种异步加载方式
  */
 
-export default class MrReq extends React.Component<MrReqProps, {}> {
+export class MrReqInner extends React.Component<MrReqProps, {}> {
 
     _data: any[];
 
@@ -81,37 +94,44 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
          */
 
         let {req, pool, result, transmit} = props;
+        let promises: any[];
+        pool = pool || MrServices.getResourcePool();
+        req = mu.isObject(req) ? [req] : req;
+        promises = mu.map(req, (one) => {
+            return this.oneReq(pool, one);
+        });
 
-        mu.run(req, () => {
-            pool = pool || MrServices.getResourcePool();
+        Promise.all(promises).then((res) => {
+            this._data = res.length === 1 ? res[0] : res;
+            transmit && this.forceUpdate();
+            result && result(this._data);
 
-            let {method = 'post', payload = {}, search = {}, transform, dataPath, resource} = req;
+        });
+    }
 
-            dataPath = mu.ifnvl(dataPath, 'data');
+    /**
+     * 单条Req数据处理
+     */
+    oneReq(pool, req) {
 
-            method = method.toLowerCase();
+        let {method = 'post', payload = {}, search = {}, transform, dataPath, resource} = req;
+        dataPath = mu.ifnvl(dataPath, 'data');
+        method = method.toLowerCase();
 
-            // 调用距离越近，权限越大
-            // prop.resource > pool[api]
-            resource = mu.ifempty(resource, pool[req.api]);
+        // 调用距离越近，权限越大
+        // prop.resource > pool[api]
+        resource = mu.ifempty(resource, pool[req.api]);
 
-            mu.run(resource, (_resource) => {
-                let _promise = _resource[method](search, payload);
-                _promise.then((res) => {
-                    // 根据 req.dataPath 从数据源中截取数据
-                    let data = dataPath === '::res' ? res : _.get(res, dataPath);
-
-                    // 通过Req.transform 处理数据后返回给 transmit && result
-                    this._data = transform ? transform(data) : data;
-
-                    // 向子组件传递数据，渲染组件，激活子组件获取数据
-                    transmit && this.forceUpdate();
-
-                    // 回调函数，向父组件传递数据
-                    result && result(this._data);
-                });
+        return mu.run(resource, (_resource) => {
+            let _promise = _resource[method](search, payload);
+            return _promise.then((res) => {
+                // 根据 req.dataPath 从数据源中截取数据
+                let data = dataPath === '::res' ? res : _.get(res, dataPath);
+                data = transform ? transform(data) : data;
+                return data;
             });
         });
+
     }
 
     // 暗暗的传给子元素，实现父元素reload
@@ -179,7 +199,7 @@ export default class MrReq extends React.Component<MrReqProps, {}> {
     }
 
     componentWillUpdate(props){
-        console.debug(props);
+        // console.debug(props);
     }
 
     componentWillUnmount() {

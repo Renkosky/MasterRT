@@ -232,7 +232,6 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
     }
 
     render() {
-        console.debug(this.props);
         return <div className={'mr-echarts'} style={this.props.style} ref={(div) => (this._chartRef = div)} />;
     }
 

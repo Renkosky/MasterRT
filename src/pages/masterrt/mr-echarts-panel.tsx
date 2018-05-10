@@ -69,7 +69,7 @@ export default class MrsEchartsPanel extends React.Component<MrsEchartsPanelProp
 
         <MrEchartsPanel
             title="Use Req"
-            style={{height: 400}} chartTypes={'line'} req={req} />
+            style={{height: 400}} chartTypes={'line'} req={req} transform={[{'@convert': {'__names': 'name'}}]} />
     `;
 
     render() {
