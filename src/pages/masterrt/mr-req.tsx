@@ -143,11 +143,13 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
                     ></JsxParser>
                 </main>
 
-                {/*<MrReq req={reqs} transmit="data">*/}
-                    {/*<MrEcharts style={{height: 300}}*/}
-                        {/*chartTypes={chartTypes}*/}
-                    {/*></MrEcharts>*/}
-                {/*</MrReq>*/}
+                <MrReq req={reqs} transmit="data">
+                    <MrEcharts style={{height: 300}}
+                        chartTypes={chartTypes}
+                    ></MrEcharts>
+                </MrReq>
+
+                <MrEcharts style={{height: 600}} chartTypes={'map::china'} data={[{"name":"其他","value":142842841},{"name":"广东","value":59869974},{"name":"北京","value":46397329},{"name":"江苏","value":27837669},{"name":"浙江","value":26733543},{"name":"山东","value":25650072},{"name":"河南","value":22147978},{"name":"四川","value":20236683},{"name":"上海","value":17925233},{"name":"福建","value":16757865},{"name":"河北","value":16686739},{"name":"湖北","value":16622216},{"name":"湖南","value":15623126},{"name":"辽宁","value":14502736},{"name":"海外","value":14297602},{"name":"安徽","value":14218932},{"name":"陕西","value":13076612},{"name":"广西","value":11033702},{"name":"江西","value":10674566},{"name":"重庆","value":10276377},{"name":"黑龙江","value":10240268},{"name":"山西","value":10150283},{"name":"云南","value":9604334},{"name":"吉林","value":8299197},{"name":"贵州","value":7864322},{"name":"内蒙古","value":7546546},{"name":"天津","value":7492764},{"name":"甘肃","value":6557203},{"name":"新疆","value":6226383},{"name":"香港","value":5431680},{"name":"海南","value":4977242},{"name":"台湾","value":4879679},{"name":"宁夏","value":3707399},{"name":"青海","value":3371199},{"name":"西藏","value":2766262},{"name":"澳门","value":2479950},{"name":"","value":388575},{"name":"??????","value":2921},{"name":"?????????","value":121}]} />
 
                 <details className="mt-16">
                     <summary>查看源码</summary>

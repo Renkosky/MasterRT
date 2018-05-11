@@ -76,7 +76,7 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
         mu.empty(
             this._chart,
             () => {
-                this._chart = echarts.init(_dom, theme || MrEchartsServices._theme(), {
+                this._chart = echarts.init(_dom, theme || MrEchartsServices._theme() || 'customed', {
                     renderer: renderType || MrEchartsServices.CHART_RENDER_TYPE
                 });
             },

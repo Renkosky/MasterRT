@@ -510,7 +510,7 @@ export default {
          * subType = chartType::sub...
          */
 
-        let _subSetting = subSetting(this._colors);
+        let _subSetting = subSetting(this._colors());
         let _setting = mu.extend({}, this.flatDataSetting(_subSetting[_chartType]));
 
         mu.run(_subType, () => {

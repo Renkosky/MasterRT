@@ -146,6 +146,10 @@ export const defSubType = {
  * @param _colors
  */
 export function subSetting(_colors) {
+
+
+    console.debug(_colors);
+
     return {
         // 不显示xy轴
         // 默认显示x轴名称
