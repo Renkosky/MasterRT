@@ -86,7 +86,7 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
     // 标记标明当前 component mount 状态，避免 unmounted 的时候 setState
     _isMounted: boolean = true;
 
-    getRequest(props) {
+    getRequest(props): void {
 
         /**
          * pool: Resource pool (resources)
@@ -96,6 +96,11 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
         let {req, pool, result, transmit} = props;
         let promises: any[];
         pool = pool || MrServices.getResourcePool();
+
+        if(!req) {
+            return void 0;
+        }
+
         req = mu.isObject(req) ? [req] : req;
         promises = mu.map(req, (one) => {
             return this.oneReq(pool, one);
@@ -105,7 +110,6 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
             this._data = res.length === 1 ? res[0] : res;
             transmit && this.forceUpdate();
             result && result(this._data);
-
         });
     }
 
