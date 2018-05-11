@@ -126,28 +126,28 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
                 <header>MrReq <small>一个可以异步请求的组件</small></header>
                 <ins>使用Resource Pool进行异步请求</ins>
                 <main>
-                    {/*<JsxParser*/}
-                        {/*bindings={{*/}
-                            {/*data,*/}
-                            {/*req,*/}
-                            {/*chartTypes,*/}
-                            {/*result,*/}
-                            {/*changeReqPie: () => changeReq('pie'),*/}
-                            {/*changeReqLine: () => changeReq('line')*/}
-                        {/*}}*/}
+                    <JsxParser
+                        bindings={{
+                            data,
+                            req,
+                            chartTypes,
+                            result,
+                            changeReqPie: () => changeReq('pie'),
+                            changeReqLine: () => changeReq('line')
+                        }}
 
-                        {/*blacklistedAttrs={[]}*/}
-                        {/*components={{Button, MrEcharts, MrPanel, MrIf, MrFill, MrIcon, MrReq}}*/}
-                        {/*jsx={this.code}*/}
-                        {/*onError={(err) => console.debug(err)}*/}
-                    {/*></JsxParser>*/}
+                        blacklistedAttrs={[]}
+                        components={{Button, MrEcharts, MrPanel, MrIf, MrFill, MrIcon, MrReq}}
+                        jsx={this.code}
+                        onError={(err) => console.debug(err)}
+                    ></JsxParser>
                 </main>
 
-                <MrReq req={reqs} transmit="data">
-                    <MrEcharts style={{height: 300}}
-                        chartTypes={chartTypes}
-                    ></MrEcharts>
-                </MrReq>
+                {/*<MrReq req={reqs} transmit="data">*/}
+                    {/*<MrEcharts style={{height: 300}}*/}
+                        {/*chartTypes={chartTypes}*/}
+                    {/*></MrEcharts>*/}
+                {/*</MrReq>*/}
 
                 <details className="mt-16">
                     <summary>查看源码</summary>

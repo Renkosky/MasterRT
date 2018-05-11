@@ -204,7 +204,7 @@ export default {
         let _series = mu.map(
             _legend,
             (legend) => {
-                return _data[legend.name || legend];
+                return _data[mu.ifnvl(legend.name, legend)];
             },
             []
         );
@@ -245,6 +245,7 @@ export default {
         let _dataView = mu.map(_series, (arr, inx) => {
             let legend = _legend[inx] || {};
             let legendName = legend.name || legend;
+
             arr.unshift(mu.isEmpty(_x) ? '' : legendName);
             arr = mu.map(arr, (o) => o.value || o);
             return arr;
