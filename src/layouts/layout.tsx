@@ -75,6 +75,9 @@ export default class MrsLayout extends React.Component<MrsLayoutProps, {}> {
                                             <Menu.Item key="mrif">
                                                 <Link to="/masterrt/mr-if">MrIf</Link>
                                             </Menu.Item>
+                                            <Menu.Item key="mrrules">
+                                                <Link to="/masterrt/mr-rules">MrRules</Link>
+                                            </Menu.Item>
                                             <Menu.Item key="mrreq">
                                                 <Link to="/masterrt/mr-req">MrReq</Link>
                                             </Menu.Item>

@@ -1,11 +1,40 @@
+/**
+ * MrRules
+ * 权限配置规则
+ *
+ * @author mizi.lin@v1.20180514
+ */
+
 import * as React from 'react';
 import {MrIf, MrServices} from './../../lib';
 import * as mu from 'mzmu';
 
 interface MrRulesProps extends MrInterface {
+    /**
+     * keys: string | string[];
+     * 权限的规则条件
+     *
+     * @value {string} 其值为权限对象的key的规则配置 (key || !!key || !!!key ...)
+     *        {string[]} 若keys为数组，则匹配值最终以或计算 rules[key0] || rules[key1] || rules[key2] ....
+     *
+     * @mark 只允许'!'作用在key上
+     * exp. keys = 'a.b.c'; keys = ['a.b.c']; key = ['a.b.c', '!a.c.d', '!c']
+     */
     keys: string | string[];
-    rules?: any;
-    def?: boolean;
+
+    /**
+     * rules?: {[key: string]: boolean}[]
+     * 权限规则字典
+     * @match 就近原则 >> MrServices.setRules(rules: object)
+     */
+    rules?: object[];
+
+    /**
+     * defNoRuleValue?: boolean = true
+     * 规则不存在默认规则
+     * @match 就近原则 >> MrServices.setRuleValue(val: boolean)
+     */
+    defNoRuleValue?: boolean;
 }
 
 /**
@@ -45,12 +74,12 @@ export default class MrRules extends React.Component<MrRulesProps, {}> {
     }
 
     componentWillMount() {
-        let {rules, def} = this.props;
+        let {rules, defNoRuleValue} = this.props;
 
         // 就近原则，props.rules > MrServices._rules
         this.rules = mu.ifnvl(rules, MrServices.getRules());
-        // 就近原则，props.def > MrServices._ruleValue
-        this.defaultValue = mu.ifnvl(mu.ifnvl(def, MrServices.getRuleValue()), true);
+        // 就近原则，props.defNoRuleValue > MrServices._ruleValue
+        this.defaultValue = mu.ifnvl(mu.ifnvl(defNoRuleValue, MrServices.getRuleValue()), true);
     }
 
     render() {

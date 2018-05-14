@@ -12,9 +12,7 @@
  */
 
 import * as React from 'react';
-import MrServices from '../mr-common/mr.services';
 import * as mu from 'mzmu';
-import * as _ from 'lodash';
 import MrElse from './mr-else.component';
 
 export interface MrIfProps {
