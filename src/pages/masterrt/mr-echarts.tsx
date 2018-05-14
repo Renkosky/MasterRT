@@ -47,165 +47,6 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
         ]
     };
 
-    dataMap = [
-        {
-            "province": "其他",
-            "volume": 142859185
-        },
-        {
-            "province": "广东",
-            "volume": 59883055
-        },
-        {
-            "province": "北京",
-            "volume": 46408945
-        },
-        {
-            "province": "江苏",
-            "volume": 27852761
-        },
-        {
-            "province": "浙江",
-            "volume": 26747883
-        },
-        {
-            "province": "山东",
-            "volume": 25659964
-        },
-        {
-            "province": "河南",
-            "volume": 22158842
-        },
-        {
-            "province": "四川",
-            "volume": 20245334
-        },
-        {
-            "province": "上海",
-            "volume": 17932076
-        },
-        {
-            "province": "福建",
-            "volume": 16764756
-        },
-        {
-            "province": "河北",
-            "volume": 16693725
-        },
-        {
-            "province": "湖北",
-            "volume": 16629541
-        },
-        {
-            "province": "湖南",
-            "volume": 15631252
-        },
-        {
-            "province": "辽宁",
-            "volume": 14508393
-        },
-        {
-            "province": "海外",
-            "volume": 14348118
-        },
-        {
-            "province": "安徽",
-            "volume": 14227123
-        },
-        {
-            "province": "陕西",
-            "volume": 13080864
-        },
-        {
-            "province": "广西",
-            "volume": 11037923
-        },
-        {
-            "province": "江西",
-            "volume": 10679289
-        },
-        {
-            "province": "重庆",
-            "volume": 10280066
-        },
-        {
-            "province": "黑龙江",
-            "volume": 10243769
-        },
-        {
-            "province": "山西",
-            "volume": 10153320
-        },
-        {
-            "province": "云南",
-            "volume": 9608523
-        },
-        {
-            "province": "吉林",
-            "volume": 8302635
-        },
-        {
-            "province": "贵州",
-            "volume": 7867499
-        },
-        {
-            "province": "内蒙古",
-            "volume": 7549547
-        },
-        {
-            "province": "天津",
-            "volume": 7495268
-        },
-        {
-            "province": "甘肃",
-            "volume": 6559616
-        },
-        {
-            "province": "新疆",
-            "volume": 6228774
-        },
-        {
-            "province": "香港",
-            "volume": 5432760
-        },
-        {
-            "province": "海南",
-            "volume": 4979599
-        },
-        {
-            "province": "台湾",
-            "volume": 4880545
-        },
-        {
-            "province": "宁夏",
-            "volume": 3709504
-        },
-        {
-            "province": "青海",
-            "volume": 3373376
-        },
-        {
-            "province": "西藏",
-            "volume": 2768280
-        },
-        {
-            "province": "澳门",
-            "volume": 2480638
-        },
-        // {
-        //     "province": "",
-        //     "volume": 386838
-        // },
-        // {
-        //     "province": "??????",
-        //     "volume": 2921
-        // },
-        // {
-        //     "province": "?????????",
-        //     "volume": 121
-        // }
-    ];
-
     code: string = `
         <section>
             <div style={{height: 300}}>
@@ -238,7 +79,7 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
                     // 图表的options配置，直接获得图表
                     options={null}
                     
-                    transform={[{'@convert': {'__names': 'name', '__value': 'name'}}]}
+                    transform={[{'@convert': {'__names': 'name', '__names': 'name'}}]}
 
                     // ? theme
                     // 图表的主体配色
@@ -267,25 +108,17 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
                 <header>MrEcharts <small>echarts集成</small></header>
                 <ins>由data直接快速生成echarts图表，并有setting进行精细控制</ins>
                 <main>
-                    {/*<JsxParser*/}
-                        {/*bindings={{*/}
-                            {/*pieData: this.data.pie*/}
-                        {/*}}*/}
-                        {/*components={{*/}
-                            {/*MrPanel,*/}
-                            {/*MrIcon,*/}
-                            {/*MrEcharts*/}
-                        {/*}}*/}
-                        {/*jsx={this.code}*/}
-                    {/*></JsxParser>*/}
-
-                    <MrEcharts style={{height: 600}} data={this.dataMap} chartTypes={'map::china'}
-                        transform={[{
-                            '@convert': {
-                                value: 'volume',
-                                name: 'province'
-                            }
-                        }]}></MrEcharts>
+                    <JsxParser
+                        bindings={{
+                            pieData: this.data.pie
+                        }}
+                        components={{
+                            MrPanel,
+                            MrIcon,
+                            MrEcharts
+                        }}
+                        jsx={this.code}
+                    ></JsxParser>
                 </main>
 
                 <details className="mt-16">

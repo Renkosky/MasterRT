@@ -187,6 +187,10 @@ export default {
             });
         });
 
+
+        // 过滤部分不合法数据
+        data = data.filter((o) => mu.isExist(o.name) && o.name !== '');
+
         let _data = mu.run(dataModel === 'single', () => {
             return mu.map(data, (o) => {
                 return {
