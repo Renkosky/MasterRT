@@ -12,7 +12,7 @@ import * as React from 'react';
 import {MrEchartsProps} from './mr-echarts.component';
 import {MrIcon, MrPanel, MrServices, MrEcharts, MrAutoBind, MrReq} from '../';
 import _mrEchartServices from './mr-echarts.services';
-import _mrServices from '../common/mr.services';
+import _mrServices from '../mr-common/mr.services';
 import * as _ from 'lodash';
 import * as mu from 'mzmu';
 import {MrEchartsDataView} from './mr-echarts-dataView.component';

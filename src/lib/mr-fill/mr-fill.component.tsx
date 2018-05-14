@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Children, cloneElement} from 'react';
-import MrServices from '../common/mr.services';
+import MrServices from '../mr-common/mr.services';
 import MrCol from './mr-col.component';
 import {MrElse, MrIf} from '../';
 import * as _ from 'lodash';

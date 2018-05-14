@@ -1,12 +1,11 @@
 import * as  React from 'react';
-import {MrCol, MrFill, MrIcon, MrIf, MrPanel, MrServices} from '../../lib';
+import {MrCol, MrFill, MrIcon, MrIf, MrElse, MrThen, MrPanel, MrServices} from '../../lib';
 import './masterrt.less';
 
 import MrsCode from '../../components/MrsCode';
 
 import JsxParser from 'react-jsx-parser';
 import {Button} from 'antd';
-import MrElse from '../../lib/mr-if/mr-else.component';
 
 interface MrsPanelProps {
 }
@@ -22,6 +21,19 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
         'show.jingyesi': true,
         'show.dengguanquelou': false,
         'show.minnong': true
+    };
+
+    aaa: any = {
+        a: {
+            title: '静夜思',
+            content: '床前明月光，疑是地上霜',
+            info: {author: '李白'}
+        },
+
+        b: {
+            title: '悯农',
+            content: '锄禾日当午，汗滴禾下土'
+        }
     };
 
     code: string = `
@@ -90,6 +102,7 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
 
     render() {
         let {showPanel, test} = this.state;
+        let abc = showPanel ? 'a' : 'b';
 
         return (
             <article className="mrs-article mrs-mrif">
@@ -98,18 +111,61 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
                 <main>
                     <Button type="primary" onClick={this.showPanel.bind(this)}>{showPanel ? '显示::悯农' : '显示::静夜思'}</Button>
 
-                    <JsxParser
-                        bindings={{showPanel, test}}
-                        components={{
-                            MrIf,
-                            MrElse,
-                            MrPanel,
-                            MrFill,
-                            MrCol,
-                            MrsCode
-                        }}
-                        jsx={this.code}
-                    ></JsxParser>
+                    {/*<JsxParser*/}
+                        {/*bindings={{showPanel, test}}*/}
+                        {/*components={{*/}
+                            {/*MrIf,*/}
+                            {/*MrElse,*/}
+                            {/*MrThen,*/}
+                            {/*MrPanel,*/}
+                            {/*MrFill,*/}
+                            {/*MrCol,*/}
+                            {/*MrsCode*/}
+                        {/*}}*/}
+                        {/*jsx={this.code}*/}
+                    {/*></JsxParser>*/}
+
+                    {/*<MrIf condition={showPanel}>*/}
+                        {/*{this.aaa[abc].info.author}*/}
+                    {/*</MrIf>*/}
+
+                    {/*<MrIf condition={showPanel}>*/}
+                        {/*{() => (<div>1. {this.aaa[abc].title} {this.aaa[abc].info.author}</div>)}*/}
+                    {/*</MrIf>*/}
+
+
+                    <MrIf condition={showPanel}>
+                        <MrThen>
+                            {() => (<div>2. {this.aaa[abc].title} {this.aaa[abc].info.author}</div>)}
+                        </MrThen>
+
+                        <MrElse>
+                            {() => (<div>2-else. {this.aaa[abc].title} {this.aaa[abc].content}</div>)}
+                        </MrElse>
+                    </MrIf>
+
+                    <MrIf condition={showPanel}>
+                        <MrElse>
+                            <MrThen>
+                                {() => (<div>3-else. {this.aaa[abc].title} {this.aaa[abc].content}</div>)}
+                            </MrThen>
+                        </MrElse>
+                    </MrIf>
+
+
+                    {/*<MrIf condition={showPanel}>*/}
+
+                        {/*<MrThen>*/}
+                            {/*{() => (*/}
+                                {/*<div>abcdef</div>*/}
+                            {/*)}*/}
+                        {/*</MrThen>*/}
+
+                        {/*<MrElse>*/}
+                            {/*<div>锄禾日当午，汗滴禾下土</div>*/}
+                        {/*</MrElse>*/}
+
+                    {/*</MrIf>*/}
                 </main>
 
                 <details className="mt-16">

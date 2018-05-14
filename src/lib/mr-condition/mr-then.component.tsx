@@ -1,16 +1,20 @@
 import * as React from 'react';
 import * as _ from 'lodash';
+import * as mu from 'mzmu';
 
-interface MrElseProps {
-    condition?: boolean | any
+interface MrThenProps {
+    condition?: boolean | any,
+    _gene?: any
 }
 
-export default class MrElse extends React.Component<MrElseProps, {}> {
+export default class MrThen extends React.Component<MrThenProps, {}> {
 
     transmit(): any {
-        let {children} = this.props;
+        let {children, _gene, ...props} = this.props;
 
-        let props: any = _.omit(this.props, 'condition', 'children');
+        if(_gene.condition && typeof children === 'function'){
+            return (children as any)(_gene);
+        }
 
         if (React.Children.count(children)) {
             children = React.Children.map(children, (col: any) => {
@@ -24,8 +28,7 @@ export default class MrElse extends React.Component<MrElseProps, {}> {
     }
 
     render() {
-        let {condition} = this.props;
         let children = this.transmit();
-        return (condition ? children : null);
+        return (children);
     }
 }

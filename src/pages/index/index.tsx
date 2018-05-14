@@ -1,6 +1,6 @@
 import React from 'react';
 import './index.less';
-import MrAutoBind from '../../lib/common/mr-auto-bind';
+import MrAutoBind from '../../lib/mr-common/mr-auto-bind';
 import {MrIf, MrPanel} from '../../lib';
 
 interface IndexProps {

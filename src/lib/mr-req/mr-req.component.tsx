@@ -22,7 +22,7 @@
 
 import * as React from 'react';
 import * as mu from 'mzmu';
-import MrServices from '../common/mr.services';
+import MrServices from '../mr-common/mr.services';
 import * as _ from 'lodash';
 
 interface iMrReq {
