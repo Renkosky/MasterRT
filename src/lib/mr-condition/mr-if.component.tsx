@@ -75,9 +75,9 @@ export default class MrIf extends React.Component<MrIfProps, {}> {
             } else if (typeof type === 'function') {
                 _props['condition'] = condition;
                 _props['_gene'] = _gene;
-                return React.cloneElement(child, {..._props, ...(child.props || {})});
+                return condition ? React.cloneElement(child, {..._props, ...(child.props || {})}) : null;
             } else {
-                return child;
+                return condition ? child : null;
             }
         });
     }

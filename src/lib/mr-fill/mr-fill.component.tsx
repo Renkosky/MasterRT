@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Children, cloneElement} from 'react';
 import MrServices from '../mr-common/mr.services';
 import MrCol from './mr-col.component';
-import {MrElse, MrIf} from '../';
+import {MrElse, MrIf, MrRules} from '../';
 import * as _ from 'lodash';
 
 declare var require: any;
@@ -15,12 +15,14 @@ interface MrFillProps {
     // 子元素呈现类型 （fill: 100%高度, auto: 自适应高度)
     type?: string;
     h100?: boolean;
+    // todo 设定子元素为空时，父元素显示规则
+    empty?: string;
 }
 
 export default class MrFill extends React.Component<MrFillProps, {}> {
 
     isConditional (type: any) {
-        return typeof type === 'function' && (type === MrIf || type === MrElse);
+        return typeof type === 'function' && (type === MrIf || type === MrElse  || type === MrRules);
     }
 
     // 向子组件传递基因信息

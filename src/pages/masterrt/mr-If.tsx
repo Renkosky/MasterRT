@@ -1,5 +1,5 @@
 import * as  React from 'react';
-import {MrCol, MrFill, MrIcon, MrIf, MrElse, MrThen, MrPanel, MrServices} from '../../lib';
+import {MrCol, MrFill, MrIcon, MrIf, MrElse, MrThen, MrPanel, MrServices, MrRules} from '../../lib';
 import './masterrt.less';
 
 import MrsCode from '../../components/MrsCode';
@@ -40,7 +40,7 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
         <section className="mt-16">
         
             <MrIf condition={showPanel}>
-                <MrPanel title="静夜思::李白">
+                <MrPanel title="静夜思::李白 (只可见一首)">
                     床前明月光<br />
                     疑是地上霜<br />
                     举头望明月<br />
@@ -48,7 +48,7 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
                 </MrPanel>
                 
                 <MrElse>
-                    <MrPanel title="悯农">
+                    <MrPanel title="悯农:: (只可见一首)">
                         锄禾日当午 汗滴禾下土<br />
                         谁知盘中餐 粒粒皆辛苦<br />
                     </MrPanel>
@@ -59,7 +59,7 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
             
             <MrPanel title="按权限规则判断::rule" className="mt-16" bodyStyle={{'padding': '8px 16px'}}>
                 <MrFill gutter={16}>
-                    <MrIf rules={'show.jingyesi-1'}>
+                    <MrRules keys={'show.jingyesi-1'}>
                         <MrCol span={1}>
                             <MrPanel title="静夜思::show.jingyesi">
                                 床前明月光<br />
@@ -68,23 +68,23 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
                                 低头思故乡<br />
                             </MrPanel>
                         </MrCol>
-                    </MrIf>
-                    <MrIf rules={'show.dengguanquelou'}>
+                    </MrRules>
+                    <MrRules keys={'show.dengguanquelou'}>
                         <MrCol span={1}>
                             <MrPanel title="登鹳雀楼::show.dengguanquelou">
                                 白日依山尽，黄河入海流。<br />
                                 欲穷千里目，更上一层楼。<br />
                             </MrPanel>
                         </MrCol>
-                    </MrIf>
-                    <MrIf rules={'show.minnong'}>
+                    </MrRules>
+                    <MrRules keys={'show.minnong'}>
                         <MrCol span={1}>
                             <MrPanel title="悯农::show.minnong">
                                 锄禾日当午 汗滴禾下土<br />
                                 谁知盘中餐 粒粒皆辛苦<br />
                             </MrPanel>
                         </MrCol>
-                    </MrIf>
+                    </MrRules>
                 </MrFill>
             </MrPanel>
             
@@ -111,19 +111,20 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
                 <main>
                     <Button type="primary" onClick={this.showPanel.bind(this)}>{showPanel ? '显示::悯农' : '显示::静夜思'}</Button>
 
-                    {/*<JsxParser*/}
-                        {/*bindings={{showPanel, test}}*/}
-                        {/*components={{*/}
-                            {/*MrIf,*/}
-                            {/*MrElse,*/}
-                            {/*MrThen,*/}
-                            {/*MrPanel,*/}
-                            {/*MrFill,*/}
-                            {/*MrCol,*/}
-                            {/*MrsCode*/}
-                        {/*}}*/}
-                        {/*jsx={this.code}*/}
-                    {/*></JsxParser>*/}
+                    <JsxParser
+                        bindings={{showPanel, test}}
+                        components={{
+                            MrIf,
+                            MrElse,
+                            MrThen,
+                            MrRules,
+                            MrPanel,
+                            MrFill,
+                            MrCol,
+                            MrsCode
+                        }}
+                        jsx={this.code}
+                    ></JsxParser>
 
                     {/*<MrIf condition={showPanel}>*/}
                         {/*{this.aaa[abc].info.author}*/}
@@ -134,23 +135,27 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
                     {/*</MrIf>*/}
 
 
-                    <MrIf condition={showPanel}>
-                        <MrThen>
-                            {() => (<div>2. {this.aaa[abc].title} {this.aaa[abc].info.author}</div>)}
-                        </MrThen>
+                    {/*<MrIf condition={showPanel}>*/}
+                        {/*<MrThen>*/}
+                            {/*{() => (<div>2. {this.aaa[abc].title} {this.aaa[abc].info.author}</div>)}*/}
+                        {/*</MrThen>*/}
 
-                        <MrElse>
-                            {() => (<div>2-else. {this.aaa[abc].title} {this.aaa[abc].content}</div>)}
-                        </MrElse>
-                    </MrIf>
+                        {/*<MrElse>*/}
+                            {/*{() => (<div>2-else. {this.aaa[abc].title} {this.aaa[abc].content}</div>)}*/}
+                        {/*</MrElse>*/}
+                    {/*</MrIf>*/}
 
-                    <MrIf condition={showPanel}>
-                        <MrElse>
-                            <MrThen>
-                                {() => (<div>3-else. {this.aaa[abc].title} {this.aaa[abc].content}</div>)}
-                            </MrThen>
-                        </MrElse>
-                    </MrIf>
+                    {/*<MrIf condition={showPanel}>*/}
+                        {/*<MrElse>*/}
+                            {/*<MrThen>*/}
+                                {/*{() => (<div>3-else. {this.aaa[abc].title} {this.aaa[abc].content}</div>)}*/}
+                            {/*</MrThen>*/}
+                        {/*</MrElse>*/}
+                    {/*</MrIf>*/}
+
+                    {/*<MrRules keys={['!!show.dengguanquelou']}>*/}
+                        {/*show.jingyesi-1*/}
+                    {/*</MrRules>*/}
 
 
                     {/*<MrIf condition={showPanel}>*/}

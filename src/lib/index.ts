@@ -8,6 +8,7 @@ export {default as MrEcharts} from './mr-echarts/mr-echarts.component';
 export {default as MrEchartsPanel} from './mr-echarts/mr-echarts-panel.component';
 export {default as MrIf} from './mr-condition/mr-if.component';
 export {default as MrThen} from './mr-condition/mr-then.component';
+export {default as MrRules} from './mr-condition/mr-rules.compontent';
 export {default as MrIcon} from './mr-icon/mr-icon.component';
 export {default as MrFill} from './mr-fill/mr-fill.component';
 export {default as MrCol} from './mr-fill/mr-col.component';

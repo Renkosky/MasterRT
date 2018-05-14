@@ -1,3 +1,11 @@
+/**
+ * MrElse
+ *
+ * @author mizi.lin
+ *
+ * @uodate v2.20180514 重写MrIf实现方式，继而影响MrElse使用方式
+ */
+
 import * as React from 'react';
 import * as _ from 'lodash';
 import * as mu from 'mzmu';
@@ -18,8 +26,6 @@ export default class MrElse extends React.Component<MrElseProps, {}> {
         let {children, condition, _gene = {}, ...props} = this.props;
 
         condition = !_gene['condition'] && mu.ifnvl(condition, true);
-
-        console.debug(condition);
 
         /**
          * 若子元素不存在

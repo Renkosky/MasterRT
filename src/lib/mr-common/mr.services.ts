@@ -54,6 +54,10 @@ class MrServices {
         download(...arg);
     }
 
+    upArray(every: any) {
+        return mu.isArray(every) ? every : [every];
+    }
+
     /**
      * 设置HTTP headers
      * @param headers
@@ -101,6 +105,16 @@ class MrServices {
 
     getRules() {
         return this._rules;
+    }
+
+    _ruleValue: boolean;
+
+    setRuleValue(val: boolean) {
+        this._ruleValue = val;
+    }
+
+    getRuleValue() {
+        return this._ruleValue;
     }
 
     /**
