@@ -171,47 +171,43 @@ export default {
      * @return {*}
      */
     transform(data, transform = [], dataType = 'dataSource', dataModel = 'group', setting = {}) {
+        // 复制原数据，作为返回数据比较使用
         let $data = mu.clone(data);
 
         mu.run(transform, () => {
             mu.each(transform, (handle, key) => {
                 if (typeof handle === 'function') {
-                    $data = handle($data);
+                    data = handle(data);
                 } else {
                     let [fnn] = _.keys(handle);
                     mu.if(this[fnn], (fn) => {
-                        $data = fn($data, handle[fnn]);
+                        data = fn(data, handle[fnn]);
                     });
                 }
             });
         });
 
         let _data = mu.run(dataModel === 'single', () => {
-            return mu.map($data, (o) => {
+            return mu.map(data, (o) => {
                 return {
                     __key__: o[CHART_NAME],
                     __val__: o
                 };
             }, {});
         }, () => {
-            return mu.groupArray($data, CHART_NAME);
+            return mu.groupArray(data, CHART_NAME);
         });
 
         let _legend = mu.map(_data, (o, name) => {
             return {name};
         }, []);
 
-        let _series = mu.map(
-            _legend,
-            (legend) => {
-                return _data[mu.ifnvl(legend.name, legend)];
-            },
-            []
-        );
+        let _series = mu.map(_legend, (legend) => {
+            return _data[mu.ifnvl(legend.name, legend)];
+        }, []);
 
-        let _x = dataModel === 'single'
-            ? null
-            : mu.map(mu.groupArray($data, CHART_X), (o, name) => {
+        let _x = dataModel === 'single' ? null
+            : mu.map(mu.groupArray(data, CHART_X), (o, name) => {
                 return name;
             }, []);
 
@@ -219,6 +215,7 @@ export default {
 
         return {
             $data,
+            // $transform: data,
             _legend,
             _series,
             _x,
@@ -388,11 +385,12 @@ export default {
                          * 虚拟
                          * @type {*}
                          */
-                        let max: any = _.maxBy(rst.$data, (o: any) => o.value) || {};
+                        let max: any = _.maxBy(rst._series, (o: any) => o.value) || {};
                         options = _.set(options, 'visualMap.max', max.value);
                         break;
                 }
             },
+
             () => {
                 let data;
 
@@ -402,7 +400,7 @@ export default {
                          * 虚拟
                          * @type {*}
                          */
-                        let max: any = _.maxBy(rst.$data, (o: any) => o.value) || {};
+                        let max: any = _.maxBy(rst._series, (o: any) => o.value) || {};
                         options = _.set(options, 'visualMap.max', max.value);
 
                         let dataMap = mu.map(rst._series, (o, name) => {
