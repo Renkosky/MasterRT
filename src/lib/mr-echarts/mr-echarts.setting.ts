@@ -127,7 +127,8 @@ export const defOptions = {
  */
 export const defDataModel = {
     pie: 'single',
-    wordCloud: 'single'
+    wordCloud: 'single',
+    map: 'single'
     // scatter: 'single'
 };
 
@@ -146,9 +147,6 @@ export const defSubType = {
  * @param _colors
  */
 export function subSetting(_colors) {
-
-
-    console.debug(_colors);
 
     return {
         // 不显示xy轴
@@ -326,7 +324,7 @@ export function subSetting(_colors) {
             'geo.map': 'china',
             'series[0].mapType': 'china',
             'series[0].geoIndex': 0,
-            'series[0].name': '地域分布'
+            'series[0].name': '地域'
         },
         // 仪表盘: 半圆
         'gauge::half': {

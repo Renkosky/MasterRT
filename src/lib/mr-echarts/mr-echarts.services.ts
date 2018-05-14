@@ -83,9 +83,9 @@ export default {
             lineBarExchange: (options) => {
                 let series = options.series;
                 mu.each(series, (o) => {
-                    if(o.type === 'line') {
+                    if (o.type === 'line') {
                         o.type = 'bar';
-                    } else if(o.type === 'bar') {
+                    } else if (o.type === 'bar') {
                         o.type = 'line';
                     }
                 });
@@ -175,26 +175,26 @@ export default {
 
         mu.run(transform, () => {
             mu.each(transform, (handle, key) => {
-                if(typeof handle === 'function'){
-                    data = handle(data);
+                if (typeof handle === 'function') {
+                    $data = handle($data);
                 } else {
                     let [fnn] = _.keys(handle);
                     mu.if(this[fnn], (fn) => {
-                        data = fn(data, handle[fnn]);
+                        $data = fn($data, handle[fnn]);
                     });
                 }
             });
         });
 
         let _data = mu.run(dataModel === 'single', () => {
-            return mu.map(data, (o) => {
+            return mu.map($data, (o) => {
                 return {
                     __key__: o[CHART_NAME],
                     __val__: o
                 };
             }, {});
         }, () => {
-            return mu.groupArray(data, CHART_NAME);
+            return mu.groupArray($data, CHART_NAME);
         });
 
         let _legend = mu.map(_data, (o, name) => {
@@ -209,16 +209,11 @@ export default {
             []
         );
 
-        let _x =
-            dataModel === 'single'
-                ? null
-                : mu.map(
-                mu.groupArray(data, CHART_X),
-                (o, name) => {
-                    return name;
-                },
-                []
-                );
+        let _x = dataModel === 'single'
+            ? null
+            : mu.map(mu.groupArray($data, CHART_X), (o, name) => {
+                return name;
+            }, []);
 
         let _dataView = this.getDataView(_series, _legend, _x);
 
@@ -237,8 +232,7 @@ export default {
         let _legend = mu.clone(legend);
         let _x = mu.clone(x);
 
-
-        if(mu.type(_series[0], 'object')){
+        if (mu.type(_series[0], 'object')) {
             _series = [_series];
         }
 
@@ -251,7 +245,7 @@ export default {
             return arr;
         });
 
-        if(mu.isEmpty(_x)) {
+        if (mu.isEmpty(_x)) {
             _x = mu.map(_dataView[0].length - 1, (i, inx) => {
                 let x = legend[inx] || 0;
                 x = x.name || x;
@@ -283,11 +277,11 @@ export default {
                 let {name, type, data} = item;
                 let color = names[name];
 
-                if(mu.or(type, 'pie') || !color) {
+                if (mu.or(type, 'pie') || !color) {
                     mu.each(data, (d) => {
                         let name = d.name;
                         let color = names[name];
-                        if(color){
+                        if (color) {
                             _.set(d, 'itemStyle.color', color);
                         }
                     });
@@ -365,8 +359,6 @@ export default {
                     );
                     break;
                 case 'map':
-                    let max: any = _.maxBy(rst.$data, (o: any) => o.value) || {};
-                    options = _.set(options, 'visualMap.max', max.value);
                     break;
                 case 'gauge':
                 case 'scatter':
@@ -382,31 +374,43 @@ export default {
          * @type {*[]}
          */
 
-        mu.run(
-            dataModel === 'single',
-            () => {
+        mu.run(dataModel === 'single', () => {
                 options.series = [
                     {
                         type: chartType,
                         data: rst._series
                     }
                 ];
+
+                switch (chartType) {
+                    case 'map':
+                        /**
+                         * 虚拟
+                         * @type {*}
+                         */
+                        let max: any = _.maxBy(rst.$data, (o: any) => o.value) || {};
+                        options = _.set(options, 'visualMap.max', max.value);
+                        break;
+                }
             },
             () => {
                 let data;
 
                 switch (chartType) {
                     case 'map':
-                        let dataMap = mu.map(
-                            rst._series,
-                            (o, name) => {
-                                return {
-                                    name: _.get(o, '[0].name'),
-                                    value: (mu.map(o, (oo) => oo.value, []) || [])[0]
-                                };
-                            },
-                            []
-                        );
+                        /**
+                         * 虚拟
+                         * @type {*}
+                         */
+                        let max: any = _.maxBy(rst.$data, (o: any) => o.value) || {};
+                        options = _.set(options, 'visualMap.max', max.value);
+
+                        let dataMap = mu.map(rst._series, (o, name) => {
+                            return {
+                                name: _.get(o, '[0].name'),
+                                value: (mu.map(o, (oo) => oo.value, []) || [])[0]
+                            };
+                        }, []);
 
                         options.series = [
                             {
@@ -448,6 +452,7 @@ export default {
                         break;
 
                     case 'scatter':
+
                         data = mu.map(
                             rst._series,
                             (o, name) => {
@@ -485,9 +490,6 @@ export default {
                 }
             }
         );
-
-
-
 
         return options;
     },
