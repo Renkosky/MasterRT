@@ -244,9 +244,9 @@ export default {
             arr.unshift(mu.isEmpty(_x) ? '' : legendName);
             arr = mu.map(arr, (o) => o.value || o);
             return arr;
-        });
+        }) || [];
 
-        if (mu.isEmpty(_x)) {
+        if (mu.isEmpty(_x) && _dataView && _dataView[0] && _dataView[0].length) {
             _x = mu.map(_dataView[0].length - 1, (i, inx) => {
                 let x = legend[inx] || 0;
                 x = x.name || x;
@@ -254,6 +254,7 @@ export default {
             }, []);
         }
 
+        _x = mu.ifnvl(_x, []);
         _x.unshift('');
         _dataView.unshift(_x);
 
