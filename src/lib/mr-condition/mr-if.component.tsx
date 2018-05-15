@@ -15,18 +15,30 @@ import * as React from 'react';
 import * as mu from 'mzmu';
 import MrElse from './mr-else.component';
 
-export interface MrIfProps {
+export interface MrIfProps extends MrInterface {
+    /**
+     * condition: any
+     * 执行条件
+     * 可以是任意值
+     */
     condition?: any;
-    rules?: string | string[];
 
     /**
-     * // todo
-     * transmit?: string | string[] = ['condition']
-     * 显性基因传递信息
+     * falseType?: string = 'if'
+     * 假值类型
+     *
+     * @author mizi.lin
+     * 我认为, 在JS的世界里没有绝对的"真 true"和"假 false"（也许真实的世界也是如此）
+     * 我对某一种特性进行区分其真假值
+     *
+     * 1. exist: 存在为真，不存在为假
+     * ::=> 即在 null, undefined 为 false, 其他情况为真
+     * 2. if 使用 if 运算符判断的假为 false, 其他为真
+     * ::=> if(condition) 或 !condition 或 三元
+     * 3. empty: 所有我们认为空或没有都未false
+     * ::=> [] 空数组，{} 空对象，noop 空函数，0，' ' 空字符串， undefined, null
      */
-    transmit?: string | string[];
-    // 父组件传递给条件组件隐性基因信息
-    _gene?: any;
+    falseType?: string;
 }
 
 export default class MrIf extends React.Component<MrIfProps, {}> {
@@ -37,7 +49,19 @@ export default class MrIf extends React.Component<MrIfProps, {}> {
      * @return {any}
      */
     inheritance(): any {
-        let {children, condition, _gene = {}, ...props} = this.props;
+        let {children, condition, falseType, _gene = {}, ...props} = this.props;
+
+        switch (falseType) {
+            case 'if':
+                condition = !!condition;
+                break;
+            case 'empty':
+                condition = mu.isNotEmpty(condition);
+                break;
+            case 'exist':
+                condition = mu.isNotExist(condition);
+                break;
+        }
 
         /**
          * 若子元素不存在
@@ -51,7 +75,7 @@ export default class MrIf extends React.Component<MrIfProps, {}> {
          * 若子元素有且仅有一个function
          */
         if(typeof children === 'function'){
-            return condition && (children as any)(condition, _gene);
+            return condition ? (children as any)(condition, _gene) : null;
         }
 
         /**
@@ -79,6 +103,10 @@ export default class MrIf extends React.Component<MrIfProps, {}> {
             }
         });
     }
+
+    static defaultProps: any = {
+        falseType: 'if'
+    };
 
     render() {
         let children = this.inheritance();

@@ -12,16 +12,16 @@ export default class MrThen extends React.Component<MrThenProps, {}> {
     transmit(): any {
         let {children, _gene, ...props} = this.props;
 
-        if(_gene.condition && typeof children === 'function'){
-            return (children as any)(_gene);
+        console.debug(children, this.props);
+
+        if(typeof children === 'function'){
+            return _gene.condition ? (children as any)(_gene) : null;
         }
 
         if (React.Children.count(children)) {
-            children = React.Children.map(children, (col: any) => {
-                return col.props ? React.cloneElement(col, props) : col;
+            return React.Children.map(children, (col: any) => {
+                return _.get(col, 'props') ? React.cloneElement(col, props) : col;
             });
-
-            return children;
         }
 
         return null;

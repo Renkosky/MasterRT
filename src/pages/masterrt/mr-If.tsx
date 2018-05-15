@@ -17,30 +17,10 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
         test: true,
     };
 
-    rules: any = {
-        'show.jingyesi': true,
-        'show.dengguanquelou': false,
-        'show.minnong': true
-    };
-
-    aaa: any = {
-        a: {
-            title: '静夜思',
-            content: '床前明月光，疑是地上霜',
-            info: {author: '李白'}
-        },
-
-        b: {
-            title: '悯农',
-            content: '锄禾日当午，汗滴禾下土'
-        }
-    };
-
     code: string = `
         <section className="mt-16">
-        
             <MrIf condition={showPanel}>
-                <MrPanel title="静夜思::李白 (只可见一首)">
+                <MrPanel title="静夜思::李白 ">
                     床前明月光<br />
                     疑是地上霜<br />
                     举头望明月<br />
@@ -48,47 +28,29 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
                 </MrPanel>
                 
                 <MrElse>
-                    <MrPanel title="悯农:: (只可见一首)">
+                    <MrPanel title="悯农::李绅">
                         锄禾日当午 汗滴禾下土<br />
                         谁知盘中餐 粒粒皆辛苦<br />
-                    </MrPanel>
+                    </MrPanel>  
                 </MrElse>
             </MrIf>
-            
-            <hr />
-            
-            <MrPanel title="按权限规则判断::rule" className="mt-16" bodyStyle={{'padding': '8px 16px'}}>
-                <MrFill gutter={16}>
-                    <MrRules keys={'show.jingyesi-1'}>
-                        <MrCol span={1}>
-                            <MrPanel title="静夜思::show.jingyesi">
-                                床前明月光<br />
-                                疑是地上霜<br />
-                                举头望明月<br />
-                                低头思故乡<br />
-                            </MrPanel>
-                        </MrCol>
-                    </MrRules>
-                    <MrRules keys={'show.dengguanquelou'}>
-                        <MrCol span={1}>
-                            <MrPanel title="登鹳雀楼::show.dengguanquelou">
-                                白日依山尽，黄河入海流。<br />
-                                欲穷千里目，更上一层楼。<br />
-                            </MrPanel>
-                        </MrCol>
-                    </MrRules>
-                    <MrRules keys={'show.minnong'}>
-                        <MrCol span={1}>
-                            <MrPanel title="悯农::show.minnong">
-                                锄禾日当午 汗滴禾下土<br />
-                                谁知盘中餐 粒粒皆辛苦<br />
-                            </MrPanel>
-                        </MrCol>
-                    </MrRules>
-                </MrFill>
-            </MrPanel>
-            
         </section>
+        
+        <MrIf condition={showPanel}>
+            {/*!!!因显示源码控件，不支持直接使用匿名函数，所以用函数名代替*/}
+            {/*<MrThen>*/}
+                {/*{() => (*/}
+                    {/*<MrPanel title="静夜思::李白">*/}
+                        {/*床前明月光<*/}
+                        {/*疑是地上霜<*/}
+                        {/*举头望明月<*/}
+                        {/*低头思故乡<*/}
+                    {/*</MrPanel>*/}
+                {/*)}*/}
+            {/*</MrThen>*/}
+            <MrThen>{jingyesi}</MrThen>
+            <MrElse>{minnong}</MrElse>
+        </MrIf>
     `;
 
     showPanel() {
@@ -97,22 +59,37 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
     }
 
     componentWillMount() {
-        MrServices.setRules(this.rules);
     }
 
     render() {
-        let {showPanel, test} = this.state;
-        let abc = showPanel ? 'a' : 'b';
+        let {showPanel} = this.state;
 
         return (
             <article className="mrs-article mrs-mrif">
-                <header>MrIf <small>条件判断</small></header>
-                <ins>条件判断，包含了子组件MrElse </ins>
+                <header>MrIf <small>v2.20180514</small></header>
+                <ins>条件判断，可代替在源码中使用三元或&&等运算符 </ins>
                 <main>
                     <Button type="primary" onClick={this.showPanel.bind(this)}>{showPanel ? '显示::悯农' : '显示::静夜思'}</Button>
 
                     <JsxParser
-                        bindings={{showPanel, test}}
+                        bindings={{
+                            showPanel,
+                            jingyesi: ()=>(
+                                <MrPanel title="静夜思::李白">
+                                    床前明月光<br />
+                                    疑是地上霜<br />
+                                    举头望明月<br />
+                                    低头思故乡<br />
+                                </MrPanel>
+                            ),
+                            minnong: ()=>(
+                                <MrPanel title="悯农::李绅">
+                                    锄禾日当午 汗滴禾下土<br />
+                                    谁知盘中餐 粒粒皆辛苦<br />
+                                </MrPanel>
+                            )
+                        }}
+
                         components={{
                             MrIf,
                             MrElse,
@@ -126,51 +103,7 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
                         jsx={this.code}
                     ></JsxParser>
 
-                    {/*<MrIf condition={showPanel}>*/}
-                        {/*{this.aaa[abc].info.author}*/}
-                    {/*</MrIf>*/}
 
-                    {/*<MrIf condition={showPanel}>*/}
-                        {/*{() => (<div>1. {this.aaa[abc].title} {this.aaa[abc].info.author}</div>)}*/}
-                    {/*</MrIf>*/}
-
-
-                    {/*<MrIf condition={showPanel}>*/}
-                        {/*<MrThen>*/}
-                            {/*{() => (<div>2. {this.aaa[abc].title} {this.aaa[abc].info.author}</div>)}*/}
-                        {/*</MrThen>*/}
-
-                        {/*<MrElse>*/}
-                            {/*{() => (<div>2-else. {this.aaa[abc].title} {this.aaa[abc].content}</div>)}*/}
-                        {/*</MrElse>*/}
-                    {/*</MrIf>*/}
-
-                    {/*<MrIf condition={showPanel}>*/}
-                        {/*<MrElse>*/}
-                            {/*<MrThen>*/}
-                                {/*{() => (<div>3-else. {this.aaa[abc].title} {this.aaa[abc].content}</div>)}*/}
-                            {/*</MrThen>*/}
-                        {/*</MrElse>*/}
-                    {/*</MrIf>*/}
-
-                    {/*<MrRules keys={['!!show.dengguanquelou']}>*/}
-                        {/*show.jingyesi-1*/}
-                    {/*</MrRules>*/}
-
-
-                    {/*<MrIf condition={showPanel}>*/}
-
-                        {/*<MrThen>*/}
-                            {/*{() => (*/}
-                                {/*<div>abcdef</div>*/}
-                            {/*)}*/}
-                        {/*</MrThen>*/}
-
-                        {/*<MrElse>*/}
-                            {/*<div>锄禾日当午，汗滴禾下土</div>*/}
-                        {/*</MrElse>*/}
-
-                    {/*</MrIf>*/}
                 </main>
 
                 <details className="mt-16">
@@ -178,29 +111,68 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
                     <MrsCode code={this.code}></MrsCode>
                 </details>
 
-                <aside className="mt-16">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>condition?: any</td>
-                                <td>根据条件真假值，判断是否显示</td>
-                            </tr>
-                            <tr>
-                                <td>rule?: string</td>
-                                <td>
-                                    规则权限 <br />
+                <MrPanel title="接口 Interface" className="mt-16">
+<MrsCode code={`
+export interface MrIfProps extends MrInterface {
+    /**
+     * condition: any
+     * 执行条件
+     * 可以是任意值
+     */
+    condition?: any;
 
-                                    规则为一个JSON，需要配置到通过MrServices进行配置 <br />
+    /**
+     * falseType?: string = 'if'
+     * 假值类型
+     *
+     * @author mizi.lin
+     * 我认为, 在JS的世界里没有绝对的"真 true"和"假 false"（也许真实的世界也是如此）
+     * 我对某一种特性进行区分其真假值
+     *
+     * 1. exist: 存在为真，不存在为假
+     * ::=> 即在 null, undefined 为 false, 其他情况为真
+     * 2. if 使用 if 运算符判断的假为 false, 其他为真
+     * ::=> if(condition) 或 !condition 或 三元
+     * 3. empty: 所有我们认为空或没有都未false
+     * ::=> [] 空数组，{} 空对象，noop 空函数，0，' ' 空字符串， undefined, null
+     */
+    falseType?: string;
+}
 
-                                    <MrsCode code={'MrServices.setRules({\'show.jingyesi\': true,\n' +
-                                    '        \'show.dengguanquelou\': false,\n' +
-                                    '        \'show.minnong\': true})'}></MrsCode>
+static defaultProps: any = {
+    falseType: 'if'
+};
 
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </aside>
+`} />
+
+                </MrPanel>
+
+                <MrPanel title="使用指南" className="mt-16">
+<MrsCode code={`
+/**
+ * 在使用MrIf中，若碰到condition成立前，子元素内变量未赋值情况
+ * React会报错，因为在React机制中会预先执行变量环境，
+ * 若变量未申明，则报错
+ * 当这样的情况时，可以将子元素包裹在匿名函数里，待condition成立时执行
+ *
+ * @Mark 所有的条件组件均如此，如MrElse, MrRules 等
+ */
+
+// 若MrIf中没有其他元素的时候可以直接使用匿名函数
+<MrIf condition={conditon}>
+    {() => (<div>...</div>)}
+</MrIf>
+
+// 若有其他元素时，请将匿名函数包裹在MrThen下面
+<MrIf condition={conditon}>
+    <MrThen>
+        {() => (<div>...</div>)}
+    </MrThen>
+    <MrElse>...</MrElse>
+</MrIf>
+
+`} />
+                </MrPanel>
             </article>
         );
 
