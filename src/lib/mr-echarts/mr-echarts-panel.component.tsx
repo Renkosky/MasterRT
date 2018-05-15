@@ -6,6 +6,9 @@
  * 按照图表类型显示工具条
  * 可以移除工具条
  * 工具条显示类型（toggle, hide, visible)
+ *
+ * @update mizi.lin@v0.1.21-b1.20180515
+ * ::=> MrReq修改部分相应规则，MrEchartsPanel 重新设定规则调用, support multiple req
  */
 
 import * as React from 'react';
@@ -35,7 +38,7 @@ interface MrEchartsPanelProps extends MrEchartsProps {
     data?: any;
     dataType?: any;
     dataModel?: any;
-    req?: any;
+    req?: any | any[];
 
     title?: string;
     border?: any;
@@ -43,6 +46,18 @@ interface MrEchartsPanelProps extends MrEchartsProps {
     h100?: boolean;
     className?: string;
     style?: any;
+
+    /**
+     * mrReq?: MrReqProps
+     * MrReq 部分interface
+     *
+     * MrReq: any {
+     *    transmit;
+     *    transform;
+     *    ...
+     * }
+     */
+    mrReq?: any;
 
     /**
      * omitTools?: string
@@ -218,7 +233,28 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
         const {title, style, className, h100, bodyStyle, border, showToolbar, transform} = this.props;
         const {chartTypes, data, dataType, dataModel} = this.props;
         const {options, renderType, theme} = this.props;
-        const {req} = this.props;
+
+        let {req: mrReqReq, mrReq = {}} = this.props;
+
+        mu.run(mrReqReq, () => {
+            mrReq['req'] = mrReqReq;
+        });
+
+        let {transmit = 'data:res.data', req, transform: mrReqTransform, force} = mrReq;
+
+        // 默认在MrEchartsPanel中多重数组处理，合并data信息
+        // todo 多轴处理
+        if(req && !mrReqTransform) {
+            mrReqTransform = (res) => {
+                if(res.length > 1) {
+                    let ds = mu.map(res, (res) => res.data);
+                    return _.concat([], ...ds);
+                } else {
+                    return res;
+                }
+            }
+        }
+
 
         let {fullScreen, dataView, setting} = this.state;
         setting = mu.clone(setting);

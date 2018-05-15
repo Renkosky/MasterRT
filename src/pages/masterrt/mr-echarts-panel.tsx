@@ -13,13 +13,15 @@ export default class MrsEchartsPanel extends React.Component<MrsEchartsPanelProp
         api: 'line',
         method: 'get',
         // 数据修改
-        transform: (data) => {
-            return mu.map(data, (o) => {
+        transform: (res) => {
+            let {data} = res;
+            res.data = mu.map(data, (o) => {
                 o.name = o.type;
                 o.x = o.date;
                 o.value = o.volume;
                 return o;
             });
+            return res;
         }
     };
 
@@ -69,7 +71,11 @@ export default class MrsEchartsPanel extends React.Component<MrsEchartsPanelProp
 
         <MrEchartsPanel
             title="Use Req"
-            style={{height: 400}} chartTypes={'line'} req={req} transform={[{'@convert': {'__names': 'name'}}]} />
+            style={{height: 400}} 
+            chartTypes={'line'} 
+            req={req} 
+            transform={[{'@convert': {'__names': 'name'}}]} 
+        />
     `;
 
     render() {
@@ -77,8 +83,8 @@ export default class MrsEchartsPanel extends React.Component<MrsEchartsPanelProp
         let {req} = this.state;
         return (
             <article className="mrs-article mrs-MrFill">
-                <header>MrEchartsPanel <small>一个基于MrPanel, MrReq, MrEcharts 集成的显示UI</small></header>
-                <ins>支持各种激活Echarts方式，以及使用Tool控制Echarts显示方式</ins>
+                <header>MrEchartsPanel <small>@v0.1.21-b1.20180515</small></header>
+                <ins>一个基于MrPanel, MrReq, MrEcharts 集成的显示UI，支持各种激活Echarts方式，以及使用Tool控制Echarts显示方式</ins>
                 <main>
                     <JsxParser
                         bindings={{pie, req}}

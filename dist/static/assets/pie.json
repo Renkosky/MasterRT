@@ -1,0 +1,36 @@
+{
+    "data": [
+        {
+            "value": 78499,
+            "name": "A0"
+        },
+        {
+            "value": 131536,
+            "name": "A Entry"
+        },
+        {
+            "value": 246050,
+            "name": "A Main"
+        },
+        {
+            "value": 284390,
+            "name": "A Plus"
+        },
+        {
+            "value": 394088,
+            "name": "B"
+        },
+        {
+            "value": 35022,
+            "name": "C"
+        },
+        {
+            "value": 316762,
+            "name": "SUV"
+        },
+        {
+            "value": 34069,
+            "name": "MPV"
+        }
+    ]
+}
