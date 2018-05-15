@@ -11,7 +11,6 @@ function responseHandler(response) {
         return handler(response);
     }, () => {
         let headers = response.headers;
-        console.debug(headers);
         let contentType = headers.get('Content-Type') || 'text/html';
         contentType = contentType.split(';')[0];
         contentType = mu.trim(contentType);
