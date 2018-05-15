@@ -10,6 +10,7 @@ import {default as mu} from 'mzmu';
 export function config() {
 
     MrServices.setHeaders({
+        'Content-Type': 'text/json',
         'X-TOKEN': mu.storage('X-TOKEN')
     });
 

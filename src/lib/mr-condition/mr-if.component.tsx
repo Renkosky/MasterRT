@@ -14,6 +14,7 @@
 import * as React from 'react';
 import * as mu from 'mzmu';
 import MrElse from './mr-else.component';
+import MrThen from './mr-then.component';
 
 export interface MrIfProps extends MrInterface {
     /**
@@ -90,14 +91,10 @@ export default class MrIf extends React.Component<MrIfProps, {}> {
 
             type = child.type;
 
-            if (type === MrElse) {
+            if (type === MrElse || type === MrThen) {
                 _gene['condition'] = condition;
                 _props['_gene'] = _gene;
                 return React.cloneElement(child, {..._props, ...(child.props || {})});
-            } else if (typeof type === 'function') {
-                _props['condition'] = condition;
-                _props['_gene'] = _gene;
-                return condition ? React.cloneElement(child, {..._props, ...(child.props || {})}) : null;
             } else {
                 return condition ? child : null;
             }

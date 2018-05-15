@@ -11,11 +11,12 @@ function responseHandler(response) {
         return handler(response);
     }, () => {
         let headers = response.headers;
+        console.debug(headers);
         let contentType = headers.get('Content-Type') || 'text/html';
         contentType = contentType.split(';')[0];
         contentType = mu.trim(contentType);
 
-        if (contentType === 'application/json' || contentType === 'application/hal+json') {
+        if (mu.or(contentType, 'application/json', 'application/hal+json', 'text/json')) {
             return response.json();
         } else if (contentType === 'text/html') {
             return response.text();
