@@ -74,8 +74,8 @@ export default class MrsRules extends React.Component<MrsRulesProps, {}> {
 
         return (
             <article className="mrs-article mrs-mrif">
-                <header>MrRules <small>权限判断</small></header>
-                <ins>按规则判断显示内容模块</ins>
+                <header>MrRules <small>v0.1.19.20180514</small></header>
+                <ins>权限，按规则判断显示内容模块</ins>
                 <main>
                     <Select defaultValue={'true'} onChange={this.show.bind(this, 'show.jingyesi')}>
                         <Select.Option value={'true'}>显示::静夜思</Select.Option>

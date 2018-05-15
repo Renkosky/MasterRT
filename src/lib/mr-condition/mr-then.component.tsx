@@ -1,3 +1,8 @@
+/**
+ * MrThen
+ * @author mizi.lin@v0.1.19.20180514
+ */
+
 import * as React from 'react';
 import * as _ from 'lodash';
 import * as mu from 'mzmu';
@@ -11,8 +16,6 @@ export default class MrThen extends React.Component<MrThenProps, {}> {
 
     transmit(): any {
         let {children, _gene, ...props} = this.props;
-
-        console.debug(children, this.props);
 
         if(typeof children === 'function'){
             return _gene.condition ? (children as any)(_gene) : null;

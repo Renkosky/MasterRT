@@ -65,7 +65,6 @@ export default class MrFill extends React.Component<MrFillProps, {}> {
 
             // 子元素不能包裹非MrCol 和 条件组件 MrIf
             if (!(type === MrCol || this.isConditional(type))) {
-                console.debug( typeof type );
                 console.error('MrFill与MrCol是父子组件，只允许条件组件(MrIf, MrFor等)包裹MrCol');
                 return null;
             } else {

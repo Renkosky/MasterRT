@@ -3,7 +3,7 @@
  *
  * @author mizi.lin
  *
- * @update v2.20180514
+ * @update v0.1.19.20180514
  * 1. 将 rules(权限值）判断从 MrIf 中移除
  * 2. 引进子元素为function的概念，子元素有且仅有一个为function, 执行该function
  * 3. 添加附属组件MrThen, 运行 condition === true 时的条件判断
@@ -109,6 +109,7 @@ export default class MrIf extends React.Component<MrIfProps, {}> {
     };
 
     render() {
+        // console.debug(this.props);
         let children = this.inheritance();
         return <React.Fragment>{children}</React.Fragment>;
     }

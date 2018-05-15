@@ -66,8 +66,8 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
 
         return (
             <article className="mrs-article mrs-mrif">
-                <header>MrIf <small>v2.20180514</small></header>
-                <ins>条件判断，可代替在源码中使用三元或&&等运算符 </ins>
+                <header>MrIf <small>v0.1.19.20180514</small></header>
+                <ins>条件判断，可代替在源码中使用三元或{'&&'}等运算符 </ins>
                 <main>
                     <Button type="primary" onClick={this.showPanel.bind(this)}>{showPanel ? '显示::悯农' : '显示::静夜思'}</Button>
 

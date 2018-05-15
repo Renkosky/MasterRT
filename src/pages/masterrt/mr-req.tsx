@@ -40,13 +40,15 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
             resource: $pool.line,
             method: 'get',
             // 数据修改
-            transform: (data) => {
-                return mu.map(data, (o) => {
+            transform: (res) => {
+                let {data} = res;
+                res.data = mu.map(data, (o) => {
                     o.name = o.type;
                     o.x = o.date;
                     o.value = o.volume;
                     return o;
                 });
+                return res;
             }
         }
     };
@@ -56,7 +58,8 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
         line: 'line',
     };
 
-    result(data) {
+    result(res) {
+        let {data} = res;
         this.setState({data});
     }
 
@@ -91,7 +94,7 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
         <Button type={'primary'} onClick={changeReqLine} className="ml-8"> Line </Button>
 
         <MrPanel title="回调::通过setState进行重新渲染" bodyStyle={{height: 300}} className="mt-16">
-            <MrReq req={req} h100={true} result={result}>
+            <MrReq req={req} result={result}>
                 <MrEcharts
                     data={data}
                     chartTypes={chartTypes}
@@ -102,14 +105,19 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
         {/*// 典型的基因传递调用方案*/}
         {/*// 其中MrReq通过transmit向子组件MrEcharts传递基因data片段*/}
         {/*// 而MrEcharts无需做任何配置，自然而然的获得父组件的遗传的基因片段信息*/}
-        <MrPanel title="传递::通过transmit传递数据，无渲染" bodyStyle={{height: 300}} className="mt-16">
-            <MrReq req={req} h100={true} transmit="data">
-                <MrIf condition={true}>
+        <MrPanel title="传递::通过transmit传递数据，局部渲染" bodyStyle={{height: 300}} className="mt-16">
+            <MrReq req={req} transmit="data">
+                <MrIf condition={true} falseType="empty">
                     <MrEcharts
                         chartTypes={chartTypes}
                     ></MrEcharts>
                 </MrIf>
             </MrReq>
+        </MrPanel>
+        
+        
+        <MrPanel title="函数调用，通过子元素进行函数调用" bodyStyle={{height: 300}} className="mt-16">
+            <MrReq req={req} transmit="data:res.data">{draw}</MrReq>
         </MrPanel>
     `;
 
@@ -118,13 +126,11 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
         let {data = {}, req, chartTypes} = this.state;
         let {changeReq, result} = this;
 
-        let reqs = [this.req['pie']];
-
         return (
             <article className="mrs-article">
 
-                <header>MrReq <small>一个可以异步请求的组件</small></header>
-                <ins>使用Resource Pool进行异步请求</ins>
+                <header>MrReq <small>v0.1.20.20180515</small></header>
+                <ins>一个可以异步请求的组件, 使用Resource Pool进行异步请求</ins>
                 <main>
                     <JsxParser
                         bindings={{
@@ -133,7 +139,13 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
                             chartTypes,
                             result,
                             changeReqPie: () => changeReq('pie'),
-                            changeReqLine: () => changeReq('line')
+                            changeReqLine: () => changeReq('line'),
+                            draw: (gene) => (
+                                <MrEcharts
+                                    data={gene.data}
+                                    chartTypes={chartTypes}
+                                ></MrEcharts>
+                            )
                         }}
 
                         blacklistedAttrs={[]}
@@ -143,105 +155,107 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
                     ></JsxParser>
                 </main>
 
-                <MrReq req={reqs} transmit="data">
-                    <MrEcharts style={{height: 300}}
-                        chartTypes={chartTypes}
-                    ></MrEcharts>
-                </MrReq>
-
-                <MrEcharts style={{height: 600}} chartTypes={'map::china'} data={[{"name":"其他","value":142842841},{"name":"广东","value":59869974},{"name":"北京","value":46397329},{"name":"江苏","value":27837669},{"name":"浙江","value":26733543},{"name":"山东","value":25650072},{"name":"河南","value":22147978},{"name":"四川","value":20236683},{"name":"上海","value":17925233},{"name":"福建","value":16757865},{"name":"河北","value":16686739},{"name":"湖北","value":16622216},{"name":"湖南","value":15623126},{"name":"辽宁","value":14502736},{"name":"海外","value":14297602},{"name":"安徽","value":14218932},{"name":"陕西","value":13076612},{"name":"广西","value":11033702},{"name":"江西","value":10674566},{"name":"重庆","value":10276377},{"name":"黑龙江","value":10240268},{"name":"山西","value":10150283},{"name":"云南","value":9604334},{"name":"吉林","value":8299197},{"name":"贵州","value":7864322},{"name":"内蒙古","value":7546546},{"name":"天津","value":7492764},{"name":"甘肃","value":6557203},{"name":"新疆","value":6226383},{"name":"香港","value":5431680},{"name":"海南","value":4977242},{"name":"台湾","value":4879679},{"name":"宁夏","value":3707399},{"name":"青海","value":3371199},{"name":"西藏","value":2766262},{"name":"澳门","value":2479950},{"name":"","value":388575},{"name":"??????","value":2921},{"name":"?????????","value":121}]} />
-
                 <details className="mt-16">
                     <summary>查看源码</summary>
                     <MrsCode code={(this.code)}></MrsCode>
                 </details>
 
                 <aside className="mt-16">
+                    <MrPanel title="MrIResource && MrReqProps">
+                        <MrsCode code={`
+interface MrIResource {
 
-                    <MrPanel title="MrReq">
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td>req: iMrReq</td>
-                                    <td>异步请求配置信息，详见 @iMrReq</td>
-                                </tr>
+    /**
+     * resource: Pool<MrResource>
+     * 一个pool的资源
+     *
+     * resource = pool[api]
+     */
+    resource?: any;
 
-                                <tr>
-                                    <td>result?: function(data: any)</td>
-                                    <td>
-                                        异步请求返回结果, data结果由_.get(response, req.dataPath || 'data') 决定返回数据
-                                        <br /> 其 data 也作为@transmit传递的基因值
-                                    </td>
-                                </tr>
+    /**
+     * api?: string
+     * resource.name
+     */
+    api?: string,
 
-                                <tr>
-                                    <td>pool?: Resource</td>
-                                    <td>Resource Pool，可以由MrService.setResourcePool全局配置</td>
-                                </tr>
+    /**
+     * method?: string = 'post'
+     * resource.method
+     * @values post, put, patch, get, delete, mrdown, download
+     */
+    method?: string,
 
-                                <tr>
-                                    <td>h100?: true</td>
-                                    <td>style.height: 100% !important</td>
-                                </tr>
+    /**
+     * payload?: object
+     * post request payload
+     */
+    payload?: object,
 
-                                <tr>
-                                    <td>transmit?: string</td>
-                                    <td>
-                                        MrReq会向子元素传递基因值data, 由transmit决定子元素接收基因key匹配的props属性值
-                                        <br /> 即 child.props[transmit] = result.data;
-                                        <br /><small>示例中的"传递"，是典型的基因传递</small>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </MrPanel>
+    /**
+     * search?: object
+     * get request params
+     */
+    search?: any,
 
-                    <MrPanel title="iMrReq:: interface">
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td>resource?: Pool{'<respource>'}</td>
-                                    <td>@ResourcePool 与 api 二者择其一</td>
-                                </tr>
+    /**
+     * transform?: function(res)
+     * 返回数据处理
+     */
+    transform?: any,
+}
 
-                                <tr>
-                                    <td>api?: string</td>
-                                    <td>Pool[api] === resource</td>
-                                </tr>
+interface MrReqProps {
+    /**
+     * MrResource
+     * 请求接口
+     */
+    req?: MrIResource | MrIResource[];
 
-                                <tr>
-                                    <td>method: string = 'get'</td>
-                                    <td>@ResourcePool 调用的方法</td>
-                                </tr>
+    /**
+     * pool?: MrResource
+     * 连接池
+     * @match 就近原则 >> MrServices.getResourcePool()
+     */
+    pool?: any;
 
-                                <tr>
-                                    <td>payload: any</td>
-                                    <td>Request PayLoad, resource 默认为json提交数据</td>
-                                </tr>
+    /**
+     * transmit?: string | string[] = ['data:res.data'];
+     * 基因遗传方式
+     *
+     * @values {string}
+     * ::=> child.prop:_.get({res}, path)
+     * ::=> 要传递给子元素的 prop : 取值路径
+     */
+    transmit?: string | string[];
 
-                                <tr>
-                                    <td>search: any</td>
-                                    <td>Url请求参数</td>
-                                </tr>
+    /**
+     * transform?: function
+     * 数据处理
+     * 区别于 req.transform,  req.transform 用于单个请求，而 transform 用于所有请求
+     * @v0.1.20.20180515
+     */
+    transform?: any;
 
-                                <tr>
-                                    <td>transform?: function(data: any) => data</td>
-                                    <td>
-                                        异步请求返回异步处理
+    /**
+     * force?: boolean = ifnvl(null, false)
+     * 是否解除 MrReq设计req未产生变化阻止渲染的行为
+     *
+     * @values true ::-> 解除阻止渲染
+     * @v0.1.20.20180515
+     */
+    force?: boolean;
 
-                                    </td>
-                                </tr>
+    /**
+     * result?: function(res);
+     * 返回调用
+     *
+     * @mark 注意，当只有一个返回值得时候，返回对象 res = res[0]
+     */
+    result?: any;
+}
 
-                                <tr>
-                                    <td>dataPath?:string = 'data'</td>
-                                    <td>使用lodash的get方法，请求response数据的属性值，
-                                        <br />作为result或transmit的data传递
-                                        <br />hack值'::res'返回response本身
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                        </table>
+                        `}></MrsCode>
                     </MrPanel>
                 </aside>
             </article>
