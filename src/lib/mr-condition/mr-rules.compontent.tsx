@@ -6,7 +6,7 @@
  */
 
 import * as React from 'react';
-import {MrIf, MrServices} from './../../lib';
+import {MrIf, MrServices} from '../';
 import * as mu from 'mzmu';
 
 interface MrRulesProps extends MrInterface {
