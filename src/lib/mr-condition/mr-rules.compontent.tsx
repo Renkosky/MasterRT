@@ -42,11 +42,7 @@ interface MrRulesProps extends MrInterface {
  */
 export default class MrRules extends React.Component<MrRulesProps, {}> {
 
-    rules: any;
-    defaultValue: boolean = true;
-
-    calc(): boolean {
-        let {keys} = this.props;
+    static calc(keys: string | string[], rules: any, defaultValue: boolean): boolean {
         let ruleGroup: boolean[], _rule: boolean = false;
 
         keys = MrServices.upArray(keys);
@@ -54,7 +50,7 @@ export default class MrRules extends React.Component<MrRulesProps, {}> {
         ruleGroup = mu.map(keys, (keyGroup) => {
             let kg: string[] = (keyGroup || '').split('!');
             let key: string = mu.trim(kg.pop());
-            let rule = mu.ifnvl(this.rules[key], this.defaultValue);
+            let rule = mu.ifnvl(rules[key], defaultValue);
             if(kg.length) {
                 // 多重否定
                 mu.each(kg, () => {
@@ -73,6 +69,10 @@ export default class MrRules extends React.Component<MrRulesProps, {}> {
         return _rule;
     }
 
+
+    rules: any;
+    defaultValue: boolean = true;
+
     componentWillMount() {
         let {rules, defNoRuleValue} = this.props;
 
@@ -83,8 +83,8 @@ export default class MrRules extends React.Component<MrRulesProps, {}> {
     }
 
     render() {
-        let {_gene} = this.props;
-        let condition: boolean = this.calc();
+        let {_gene, keys} = this.props;
+        let condition: boolean = MrRules.calc(keys, this.rules, this.defaultValue);
         return (<MrIf condition={condition} _gene={_gene}>{this.props.children}</MrIf>);
     }
 }

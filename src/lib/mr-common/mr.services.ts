@@ -107,7 +107,7 @@ class MrServices {
         return this._rules;
     }
 
-    _ruleValue: boolean;
+    _ruleValue: boolean = true;
 
     setRuleValue(val: boolean) {
         this._ruleValue = val;
