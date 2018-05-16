@@ -1,7 +1,7 @@
 /**
  * MrRules
  * 按权限规则判断显示
- * @author mizi.lin@v0.1.21.20180515
+ * @creator mizi.lin@v0.1.21.20180515
  */
 
 import {MrServices} from "..";

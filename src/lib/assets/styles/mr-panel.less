@@ -13,8 +13,17 @@
         display: table-row;
         height: 40px;
     
-        + main {
-            display: table-row;
+        
+    }
+    
+    > main,
+    .mr-panel-append,
+    .mr-panel-prepend {
+        display: table-row;
+        > div {
+            display: table-cell;
+            padding: 8px;
+            vertical-align: middle;
         }
     }
     

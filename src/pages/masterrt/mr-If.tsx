@@ -125,7 +125,7 @@ export interface MrIfProps extends MrInterface {
      * falseType?: string = 'if'
      * 假值类型
      *
-     * @author mizi.lin
+     * @creator mizi.lin
      * 我认为, 在JS的世界里没有绝对的"真 true"和"假 false"（也许真实的世界也是如此）
      * 我对某一种特性进行区分其真假值
      *

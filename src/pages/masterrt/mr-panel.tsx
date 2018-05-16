@@ -13,7 +13,7 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
 
     code: string = `
         <section>
-            <MrPanel title="静夜思::李白" border="title">
+            <MrPanel title="静夜思::李白" border="title" prepend={<div>我的第一首诗</div>}>
                 床前明月光<br />
                 疑是地上霜<br />
                 举头望明月<br />
@@ -34,8 +34,8 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
     render() {
         return (
             <article className="mrs-article mrs-MrFill">
-                <header>MrPanel <small>一个集成的盒子</small></header>
-                <ins>一个拥有标题，子标题，工具条的容器</ins>
+                <header>MrPanel <small>v0.1.21.20180516</small></header>
+                <ins>一个集成的盒子, 一个拥有标题，子标题，工具条的容器</ins>
                 <main>
                     <JsxParser
                         components={{MrPanel, MrIcon}}

@@ -67,7 +67,8 @@ export default class MrsEchartsPanel extends React.Component<MrsEchartsPanelProp
     code = `
         <MrEchartsPanel
                 title="Use Data"
-                style={{height: 400}} chartTypes={'pie::ring::rose'} data={pie} />
+                style={{height: 400}} chartTypes={'pie::ring::rose'} data={pie} 
+                append={<div>在饼图底部插入内容</div>} />
 
         <MrEchartsPanel
             title="Use Req"

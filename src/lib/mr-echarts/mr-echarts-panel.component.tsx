@@ -7,8 +7,11 @@
  * 可以移除工具条
  * 工具条显示类型（toggle, hide, visible)
  *
- * @update mizi.lin@v0.1.21-b1.20180515
+ * @update mizi.lin@v0.1.21.20180515
  * ::=> MrReq修改部分相应规则，MrEchartsPanel 重新设定规则调用, support multiple req
+ *
+ * @update mizi.lin@v0.1.21.20180516
+ * ::=> 添加 append && prepend
  */
 
 import * as React from 'react';
@@ -46,6 +49,8 @@ interface MrEchartsPanelProps extends MrEchartsProps {
     h100?: boolean;
     className?: string;
     style?: any;
+    append?: any;
+    prepend?: any;
 
     /**
      * mrReq?: MrReqProps
@@ -230,7 +235,7 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
     };
 
     render() {
-        const {title, style, className, h100, bodyStyle, border, showToolbar, transform} = this.props;
+        const {title, style, className, h100, bodyStyle, border, showToolbar, transform, append, prepend} = this.props;
         const {chartTypes, data, dataType, dataModel} = this.props;
         const {options, renderType, theme} = this.props;
 
@@ -285,6 +290,8 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
                 style={style}
                 className={panelClass}
                 bodyStyle={bodyStyle}
+                append={append}
+                prepend={prepend}
                 border={border}>
                 <MrReq req={req} force={true} transmit="data">
                     {dataView

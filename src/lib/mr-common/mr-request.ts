@@ -2,7 +2,7 @@
  * MrRequest
  * 简单封装fetch
  *
- * @author mizi.lin
+ * @creator mizi.lin
  *
  * @update mizi.lin@v0.1.21.20180516 修复 headers 不接受 function，不能获取最新值
  */

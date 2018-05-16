@@ -2,7 +2,7 @@
  * MrRules
  * 权限配置规则
  *
- * @author mizi.lin@v1.20180514
+ * @creator mizi.lin@v1.20180514
  */
 
 import * as React from 'react';

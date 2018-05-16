@@ -1,3 +1,12 @@
+/**
+ * MrPanel
+ *
+ * @creator mizi.lin
+ *
+ * @update mizi.lin@v0.1.21.20180516
+ * ::=> 添加 append && prepend
+ */
+
 import * as React from 'react';
 import {MrIf} from '../';
 declare var require: any;
@@ -13,6 +22,9 @@ interface MrPanelProps {
     // wrapper, title, all
     border?: string;
     h100?: string;
+
+    prepend?: any;
+    append?: any;
 }
 
 export default class MrPanel extends React.Component<MrPanelProps, {}> {
@@ -20,6 +32,7 @@ export default class MrPanel extends React.Component<MrPanelProps, {}> {
     render() {
 
         const {style, className = '', title = '', extra, bodyStyle, border = 'all', h100} = this.props;
+        const {prepend, append} = this.props;
         const [_title, _subTitle] = title.split('::');
 
         const classString = MrServices.cls({
@@ -40,11 +53,27 @@ export default class MrPanel extends React.Component<MrPanelProps, {}> {
                     </div>
                 </header>
 
+                <MrIf condition={prepend}>
+                    <section className="mr-panel-prepend">
+                        <div>
+                            {prepend}
+                        </div>
+                    </section>
+                </MrIf>
+
                 <main>
                     <div style={bodyStyle} className={'mr-panel-body'}>
                         {this.props.children}
                     </div>
                 </main>
+
+                <MrIf condition={append}>
+                    <section className="mr-panel-append">
+                        <div>
+                            {append}
+                        </div>
+                    </section>
+                </MrIf>
             </article>
         );
     }

@@ -1,6 +1,6 @@
 /**
  * MrThen
- * @author mizi.lin@v0.1.19.20180514
+ * @creator mizi.lin@v0.1.19.20180514
  */
 
 import * as React from 'react';
