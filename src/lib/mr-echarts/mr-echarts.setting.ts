@@ -163,10 +163,12 @@ export function subSetting(_colors) {
             'xAxis[0].splitArea.show': false,
             'xAxis[0].splitLine.show': false
         },
+
         // 是否堆叠显示
         '::stack': {
             '$$series[*].stack': 'one'
         },
+
         // 正负值 颜色配置
         '::pnColors': {
             '**$$series[*]': (obj, data) => {
@@ -176,10 +178,12 @@ export function subSetting(_colors) {
                 return data;
             }
         },
+
         '::xyExchange': {
             'xAxis[0].type': 'value',
             'yAxis[0].type': 'category'
         },
+
         '::bg': {
             'series[1].type': 'bar',
             'series[1].zlevel': -2,
@@ -197,28 +201,34 @@ export function subSetting(_colors) {
                 });
             }
         },
+
         '::area': {
             '$$series[*].areaStyle.opacity': 0.1,
             '$$series[*].smooth': true,
             '$$series[*].smoothMonotone': true
         },
+
         '::tooltipFormatterPercent': {
             'tooltip.formatter': (obj) => {
                 return `${obj.marker} ${obj.data.name}: ${mu.format(obj.data.value, '::1')}`;
             }
         },
+
         '::tooltipFormatterPercent2': {
             'tooltip.formatter': (obj) => {
                 let x = obj.data.x ? obj.data.x + '<br />' : '';
                 return `${x}${obj.marker} ${obj.data.name}: ${obj.data.value}%`;
             }
         },
+
         '::yAxisPercent': {
             '$$yAxis[*].axisLabel.formatter': '{value}%'
         },
+
         '::xAxisPercent': {
             '$$xAxis[*].axisLabel.formatter': '{value}%'
         },
+
         // 柱形阶梯瀑布图
         // 默认拾级上升
         '::ladder': {
@@ -243,12 +253,14 @@ export function subSetting(_colors) {
                 return obj.series;
             }
         },
+
         pie: {
             '$$series[*].center': [
                 '50%',
                 '55%'
             ]
         },
+
         // 饼图 => 环形
         'pie::ring': [
             {
@@ -312,7 +324,7 @@ export function subSetting(_colors) {
         ],
 
         map: {
-            'inRange.color': [
+            'visualMap.inRange.color': [
                 '#ffffff',
                 _.get(_colors, 'base[0]')
             ],
@@ -326,6 +338,7 @@ export function subSetting(_colors) {
             'series[0].geoIndex': 0,
             'series[0].name': '地域'
         },
+
         // 仪表盘: 半圆
         'gauge::half': {
             'grid.top': 0,
@@ -343,6 +356,11 @@ export function subSetting(_colors) {
                 formatter: '{value}%'
             }
         },
+
+        'line': {
+            '$$series[*].smooth': true
+        },
+
         'bar::pn': {
             'xAxis[0].max': 100,
             'xAxis[0].min': -100,
@@ -358,6 +376,7 @@ export function subSetting(_colors) {
                 return data;
             }
         },
+
         'scatter::pop': {
             '$$series[*].symbol': 'circle',
             '$$series[*].symbolSize': 18,
@@ -370,6 +389,7 @@ export function subSetting(_colors) {
                 opacity: 0.6
             }
         },
+
         'treemap::simple': {
             '$$series[*].left': 0,
             '$$series[*].right': 0,
@@ -384,9 +404,11 @@ export function subSetting(_colors) {
             '$$series[*].itemStyle.borderColor': '#fff',
             '$$series[*].itemStyle.borderColorSaturation': 1
         },
+
         radar: {
             '$$series[*].name': ''
         },
+
         'radar::area': {
             'radar.splitArea.show': false,
             'radar.splitLine.lineStyle.color': 'rgba(155, 155, 155, .2)',
@@ -396,6 +418,7 @@ export function subSetting(_colors) {
             '$$series[*].lineStyle.normal.opacity': 0.3,
             '$$series[*].symbol': 'none'
         },
+
         wordCloud: {
             '$$series[*].shape': 'circle',
             '$$series[*].sizeRange': [
@@ -407,6 +430,7 @@ export function subSetting(_colors) {
                 90
             ]
         },
+
         'wordCloud::random': {
             '$$series[*].textStyle.normal.color': () => {
                 return _.get(_colors, `base[${mu.randomInt(0, 4)}]`);

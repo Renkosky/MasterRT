@@ -75,8 +75,10 @@ function preErrorHandler(response) {
 
  // @todo 接收option自定义值，配置可接受参数，控制报错流程
 export default function MrRequest(url, options: any = {}) {
+
     let headers: any = MrServices.getHeaders();
     options.headers = mu.extend(true, headers, options.headers);
+
     return fetch(url, options)
     .then(checkStatus)
     .then(responseHandler)
