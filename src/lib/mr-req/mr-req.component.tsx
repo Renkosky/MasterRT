@@ -21,6 +21,8 @@
  * ::=> 添加对子元素为函数的支持，可以传递更多的对象
  * ::=> 重写transmit获取相应数据方式，从req中移除dataPath属性
  * ::=> 支持多个请求 req: iMrReq | iMrReq[]
+ *
+ * @todo 可以分别设置各种method下的headers
  */
 
 import * as React from 'react';

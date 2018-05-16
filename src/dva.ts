@@ -11,7 +11,7 @@ export function config() {
 
     MrServices.setHeaders({
         'Content-Type': 'text/json',
-        'X-TOKEN': mu.storage('X-TOKEN')
+        'X-TOKEN': () => mu.storage('X-TOKEN')
     });
 
     MrServices.setRules({

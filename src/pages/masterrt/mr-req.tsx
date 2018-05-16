@@ -66,6 +66,11 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
     changeReq(type: string) {
         let req = this.req[type];
         let chartTypes = this.chartTypes[type];
+
+        mu.storage('X-TOKEN', + new Date());
+
+        console.debug(mu.storage('X-TOKEN'));
+
         this.setState({req, chartTypes});
     }
 
@@ -89,31 +94,33 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
         this.setState = () => void 0;
     }
 
+// <MrPanel title="回调::通过setState进行重新渲染" bodyStyle={{height: 300}} className="mt-16">
+// <MrReq req={req} result={result}>
+// <MrEcharts
+// data={data}
+// chartTypes={chartTypes}
+// ></MrEcharts>
+// </MrReq>
+// </MrPanel>
+//
+// {/*// 典型的基因传递调用方案*/}
+// {/*// 其中MrReq通过transmit向子组件MrEcharts传递基因data片段*/}
+// {/*// 而MrEcharts无需做任何配置，自然而然的获得父组件的遗传的基因片段信息*/}
+// <MrPanel title="传递::通过transmit传递数据，局部渲染" bodyStyle={{height: 300}} className="mt-16">
+//     <MrReq req={req} transmit="data">
+//         <MrIf condition={true} falseType="empty">
+//             <MrEcharts
+//                 chartTypes={chartTypes}
+//             ></MrEcharts>
+//         </MrIf>
+//     </MrReq>
+// </MrPanel>
+
     code: string = `
         <Button type={'primary'} onClick={changeReqPie}> Pie </Button>
         <Button type={'primary'} onClick={changeReqLine} className="ml-8"> Line </Button>
 
-        <MrPanel title="回调::通过setState进行重新渲染" bodyStyle={{height: 300}} className="mt-16">
-            <MrReq req={req} result={result}>
-                <MrEcharts
-                    data={data}
-                    chartTypes={chartTypes}
-                ></MrEcharts>
-            </MrReq>
-        </MrPanel>
         
-        {/*// 典型的基因传递调用方案*/}
-        {/*// 其中MrReq通过transmit向子组件MrEcharts传递基因data片段*/}
-        {/*// 而MrEcharts无需做任何配置，自然而然的获得父组件的遗传的基因片段信息*/}
-        <MrPanel title="传递::通过transmit传递数据，局部渲染" bodyStyle={{height: 300}} className="mt-16">
-            <MrReq req={req} transmit="data">
-                <MrIf condition={true} falseType="empty">
-                    <MrEcharts
-                        chartTypes={chartTypes}
-                    ></MrEcharts>
-                </MrIf>
-            </MrReq>
-        </MrPanel>
         
         
         <MrPanel title="函数调用，通过子元素进行函数调用" bodyStyle={{height: 300}} className="mt-16">
@@ -129,7 +136,7 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
         return (
             <article className="mrs-article">
 
-                <header>MrReq <small>v0.1.20.20180515</small></header>
+                <header>MrReq <small>v0.1.21.20180516</small></header>
                 <ins>一个可以异步请求的组件, 使用Resource Pool进行异步请求</ins>
                 <main>
                     <JsxParser

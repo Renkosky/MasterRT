@@ -1,3 +1,13 @@
+/**
+ * MrRequest
+ * 简单封装fetch
+ *
+ * @author mizi.lin
+ *
+ * @update mizi.lin@v0.1.21.20180516 修复 headers 不接受 function，不能获取最新值
+ */
+
+
 import * as fetch from 'dva/fetch';
 import MrServices from './mr.services';
 import * as mu from 'mzmu';
@@ -11,9 +21,13 @@ function responseHandler(response) {
         return handler(response);
     }, () => {
         let headers = response.headers;
-        let contentType = headers.get('Content-Type') || 'text/html';
-        contentType = contentType.split(';')[0];
-        contentType = mu.trim(contentType);
+        let contentType: string = 'application/json';
+
+        mu.run(headers, () => {
+            contentType = headers.get('Content-Type') || 'text/html';
+            contentType = contentType.split(';')[0];
+            contentType = mu.trim(contentType);
+        });
 
         if (mu.or(contentType, 'application/json', 'application/hal+json', 'text/json')) {
             return response.json();
@@ -77,6 +91,11 @@ function preErrorHandler(response) {
 export default function MrRequest(url, options: any = {}) {
 
     let headers: any = MrServices.getHeaders();
+
+    headers = mu.map(headers || {}, (item)=> {
+        return typeof item === 'function' ? item() : item;
+    });
+
     options.headers = mu.extend(true, headers, options.headers);
 
     return fetch(url, options)
