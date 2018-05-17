@@ -113,6 +113,12 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
         line: ['download', 'dataView', 'xyExchange', 'lineBarExchange', 'xAxisShowAll', 'legendShow', 'reload', 'fullScreen'],
         bar: ['download', 'dataView', 'xyExchange', 'lineBarExchange', 'xAxisShowAll', 'legendShow', 'reload', 'fullScreen'],
         pie: ['download', 'dataView', 'legendShow', 'reload', 'fullScreen'],
+        wordCloud: ['download', 'dataView', 'legendShow', 'reload', 'fullScreen'],
+        map: ['download', 'dataView', 'reload', 'fullScreen'],
+        gauge: ['download', 'dataView', 'legendShow', 'reload', 'fullScreen'],
+        radar: ['download', 'dataView', 'legendShow', 'reload', 'fullScreen'],
+        scatter: ['download', 'dataView', 'legendShow', 'reload', 'fullScreen'],
+        treemap: ['download', 'dataView',  'reload', 'fullScreen'],
     };
 
     tools() {
