@@ -149,8 +149,12 @@ export const defSubType = {
 export function subSetting(_colors) {
 
     return {
-        // 不显示xy轴
-        // 默认显示x轴名称
+        /**
+         * 不显示xy轴
+         * 默认显示x轴名称
+         *
+         * @map bar, line, scatter, radar
+         */
         '::noAxis': {
             'legend.show': false,
             'yAxis[0].axisLine.show': false,
@@ -165,25 +169,33 @@ export function subSetting(_colors) {
         },
 
         // 是否堆叠显示
+        // @map bar, line
         '::stack': {
             '$$series[*].stack': 'one'
         },
 
-        // 正负值 颜色配置
-        '::pnColors': {
-            '**$$series[*]': (obj, data) => {
-                mu.run(_.get(_colors, `pn.${data.name.toUpperCase()}`), (color) => {
-                    data = _.set(data, 'itemStyle.color', color);
-                });
-                return data;
-            }
+        /**
+         * 平铺呈现
+         * @map bar, line
+         */
+        '::paved': {
+            '$$series[*].stack': null
         },
 
+        /**
+         * xy轴转换显示
+         *
+         * @map bar, line, scatter, radar
+         */
         '::xyExchange': {
             'xAxis[0].type': 'value',
             'yAxis[0].type': 'category'
         },
 
+        /**
+         * 设置柱形图背景阴影
+         * @map bar
+         */
         '::bg': {
             'series[1].type': 'bar',
             'series[1].zlevel': -2,
@@ -194,7 +206,6 @@ export function subSetting(_colors) {
             '**series[1].data': (obj: any) => {
                 let _data = _.get(obj, 'series[0].data');
                 let _max = _.maxBy(_data, (o: any) => o.value);
-
                 return mu.map(_.get(obj, 'series[0].data'), (o: any) => {
                     o.value = _max.value * 1.1;
                     return o;
@@ -202,18 +213,33 @@ export function subSetting(_colors) {
             }
         },
 
+        /**
+         * 设置图表area显示方式
+         *
+         * @map line
+         */
         '::area': {
             '$$series[*].areaStyle.opacity': 0.1,
             '$$series[*].smooth': true,
             '$$series[*].smoothMonotone': true
         },
 
+        /**
+         * tooltip 显示百分比数值
+         *
+         * @map line, bar, pie ...
+         */
         '::tooltipFormatterPercent': {
             'tooltip.formatter': (obj) => {
                 return `${obj.marker} ${obj.data.name}: ${mu.format(obj.data.value, '::1')}`;
             }
         },
 
+        /**
+         * tooltip 显示百分比数值2
+         *
+         * @map line, bar, pie ...
+         */
         '::tooltipFormatterPercent2': {
             'tooltip.formatter': (obj) => {
                 let x = obj.data.x ? obj.data.x + '<br />' : '';
@@ -221,12 +247,40 @@ export function subSetting(_colors) {
             }
         },
 
+        /**
+         * y轴 显示百分比数值
+         * @map line, bar, pie ...
+         */
         '::yAxisPercent': {
             '$$yAxis[*].axisLabel.formatter': '{value}%'
         },
 
+        /**
+         * x轴 显示百分比数值
+         * @map line, bar, pie ...
+         */
         '::xAxisPercent': {
             '$$xAxis[*].axisLabel.formatter': '{value}%'
+        },
+
+        'line': {
+            '$$series[*].smooth': true
+        },
+
+        'bar::pn': {
+            'xAxis[0].max': 100,
+            'xAxis[0].min': -100,
+            'series[0].label.formatter': (rst) => {
+                return `${rst.data._value || rst.data.value}%`;
+            },
+            'tooltip.formatter': (rst) => {
+                return `${rst.data.name}: ${rst.data._value || rst.data.value}%`;
+            },
+            '**$$series[0].data[*]': (obj, data) => {
+                data._value = data.value;
+                data.value = -data.value;
+                return data;
+            }
         },
 
         // 柱形阶梯瀑布图
@@ -270,6 +324,22 @@ export function subSetting(_colors) {
                 ]
             }
         ],
+
+        '::ringLabel': {
+            '$$series[*].avoidLabelOverlap': false,
+            '$$series[*].selectedMode': 'single',
+            '$$series[*].label': {
+                normal: {show: false, position: 'center'},
+                emphasis: {
+                    show: true,
+                    lineHeight: 56,
+                    fontSize: 14,
+                    formatter: (o) => {
+                        return `${o.name}\n${mu.format(o.value)}\n${o.data['$rowPercent2']}`;
+                    },
+                }
+            },
+        },
 
         'pie::rose': [
             {'$$series[*].roseType': 'area'},
@@ -354,26 +424,6 @@ export function subSetting(_colors) {
             'series[0].pointer.width': 6,
             'series[0].detail': {
                 formatter: '{value}%'
-            }
-        },
-
-        'line': {
-            '$$series[*].smooth': true
-        },
-
-        'bar::pn': {
-            'xAxis[0].max': 100,
-            'xAxis[0].min': -100,
-            'series[0].label.formatter': (rst) => {
-                return `${rst.data._value || rst.data.value}%`;
-            },
-            'tooltip.formatter': (rst) => {
-                return `${rst.data.name}: ${rst.data._value || rst.data.value}%`;
-            },
-            '**$$series[0].data[*]': (obj, data) => {
-                data._value = data.value;
-                data.value = -data.value;
-                return data;
             }
         },
 

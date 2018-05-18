@@ -210,6 +210,8 @@ export default {
             return _data[mu.ifnvl(legend.name, legend)];
         }, []);
 
+        _series = this.percentRowSeries(_series, dataModel);
+
         let _x = dataModel === 'single' ? null
             : mu.map(mu.groupArray(data, CHART_X), (o, name) => {
                 return name;
@@ -260,6 +262,33 @@ export default {
 
         return _dataView;
     },
+
+    /**
+     * 计算当前series横向数据所占百分比
+     * @param series
+     * @param dataModel
+     */
+
+    percentRowSeries(series: any[] = [], dataModel: string = 'group') {
+        if(dataModel === 'single') {
+            let sum: number = _.reduce(series, (sum, d) => {
+                return sum + d.value;
+            }, 0);
+            return mu.map(series, (d)=> {
+                d.$rowSum = sum;
+                d.$rowRate = mu.format(d.value / sum, ':4');
+                d.$rowPercent = mu.format(d.value / sum, '::');
+                d.$rowPercent2 = mu.format(d.value / sum, '::2');
+                return d;
+            });
+        } else if(dataModel = 'group') {
+            return mu.map(series, (item) => {
+                return this.percentRowSeries(item, 'single')
+            });
+        }
+    },
+
+
 
     /**
      * 初始调整options
