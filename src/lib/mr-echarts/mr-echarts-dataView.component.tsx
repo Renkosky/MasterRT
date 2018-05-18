@@ -2,12 +2,12 @@ import * as React from 'react';
 import * as mu from 'mzmu';
 
 interface MrEchartsDataViewProps {
-    data: any[]
+    dataView: any[]
 }
 
 export class MrEchartsDataView extends React.Component<MrEchartsDataViewProps, {}> {
     render() {
-        let {data} = this.props;
+        let {dataView: data} = this.props;
         return <section className="mr-echarts-dataView">
             <table>
                 <tbody>

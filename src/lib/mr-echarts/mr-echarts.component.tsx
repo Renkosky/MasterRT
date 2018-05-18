@@ -96,9 +96,6 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
             return;
         }
 
-
-
-
         if(mu.isNotEmpty(options) && optionsSetting) {
             options = MrEchartsServices.reOptions(options, setting, chartTypes);
         }
@@ -187,7 +184,7 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
     }
 
     windowResize = mu.bind(() => {
-        this._chart && this._chart.resize();
+        this._chart && this._chart.resize && this._chart.resize();
     }, this);
 
     componentWillReceiveProps(props: MrEchartsProps) {

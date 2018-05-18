@@ -113,7 +113,7 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
         line: ['download', 'dataView', 'xyExchange', 'lineBarExchange', 'xAxisShowAll', 'legendShow', 'reload', 'fullScreen'],
         bar: ['download', 'dataView', 'xyExchange', 'lineBarExchange', 'xAxisShowAll', 'legendShow', 'reload', 'fullScreen'],
         pie: ['download', 'dataView', 'legendShow', 'reload', 'fullScreen'],
-        wordCloud: ['download', 'dataView', 'legendShow', 'reload', 'fullScreen'],
+        wordCloud: ['download', 'dataView', 'reload', 'fullScreen'],
         map: ['download', 'dataView', 'reload', 'fullScreen'],
         gauge: ['download', 'dataView', 'legendShow', 'reload', 'fullScreen'],
         radar: ['download', 'dataView', 'legendShow', 'reload', 'fullScreen'],
@@ -219,9 +219,7 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
     // 获得 echart callback data
     getResult(options, rst) {
         let {result} = this.props;
-
         this._dataView = _.get(rst, 'data._dataView');
-
         result && result(options, rst);
     }
 
@@ -301,7 +299,7 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
                 border={border}>
                 <MrReq req={req} force={true} transmit="data">
                     {dataView
-                        ? <MrEchartsDataView data={this._dataView} />
+                        ? <MrEchartsDataView dataView={this._dataView} />
                         :  <MrEcharts {...echartsProps} result={this.getResult.bind(this)} />}
                 </MrReq>
             </MrPanel>
