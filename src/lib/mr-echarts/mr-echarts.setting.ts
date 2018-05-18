@@ -7,7 +7,9 @@ import * as mu from 'mzmu';
 export const defOptions = {
     pie: {
         legend: {},
-        tooltip: {},
+        tooltip: {
+            trigger: 'item',
+        },
         dataset: {},
         series: []
     },
@@ -21,7 +23,9 @@ export const defOptions = {
             containLabel: true
         },
         legend: {},
-        tooltip: {},
+        tooltip: {
+            trigger: 'axis',
+        },
         yAxis: [{}],
         dataset: {},
         series: [],
@@ -37,7 +41,9 @@ export const defOptions = {
             containLabel: true
         },
         legend: {},
-        tooltip: {},
+        tooltip: {
+            trigger: 'axis',
+        },
         dataset: {},
         series: [],
         xAxis: [
