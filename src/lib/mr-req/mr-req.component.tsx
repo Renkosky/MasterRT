@@ -26,6 +26,7 @@
  *
  * @update mizi.lin@v0.1.23.20180521
  * ::=> 支持loader && nodata
+ * ::=> 添加属性 data
  *
  * @todo 梳理支持多req的nodata
  */
@@ -82,6 +83,8 @@ interface MrReqProps {
     /**
      * MrResource
      * 请求接口
+     *
+     * 与data二者存一，若共存 req > data
      */
     req?: MrIResource | MrIResource[];
 
@@ -91,6 +94,14 @@ interface MrReqProps {
      * @match 就近原则 >> MrServices.getResourcePool()
      */
     pool?: any;
+
+    /**
+     * data: any
+     * 接受直接数据
+     *
+     * 与req二者存一，若共存 req > data
+     */
+    data?: any;
 
     /**
      * transmit?: string | string[] = ['data:res.data'];
@@ -176,15 +187,18 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
          * pool: Resource pool (resources)
          * resource: 单个资源 （single resource)
          */
-
-        let {req, pool, result, transmit} = props;
+        let {req, pool, result, transmit, data} = props;
         let $promises: Promise<any>[];
 
-        pool = pool || MrServices.getResourcePool();
-
-        if (!req) {
+        if(mu.isEmpty(req)){
+            this._data = data;
+            this.setState({
+                start: 100
+            });
             return void 0;
         }
+
+        pool = pool || MrServices.getResourcePool();
 
         req = MrServices.upArray(req);
 

@@ -264,7 +264,6 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
             }
         }
 
-
         let {fullScreen, dataView, setting} = this.state;
         setting = mu.clone(setting);
 
@@ -297,7 +296,7 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
                 append={append}
                 prepend={prepend}
                 border={border}>
-                <MrReq req={req} force={true} transmit="data">
+                <MrReq req={req} data={{data}} force={true} transmit="data">
                     {dataView
                         ? <MrEchartsDataView dataView={this._dataView} />
                         :  <MrEcharts {...echartsProps} result={this.getResult.bind(this)} />}
