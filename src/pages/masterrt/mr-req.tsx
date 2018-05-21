@@ -29,10 +29,14 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
         a: 1111111
     };
 
-
     req: any = {
         pie: {
             resource: $pool.pie,
+            method: 'get'
+        },
+
+        nodata: {
+            resource: $pool.nodata,
             method: 'get'
         },
 
@@ -66,18 +70,15 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
     changeReq(type: string) {
         let req = this.req[type];
         let chartTypes = this.chartTypes[type];
-
         mu.storage('X-TOKEN', + new Date());
-
-        console.debug(mu.storage('X-TOKEN'));
-
         this.setState({req, chartTypes});
     }
 
     state: any = {
         data: [],
         req: this.req['pie'],
-        chartTypes: this.chartTypes['pie']
+        chartTypes: this.chartTypes['pie'],
+        nodataReq: this.req['nodata'],
     };
 
     componentWillMount() {
@@ -119,18 +120,19 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
     code: string = `
         <Button type={'primary'} onClick={changeReqPie}> Pie </Button>
         <Button type={'primary'} onClick={changeReqLine} className="ml-8"> Line </Button>
-
-        
-        
         
         <MrPanel title="函数调用，通过子元素进行函数调用" bodyStyle={{height: 300}} className="mt-16">
             <MrReq req={req} transmit="data:res.data">{draw}</MrReq>
+        </MrPanel>
+        
+        <MrPanel title="NoData Test" bodyStyle={{height: 100}} className="mt-16">
+            <MrReq req={nodataReq} transmit="data:res.data" style={{height: 300}}></MrReq>
         </MrPanel>
     `;
 
     render() {
 
-        let {data = {}, req, chartTypes} = this.state;
+        let {data = {}, req, chartTypes, nodataReq} = this.state;
         let {changeReq, result} = this;
 
         return (
@@ -143,6 +145,7 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
                         bindings={{
                             data,
                             req,
+                            nodataReq,
                             chartTypes,
                             result,
                             changeReqPie: () => changeReq('pie'),

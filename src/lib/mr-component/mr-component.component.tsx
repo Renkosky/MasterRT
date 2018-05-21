@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 
 interface MrComponentProps {
     component: any;
+    [propName: string]: any
 }
 
 export default class MrComponent extends React.Component<any, {}> {

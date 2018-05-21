@@ -10,6 +10,8 @@
  *  nameMap: {}
  * });
  *
+ * @update mizi.lin@v0.1.23.20180521
+ * ::=> 添加 MrService.setNoDataComponent
  */
 
 import * as download from '../assets/js/download';
@@ -153,6 +155,16 @@ class MrServices {
 
     getEchartsColors(): any {
         return this._mrEchartsColors;
+    }
+
+    _noDataComponent: any;
+
+    setNoDataComponent(component) {
+        this._noDataComponent = component;
+    }
+
+    getNoDataComponent(){
+        return this._noDataComponent;
     }
 }
 

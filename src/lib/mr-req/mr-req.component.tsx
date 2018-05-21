@@ -29,6 +29,7 @@ import * as React from 'react';
 import * as mu from 'mzmu';
 import MrServices from '../mr-common/mr.services';
 import * as _ from 'lodash';
+import MrProcess from '../mr-process/mr-process.component';
 
 interface MrIResource {
 
@@ -191,13 +192,27 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
                 res = res[0];
             }
             this._data = res;
+            // console.debug('mrreq.start -=>', 100);
+
+            this.setState({
+                start: 100
+            });
+
             transmit && this.forceUpdate();
             result && result(res);
+        }).catch((error) => {
+            this._gene = null;
+            this.forceUpdate();
+            return Promise.reject(error);
         });
     }
 
     _transmit: any;
 
+    /**
+     * 基因片段路径
+     * @return {any}
+     */
     transmit(): any {
         mu.empty(this._transmit, () => {
             let {transmit = ['data:res.data']} = this.props;
@@ -213,7 +228,22 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
         return this._transmit;
     }
 
-    // 暗暗的传给子元素，实现父元素reload
+    /**
+     * 获取基因信息
+     */
+    _gene: any;
+    getGene(res) {
+        let wrapper = {res};
+        return mu.map(this.transmit(), (transmit) => {
+            let {name, path} = transmit;
+            return {
+                __key__: name,
+                __val__: _.get(wrapper, path)
+            };
+        }, {});
+    }
+
+        // 暗暗的传给子元素，实现父元素reload
     _childEmitReload: any = mu.bind((fn) => {
         let res = fn();
         if (res === true) {
@@ -225,14 +255,10 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
     inheritance(res) {
         let {children, transform} = this.props;
         res = transform ? transform(res) : res;
-        let wrapper = {res};
-        let gene = mu.map(this.transmit(), (transmit) => {
-            let {name, path} = transmit;
-            return {
-                __key__: name,
-                __val__: _.get(wrapper, path)
-            };
-        }, {});
+        let gene = this.getGene(res);
+
+        // todo 重新梳理gene传递信息值得计算
+        this._gene = gene;
 
         if(mu.isNotExist(children)) {
             return null;
@@ -265,7 +291,7 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
     }
 
     state: any = {
-        loaded: false
+        start: 0
     };
 
     componentWillMount() {
@@ -278,9 +304,9 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
         }
     }
 
-    shouldComponentUpdate(nextProps) {
+    shouldComponentUpdate(nextProps, nextState) {
         let {force} = this.props;
-        return force || !_.isEqual(nextProps.req, this.props.req);
+        return force || !_.isEqual(nextProps.req, this.props.req) || !_.isEqual(nextState, this.state);
     }
 
     componentWillUpdate(props) {
@@ -297,6 +323,13 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
 
     render() {
         let children = this.inheritance(this._data) || null;
-        return (<React.Fragment>{children}</React.Fragment>);
+        let {start} = this.state;
+        let data = _.get(this, '_gene.data');
+
+        return (<React.Fragment>
+            <MrProcess start={start} data={data}>
+                {children}
+            </MrProcess>
+        </React.Fragment>);
     }
 }
