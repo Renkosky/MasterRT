@@ -1,6 +1,6 @@
 {
     "name": "masterrt",
-    "version": "0.1.23-b1",
+    "version": "0.1.23-b2",
     "license": "MIT",
     "scripts": {
         "start": "umi dev",
@@ -32,6 +32,7 @@
         "mzmu": "^1.8.15",
         "ramda": "^0.25.0",
         "autobind-decorator": "^2.1.0",
+        "simple-line-icons": "^2.4.1",
         "classnames": "^2.2.5",
         "downloadjs": "^1.4.7",
         "hanabi": "^0.4.0",
