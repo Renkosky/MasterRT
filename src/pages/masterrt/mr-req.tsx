@@ -138,7 +138,7 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
         return (
             <article className="mrs-article">
 
-                <header>MrReq <small>v0.1.21.20180516</small></header>
+                <header>MrReq <small>v0.1.24.20180521</small></header>
                 <ins>一个可以异步请求的组件, 使用Resource Pool进行异步请求</ins>
                 <main>
                     <JsxParser

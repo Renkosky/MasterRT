@@ -4,6 +4,9 @@
  * 其包含，loader, nodata
  *
  * @creator mizi.lin@v0.1.23.20180521
+ *
+ * @update mizi.lin@v0.1.23.20180521
+ * ::=> 修改nodataComponent 取值错误
  */
 
 import * as React from 'react';
@@ -28,7 +31,7 @@ export default class MrProcess extends React.Component<MrProcessProps, {}> {
 
     static defaultProps = {
         start: 0,
-        nodata: MrServices.getNoDataComponent() || NoDateComponent
+        nodata: NoDateComponent
     };
 
     componentWillMount() {
@@ -40,6 +43,9 @@ export default class MrProcess extends React.Component<MrProcessProps, {}> {
         let {start, end, type} = this.props;
         let {data, nodata, children} = this.props;
         // console.debug('..process start', start);
+
+        nodata = nodata ? MrServices.getNoDataComponent() : nodata;
+
         return (
             <section className="mr-process">
                 {
@@ -50,13 +56,11 @@ export default class MrProcess extends React.Component<MrProcessProps, {}> {
                 }
 
                 {
-                    start > 99 && mu.isEmpty(data) &&
+                    start > 99 && mu.isEmpty(data) ?
                     <section className="mr-process-nodata">
                         <MrComponent component={nodata}></MrComponent>
-                    </section>
+                    </section> : children
                 }
-
-                {children}
             </section>
         );
     }

@@ -23,6 +23,11 @@
  * ::=> 支持多个请求 req: iMrReq | iMrReq[]
  *
  * @todo 可以分别设置各种method下的headers
+ *
+ * @update mizi.lin@v0.1.23.20180521
+ * ::=> 支持loader && nodata
+ *
+ * @todo 梳理支持多req的nodata
  */
 
 import * as React from 'react';
