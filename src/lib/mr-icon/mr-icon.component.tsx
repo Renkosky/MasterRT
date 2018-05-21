@@ -1,3 +1,11 @@
+/**
+ * MrIcon
+ *
+ * @creator mizi.lin
+ *
+ * @update mizi.lin@v0.1.22.20180521 添加simpleicon
+ */
+
 import * as React from 'react';
 import {MrServices} from '..';
 import {Icon} from 'antd';
@@ -5,6 +13,7 @@ import * as mu from 'mzmu';
 
 declare var require: any;
 require('../assets/styles/mr-icon.less');
+require('../assets/styles/mr-simple-line-icon.less');
 
 interface MrIconProps {
     /**

@@ -21,6 +21,11 @@ export default class MrsMrIcon extends React.Component<MrsMrIconProps, {}> {
             <MrIcon type="user" size={128} shape="circle" style={{background: '#ccc', color: '#fff', fontSize: 56}} /> 
             <span>江山如此多娇</span>
         </section>
+        
+         <section>
+            <MrIcon type="share-alt" family="simpleicon" /> 
+            <MrIcon type="share" family="simpleicon" /> 
+        </section>
     `;
 
     interface: string = `
@@ -60,7 +65,7 @@ interface MrIconProps {
      * family?: string = ifnvl(null, 'anticon')
      * 自定义图标框名称
      *
-     * @ps: 若使用自定义图标库，请加重自定义图标class的权重值来覆盖anticon设定的fontFamily
+     * @mark: 若使用自定义图标库，请加重自定义图标class的权重值来覆盖anticon设定的fontFamily
      * exp.
      *
      *   body i.mricon {
@@ -71,6 +76,10 @@ interface MrIconProps {
      *       font-family: "mricon", serif !important;
      *   }
      *
+     * @mark: 默认使用 ant-design 的图标库 https://ant.design/components/icon-cn/
+     *
+     * 同时提供 simpleLineIcon http://simplelineicons.com/
+     * < MrIcon type="" family="simpleicon" / >
      */
     family?: string
 
@@ -83,7 +92,7 @@ interface MrIconProps {
     render() {
         return (
             <article className="mrs-article mrs-MrFill">
-                <header>MrIcon <small>icon</small></header>
+                <header>MrIcon <small>v0.1.22.20180521</small></header>
                 <ins>字体文件托管在iconfont, 也可自定义配置自己的icon组件库</ins>
                 <main>
                     <JsxParser

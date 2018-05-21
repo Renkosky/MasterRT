@@ -16,8 +16,7 @@ import * as download from '../assets/js/download';
 import * as mu from 'mzmu';
 import * as classNames from 'classnames';
 
-declare var require: any;
-const _commonStyles = require('../assets/styles/common.less');
+require('../assets/styles/common.less');
 
 /**
  * 通用方法
