@@ -1,11 +1,20 @@
+/**
+ * MrResource
+ * 基于restful的实现方案
+ *
+ * @create mizi.lin
+ *
+ * @update mizi.lin@v0.1.23.v20180522
+ * ::=> fixed delete no search
+ */
+
 import * as mu from 'mzmu';
 import MrRequest from './mr-request';
 import MrServices from './mr.services';
 
+
+// todo support /abc/efg{/id} 路径格式
 class MrResource {
-
-
-
     /**
      * URL to REST_URL
      * @param url
@@ -125,12 +134,15 @@ class MrResource {
     }
 
     delete(url: string, search?: any, options?: any) {
+
         const rest = this.restful(url, search);
-        url = rest.url;
+        let fullUrl = rest.fullUrl;
+
         options = mu.extend(true, {
-            method: 'delete'
+            method: 'delete',
         }, options || {});
-        return MrRequest(url, options);
+
+        return MrRequest(fullUrl, options);
     }
 
     pool(url: string) {
