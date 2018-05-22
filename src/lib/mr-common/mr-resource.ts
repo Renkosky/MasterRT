@@ -97,7 +97,7 @@ class MrResource {
         options = mu.extend(true, {
             method: 'post',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json;'
             },
             body: JSON.stringify(data)
         }, options || {});
