@@ -12,7 +12,7 @@
 import * as React from 'react';
 import * as mu from 'mzmu';
 import * as _ from 'lodash';
-import '../assets/styles/mr-process.less';
+import './mr-process.less';
 import {MrIf, MrElse, MrFill, MrCol, MrAutoBind, MrReq, MrPanel, MrComponent, MrServices} from '..';
 import MrLoader from './mr-loader.component';
 import NoDateComponent from './nodate.component';
