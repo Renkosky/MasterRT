@@ -198,6 +198,8 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
             return void 0;
         }
 
+        this._data = null;
+
         pool = pool || MrServices.getResourcePool();
 
         req = MrServices.upArray(req);
