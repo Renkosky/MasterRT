@@ -27,6 +27,7 @@
  * @update mizi.lin@v0.1.23.20180521
  * ::=> 支持loader && nodata
  * ::=> 添加属性 data
+ * ::=> 修改start获得方式
  *
  * @todo 梳理支持多req的nodata
  */
@@ -161,6 +162,8 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
 
     _data: any[];
 
+    _start: number = 0;
+
     /**
      * 单条Req数据处理
      */
@@ -192,13 +195,12 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
 
         if(mu.isEmpty(req)){
             this._data = data;
-            this.setState({
-                start: 100
-            });
+            this._start = 100;
             return void 0;
+        } else {
+            this._data = null;
+            this._start = 0;
         }
-
-        this._data = null;
 
         pool = pool || MrServices.getResourcePool();
 
@@ -213,11 +215,8 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
                 res = res[0];
             }
             this._data = res;
+            this._start = 100;
             // console.debug('mrreq.start -=>', 100);
-
-            this.setState({
-                start: 100
-            });
 
             transmit && this.forceUpdate();
             result && result(res);
@@ -312,7 +311,6 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
     }
 
     state: any = {
-        start: 0
     };
 
     componentWillMount() {
@@ -344,11 +342,10 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
 
     render() {
         let children = this.inheritance(this._data) || null;
-        let {start} = this.state;
         let data = _.get(this, '_gene.data');
 
         return (<React.Fragment>
-            <MrProcess start={start} data={data}>
+            <MrProcess start={this._start} data={data}>
                 {children}
             </MrProcess>
         </React.Fragment>);
