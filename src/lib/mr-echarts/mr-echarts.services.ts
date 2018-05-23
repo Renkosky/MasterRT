@@ -2,7 +2,10 @@
  * MrEchartsService
  *
  * @update mizi.lin@20180508
- * => 支持按name匹配颜色
+ * ::=> 支持按name匹配颜色
+ *
+ * @update mizi.lin@v0.1.25.20180523
+ * ::=> 处理single状态下，x值存在与否，处理方式
  *
  * //todo 重写 echarts 实现方式
  */
@@ -212,8 +215,14 @@ export default {
 
         _series = this.percentRowSeries(_series, dataModel);
 
-        let _x = dataModel === 'single' ? null
-            : mu.map(mu.groupArray(data, CHART_X), (o, name) => {
+        let _x = dataModel === 'single' ? mu.run(() => {
+            let xd = mu.map(data, (o) => {
+                return o[CHART_X];
+            });
+
+            return mu.isEmpty(_.uniq(xd)) ? null : xd;
+
+        }): mu.map(mu.groupArray(data, CHART_X), (o, name) => {
                 return name;
             }, []);
 

@@ -1,3 +1,11 @@
+/**
+ * @creator mizi.lin
+ *
+ * @update mizi.lin@0.1.25.20180523
+ * ::=> 添加 setting.bar::singleColors
+ */
+
+
 import * as _ from 'lodash';
 import * as mu from 'mzmu';
 
@@ -285,6 +293,17 @@ export function subSetting(_colors) {
             '**$$series[0].data[*]': (obj, data) => {
                 data._value = data.value;
                 data.value = -data.value;
+                return data;
+            }
+        },
+
+        /**
+         * 在显示singleBar的时候（无legend时)
+         * 可以按顺序显示柱子颜色
+         */
+        'bar:singleColors': {
+            '**$$series[0].data[*]': (obj, data, inx) => {
+                _.set(data, 'itemStyle.color', _colors[inx]);
                 return data;
             }
         },
