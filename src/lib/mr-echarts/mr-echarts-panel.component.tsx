@@ -13,7 +13,7 @@
  * @update mizi.lin@v0.1.21.20180516
  * ::=> 添加 append && prepend
  *
- * @update mizi.lin@v0.1.23.20180523
+ * @update mizi.lin@v0.1.24.20180523
  * ::=> support echarts event
  */
 
