@@ -198,7 +198,7 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
             this._start = 100;
             return void 0;
         } else {
-            this._data = null;
+            this._data = void 0;
             this._start = 0;
         }
 
