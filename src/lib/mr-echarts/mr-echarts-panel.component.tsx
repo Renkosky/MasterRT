@@ -12,6 +12,9 @@
  *
  * @update mizi.lin@v0.1.21.20180516
  * ::=> 添加 append && prepend
+ *
+ * @update mizi.lin@v0.1.23.20180523
+ * ::=> support echarts event
  */
 
 import * as React from 'react';
@@ -243,6 +246,9 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
         const {chartTypes, data, dataType, dataModel} = this.props;
         const {options, renderType, theme} = this.props;
 
+        let {chartClick, chartDblClick, chartMouseDown, chartMouseUp, chartMouseOver, chartMouseOut, chartGlobalOut} = this.props;
+        let chartsEvent = {chartClick, chartDblClick, chartMouseDown, chartMouseUp, chartMouseOver, chartMouseOut, chartGlobalOut};
+
         let {req: mrReqReq, mrReq = {}} = this.props;
 
         mu.run(mrReqReq, () => {
@@ -299,7 +305,7 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
                 <MrReq req={req} data={{data}} force={true} transmit="data">
                     {dataView
                         ? <MrEchartsDataView dataView={this._dataView} />
-                        :  <MrEcharts {...echartsProps} result={this.getResult.bind(this)} />}
+                        :  <MrEcharts {...echartsProps} {...chartsEvent} result={this.getResult.bind(this)} />}
                 </MrReq>
             </MrPanel>
         );

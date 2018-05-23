@@ -6,11 +6,13 @@
  *
  * @update mizi.lin@v0.1.23.v20180522
  * ::=> fixed delete no search
+ * ::=> 添加 upload 接口
  */
 
 import * as mu from 'mzmu';
 import MrRequest from './mr-request';
 import MrServices from './mr.services';
+import * as _ from 'lodash';
 
 
 // todo support /abc/efg{/id} 路径格式
@@ -145,6 +147,7 @@ class MrResource {
         return MrRequest(fullUrl, options);
     }
 
+
     pool(url: string) {
         const vm = this;
         return {
@@ -166,6 +169,12 @@ class MrResource {
                 const args: any = Array.from(arguments);
                 args.unshift(url);
                 return vm.post.apply(vm, args);
+            },
+
+            upload(search?: any, data?: any, options?: any) {
+                options = options || {};
+                _.set(options, 'headers.Content-Type', 'multipart/form-data;');
+                return vm.post(url, search, data, options);
             },
 
             delete(search?: any, data?: any, options?: any) {

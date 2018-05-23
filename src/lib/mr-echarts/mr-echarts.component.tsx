@@ -43,6 +43,14 @@ export interface MrEchartsProps {
     style?: any;
     result?: any;
     _gene?: any;
+
+    chartClick?: any;
+    chartDblClick?: any;
+    chartMouseDown?: any;
+    chartMouseUp?: any;
+    chartMouseOver?: any;
+    chartMouseOut?: any;
+    chartGlobalOut?: any;
 }
 
 export default class MrEcharts extends React.Component<MrEchartsProps, {}> {

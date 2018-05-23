@@ -16,5 +16,8 @@ cp -R ./src/lib/package.json ./pub/package.json
 echo ':::复制tsconfig'
 cp -R ./src/lib/tsconfig.pub.json ./pub/tsconfig.pub.json
 
+echo ':::复制部分相关文件'
+cp -R ./src/lib/README.md ./pub/README.md
+
 echo ':::编译文件'
 npm run compile

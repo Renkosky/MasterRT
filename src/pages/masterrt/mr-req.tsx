@@ -85,7 +85,7 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
 
         // $pool.nodata.get({id: 111});
         // $pool.nodata.post({id: 111}, {});
-        $pool.nodata.delete({id: 111}, {});
+        // $pool.nodata.delete({id: 111}, {});
         // $pool.nodata.patch({id: 111}, {});
 
     }

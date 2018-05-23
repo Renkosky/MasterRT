@@ -4,7 +4,12 @@
  *
  * @creator mizi.lin
  *
- * @update mizi.lin@v0.1.21.20180516 修复 headers 不接受 function，不能获取最新值
+ * @update mizi.lin@v0.1.21.20180516
+ * ::=> 修复 headers 不接受 function，不能获取最新值
+ *
+ * @update mizi.lin@v0.1.23,20180523
+ * ::=> 移除 catch 时回调 responseHandler
+ *
  */
 
 
@@ -30,7 +35,11 @@ function responseHandler(response) {
         });
 
         if (mu.or(contentType, 'application/json', 'application/hal+json', 'text/json')) {
-            return response.json();
+            try {
+                return response.json();
+            } catch (e) {
+                return response.text();
+            }
         } else if (contentType === 'text/html') {
             return response.text();
         } else {
@@ -43,25 +52,20 @@ function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
         return response;
     }
+
     return Promise.reject(response);
 }
 
 function preErrorHandler(response) {
     // 设置reject, 表示该 catch 后，不再接受 then
-
     let error: any = {};
     let {headers, status, statusText, ok} = response;
-
-    let _response = responseHandler(response);
-    _response.then((response) => {
-        error.response = response;
-    });
 
     error.headers = headers;
     error.status = status;
     error.statusText = statusText;
     error.ok = ok;
-    error._response = _response;
+    error._response = response;
 
     let self = MrServices._reqCatch;
 
