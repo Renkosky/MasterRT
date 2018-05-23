@@ -1,3 +1,8 @@
+/**
+ * @update mizi.lin@0.1.25.20180523
+ * ::=> try echart setOption && resize
+ */
+
 import * as React from 'react';
 import * as echarts from 'echarts';
 import * as _ from 'lodash';

@@ -220,7 +220,7 @@ export default {
                 return o[CHART_X];
             });
 
-            return mu.isEmpty(_.uniq(xd)) ? null : xd;
+            return mu.isEmpty(_.compact(xd)) ? null : xd;
 
         }): mu.map(mu.groupArray(data, CHART_X), (o, name) => {
                 return name;
