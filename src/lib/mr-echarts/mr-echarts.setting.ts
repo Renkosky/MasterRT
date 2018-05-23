@@ -162,6 +162,8 @@ export const defSubType = {
  */
 export function subSetting(_colors) {
 
+    let {base: _baseColors = [], names: _nameColors = {}} = _colors;
+
     return {
         /**
          * 不显示xy轴
@@ -301,9 +303,9 @@ export function subSetting(_colors) {
          * 在显示singleBar的时候（无legend时)
          * 可以按顺序显示柱子颜色
          */
-        'bar:singleColors': {
+        'bar::singleColors': {
             '**$$series[0].data[*]': (obj, data, inx) => {
-                _.set(data, 'itemStyle.color', _colors[inx]);
+                _.set(data, 'itemStyle.color', _baseColors[inx]);
                 return data;
             }
         },

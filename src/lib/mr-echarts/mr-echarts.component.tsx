@@ -99,8 +99,13 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
 
         // set empty option for no data
         if (_.isEmpty(data) && _.isEmpty(options)) {
-            this._chart.setOption({}, true);
-            this._chart.resize();
+            try {
+                this._chart.setOption({}, true);
+                this._chart.resize();
+            } catch (e) {
+                console.error(e);
+            }
+
             return;
         }
 
@@ -117,8 +122,14 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
 
         console.debug('::::::: options => ~~', options);
 
-        this._chart.setOption(options, true);
-        this._chart.resize();
+        try {
+            this._chart.setOption(options, true);
+            this._chart.resize();
+        } catch (e) {
+            console.error(e);
+        }
+
+
 
         this.registerEvents(props, options, rst);
 
@@ -192,7 +203,9 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
     }
 
     windowResize = mu.bind(() => {
-        this._chart && this._chart.resize && this._chart.resize();
+        try {
+            this._chart && this._chart.resize && this._chart.resize();
+        } catch (e) {}
     }, this);
 
     componentWillReceiveProps(props: MrEchartsProps) {
