@@ -17,18 +17,12 @@ import JsxParser from 'react-jsx-parser';
 import Test from '../../components/test';
 
 interface MrsReqProps {
-    a: number;
 }
 
-// @MrPurRender
-@immutableRenderDecorator
+// @todo use immutable
+// @immutableRenderDecorator
 @MrAutoBind
 export default class MrsReq extends React.Component<MrsReqProps, {}> {
-    // default props
-    static defaultProps = {
-        a: 1111111
-    };
-
     req: any = {
         pie: {
             resource: $pool.pie,
@@ -84,7 +78,11 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
     componentWillMount() {
 
         // $pool.nodata.get({id: 111});
-        // $pool.nodata.post({id: 111}, {});
+
+        // $pool.nores.get({id: 111}).catch((error) => {
+        //     error.$message.then((o) => console.debug(o));
+        // });
+
         // $pool.nodata.delete({id: 111}, {});
         // $pool.nodata.patch({id: 111}, {});
 
@@ -101,31 +99,30 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
         this.setState = () => void 0;
     }
 
-// <MrPanel title="回调::通过setState进行重新渲染" bodyStyle={{height: 300}} className="mt-16">
-// <MrReq req={req} result={result}>
-// <MrEcharts
-// data={data}
-// chartTypes={chartTypes}
-// ></MrEcharts>
-// </MrReq>
-// </MrPanel>
-//
-// {/*// 典型的基因传递调用方案*/}
-// {/*// 其中MrReq通过transmit向子组件MrEcharts传递基因data片段*/}
-// {/*// 而MrEcharts无需做任何配置，自然而然的获得父组件的遗传的基因片段信息*/}
-// <MrPanel title="传递::通过transmit传递数据，局部渲染" bodyStyle={{height: 300}} className="mt-16">
-//     <MrReq req={req} transmit="data">
-//         <MrIf condition={true} falseType="empty">
-//             <MrEcharts
-//                 chartTypes={chartTypes}
-//             ></MrEcharts>
-//         </MrIf>
-//     </MrReq>
-// </MrPanel>
 
     code: string = `
         <Button type={'primary'} onClick={changeReqPie}> Pie </Button>
         <Button type={'primary'} onClick={changeReqLine} className="ml-8"> Line </Button>
+        
+        <MrPanel title="回调::通过setState进行重新渲染" bodyStyle={{height: 300}} className="mt-16">
+            <MrReq req={req} result={result}>
+                <MrEcharts
+                    data={data}
+                    chartTypes={chartTypes}
+                ></MrEcharts>
+            </MrReq>
+        </MrPanel>
+
+        {/*// 典型的基因传递调用方案*/}
+        {/*// 其中MrReq通过transmit向子组件MrEcharts传递基因data片段*/}
+        {/*// 而MrEcharts无需做任何配置，自然而然的获得父组件的遗传的基因片段信息*/}
+        <MrPanel title="传递::通过transmit传递数据，局部渲染" bodyStyle={{height: 300}} className="mt-16">
+            <MrReq req={req} transmit="data:res.data">
+                <MrEcharts
+                    chartTypes={chartTypes}
+                ></MrEcharts>
+            </MrReq>
+        </MrPanel>
         
         <MrPanel title="函数调用，通过子元素进行函数调用" bodyStyle={{height: 300}} className="mt-16">
             <MrReq req={req} transmit="data:res.data">{draw}</MrReq>
@@ -140,6 +137,7 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
 
         let {data = {}, req, chartTypes, nodataReq} = this.state;
         let {changeReq, result} = this;
+
 
         return (
             <article className="mrs-article">

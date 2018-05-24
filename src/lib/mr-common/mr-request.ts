@@ -25,34 +25,38 @@ function responseHandler(response) {
     return mu.run(MrServices.reqResponse, (handler) => {
         return handler(response);
     }, () => {
-        let headers = response.headers;
-        let contentType: string = 'application/json';
-
-        mu.run(headers, () => {
-            contentType = headers.get('Content-Type') || 'text/html';
-            contentType = contentType.split(';')[0];
-            contentType = mu.trim(contentType);
-        });
-
-        if (mu.or(contentType, 'application/json', 'application/hal+json', 'text/json')) {
-            try {
-                return response.json();
-            } catch (e) {
-                return response.text();
-            }
-        } else if (contentType === 'text/html') {
-            return response.text();
-        } else {
-            return response.blob();
-        }
+        return get$Response(response);
     });
 }
 
+function get$Response(response) {
+    let headers = response.headers;
+    let contentType: string = 'application/json';
+
+    mu.run(headers, () => {
+        contentType = headers.get('Content-Type') || 'text/html';
+        contentType = contentType.split(';')[0];
+        contentType = mu.trim(contentType);
+    });
+
+    if (mu.or(contentType, 'application/json', 'application/hal+json', 'text/json')) {
+        try {
+            return response.json();
+        } catch (e) {
+            return response.text();
+        }
+    } else if (contentType === 'text/html') {
+        return response.text();
+    } else {
+        return response.blob();
+    }
+}
+
 function checkStatus(response) {
+
     if (response.status >= 200 && response.status < 300) {
         return response;
     }
-
     return Promise.reject(response);
 }
 
@@ -60,11 +64,13 @@ function preErrorHandler(response) {
     // 设置reject, 表示该 catch 后，不再接受 then
     let error: any = {};
     let {headers, status, statusText, ok} = response;
+    let $message: any;
 
     error.headers = headers;
     error.status = status;
     error.statusText = statusText;
     error.ok = ok;
+    error.$message = get$Response(response);
     error._response = response;
 
     let self = MrServices._reqCatch;

@@ -42,7 +42,7 @@ export default class MrProcess extends React.Component<MrProcessProps, {}> {
 
     render() {
 
-        let {start, end, type} = this.props;
+        let {start, type} = this.props;
         let {data, nodata, children} = this.props;
         // console.debug('..process start', start);
 
@@ -53,7 +53,7 @@ export default class MrProcess extends React.Component<MrProcessProps, {}> {
                 {
                     start >= 0 && start < 100 &&
                     <section className="mr-process-loader">
-                        <MrLoader start={start} end={end} type={type} />
+                        <MrLoader start={start} type={type} />
                     </section>
                 }
 

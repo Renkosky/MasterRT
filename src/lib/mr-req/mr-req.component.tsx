@@ -170,7 +170,7 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
     /**
      * 单条Req数据处理
      */
-    oneReq(pool, req): Promise<any> {
+    oneRequest(pool, req): Promise<any> {
         let {method = 'post', payload = {}, search = {}, transform, resource} = req;
         method = method.toLowerCase();
 
@@ -187,7 +187,7 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
         });
     }
 
-    getRequest(props): void {
+    getRequests(props): void {
 
         /**
          * pool: Resource pool (resources)
@@ -210,22 +210,19 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
         req = MrServices.upArray(req);
 
         $promises = mu.map(req, (one) => {
-            return this.oneReq(pool, one);
+            return this.oneRequest(pool, one);
         });
 
         Promise.all($promises).then((res) => {
-            if(res.length === 1){
-                res = res[0];
-            }
-            this._data = res;
+            this._data = req.length == 1 ? res[0] : res;
             this._start = 100;
-            // console.debug('mrreq.start -=>', 100);
-
-            transmit && this.forceUpdate();
-            result && result(res);
+            result && result(this._data);
+            this.transmit();
+            this.forceUpdate();
         }).catch((error) => {
             this._gene = null;
             this.forceUpdate();
+            result && result(null);
             return Promise.reject(error);
         });
     }
@@ -237,18 +234,22 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
      * @return {any}
      */
     transmit(): any {
-        mu.empty(this._transmit, () => {
-            let {transmit = ['data:res.data']} = this.props;
-            transmit = MrServices.upArray(transmit);
-            this._transmit = mu.map(transmit, (item) => {
-                let [name, path = 'res.data'] = item.split(':');
-                return {
-                    name,
-                    path
-                };
-            });
+        let {transmit = ['data:res.data'], req} = this.props;
+        let res = this._data;
+
+        let transmits = MrServices.upArray(transmit);
+
+        transmits = mu.map(transmits, (item) => {
+            let [name, path = 'res.data'] = item.split(':');
+            let data = _.get({res}, path);
+            return {
+                name,
+                path,
+                data
+            };
         });
-        return this._transmit;
+
+        this._transmit = transmits;
     }
 
     /**
@@ -257,7 +258,7 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
     _gene: any;
     getGene(res) {
         let wrapper = {res};
-        return mu.map(this.transmit(), (transmit) => {
+        return mu.map(this._transmit, (transmit) => {
             let {name, path} = transmit;
             return {
                 __key__: name,
@@ -270,12 +271,18 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
     _childEmitReload: any = mu.bind((fn) => {
         let res = fn();
         if (res === true) {
-            this.getRequest(this.props);
+            this.getRequests(this.props);
         }
     }, this);
 
     // 基因片段传递
     inheritance(res) {
+
+        // 数据不存在不予传递信息
+        if(mu.isNotExist(res)) {
+            return null;
+        }
+
         let {children, transform} = this.props;
         res = transform ? transform(res) : res;
         let gene = this.getGene(res);
@@ -287,7 +294,7 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
             return null;
         }
 
-        if ( typeof children === 'function') {
+        if (typeof children === 'function') {
             return (children as any)(gene);
         }
 
@@ -317,12 +324,12 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
     };
 
     componentWillMount() {
-        this.getRequest(this.props);
+        this.getRequests(this.props);
     }
 
     componentWillReceiveProps(nextProps) {
         if (!_.isEqual(nextProps.req, this.props.req)) {
-            this.getRequest(nextProps);
+            this.getRequests(nextProps);
         }
     }
 
@@ -345,9 +352,11 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
 
     render() {
         let children = this.inheritance(this._data) || null;
+        let datas = mu.map(this._transmit || [], (o) => o.data);
+        let data = datas.length === 1 ? datas[0] : datas;
 
         return (<React.Fragment>
-            <MrProcess start={this._start} data={this._data}>
+            <MrProcess start={this._start} data={data}>
                 {children}
             </MrProcess>
         </React.Fragment>);

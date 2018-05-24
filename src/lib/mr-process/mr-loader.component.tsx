@@ -11,7 +11,6 @@ import {Spin} from 'antd';
 
 interface MrLoaderComponentProps {
     start: number | boolean;
-    end: number | boolean;
     type: string;
 }
 
