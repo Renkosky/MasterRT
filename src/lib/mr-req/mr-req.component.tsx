@@ -15,20 +15,23 @@
  * ::=> 添加showComponentUpdate, 对req未产生变化，阻止渲染, 便于数据传递给子组件
  * ::=> 同时添加force模式，若 force = true, 则阻止失效
  *
- * @todo immutable 使用持久化数据 加快判断 showComponentUpdate, 进行性能优化
+ *
  *
  * @update mizi.lin@v0.1.20.20180515
  * ::=> 添加对子元素为函数的支持，可以传递更多的对象
  * ::=> 重写transmit获取相应数据方式，从req中移除dataPath属性
  * ::=> 支持多个请求 req: iMrReq | iMrReq[]
  *
- * @todo 可以分别设置各种method下的headers
- *
  * @update mizi.lin@v0.1.23.20180521
  * ::=> 支持loader && nodata
  * ::=> 添加属性 data
  * ::=> 修改start获得方式
  *
+ * @update mizi.lin@v0.1.25.20180524
+ * ::=> 修改向MrProcess传递data属性错误的问题
+ *
+ * @todo immutable 使用持久化数据 加快判断 showComponentUpdate, 进行性能优化
+ * @todo 可以分别设置各种method下的headers
  * @todo 梳理支持多req的nodata
  */
 
@@ -342,10 +345,9 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
 
     render() {
         let children = this.inheritance(this._data) || null;
-        let data = _.get(this, '_gene.data');
 
         return (<React.Fragment>
-            <MrProcess start={this._start} data={data}>
+            <MrProcess start={this._start} data={this._data}>
                 {children}
             </MrProcess>
         </React.Fragment>);
