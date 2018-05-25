@@ -39,13 +39,7 @@ export default class MrsLayout extends React.Component<MrsLayoutProps, {}> {
     }
 
     render() {
-
         let {menu, parent} = this.state;
-
-
-
-
-
         return (
             <div className="wrapper">
                 { this.isIgnoreLayout() ? this.props.children

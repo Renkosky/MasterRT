@@ -250,11 +250,14 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
     };
 
     shouldComponentUpdate(nextProps) {
-        let {force} = this.props;
+        let {children, append, ...next} = nextProps;
+        let {children:a, append:b, ...current} = this.props;
+
+        let {force} = nextProps;
         if(force) {
             return true;
         } else {
-            return _.isEqual(nextProps, this.props)
+            return !_.isEqual(next, current);
         }
     }
 

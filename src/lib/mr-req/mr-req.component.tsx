@@ -195,8 +195,6 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
         let {req, pool, result, transmit, data} = props;
         let $promises: Promise<any>[];
 
-        console.debug(data);
-
         if(mu.isEmpty(req)){
             this._data = data;
             this._start = 100;
@@ -321,6 +319,11 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
         });
     }
 
+    isRender(nextProps, nextState) {
+        let {force} = nextProps;
+        return force || !_.isEqual(nextProps.req, this.props.req) || !_.isEqual(nextState, this.state);
+    }
+
     state: any = {
     };
 
@@ -328,19 +331,14 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
         this.getRequests(this.props);
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (!_.isEqual(nextProps.req, this.props.req)) {
+    componentWillReceiveProps(nextProps, nextState) {
+        if (this.isRender(nextProps, nextState)) {
             this.getRequests(nextProps);
         }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        let {force} = this.props;
-        return force || !_.isEqual(nextProps.req, this.props.req) || !_.isEqual(nextState, this.state);
-    }
-
-    componentWillUpdate(props) {
-        // console.debug(props);
+        return this.isRender(nextProps, nextState);
     }
 
     componentWillUnmount() {
