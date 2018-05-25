@@ -188,13 +188,14 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
     }
 
     getRequests(props): void {
-
         /**
          * pool: Resource pool (resources)
          * resource: 单个资源 （single resource)
          */
         let {req, pool, result, transmit, data} = props;
         let $promises: Promise<any>[];
+
+        console.debug(data);
 
         if(mu.isEmpty(req)){
             this._data = data;
@@ -353,7 +354,7 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
     render() {
         let children = this.inheritance(this._data) || null;
         let datas = mu.map(this._transmit || [], (o) => o.data);
-        let data = datas.length === 1 ? datas[0] : datas;
+        let data = this._transmit ? (datas.length === 1 ? datas[0] : datas) : this._data;
 
         return (<React.Fragment>
             <MrProcess start={this._start} data={data}>

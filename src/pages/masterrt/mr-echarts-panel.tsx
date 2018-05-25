@@ -67,17 +67,10 @@ export default class MrsEchartsPanel extends React.Component<MrsEchartsPanelProp
     code = `
         <MrEchartsPanel
                 title="Use Data"
-                style={{height: 400}} chartTypes={'pie::ring::ringLabel'} data={pie} 
+                style={{height: 400}} 
+                chartTypes={'pie::ring::ringLabel'} 
+                data={pie} 
                 append={<div>在饼图底部插入内容</div>} />
-
-        <MrEchartsPanel
-            chartClick={click}
-            title="Use Req"
-            style={{height: 400}} 
-            chartTypes={'line'} 
-            req={req} 
-            transform={[{'@convert': {'__names': 'name'}}]} 
-        />
     `;
 
     render() {
@@ -85,6 +78,16 @@ export default class MrsEchartsPanel extends React.Component<MrsEchartsPanelProp
         let {req} = this.state;
         return (
             <article className="mrs-article mrs-MrFill">
+
+                {/*<MrEchartsPanelA*/}
+                {/*chartClick={click}*/}
+                {/*title="Use Req"*/}
+                {/*style={{height: 400}}*/}
+                {/*chartTypes={'line'}*/}
+                {/*req={req}*/}
+                {/*transform={[{'@convert': {'__names': 'name'}}]}*/}
+                {/*/>*/}
+
                 <header>MrEchartsPanel <small>@v0.1.24.20180523</small></header>
                 <ins>一个基于MrPanel, MrReq, MrEcharts 集成的显示UI，支持各种激活Echarts方式，以及使用Tool控制Echarts显示方式</ins>
                 <main>

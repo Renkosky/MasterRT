@@ -15,6 +15,9 @@
  *
  * @update mizi.lin@v0.1.24.20180523
  * ::=> support echarts event
+ *
+ * @update mizi.lin@v0.1.25.20180525
+ * ::=> 添加 force，默认MrEchartsPanel 在props未改变状态下，不重新渲染
  */
 
 import * as React from 'react';
@@ -90,6 +93,11 @@ interface MrEchartsPanelProps extends MrEchartsProps {
      * @params result: {options: EchartOption, data: any, dataView: any}
      */
     result?: any;
+
+    /**
+     * 强制渲染
+     */
+    force?: boolean;
 }
 
 @MrAutoBind
@@ -240,6 +248,15 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
         lineBarExchange: false,
         setting: _mrEchartServices.serialize(this.props.setting)
     };
+
+    shouldComponentUpdate(nextProps) {
+        let {force} = this.props;
+        if(force) {
+            return true;
+        } else {
+            return _.isEqual(nextProps, this.props)
+        }
+    }
 
     render() {
         const {title, style, className, h100, bodyStyle, border, showToolbar, transform, append, prepend} = this.props;
