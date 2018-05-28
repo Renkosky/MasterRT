@@ -250,8 +250,9 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
     };
 
     shouldComponentUpdate(nextProps) {
-        let {children, append, ...next} = nextProps;
-        let {children:a, append:b, ...current} = this.props;
+        // @todo 过滤掉 props 中的 function
+        let {children, append, chartClick, ...next} = nextProps;
+        let {children:a, append:b, chartClick:c, ...current} = this.props;
 
         let {force} = nextProps;
         if(force) {
