@@ -521,8 +521,8 @@ export function subSetting(_colors) {
 
         'wordCloud::randomAll': {
             '$$series[*].textStyle.normal.color': () => {
-                let len = _colors.length;
-                return _.get(_colors, `base[${mu.randomInt(0, len - 1)}]`);
+                let len = _baseColors.length;
+                return _baseColors[mu.randomInt(0, len - 1)];
             }
         }
     };
