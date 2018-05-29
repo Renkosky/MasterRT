@@ -198,8 +198,9 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
 
     // 查看DataView
     dataView() {
+        let {dataView} = this.state;
         this.setState({
-            dataView: !this.state.dataView
+            dataView: !dataView
         });
     }
 
