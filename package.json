@@ -1,6 +1,6 @@
 {
     "name": "masterrt.pool",
-    "version": "0.0.6",
+    "version": "1.0.0",
     "license": "MIT",
     "scripts": {
         "start": "PORT=6001 umi dev",
