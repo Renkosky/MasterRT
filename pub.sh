@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
+
+# 使用yarn 替换 npm
+
 echo ':::编译文件'
 npm run tsd
+#yarn run tsd
 
 _ov=`npm view masterrt.seed version`
 
@@ -30,7 +34,7 @@ if [ $? -eq 0 ]; then
     git commit -am "$_ov -> $_uv"
     git pull
     git push
-
+`
     echo '::::::::::::::: Git Tag'
     git tag $_uv
     git push --tags

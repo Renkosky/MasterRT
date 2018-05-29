@@ -22,22 +22,15 @@
         "url": "https://github.com/amily4555/MasterRT/issues"
     },
     "dependencies": {
-        "antd": "^3.3.1",
-        "dva": "^2.1.0",
-        "umi": "^1.0.8",
-        "umi-plugin-dva": "^0.3.4",
         "echarts": "^4.0.4",
         "echarts-wordcloud": "^1.1.3",
         "lodash": "^4.17.5",
         "mzmu": "^1.8.15",
-        "ramda": "^0.25.0",
         "autobind-decorator": "^2.1.0",
         "simple-line-icons": "^2.4.1",
         "classnames": "^2.2.5",
         "downloadjs": "^1.4.7",
         "hanabi": "^0.4.0",
-        "react-jsx-parser": "^1.3.1",
-        "typescript": "^2.8.1",
         "react-immutable-render-mixin": "^0.9.7"
     },
     "devDependencies": {
@@ -47,6 +40,13 @@
         "@types/lodash": "^4.14.106",
         "babel-plugin-module-resolver": "^3.1.0",
         "ts-jest-babel-7": "^22.0.7",
-        "typedoc": "^0.11.1"
+        "typedoc": "^0.11.1",
+        "antd": "^3.3.1",
+        "dva": "^2.1.0",
+        "umi": "^1.0.8",
+        "umi-plugin-dva": "^0.3.4",
+        "ramda": "^0.25.0",
+        "react-jsx-parser": "^1.3.1",
+        "typescript": "^2.8.1"
     }
 }

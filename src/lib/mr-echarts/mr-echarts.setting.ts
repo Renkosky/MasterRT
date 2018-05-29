@@ -368,6 +368,11 @@ export function subSetting(_colors) {
             },
         },
 
+        // 隐藏label
+        '::hideLabel': {
+            '$$series[*].label.normal.show': false
+        },
+
         'pie::rose': [
             {'$$series[*].roseType': 'area'},
             {
