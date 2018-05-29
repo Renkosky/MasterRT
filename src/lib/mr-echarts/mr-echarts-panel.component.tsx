@@ -190,8 +190,9 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
 
     // 全屏显示
     fullScreen() {
+        let {fullScreen} = this.state;
         this.setState({
-            fullScreen: !this.state.fullScreen
+            fullScreen: !fullScreen
         });
     }
 
@@ -249,7 +250,7 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
         setting: _mrEchartServices.serialize(this.props.setting)
     };
 
-    shouldComponentUpdate(nextProps) {
+    shouldComponentUpdate(nextProps, nextState) {
         // @todo 过滤掉 props 中的 function
         let {children, append, chartClick, ...next} = nextProps;
         let {children:a, append:b, chartClick:c, ...current} = this.props;
@@ -258,7 +259,7 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
         if(force) {
             return true;
         } else {
-            return !_.isEqual(next, current);
+            return !_.isEqual(next, current) || !_.isEqual(nextState, this.state);
         }
     }
 
