@@ -91,10 +91,10 @@ export default {
                 mu.each(series, (o) => {
                     if (o.type === 'line') {
                         o.type = 'bar';
-                        xAxis.boundaryGap = true;
+                        xAxis[0].boundaryGap = true;
                     } else if (o.type === 'bar') {
                         o.type = 'line';
-                        xAxis.boundaryGap = false;
+                        xAxis[0].boundaryGap = false;
                     }
                 });
             },
