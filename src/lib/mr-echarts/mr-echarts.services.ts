@@ -87,12 +87,14 @@ export default {
 
             // 线图和柱形图互换
             lineBarExchange: (options) => {
-                let series = options.series;
+                let {series, xAxis} = options;
                 mu.each(series, (o) => {
                     if (o.type === 'line') {
                         o.type = 'bar';
+                        xAxis.boundaryGap = true;
                     } else if (o.type === 'bar') {
                         o.type = 'line';
+                        xAxis.boundaryGap = false;
                     }
                 });
             },

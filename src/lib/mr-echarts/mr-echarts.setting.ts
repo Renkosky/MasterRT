@@ -41,7 +41,7 @@ export const defOptions = {
         yAxis: [{}],
         dataset: {},
         series: [],
-        xAxis: [{type: 'category'}]
+        xAxis: [{type: 'category', boundaryGap: true}]
     },
 
     line: {

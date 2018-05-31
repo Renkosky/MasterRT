@@ -134,7 +134,7 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
                 </details>
 
                 <section style={{height: 300, width: '100%'}}>
-                    <MrEcharts chartTypes="radar::radarMinZero::radarMaximum" data={dataSource.radar}/>
+                    <MrEcharts chartTypes="radar::area::radarMinZero" data={dataSource.radar}/>
                 </section>
 
                 <details className="mt-16">
