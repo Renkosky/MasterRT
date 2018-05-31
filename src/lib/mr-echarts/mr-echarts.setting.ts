@@ -3,6 +3,10 @@
  *
  * @update mizi.lin@0.1.25.20180523
  * ::=> 添加 setting.bar::singleColors
+ *
+ * @update mizi.lin@0.1.26.20180529
+ * ::=> 添加 randomAll
+ * ::=> wordCloud 添加 width 和 height
  */
 
 
@@ -501,8 +505,29 @@ export function subSetting(_colors) {
             '$$series[*].symbol': 'none'
         },
 
+        '::radarZero': {
+            '$$radar.indicator[*].min': 0,
+        },
+
+        '::radarMaximum': {
+            '**$$radar.indicator[*].max': (options, data) => {
+
+
+                let indicator = _.get(options, 'radar.indicator');
+                indicator = mu.clone(indicator)
+                let maxItem = _.maxBy(indicator, (o: any) => o.max);
+
+                console.debug(mu.clone(indicator));
+
+                return maxItem.max * 1.05;
+            },
+        },
+
+
         wordCloud: {
             '$$series[*].shape': 'circle',
+            '$$series[*].width': '98%',
+            '$$series[*].height': '90%',
             '$$series[*].sizeRange': [
                 14,
                 42

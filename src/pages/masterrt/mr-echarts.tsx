@@ -4,6 +4,8 @@ import './masterrt.less';
 import * as _ from 'lodash';
 import MrsCode from '../../components/MrsCode';
 import JsxParser from 'react-jsx-parser';
+import {default as dataSource} from 'src/services/data-source';
+import MrEchartsPanel from '../../lib/mr-echarts/mr-echarts-panel.component';
 
 interface MrsMrEchartsProps {
 }
@@ -105,7 +107,7 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
         return (
             <article className="mrs-article mrs-MrFill">
 
-                <header>MrEcharts <small>echarts集成</small></header>
+                <header>MrEcharts <small>v0.1.26-b4</small></header>
                 <ins>由data直接快速生成echarts图表，并有setting进行精细控制</ins>
                 <main>
                     <JsxParser
@@ -129,6 +131,17 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
                 <details className="mt-16">
                     <summary>数据源</summary>
                     <MrsCode code={_data}></MrsCode>
+                </details>
+
+                <section style={{height: 300, width: '100%'}}>
+                    <MrEcharts chartTypes="radar::radarMinZero::radarMaximum" data={dataSource.radar}/>
+                </section>
+
+                <details className="mt-16">
+                    <summary>雷达图</summary>
+                    <MrsCode code={`
+                        <MrEcharts chartTypes="radar" data={dataSource.radar}/>
+                    `}></MrsCode>
                 </details>
 
                 <aside className="mt-16">

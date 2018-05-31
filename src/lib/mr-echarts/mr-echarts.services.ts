@@ -8,6 +8,9 @@
  * ::=> 处理single状态下，x值存在与否，处理方式
  *
  * //todo 重写 echarts 实现方式
+ *
+ * @update mizi.lin@v0.1.26-b3.20180531
+ * ::=> 添加基于雷达的
  */
 
 import * as mu from 'mzmu';
@@ -132,8 +135,10 @@ export default {
             let [p1, p2] = _path.split('[*]');
             p2 = p2.replace(/^\./, '');
 
+            let _obj = mu.clone(obj);
+
             mu.each(_.get(obj, p1), (o, idx) => {
-                value = _fn ? _fn(obj, o, idx) : value;
+                value = _fn ? _fn(_obj, o, idx) : value;
                 if (p2) {
                     _.set(o, p2, value);
                 } else {
