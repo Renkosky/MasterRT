@@ -511,16 +511,12 @@ export function subSetting(_colors) {
 
         '::radarMaximum': {
             '**$$radar.indicator[*].max': (options, data) => {
-
-
                 let indicator = _.get(options, 'radar.indicator');
                 indicator = mu.clone(indicator)
                 let maxItem = _.maxBy(indicator, (o: any) => o.max);
-
-                console.debug(mu.clone(indicator));
-
-                return maxItem.max * 1.05;
-            },
+                let max = maxItem.max * 1.05;
+                return max ? max : 5;
+            }
         },
 
 
