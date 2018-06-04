@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import MrsCode from '../../components/MrsCode';
 import JsxParser from 'react-jsx-parser';
 import {default as dataSource} from 'src/services/data-source';
-import MrEchartsPanel from '../../lib/mr-echarts/mr-echarts-panel.component';
+import * as mu from 'mzmu';
 
 interface MrsMrEchartsProps {
 }
@@ -109,40 +109,78 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
 
                 <header>MrEcharts <small>v0.1.26-b4</small></header>
                 <ins>由data直接快速生成echarts图表，并有setting进行精细控制</ins>
-                <main>
-                    <JsxParser
-                        bindings={{
-                            pieData: this.data.pie
-                        }}
-                        components={{
-                            MrPanel,
-                            MrIcon,
-                            MrEcharts
-                        }}
-                        jsx={this.code}
-                    ></JsxParser>
-                </main>
 
-                <details className="mt-16">
-                    <summary>查看源码</summary>
-                    <MrsCode code={(this.code)}></MrsCode>
-                </details>
+                <MrEcharts style={{height: 300}}
+                    chartTypes={'pie'}
+                    data={dataSource.base}
 
-                <details className="mt-16">
-                    <summary>数据源</summary>
-                    <MrsCode code={_data}></MrsCode>
-                </details>
+                    transform={[
+                        {'@group': 'type'},
+                        (data) => {
+                            return mu.map(data, (items) => {
+                                let item = items[0];
+                                item.value = _.reduce(items, (sum, item) => sum + item.volume, 0);
+                                item.name = item.type;
+                                return item;
+                            });
+                        }
+                    ]}></MrEcharts>
 
-                <section style={{height: 300, width: '100%'}}>
-                    <MrEcharts chartTypes="radar::area::radarMinZero" data={dataSource.radar}/>
-                </section>
 
-                <details className="mt-16">
-                    <summary>雷达图</summary>
-                    <MrsCode code={`
-                        <MrEcharts chartTypes="radar" data={dataSource.radar}/>
-                    `}></MrsCode>
-                </details>
+                {/*<MrEcharts style={{height: 300}}*/}
+                           {/*chartTypes={'line'}*/}
+                           {/*setting={{*/}
+                               {/*'grid.right': 160,*/}
+                               {/*'grid.width': '95%'*/}
+                           {/*}}*/}
+                           {/*data={dataSource.base} transform={[*/}
+                    {/*{*/}
+                        {/*'@convert': {*/}
+                            {/*value: 'volume',*/}
+                            {/*name: 'type',*/}
+                            {/*x: 'date'*/}
+                        {/*}*/}
+                    {/*}*/}
+                {/*]*/}
+                {/*}></MrEcharts>*/}
+
+                {/*<main>*/}
+                    {/*<JsxParser*/}
+                        {/*bindings={{*/}
+                            {/*pieData: this.data.pie*/}
+                        {/*}}*/}
+                        {/*components={{*/}
+                            {/*MrPanel,*/}
+                            {/*MrIcon,*/}
+                            {/*MrEcharts*/}
+                        {/*}}*/}
+                        {/*jsx={this.code}*/}
+                    {/*></JsxParser>*/}
+                {/*</main>*/}
+
+                {/*<details className="mt-16">*/}
+                    {/*<summary>查看源码</summary>*/}
+                    {/*<MrsCode code={(this.code)}></MrsCode>*/}
+                {/*</details>*/}
+
+                {/*<details className="mt-16">*/}
+                    {/*<summary>数据源</summary>*/}
+                    {/*<MrsCode code={_data}></MrsCode>*/}
+                {/*</details>*/}
+
+                {/*<section style={{*/}
+                    {/*height: 300,*/}
+                    {/*width: '100%'*/}
+                {/*}}>*/}
+                    {/*<MrEcharts chartTypes="radar::area::radarMinZero" data={dataSource.radar} />*/}
+                {/*</section>*/}
+
+                {/*<details className="mt-16">*/}
+                    {/*<summary>雷达图</summary>*/}
+                    {/*<MrsCode code={`*/}
+                        {/*<MrEcharts chartTypes="radar" data="{dataSource.radar}/">*/}
+                    {/*`}></MrsCode>*/}
+                {/*</details>*/}
 
                 <aside className="mt-16">
                     <table>

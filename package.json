@@ -33,6 +33,8 @@
         "hanabi": "^0.4.0",
         "lodash": "^4.17.5",
         "masterrt": "^0.1.19-b4",
+        "mobx": "^4.3.0",
+        "mobx-react": "^5.1.2",
         "mzmu": "^1.8.15",
         "ramda": "^0.25.0",
         "react-immutable-render-mixin": "^0.9.7",

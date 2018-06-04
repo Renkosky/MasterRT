@@ -9,7 +9,6 @@
  * ::=> wordCloud 添加 width 和 height
  */
 
-
 import * as _ from 'lodash';
 import * as mu from 'mzmu';
 
@@ -20,7 +19,7 @@ export const defOptions = {
     pie: {
         legend: {},
         tooltip: {
-            trigger: 'item',
+            trigger: 'item'
         },
         dataset: {},
         series: []
@@ -31,12 +30,12 @@ export const defOptions = {
             left: 'left',
             right: 20,
             bottom: 20,
-            width: '100%',
+            width: '98%',
             containLabel: true
         },
         legend: {},
         tooltip: {
-            trigger: 'axis',
+            trigger: 'axis'
         },
         yAxis: [{}],
         dataset: {},
@@ -49,12 +48,12 @@ export const defOptions = {
             left: 'left',
             right: 20,
             bottom: 20,
-            width: '100%',
+            width: '95%',
             containLabel: true
         },
         legend: {},
         tooltip: {
-            trigger: 'axis',
+            trigger: 'axis'
         },
         dataset: {},
         series: [],
@@ -117,12 +116,8 @@ export const defOptions = {
             max: 200,
             left: 'left',
             top: 'bottom',
-            text: [
-                '高',
-                '低'
-            ],
-            calculable: false,
-
+            text: ['高', '低'],
+            calculable: false
         },
         geo: {
             zoom: 1.2,
@@ -132,7 +127,6 @@ export const defOptions = {
                     areaColor: '#fbfbfb',
                     borderColor: '#b9b4b7'
                 }
-
             }
         },
         series: []
@@ -165,7 +159,6 @@ export const defSubType = {
  * @param _colors
  */
 export function subSetting(_colors) {
-
     let {base: _baseColors = [], names: _nameColors = {}} = _colors;
 
     return {
@@ -283,7 +276,7 @@ export function subSetting(_colors) {
             '$$xAxis[*].axisLabel.formatter': '{value}%'
         },
 
-        'line': {
+        line: {
             '$$series[*].smooth': true
         },
 
@@ -340,19 +333,13 @@ export function subSetting(_colors) {
         },
 
         pie: {
-            '$$series[*].center': [
-                '50%',
-                '55%'
-            ]
+            '$$series[*].center': ['50%', '55%']
         },
 
         // 饼图 => 环形
         'pie::ring': [
             {
-                '$$series[*].radius': [
-                    '50%',
-                    '75%'
-                ]
+                '$$series[*].radius': ['50%', '75%']
             }
         ],
 
@@ -367,9 +354,9 @@ export function subSetting(_colors) {
                     fontSize: 14,
                     formatter: (o) => {
                         return `${o.name}\n${mu.format(o.value)}\n${o.data['$rowPercent2']}`;
-                    },
+                    }
                 }
-            },
+            }
         },
 
         // 隐藏label
@@ -380,10 +367,7 @@ export function subSetting(_colors) {
         'pie::rose': [
             {'$$series[*].roseType': 'area'},
             {
-                '$$series[*].radius': [
-                    '10%',
-                    '75%'
-                ]
+                '$$series[*].radius': ['10%', '75%']
             },
             {'$$series[*].label.normal.show': true}
         ],
@@ -391,10 +375,7 @@ export function subSetting(_colors) {
         'pie::ring::rose': [
             {'series[0].roseType': 'area'},
             {
-                'series[0].radius': [
-                    '10%',
-                    '65%'
-                ]
+                'series[0].radius': ['10%', '65%']
             },
             {'series[0].label.normal.show': false},
             // 'series[0].itemStyle.color': _colors[0],
@@ -403,16 +384,10 @@ export function subSetting(_colors) {
             {'series[1].hoverAnimation': false},
             {'series[1].zlevel': -2},
             {
-                'series[1].radius': [
-                    '66%',
-                    '75%'
-                ]
+                'series[1].radius': ['66%', '75%']
             },
             {
-                'series[1].center': [
-                    '50%',
-                    '55%'
-                ]
+                'series[1].center': ['50%', '55%']
             },
             // 'series[1].itemStyle.color': '#CFD7D9'},
             {'series[1].itemStyle.borderWidth': 1},
@@ -430,10 +405,7 @@ export function subSetting(_colors) {
         ],
 
         map: {
-            'visualMap.inRange.color': [
-                '#ffffff',
-                _.get(_colors, 'base[0]')
-            ],
+            'visualMap.inRange.color': ['#ffffff', _.get(_colors, 'base[0]')],
             'geo.itemStyle.emphasis.areaColor': _.get(_colors, 'base[1]')
         },
 
@@ -506,32 +478,25 @@ export function subSetting(_colors) {
         },
 
         '::radarZero': {
-            '$$radar.indicator[*].min': 0,
+            '$$radar.indicator[*].min': 0
         },
 
         '::radarMaximum': {
             '**$$radar.indicator[*].max': (options, data) => {
                 let indicator = _.get(options, 'radar.indicator');
-                indicator = mu.clone(indicator)
+                indicator = mu.clone(indicator);
                 let maxItem = _.maxBy(indicator, (o: any) => o.max);
                 let max = maxItem.max * 1.05;
                 return max ? max : 5;
             }
         },
 
-
         wordCloud: {
             '$$series[*].shape': 'circle',
-            '$$series[*].width': '98%',
+            '$$series[*].width': '95%',
             '$$series[*].height': '90%',
-            '$$series[*].sizeRange': [
-                14,
-                42
-            ],
-            '$$series[*].rotationRange': [
-                -45,
-                90
-            ]
+            '$$series[*].sizeRange': [14, 42],
+            '$$series[*].rotationRange': [-45, 90]
         },
 
         'wordCloud::random': {

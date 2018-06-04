@@ -11,6 +11,9 @@
  *
  * @update mizi.lin@v0.1.26-b3.20180531
  * ::=> 添加基于雷达的
+ *
+ * @update mizi.lin@v0.1.26-b8.2018o531
+ * ::=> 添加纵向计算占比值，以及@group方法
  */
 
 import * as mu from 'mzmu';
@@ -62,6 +65,16 @@ export default {
             });
             return item;
         });
+    },
+
+    /**
+     * 按数据分组
+     * @param data
+     * @param key
+     */
+    ['@group'](data: any[], key: string) {
+        let groups = mu.groupArray(data, key);
+        return mu.map(groups, (o) => o, []);
     },
 
     /**
@@ -193,14 +206,16 @@ export default {
                     mu.if(this[fnn], (fn) => {
                         data = fn(data, handle[fnn]);
                     });
+
                 }
             });
         });
 
-
         // 过滤部分不合法数据
         data = data.filter((o) => mu.isExist(o.name) && o.name !== '');
 
+        // 将数据按组显示
+        // 过滤数据中重复数据
         let _data = mu.run(dataModel === 'single', () => {
             return mu.map(data, (o) => {
                 return {
@@ -212,15 +227,21 @@ export default {
             return mu.groupArray(data, CHART_NAME);
         });
 
+        // 获得 legend array
         let _legend = mu.map(_data, (o, name) => {
             return {name};
         }, []);
 
+        // 按 _legend 的顺序重新排列数据
         let _series = mu.map(_legend, (legend) => {
             return _data[mu.ifnvl(legend.name, legend)];
         }, []);
 
-        _series = this.percentRowSeries(_series, dataModel);
+        // 统计并计算横向（经度）数据
+        _series = this.rowCalc(_series, dataModel);
+
+        // 统计并计算纬度信息
+        _series = this.colCalc(_series, dataModel);
 
         let _x = dataModel === 'single' ? mu.run(() => {
             let xd = mu.map(data, (o) => {
@@ -280,12 +301,45 @@ export default {
     },
 
     /**
-     * 计算当前series横向数据所占百分比
+     * 计算当前series纵向数据统计，及所占百分比
+     * @param {any[]} series
+     * @param {string} dataModel
+     */
+    colCalc(series: any[] = [],  dataModel: string = 'group') {
+        if(mu.isEmpty(series) || dataModel !== 'group') {
+            return series;
+        }
+
+        // col length
+        let colLen = series[0].length;
+
+        let sums = mu.map(colLen, (i, ii) => {
+            return _.reduce(series, (sum, d) => {
+                return sum + d[ii].value;
+            }, 0);
+        }, []);
+
+        return mu.map(series, (items) => {
+            return mu.map(items, (d, inx) => {
+                let sum = sums[inx];
+                d.$colSum = sum;
+                d.$colRate = mu.format(d.value / sum, ':4');
+                d.$colPercent = mu.format(d.value / sum, '::');
+                d.$colPercent2 = mu.format(d.value / sum, '::2');
+                return d;
+            });
+        });
+    },
+
+
+    /**
+     * 计算当前series横向数据统计，及所占百分比
      * @param series
      * @param dataModel
      */
 
-    percentRowSeries(series: any[] = [], dataModel: string = 'group') {
+    rowCalc(series: any[] = [], dataModel: string = 'group') {
+
         if(dataModel === 'single') {
             let sum: number = _.reduce(series, (sum, d) => {
                 return sum + d.value;
@@ -299,7 +353,7 @@ export default {
             });
         } else if(dataModel = 'group') {
             return mu.map(series, (item) => {
-                return this.percentRowSeries(item, 'single')
+                return this.rowCalc(item, 'single')
             });
         }
     },
