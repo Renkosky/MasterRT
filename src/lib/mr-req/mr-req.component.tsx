@@ -30,6 +30,9 @@
  * @update mizi.lin@v0.1.25.20180524
  * ::=> 修改向MrProcess传递data属性错误的问题
  *
+ * @update mizi.lin@v0.1.27.20180606
+ * ::=> 添加 MrProcess 的特性属性，showLoading, showNodata, loading, nodata
+ *
  * @todo immutable 使用持久化数据 加快判断 showComponentUpdate, 进行性能优化
  * @todo 可以分别设置各种method下的headers
  * @todo 梳理支持多req的nodata
@@ -141,6 +144,30 @@ interface MrReqProps {
      * @mark 注意，当只有一个返回值得时候，返回对象 res = res[0]
      */
     result?: any;
+
+    /**
+     * showLoading?: boolean = true
+     * @extend MrProcessProps
+     */
+    showLoading?: boolean;
+
+    /**
+     * showNodata?: boolean = true
+     * @extend MrProcessProps
+     */
+    showNodata?: boolean;
+
+    /**
+     * loading?: string | React.Component
+     * @extend MrProcessProps
+     */
+    loading?: string | React.Component;
+
+    /**
+     * nodata?: string | React.Component
+     * @extend MrProcessProps
+     */
+    nodata?: string | React.Component;
 }
 
 export default class MrReq extends React.Component<MrReqProps, {}> {
@@ -354,8 +381,11 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
         let datas = mu.map(this._transmit || [], (o) => o.data);
         let data = this._transmit ? (datas.length === 1 ? datas[0] : datas) : this._data;
 
+        let {showLoading, showNodata, nodata, loading} = this.props;
+        let _process = {showLoading, showNodata, nodata, loading};
+
         return (<React.Fragment>
-            <MrProcess start={this._start} data={data}>
+            <MrProcess start={this._start} data={data} {..._process}>
                 {children}
             </MrProcess>
         </React.Fragment>);

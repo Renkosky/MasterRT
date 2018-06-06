@@ -9,6 +9,11 @@
  * ::=> 修改nodataComponent 取值错误
  * ::=> 证实在tsx可以使用import style 文件了``
  *
+ * @update mizi.lin@v0.1.27.20180606
+ * ::=> fixed when noset MrServices.nodataComponent get default value error
+ * ::=> 添加是否使用无数据显示, showNodata
+ * ::=> 添加是否显示loading, showLoading
+ *
  */
 
 import * as React from 'react';
@@ -24,16 +29,29 @@ interface MrProcessProps extends MrInterface {
     end?: number | boolean;
     type?: string;
     data?: any;
-    nodata?: string | React.Component
-    loader?: string | React.Component
-    content?: string | React.Component
+    nodata?: string | React.Component;
+    loader?: string | React.Component;
+    content?: string | React.Component;
+    /**
+     * showLoading?: boolean = true
+     * 是否显示 loading
+     */
+    showLoading?: boolean;
+
+    /**
+     * showLoading?: boolean = true
+     * 是否显示 loading
+     */
+    showNodata?: boolean;
 }
 
 export default class MrProcess extends React.Component<MrProcessProps, {}> {
 
     static defaultProps = {
         start: 0,
-        nodata: NoDateComponent
+        nodata: NoDateComponent,
+        showLoading: true,
+        showNodata: true
     };
 
     componentWillMount() {
@@ -43,22 +61,22 @@ export default class MrProcess extends React.Component<MrProcessProps, {}> {
     render() {
 
         let {start, type} = this.props;
-        let {data, nodata, children} = this.props;
+        let {data, nodata, children, showLoading, showNodata} = this.props;
         // console.debug('..process start', start);
 
-        nodata = nodata ? MrServices.getNoDataComponent() : nodata;
+        nodata = MrServices.getNoDataComponent() || nodata;
 
         return (
             <section className="mr-process">
                 {
-                    start >= 0 && start < 100 &&
+                    start >= 0 && start < 100 && showLoading &&
                     <section className="mr-process-loader">
                         <MrLoader start={start} type={type} />
                     </section>
                 }
 
                 {
-                    start > 99 && mu.isEmpty(data) ?
+                    start > 99 && mu.isEmpty(data) && showNodata ?
                     <section className="mr-process-nodata">
                         <MrComponent component={nodata}></MrComponent>
                     </section> : children

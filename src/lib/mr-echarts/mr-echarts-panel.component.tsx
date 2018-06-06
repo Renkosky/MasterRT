@@ -18,6 +18,9 @@
  *
  * @update mizi.lin@v0.1.25.20180525
  * ::=> 添加 force，默认MrEchartsPanel 在props未改变状态下，不重新渲染
+ *
+ * * @update mizi.lin@v0.1.27.20180606
+ * ::=> 添加 MrProcess 的特性属性，showLoading, showNodata, loading, nodata
  */
 
 import * as React from 'react';
@@ -98,6 +101,30 @@ interface MrEchartsPanelProps extends MrEchartsProps {
      * 强制渲染
      */
     force?: boolean;
+
+    /**
+     * showLoading?: boolean = true
+     * @extend MrProcessProps
+     */
+    showLoading?: boolean;
+
+    /**
+     * showNodata?: boolean = true
+     * @extend MrProcessProps
+     */
+    showNodata?: boolean;
+
+    /**
+     * loading?: string | React.Component
+     * @extend MrProcessProps
+     */
+    loading?: string | React.Component;
+
+    /**
+     * nodata?: string | React.Component
+     * @extend MrProcessProps
+     */
+    nodata?: string | React.Component;
 }
 
 @MrAutoBind
@@ -315,6 +342,9 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
             [`mr-echarts-panel-tools-${showToolbar}`]: true
         }, className);
 
+        let {showLoading, showNodata, nodata, loading} = this.props;
+        let _process = {showLoading, showNodata, nodata, loading};
+
         return (
             <MrPanel
                 title={title}
@@ -325,7 +355,7 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
                 append={append}
                 prepend={prepend}
                 border={border}>
-                <MrReq req={req} data={{data}} force={true} transmit="data">
+                <MrReq req={req} data={{data}} force={true} transmit="data" {..._process}>
                     {dataView
                         ? <MrEchartsDataView dataView={this._dataView} />
                         :  <MrEcharts {...echartsProps} {...chartsEvent} result={this.getResult.bind(this)} />}
