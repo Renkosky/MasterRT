@@ -10,6 +10,7 @@
  *
  * @update mizi.lin@0.1.27-b1.2018o6o6
  * ::=> clear UrlSearchParams
+ * ::=> method.get 添加默认 ContentType
  */
 
 import * as mu from 'mzmu';
@@ -139,7 +140,10 @@ class MrResource {
 
         options = mu.extend(true, {
             method: 'patch',
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json;'
+            },
         }, options || {});
 
         return MrRequest(restdata.fullUrl, options);

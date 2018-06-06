@@ -14,6 +14,9 @@
  *
  * @update mizi.lin@v0.1.26-b8.2018o531
  * ::=> 添加纵向计算占比值，以及@group方法
+ *
+ * @update mizi.lin@v0.1.27-b3.2018o6o6
+ * ::=> 修改dataView value = 0 时呈现问题，以及设置默认支持中文字符下载
  */
 
 import * as mu from 'mzmu';
@@ -281,7 +284,7 @@ export default {
             let legendName = legend.name || legend;
 
             arr.unshift(mu.isEmpty(_x) ? '' : legendName);
-            arr = mu.map(arr, (o) => o.value || o);
+            arr = mu.map(arr, (o) => mu.ifnvl(mu.ifnvl(o.value, o), '-'));
             return arr;
         }) || [];
 

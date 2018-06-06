@@ -28,11 +28,11 @@ export default class MrsEchartsPanel extends React.Component<MrsEchartsPanelProp
     pie: any[] = [
         {
             value: 78499,
-            name: 'A0'
+            name: '百日依山郡'
         },
         {
             value: 131536,
-            name: 'A Entry'
+            name: '黄河如海浪'
         },
         {
             value: 246050,
