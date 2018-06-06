@@ -50,8 +50,6 @@ class MrResource {
 
             let searchStr = arr.join('&');
 
-            console.log(searchStr);
-
             // let searchStr = new URLSearchParams(arr).toString();
 
             if(url.indexOf('?') > -1){
@@ -76,6 +74,9 @@ class MrResource {
 
         options = mu.extend(true, {
             method: 'get',
+            headers: {
+                'Content-Type': 'application/json;'
+            },
         }, options || {});
 
         return MrRequest(fullUrl, options);
