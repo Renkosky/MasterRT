@@ -43,7 +43,11 @@ function get$Response(response) {
         try {
             return response.json();
         } catch (e) {
-            return response.text();
+            try {
+                return response.text();
+            } catch {
+                console.error('request no callback');
+            }
         }
     } else if (contentType === 'text/html') {
         return response.text();

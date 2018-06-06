@@ -7,6 +7,9 @@
  * @update mizi.lin@v0.1.23.v20180522
  * ::=> fixed delete no search
  * ::=> 添加 upload 接口
+ *
+ * @update mizi.lin@0.1.27-b1.2018o6o6
+ * ::=> clear UrlSearchParams
  */
 
 import * as mu from 'mzmu';
@@ -42,10 +45,14 @@ class MrResource {
 
         mu.run(sp, () => {
             let arr: any = mu.map(sp, (o, key) => {
-                return [key, o]
+                return `${key}=${o}`;
             }, []);
 
-            let searchStr = new URLSearchParams(arr).toString();
+            let searchStr = arr.join('&');
+
+            console.log(searchStr);
+
+            // let searchStr = new URLSearchParams(arr).toString();
 
             if(url.indexOf('?') > -1){
                 fullUrl = url + '&' + searchStr;

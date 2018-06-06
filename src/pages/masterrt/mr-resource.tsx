@@ -3,11 +3,21 @@ import * as mu from 'mzmu';
 import * as _ from 'lodash';
 import MrPanel from '../../lib/mr-panel/mr-panel.component';
 import MrCode from '../../lib/mr-code/mr-code.component';
+import {MrResource} from '../../lib'
 
 interface MrsMrResourcesProps {
 }
 
 export default class MrsMrResources extends React.Component<MrsMrResourcesProps, {}> {
+
+    componentWillMount() {
+       let a =  MrResource.pool('/abc');
+
+       a.get({a:111, b: '江山如此多娇'}).then(() => {
+           console.debug(1111111);
+       });
+    }
+
 
     render() {
         return (
