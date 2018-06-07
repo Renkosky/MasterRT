@@ -23,8 +23,7 @@
     },
     "include": [
         "../src/lib/**/*.tsx",
-        "../src/lib/**/*.ts",
-        "../src/lib/**/*.less"
+        "../src/lib/**/*.ts"
     ],
     "exclude": [
         "node_modules",
