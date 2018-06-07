@@ -240,6 +240,9 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
         });
 
         Promise.all($promises).then((res) => {
+
+            console.debug(res);
+
             this._data = req.length == 1 ? res[0] : res;
             this._start = 100;
             result && result(this._data);

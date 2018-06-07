@@ -3,7 +3,7 @@ import * as mu from 'mzmu';
 import * as _ from 'lodash';
 import {MrResource, MrAutoBind, MrEcharts, MrPanel, MrIf, MrFill, MrIcon, MrReq, MrPurRender} from '../../lib';
 import {Button} from 'antd';
-import {$pool} from 'src/';
+import {default as $pool} from '../../services/base-resource-pool';
 
 import {immutableRenderDecorator} from 'react-immutable-render-mixin';
 import { shallowEqualImmutable } from 'react-immutable-render-mixin';
@@ -21,6 +21,7 @@ interface MrsReqProps {
 
 // @todo use immutable
 // @immutableRenderDecorator
+
 @MrAutoBind
 export default class MrsReq extends React.Component<MrsReqProps, {}> {
     req: any = {

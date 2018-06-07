@@ -3,11 +3,37 @@ import * as mu from 'mzmu';
 import * as _ from 'lodash';
 import MrPanel from '../../lib/mr-panel/mr-panel.component';
 import MrCode from '../../lib/mr-code/mr-code.component';
+import MrRequest from '../../lib/mr-common/mr-request';
+import {MrResource} from '../../lib';
+import {AxiosResponse} from 'axios';
 
 interface MrsMrRequestProps {
 }
 
 export default class MrsMrRequest extends React.Component<MrsMrRequestProps, {}> {
+
+    componentWillMount() {
+       let a =  MrResource.pool('/assets/line.json');
+       let b =  MrResource.pool('/assets/line.json');
+       //
+
+
+       a.get({n: 123}, {a:111, b: '江山如此多娇'}, {
+           resultType: 'response'
+       }).then((res) => {
+           console.debug(res);
+       });
+
+        b.get({n: 123}, {a:111, b: '江山如此多娇'}, {}).then((res) => {
+            console.debug(res);
+        });
+
+
+        // MrRequest('/services/abcdefghijk', {
+        //     data: {a: 1, b: 2}
+        // })
+
+    }
 
     render() {
         return (

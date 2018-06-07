@@ -1,5 +1,5 @@
 import {message} from 'antd';
-import {MrServices} from 'src/lib';
+import {MrServices} from './lib';
 import {default as brp} from './services/base-resource-pool';
 import {default as mu} from 'mzmu';
 import NodataComponent from './components/nodata.component';
@@ -27,6 +27,7 @@ export function config() {
 
     MrServices.reqCatch ( (res) => {
         console.debug('::::::::::', res);
+        return res;
     });
 
     MrServices.setNoDataComponent(NodataComponent);

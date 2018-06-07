@@ -10,13 +10,13 @@ interface MrsMrResourcesProps {
 
 export default class MrsMrResources extends React.Component<MrsMrResourcesProps, {}> {
 
-    componentWillMount() {
-       // let a =  MrResource.pool('/abc');
-       //
-       // a.post({}, {a:111, b: '江山如此多娇'}, {}).then(() => {
-       //     console.debug(1111111);
-       // });
-    }
+    // componentWillMount() {
+    //    let a =  MrResource.pool('/abc');
+    //
+    //    a.post({}, {a:111, b: '江山如此多娇'}, {}).then(() => {
+    //        console.debug(1111111);
+    //    });
+    // }
 
 
     render() {

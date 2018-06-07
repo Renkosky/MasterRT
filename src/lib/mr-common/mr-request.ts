@@ -10,84 +10,51 @@
  * @update mizi.lin@v0.1.23,20180523
  * ::=> 移除 catch 时回调 responseHandler
  *
+ * @update mizi.lin@v0.2.0.20180607
+ * ::=> 使用 axios 替换 fetch （Loreal中国不知道为什么网关阻止 fetch.get 但允许 fetch.post)）
+ * ::=> fetch@v0.1.27-b3
  */
 
 
-import * as fetch from 'dva/fetch';
 import MrServices from './mr.services';
 import * as mu from 'mzmu';
-// https://www.cnblogs.com/huilixieqi/p/6494380.html
+import axios, {AxiosResponse} from 'axios';
 
-// @todo 封装成类 
-
-function responseHandler(response) {
-
-    return mu.run(MrServices.reqResponse, (handler) => {
-        return handler(response);
-    }, () => {
-        return get$Response(response);
-    });
+interface AxiosRequestConfig {
+    resultType: string;
 }
 
-function get$Response(response) {
-    let headers = response.headers;
-    let contentType: string = 'application/json';
-
-    mu.run(headers, () => {
-        contentType = headers.get('Content-Type') || 'text/html';
-        contentType = contentType.split(';')[0];
-        contentType = mu.trim(contentType);
-    });
-
-    if (mu.or(contentType, 'application/json', 'application/hal+json', 'text/json')) {
-        try {
-            return response.json();
-        } catch (e) {
-            try {
-                return response.text();
-            } catch {
-                console.error('request no callback');
-            }
-        }
-    } else if (contentType === 'text/html') {
-        return response.text();
-    } else {
-        return response.blob();
-    }
+/**
+ * responseHandler(response: AxiosResponse)
+ * @todo 编写文档的时候注明可以根据不同的resultType返回不同的类型
+ * @param {AxiosResponse} response
+ * @return {Promise<any>}
+ */
+function responseHandler(response: AxiosResponse) {
+    let {resultType} = response.config as AxiosRequestConfig;
+    return Promise.resolve( resultType === 'response' ? response : response.data);
 }
 
-function checkStatus(response) {
+function errorHandler(err) {
 
-    if (response.status >= 200 && response.status < 300) {
-        return response;
-    }
-    return Promise.reject(response);
-}
+    const {response} = err;
 
-function preErrorHandler(response) {
     // 设置reject, 表示该 catch 后，不再接受 then
-    let error: any = {};
-    let {headers, status, statusText, ok} = response;
-    let $message: any;
+    let {headers, status, statusText, data} = response;
 
-    error.headers = headers;
-    error.status = status;
-    error.statusText = statusText;
-    error.ok = ok;
-    error.$message = get$Response(response);
-    error._response = response;
+    // 兼容fetch使用promise获得信息
+    let $message: any = new Promise((resolve) => resolve(data));
+
+    // 传递error信息
+    let error: any = {
+        headers, status, statusText, data, $message, response, error: err
+    };
+
 
     let self = MrServices._reqCatch;
 
     if(self) {
-        // todo
-        self(error);
-    } else {
-        // system handler
-
-        // mu.run(MrServices.setExtendCatch, (ex) => {
-        //     let a = ex(error);
-        // });
+        error = self(error);
     }
 
     return Promise.reject(error);
@@ -111,10 +78,10 @@ export default function MrRequest(url, options: any = {}) {
     });
 
     options.headers = mu.extend(true, headers, options.headers);
+    options.url = url;
 
-    return fetch(url, options)
-    .then(checkStatus)
-    .then(responseHandler)
-    .then(data => data)
-    .catch(preErrorHandler)
+    return axios(options)
+        .then(responseHandler)
+        .catch(errorHandler)
 }
+

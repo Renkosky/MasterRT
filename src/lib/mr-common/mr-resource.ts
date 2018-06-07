@@ -18,7 +18,6 @@ import MrRequest from './mr-request';
 import MrServices from './mr.services';
 import * as _ from 'lodash';
 
-
 // todo support /abc/efg{/id} 路径格式
 class MrResource {
     /**
@@ -44,21 +43,23 @@ class MrResource {
 
         // url = url.replace(/\/$/, '');
 
-        mu.run(sp, () => {
-            let arr: any = mu.map(sp, (o, key) => {
-                return `${key}=${o}`;
-            }, []);
+        // axios 支持直接使用params
 
-            let searchStr = arr.join('&');
-
-            // let searchStr = new URLSearchParams(arr).toString();
-
-            if(url.indexOf('?') > -1){
-                fullUrl = url + '&' + searchStr;
-            } else {
-                fullUrl = url + '?' + searchStr;
-            }
-        });
+        // mu.run(sp, () => {
+        //     let arr: any = mu.map(sp, (o, key) => {
+        //         return `${key}=${o}`;
+        //     }, []);
+        //
+        //     let searchStr = arr.join('&');
+        //
+        //     // let searchStr = new URLSearchParams(arr).toString();
+        //
+        //     if(url.indexOf('?') > -1){
+        //         fullUrl = url + '&' + searchStr;
+        //     } else {
+        //         fullUrl = url + '?' + searchStr;
+        //     }
+        // });
 
         return {
             url: url,
@@ -75,9 +76,7 @@ class MrResource {
 
         options = mu.extend(true, {
             method: 'get',
-            headers: {
-                'Content-Type': 'application/json;'
-            },
+            params: search,
         }, options || {});
 
         return MrRequest(fullUrl, options);
@@ -112,7 +111,10 @@ class MrResource {
                 'Content-Type': 'application/json;',
                 // 'Accept': 'application/json;'
             },
-            body: JSON.stringify(data)
+            // fetch
+            // body: JSON.stringify(data)
+            data,
+            params: search
         }, options || {});
 
         return MrRequest(rest.fullUrl, options);
@@ -140,10 +142,12 @@ class MrResource {
 
         options = mu.extend(true, {
             method: 'patch',
-            body: JSON.stringify(data),
+            // body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json;'
             },
+            data,
+            params: search
         }, options || {});
 
         return MrRequest(restdata.fullUrl, options);
@@ -156,11 +160,11 @@ class MrResource {
 
         options = mu.extend(true, {
             method: 'delete',
+            params: search,
         }, options || {});
 
         return MrRequest(fullUrl, options);
     }
-
 
     pool(url: string) {
         const vm = this;
@@ -173,7 +177,7 @@ class MrResource {
             get(search?: any, hack?: any, options?: any) {
 
                 mu.run(hack, () => {
-                   search = mu.extend(true, search, hack);
+                    search = mu.extend(true, search, hack);
                 });
 
                 return vm.get(url, search, options);
@@ -220,7 +224,7 @@ class MrResource {
             },
 
             mrdown(search: any = {}, data?: any, options?: any) {
-                if(!search.downloadName){
+                if (!search.downloadName) {
                     console.error('downloadName 未设置');
                     return false;
                 }

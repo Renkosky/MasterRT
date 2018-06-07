@@ -4,7 +4,7 @@ import './masterrt.less';
 import * as _ from 'lodash';
 import MrsCode from '../../components/MrsCode';
 import JsxParser from 'react-jsx-parser';
-import {default as dataSource} from 'src/services/data-source';
+import {default as dataSource} from '../../services/data-source';
 import * as mu from 'mzmu';
 
 interface MrsMrEchartsProps {
