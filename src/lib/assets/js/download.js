@@ -7,7 +7,10 @@
 // v4.2 adds semantic variable names, long (over 2MB) dataURL support, and hidden by default temp anchors
 // https://github.com/rndme/download
 
-// 修复了不支持中文后缀名下载
+
+/**
+ * @update mizi.lin@v0.2.0-b4.20180608
+ */
 
 var define = window.define;
 
@@ -28,8 +31,6 @@ var define = window.define;
 
     return function download(data, strFileName, strMimeType) {
 
-        console.debug(strFileName, strMimeType);
-
         var self = window, // this script is only for browsers anyway...
             defaultMime = 'application/octet-stream;charset=utf-8', // this default mime also triggers iframe downloads
             mimeType = strMimeType || defaultMime,
@@ -41,7 +42,6 @@ var define = window.define;
             fileName = strFileName || 'download',
             blob,
             reader;
-
         myBlob = myBlob.call ? myBlob.bind(self) : Blob;
 
 
@@ -51,25 +51,37 @@ var define = window.define;
             payload = payload[1];
         }
 
-
-        if(url && url.length < 2048) { // if no filename and no mime, assume a url was passed as the only argument
+    // if no filename and no mime, assume a url was passed as the only argument
+    if(url && url.length < 2048) {
             fileName = url.split('/')
                 .pop()
                 .split('?')[0];
             url = encodeURI(decodeURI(url));
-            anchor.href = url; // assign href prop to temp anchor
-            if(anchor.href.indexOf(url) !== -1) { // if the browser determines that it's a potentially valid url path:
+            fileName = decodeURI(fileName);
+            // assign href prop to temp anchor
+            anchor.href = url;
+            // if the browser determines that it's a potentially valid url path:
+            if(anchor.href.indexOf(url) !== -1) {
                 var ajax = new XMLHttpRequest();
                 ajax.open('GET', url, true);
                 ajax.responseType = 'blob';
                 ajax.onload = function(e) {
-
-                    download(e.target.response, fileName, defaultMime);
+                    /**
+                     * 校验文件不存在
+                     */
+                    var status = e.target.status;
+                    var response = e.target.response;
+                    if(status < 200 && status > 300) {
+                        download(response, fileName, defaultMime);
+                    } else {
+                        console.error('文件不存在 || 请求错误 || 网络错误');
+                    }
                 };
+
                 setTimeout(function() { ajax.send();}, 0); // allows setting custom ajax headers using the return:
                 return ajax;
-            } // end if valid url?
-        } // end if url?
+            }
+        }
 
 
         //go ahead and download dataURLs right away
@@ -101,7 +113,7 @@ var define = window.define;
         /**
          * 支持unicode中文字符
          */
-        blob = new Blob([String.fromCharCode(0xFEFF), blob], {type: blob.type});
+        // blob = new Blob([String.fromCharCode(0xFEFF), blob], {type: blob.type});
 
 
         function dataUrlToBlob(strUrl) {
@@ -169,7 +181,7 @@ var define = window.define;
         }
 
         if(self.URL) { // simple fast and modern way using Blob and URL:
-            saver(self.URL.createObjectURL(blob));
+            saver(self.URL.createObjectURL(blob), true);
         } else {
             // handle non-Blob()+non-URL browsers:
             if(typeof blob === 'string' || blob.constructor === toString) {
