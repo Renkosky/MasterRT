@@ -71,7 +71,7 @@ var define = window.define;
                      */
                     var status = e.target.status;
                     var response = e.target.response;
-                    if(status < 200 && status > 300) {
+                    if(status >= 200 && status < 300) {
                         download(response, fileName, defaultMime);
                     } else {
                         console.error('文件不存在 || 请求错误 || 网络错误');
