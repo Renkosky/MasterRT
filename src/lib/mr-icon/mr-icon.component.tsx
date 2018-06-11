@@ -38,14 +38,14 @@ interface MrIconProps {
      * icon 形状
      * @values: square, circle
      */
-    shape?: string
+    shape?: string;
 
     /**
      * size?: string | number
      * 图标大小
      * @values: {string} 带单位长度单位，{number} 如果为数字，默认单位长度为 'px'
      */
-    size?: string | number,
+    size?: string | number;
 
     /**
      * family?: string = ifnvl(null, 'anticon')
@@ -63,7 +63,12 @@ interface MrIconProps {
      *   }
      *
      */
-    family?: string
+    family?: string;
+
+    /**
+     * base64 资源，使用背景显示
+     */
+    base64?: string;
 
     style?: React.CSSProperties;
     className?: string;
@@ -73,14 +78,17 @@ interface MrIconProps {
 export default class MrIcon extends React.Component<MrIconProps, {}> {
 
     render() {
-        const {type, className = '', shape = '', size, children, onClick, family} = this.props;
-        const classString = MrServices.cls({
-            [family]: !!family,
-            [`${family}-${type}`]: !!family,
-        }, className);
+        let {type, className = '', shape = '', size, children, onClick, family, base64} = this.props;
+
+        let classString, cls;
 
         let {style = {}} = this.props;
         let _style: any = {};
+
+        cls = {
+            [family]: !!family,
+            [`${family}-${type}`]: !!family,
+        };
 
         _style.verticalAlign = 'middle';
 
@@ -100,6 +108,18 @@ export default class MrIcon extends React.Component<MrIconProps, {}> {
         mu.run(shape === 'circle', (size) => {
             style.borderRadius = '50%';
         });
+
+        mu.run(base64, () => {
+            type = '___usebase64___';
+
+            style.backgroundImage = `url(${base64})`;
+            style.backgroundRepeat = 'no-repeat';
+            style.backgroundPosition = 'center center';
+
+            cls['base64'] = true;
+        });
+
+        classString = MrServices.cls(cls, className);
 
         const iconProps = {
             type,

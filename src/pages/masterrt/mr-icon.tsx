@@ -6,8 +6,6 @@ import MrsCode from '../../components/MrsCode';
 
 import JsxParser from 'react-jsx-parser';
 
-
-
 interface MrsMrIconProps {
 }
 
@@ -26,6 +24,8 @@ export default class MrsMrIcon extends React.Component<MrsMrIconProps, {}> {
             <MrIcon type="share-alt" family="simpleicon" /> 
             <MrIcon type="share" family="simpleicon" /> 
         </section>
+        
+        
     `;
 
     interface: string = `
@@ -100,6 +100,10 @@ interface MrIconProps {
                         jsx={this.code}
                     ></JsxParser>
                 </main>
+
+                <section>
+                    <MrIcon type="base64" base64={require('../../assets/Admaster Sharing.svg')} />
+                </section>
 
                 <details className="mt-16">
                     <summary>查看源码</summary>
