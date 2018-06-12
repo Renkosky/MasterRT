@@ -13,6 +13,9 @@
  * @update mizi.lin@v0.2.0.20180607
  * ::=> 使用 axios 替换 fetch （Loreal中国不知道为什么网关阻止 fetch.get 但允许 fetch.post)）
  * ::=> fetch@v0.1.27-b3
+ *
+ * @update mizi.lin@v0.2.0-b7.2o18o612
+ * ::=> fixed bugs: catch error return value 没有判断是否为promise又外裹一层promise.reject
  */
 
 
@@ -57,7 +60,7 @@ function errorHandler(err) {
         error = self(error);
     }
 
-    return Promise.reject(error);
+    return Object.prototype.toString.call(error) === '[object Promise]' ? error : Promise.reject(error);
 }
 
 /**

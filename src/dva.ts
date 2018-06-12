@@ -26,8 +26,8 @@ export function config() {
     MrServices.setResourcePool(brp);
 
     MrServices.reqCatch ( (res) => {
-        console.debug('::::::::::', res);
-        return res;
+        // console.debug('::::::::::', res);
+        return Promise.reject(res);
     });
 
     MrServices.setNoDataComponent(NodataComponent);

@@ -18,20 +18,22 @@ export default class MrsMrRequest extends React.Component<MrsMrRequestProps, {}>
        //
 
 
-       a.get({n: 123}, {a:111, b: '江山如此多娇'}, {
-           resultType: 'response'
-       }).then((res) => {
-           console.debug(res);
-       });
+       // a.get({n: 123}, {a:111, b: '江山如此多娇'}, {
+       //     resultType: 'response'
+       // }).then((res) => {
+       //     console.debug(res);
+       // });
+       //
+       //  b.get({n: 123}, {a:111, b: '江山如此多娇'}, {}).then((res) => {
+       //      console.debug(res);
+       //  });
 
-        b.get({n: 123}, {a:111, b: '江山如此多娇'}, {}).then((res) => {
-            console.debug(res);
-        });
 
-
-        // MrRequest('/services/abcdefghijk', {
-        //     data: {a: 1, b: 2}
-        // })
+        MrRequest('/services/abcdefghijk', {
+            data: {a: 1, b: 2}
+        }).catch((res) => {
+            console.debug(Object.prototype.toString.call(res));
+        })
 
     }
 
