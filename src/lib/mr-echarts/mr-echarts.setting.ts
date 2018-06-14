@@ -7,6 +7,9 @@
  * @update mizi.lin@0.1.26.20180529
  * ::=> 添加 randomAll
  * ::=> wordCloud 添加 width 和 height
+ *
+ * @uodate mizi.lin@v0.2.0-b8.2o18o614
+ * :: => 添加 ::radarCoaxial 雷达各坐标轴同轴（相同的min, max）
  */
 
 import * as _ from 'lodash';
@@ -477,10 +480,17 @@ export function subSetting(_colors) {
             '$$series[*].symbol': 'none'
         },
 
+        // @deprecated
         '::radarZero': {
             '$$radar.indicator[*].min': 0
         },
 
+        '::radarMinZero': {
+            '$$radar.indicator[*].min': 0
+        },
+
+
+        // @deprecated
         '::radarMaximum': {
             '**$$radar.indicator[*].max': (options, data) => {
                 let indicator = _.get(options, 'radar.indicator');
@@ -489,6 +499,37 @@ export function subSetting(_colors) {
                 let max = maxItem.max * 1.05;
                 return max ? max : 5;
             }
+        },
+
+        '::radarMaxSome': {
+            '**$$radar.indicator[*].max': (options, data) => {
+                let indicator = _.get(options, 'radar.indicator');
+                indicator = mu.clone(indicator);
+                let maxItem = _.maxBy(indicator, (o: any) => o.max);
+
+                console.debug(maxItem);
+
+                let max = maxItem.max * 1.05;
+                return max ? max : 5;
+            }
+        },
+
+        /**
+         * 雷达同轴
+         * 默认不同轴
+         */
+        // '::radarCoaxial': '::radarMinZero::radarMaxSome',
+
+        '::radarCoaxial': {
+            '**$$radar.indicator[*].max': (options, data) => {
+                let indicator = _.get(options, 'radar.indicator');
+                indicator = mu.clone(indicator);
+                let maxItem = _.maxBy(indicator, (o: any) => o.max);
+                let max = maxItem.max * 1.05;
+                return max ? max : 5;
+            },
+
+            '$$radar.indicator[*].min': 0
         },
 
         wordCloud: {

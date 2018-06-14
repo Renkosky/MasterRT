@@ -17,6 +17,9 @@
  *
  * @update mizi.lin@v0.1.27-b3.2018o6o6
  * ::=> 修改dataView value = 0 时呈现问题，以及设置默认支持中文字符下载
+ *
+ * @uodate mizi.lin@v0.2.0-b8.2o18o614
+ * :: => fixed bugs: 雷达数据在计算雷达计算最大最小值时，源数据未进行transform, 从而造成 max, min 值计算错位
  */
 
 import * as mu from 'mzmu';
@@ -64,7 +67,10 @@ export default {
     ['@convert'](data: any[], rules: object[]) {
         return mu.map(data, (item) => {
             mu.each(rules, (source, target) => {
-                item[target] = _.get(item, source);
+                let v = _.get(item, source);
+                if (mu.isExist(v)) {
+                    item[target] = v;
+                }
             });
             return item;
         });
@@ -198,7 +204,7 @@ export default {
      */
     transform(data, transform = [], dataType = 'dataSource', dataModel = 'group', setting = {}) {
         // 复制原数据，作为返回数据比较使用
-        let $data = mu.clone(data);
+
 
         mu.run(transform, () => {
             mu.each(transform, (handle, key) => {
@@ -213,6 +219,8 @@ export default {
                 }
             });
         });
+
+        let $data = mu.clone(data);
 
         // 过滤部分不合法数据
         data = data.filter((o) => mu.isExist(o.name) && o.name !== '');
@@ -253,9 +261,9 @@ export default {
 
             return mu.isEmpty(_.compact(xd)) ? null : xd;
 
-        }): mu.map(mu.groupArray(data, CHART_X), (o, name) => {
-                return name;
-            }, []);
+        }) : mu.map(mu.groupArray(data, CHART_X), (o, name) => {
+            return name;
+        }, []);
 
         let _dataView = this.getDataView(_series, _legend, _x);
 
@@ -308,8 +316,8 @@ export default {
      * @param {any[]} series
      * @param {string} dataModel
      */
-    colCalc(series: any[] = [],  dataModel: string = 'group') {
-        if(mu.isEmpty(series) || dataModel !== 'group') {
+    colCalc(series: any[] = [], dataModel: string = 'group') {
+        if (mu.isEmpty(series) || dataModel !== 'group') {
             return series;
         }
 
@@ -334,7 +342,6 @@ export default {
         });
     },
 
-
     /**
      * 计算当前series横向数据统计，及所占百分比
      * @param series
@@ -343,25 +350,23 @@ export default {
 
     rowCalc(series: any[] = [], dataModel: string = 'group') {
 
-        if(dataModel === 'single') {
+        if (dataModel === 'single') {
             let sum: number = _.reduce(series, (sum, d) => {
                 return sum + d.value;
             }, 0);
-            return mu.map(series, (d)=> {
+            return mu.map(series, (d) => {
                 d.$rowSum = sum;
                 d.$rowRate = mu.format(d.value / sum, ':4');
                 d.$rowPercent = mu.format(d.value / sum, '::');
                 d.$rowPercent2 = mu.format(d.value / sum, '::2');
                 return d;
             });
-        } else if(dataModel = 'group') {
+        } else if (dataModel = 'group') {
             return mu.map(series, (item) => {
                 return this.rowCalc(item, 'single')
             });
         }
     },
-
-
 
     /**
      * 初始调整options

@@ -1,32 +1,272 @@
 const dataSource = {
 
     base: [
-        {"__type":"中性","date":"2018-05-28","mainRuleId":137500,"ruleId":137500,"ruleName":"stats相应规则","type":"Neutral","volume":25},
-        {"__type":"正面","date":"2018-05-28","mainRuleId":137500,"ruleId":137500,"ruleName":"stats相应规则","type":"Positive","volume":13},
-        {"__type":"负面","date":"2018-05-28","type":"Negative","volume":0},
-        {"__type":"中性","date":"2018-05-29","mainRuleId":137500,"ruleId":137500,"ruleName":"stats相应规则","type":"Neutral","volume":30},
-        {"__type":"正面","date":"2018-05-29","mainRuleId":137500,"ruleId":137500,"ruleName":"stats相应规则","type":"Positive","volume":11},
-        {"__type":"负面","date":"2018-05-29","type":"Negative","volume":0},
-        {"__type":"中性","date":"2018-05-30","mainRuleId":137500,"ruleId":137500,"ruleName":"stats相应规则","type":"Neutral","volume":40},
-        {"__type":"正面","date":"2018-05-30","mainRuleId":137500,"ruleId":137500,"ruleName":"stats相应规则","type":"Positive","volume":116},
-        {"__type":"负面","date":"2018-05-30","type":"Negative","volume":0},
-        {"__type":"中性","date":"2018-05-31","mainRuleId":137500,"ruleId":137500,"ruleName":"stats相应规则","type":"Neutral","volume":93},
-        {"__type":"正面","date":"2018-05-31","mainRuleId":137500,"ruleId":137500,"ruleName":"stats相应规则","type":"Positive","volume":17},
-        {"__type":"负面","date":"2018-05-31","type":"Negative","volume":0},
-        {"__type":"中性","date":"2018-06-01","mainRuleId":137500,"ruleId":137500,"ruleName":"stats相应规则","type":"Neutral","volume":88},
-        {"__type":"正面","date":"2018-06-01","mainRuleId":137500,"ruleId":137500,"ruleName":"stats相应规则","type":"Positive","volume":32},
-        {"__type":"负面","date":"2018-06-01","type":"Negative","volume":0},
-        {"__type":"中性","date":"2018-06-02","mainRuleId":137500,"ruleId":137500,"ruleName":"stats相应规则","type":"Neutral","volume":21},
-        {"__type":"正面","date":"2018-06-02","mainRuleId":137500,"ruleId":137500,"ruleName":"stats相应规则","type":"Positive","volume":6},
-        {"__type":"负面","date":"2018-06-02","type":"Negative","volume":0},
-        {"__type":"中性","date":"2018-06-03","mainRuleId":137500,"ruleId":137500,"ruleName":"stats相应规则","type":"Neutral","volume":28},
-        {"__type":"正面","date":"2018-06-03","mainRuleId":137500,"ruleId":137500,"ruleName":"stats相应规则","type":"Positive","volume":6},
-        {"__type":"负面","date":"2018-06-03","type":"Negative","volume":0},
-        {"__type":"中性","date":"2018-06-04","mainRuleId":137500,"ruleId":137500,"ruleName":"stats相应规则","type":"Neutral","volume":14},
-        {"__type":"正面","date":"2018-06-04","mainRuleId":137500,"ruleId":137500,"ruleName":"stats相应规则","type":"Positive","volume":1},
-        {"__type":"负面","date":"2018-06-04","type":"Negative","volume":0}
+        {
+            "__type": "中性",
+            "date": "2018-05-28",
+            "mainRuleId": 137500,
+            "ruleId": 137500,
+            "ruleName": "stats相应规则",
+            "type": "Neutral",
+            "volume": 25
+        },
+        {
+            "__type": "正面",
+            "date": "2018-05-28",
+            "mainRuleId": 137500,
+            "ruleId": 137500,
+            "ruleName": "stats相应规则",
+            "type": "Positive",
+            "volume": 13
+        },
+        {
+            "__type": "负面",
+            "date": "2018-05-28",
+            "type": "Negative",
+            "volume": 0
+        },
+        {
+            "__type": "中性",
+            "date": "2018-05-29",
+            "mainRuleId": 137500,
+            "ruleId": 137500,
+            "ruleName": "stats相应规则",
+            "type": "Neutral",
+            "volume": 30
+        },
+        {
+            "__type": "正面",
+            "date": "2018-05-29",
+            "mainRuleId": 137500,
+            "ruleId": 137500,
+            "ruleName": "stats相应规则",
+            "type": "Positive",
+            "volume": 11
+        },
+        {
+            "__type": "负面",
+            "date": "2018-05-29",
+            "type": "Negative",
+            "volume": 0
+        },
+        {
+            "__type": "中性",
+            "date": "2018-05-30",
+            "mainRuleId": 137500,
+            "ruleId": 137500,
+            "ruleName": "stats相应规则",
+            "type": "Neutral",
+            "volume": 40
+        },
+        {
+            "__type": "正面",
+            "date": "2018-05-30",
+            "mainRuleId": 137500,
+            "ruleId": 137500,
+            "ruleName": "stats相应规则",
+            "type": "Positive",
+            "volume": 116
+        },
+        {
+            "__type": "负面",
+            "date": "2018-05-30",
+            "type": "Negative",
+            "volume": 0
+        },
+        {
+            "__type": "中性",
+            "date": "2018-05-31",
+            "mainRuleId": 137500,
+            "ruleId": 137500,
+            "ruleName": "stats相应规则",
+            "type": "Neutral",
+            "volume": 93
+        },
+        {
+            "__type": "正面",
+            "date": "2018-05-31",
+            "mainRuleId": 137500,
+            "ruleId": 137500,
+            "ruleName": "stats相应规则",
+            "type": "Positive",
+            "volume": 17
+        },
+        {
+            "__type": "负面",
+            "date": "2018-05-31",
+            "type": "Negative",
+            "volume": 0
+        },
+        {
+            "__type": "中性",
+            "date": "2018-06-01",
+            "mainRuleId": 137500,
+            "ruleId": 137500,
+            "ruleName": "stats相应规则",
+            "type": "Neutral",
+            "volume": 88
+        },
+        {
+            "__type": "正面",
+            "date": "2018-06-01",
+            "mainRuleId": 137500,
+            "ruleId": 137500,
+            "ruleName": "stats相应规则",
+            "type": "Positive",
+            "volume": 32
+        },
+        {
+            "__type": "负面",
+            "date": "2018-06-01",
+            "type": "Negative",
+            "volume": 0
+        },
+        {
+            "__type": "中性",
+            "date": "2018-06-02",
+            "mainRuleId": 137500,
+            "ruleId": 137500,
+            "ruleName": "stats相应规则",
+            "type": "Neutral",
+            "volume": 21
+        },
+        {
+            "__type": "正面",
+            "date": "2018-06-02",
+            "mainRuleId": 137500,
+            "ruleId": 137500,
+            "ruleName": "stats相应规则",
+            "type": "Positive",
+            "volume": 6
+        },
+        {
+            "__type": "负面",
+            "date": "2018-06-02",
+            "type": "Negative",
+            "volume": 0
+        },
+        {
+            "__type": "中性",
+            "date": "2018-06-03",
+            "mainRuleId": 137500,
+            "ruleId": 137500,
+            "ruleName": "stats相应规则",
+            "type": "Neutral",
+            "volume": 28
+        },
+        {
+            "__type": "正面",
+            "date": "2018-06-03",
+            "mainRuleId": 137500,
+            "ruleId": 137500,
+            "ruleName": "stats相应规则",
+            "type": "Positive",
+            "volume": 6
+        },
+        {
+            "__type": "负面",
+            "date": "2018-06-03",
+            "type": "Negative",
+            "volume": 0
+        },
+        {
+            "__type": "中性",
+            "date": "2018-06-04",
+            "mainRuleId": 137500,
+            "ruleId": 137500,
+            "ruleName": "stats相应规则",
+            "type": "Neutral",
+            "volume": 14
+        },
+        {
+            "__type": "正面",
+            "date": "2018-06-04",
+            "mainRuleId": 137500,
+            "ruleId": 137500,
+            "ruleName": "stats相应规则",
+            "type": "Positive",
+            "volume": 1
+        },
+        {
+            "__type": "负面",
+            "date": "2018-06-04",
+            "type": "Negative",
+            "volume": 0
+        }
     ],
 
+    radar2: [
+        {
+            "benefit": "Long-lasting_face makeup",
+            "ingredient": "Acanthopanax",
+            "rase": 0.1656603623,
+            "total": 25009,
+            "volume": 4143
+        },
+        {
+            "benefit": "Hydration",
+            "ingredient": "Acanthopanax",
+            "rase": 0.1420688552,
+            "total": 25009,
+            "volume": 3553
+        },
+        {
+            "benefit": "Anti-sensitivity",
+            "ingredient": "Acanthopanax",
+            "rase": 0.1213163261,
+            "total": 25009,
+            "volume": 3034
+        },
+        {
+            "benefit": "Anti-aging",
+            "ingredient": "Acanthopanax",
+            "rase": 0.0858490943,
+            "total": 25009,
+            "volume": 2147
+        },
+        {
+            "benefit": "Whitening",
+            "ingredient": "Acanthopanax",
+            "rase": 0.0655364069,
+            "total": 25009,
+            "volume": 1639
+        },
+        {
+            "benefit": "Protection_face makeup",
+            "ingredient": "Acanthopanax",
+            "rase": 0.0598984366,
+            "total": 25009,
+            "volume": 1498
+        },
+        {
+            "benefit": "Hydrated & plumpy_face makeup",
+            "ingredient": "Acanthopanax",
+            "rase": 0.0540605382,
+            "total": 25009,
+            "volume": 1352
+        },
+        {
+            "benefit": "Anti-oxidant",
+            "ingredient": "Acanthopanax",
+            "rase": 0.0420248710,
+            "total": 25009,
+            "volume": 1051
+        },
+        {
+            "benefit": "Anti-aging_face makeup",
+            "ingredient": "Acanthopanax",
+            "rase": 0.0364268863,
+            "total": 25009,
+            "volume": 911
+        },
+        {
+            "benefit": "Anti-pollution",
+            "ingredient": "Acanthopanax",
+            "rase": 0.0347474909,
+            "total": 25009,
+            "volume": 869
+        }
+    ],
 
     radar: [
         {

@@ -1,9 +1,8 @@
 import * as  React from 'react';
-import {MrIcon, MrPanel, MrEcharts} from '../../lib';
+import {MrPanel, MrEcharts} from '../../lib';
 import './masterrt.less';
 import * as _ from 'lodash';
 import MrsCode from '../../components/MrsCode';
-import JsxParser from 'react-jsx-parser';
 import {default as dataSource} from '../../services/data-source';
 import * as mu from 'mzmu';
 
@@ -111,76 +110,49 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
                 <ins>由data直接快速生成echarts图表，并有setting进行精细控制</ins>
 
                 <MrEcharts style={{height: 300}}
-                    chartTypes={'pie'}
-                    data={dataSource.base}
+                           chartTypes={'pie'}
+                           data={dataSource.base}
 
-                    transform={[
-                        {'@group': 'type'},
-                        (data) => {
-                            return mu.map(data, (items) => {
-                                let item = items[0];
-                                item.value = _.reduce(items, (sum, item) => sum + item.volume, 0);
-                                item.name = item.type;
-                                return item;
-                            });
-                        }
-                    ]}></MrEcharts>
+                           transform={[
+                               {'@group': 'type'},
+                               (data) => {
+                                   return mu.map(data, (items) => {
+                                       let item = items[0];
+                                       item.value = _.reduce(items, (sum, item) => sum + item.volume, 0);
+                                       item.name = item.type;
+                                       return item;
+                                   });
+                               }
+                           ]}></MrEcharts>
 
+                {/*<MrEcharts style={{height: 300}}*/} {/*chartTypes={'line'}*/} {/*setting={{*/} {/*'grid.right': 160,*/} {/*'grid.width': '95%'*/} {/*}}*/} {/*data={dataSource.base} transform={[*/} {/*{*/} {/*'@convert': {*/} {/*value: 'volume',*/} {/*name: 'type',*/} {/*x: 'date'*/} {/*}*/} {/*}*/} {/*]*/} {/*}></MrEcharts>*/}
 
-                {/*<MrEcharts style={{height: 300}}*/}
-                           {/*chartTypes={'line'}*/}
-                           {/*setting={{*/}
-                               {/*'grid.right': 160,*/}
-                               {/*'grid.width': '95%'*/}
-                           {/*}}*/}
-                           {/*data={dataSource.base} transform={[*/}
-                    {/*{*/}
-                        {/*'@convert': {*/}
-                            {/*value: 'volume',*/}
-                            {/*name: 'type',*/}
-                            {/*x: 'date'*/}
-                        {/*}*/}
-                    {/*}*/}
-                {/*]*/}
-                {/*}></MrEcharts>*/}
+                {/*<main>*/} {/*<JsxParser*/} {/*bindings={{*/} {/*pieData: this.data.pie*/} {/*}}*/} {/*components={{*/} {/*MrPanel,*/} {/*MrIcon,*/} {/*MrEcharts*/} {/*}}*/} {/*jsx={this.code}*/} {/*></JsxParser>*/} {/*</main>*/}
 
-                {/*<main>*/}
-                    {/*<JsxParser*/}
-                        {/*bindings={{*/}
-                            {/*pieData: this.data.pie*/}
-                        {/*}}*/}
-                        {/*components={{*/}
-                            {/*MrPanel,*/}
-                            {/*MrIcon,*/}
-                            {/*MrEcharts*/}
-                        {/*}}*/}
-                        {/*jsx={this.code}*/}
-                    {/*></JsxParser>*/}
-                {/*</main>*/}
+                {/*<details className="mt-16">*/} {/*<summary>查看源码</summary>*/} {/*<MrsCode code={(this.code)}></MrsCode>*/} {/*</details>*/}
 
-                {/*<details className="mt-16">*/}
-                    {/*<summary>查看源码</summary>*/}
-                    {/*<MrsCode code={(this.code)}></MrsCode>*/}
-                {/*</details>*/}
+                {/*<details className="mt-16">*/} {/*<summary>数据源</summary>*/} {/*<MrsCode code={_data}></MrsCode>*/} {/*</details>*/}
 
-                {/*<details className="mt-16">*/}
-                    {/*<summary>数据源</summary>*/}
-                    {/*<MrsCode code={_data}></MrsCode>*/}
-                {/*</details>*/}
+                <section style={{
+                    height: 300,
+                    width: '100%'
+                }}>
+                    <MrEcharts
+                        chartTypes="radar::radarCoaxial"
+                        data={dataSource.radar2}
+                        transform={[
+                            {
+                                '@convert': {
+                                    'value': 'volume',
+                                    'x': 'benefit',
+                                    'name': 'ingredient'
+                                }
+                            }
+                        ]}
+                    />
+                </section>
 
-                {/*<section style={{*/}
-                    {/*height: 300,*/}
-                    {/*width: '100%'*/}
-                {/*}}>*/}
-                    {/*<MrEcharts chartTypes="radar::area::radarMinZero" data={dataSource.radar} />*/}
-                {/*</section>*/}
-
-                {/*<details className="mt-16">*/}
-                    {/*<summary>雷达图</summary>*/}
-                    {/*<MrsCode code={`*/}
-                        {/*<MrEcharts chartTypes="radar" data="{dataSource.radar}/">*/}
-                    {/*`}></MrsCode>*/}
-                {/*</details>*/}
+                {/*<details className="mt-16">*/} {/*<summary>雷达图</summary>*/} {/*<MrsCode code={`*/} {/*<MrEcharts chartTypes="radar" data="{dataSource.radar}/">*/} {/*`}></MrsCode>*/} {/*</details>*/}
 
                 <aside className="mt-16">
                     <table>
@@ -299,7 +271,9 @@ MrServices.setEchartsColors(colors: any = {
     names: any = {[name: string]: color}
 });
 
-                        `}></MrsCode> </MrPanel>
+                        `}></MrsCode>
+
+                    </MrPanel>
 
                 </aside>
             </article>
