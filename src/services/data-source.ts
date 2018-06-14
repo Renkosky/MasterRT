@@ -749,6 +749,79 @@ const dataSource = {
             value: 2,
             x: 'f11'
         }
+    ],
+
+    polar: [
+        {
+            "category": "Cosmetic water",
+            "ingredient": "Acanthopanax",
+            "rase": 0.1668856767,
+            "total": 761,
+            "volume": 127
+        },
+        {
+            "category": "Body care",
+            "ingredient": "Acanthopanax",
+            "rase": 0.1235216820,
+            "total": 761,
+            "volume": 94
+        },
+        {
+            "category": "Cleanser",
+            "ingredient": "Acanthopanax",
+            "rase": 0.1077529566,
+            "total": 761,
+            "volume": 82
+        },
+        {
+            "category": "Hair care product",
+            "ingredient": "Acanthopanax",
+            "rase": 0.0906701708,
+            "total": 761,
+            "volume": 69
+        },
+        {
+            "category": "Lotion/cream/gel/essence",
+            "ingredient": "Acanthopanax",
+            "rase": 0.0880420499,
+            "total": 761,
+            "volume": 67
+        },
+        {
+            "category": "Perfume",
+            "ingredient": "Acanthopanax",
+            "rase": 0.0827858081,
+            "total": 761,
+            "volume": 63
+        },
+        {
+            "category": "Total UV",
+            "ingredient": "Acanthopanax",
+            "rase": 0.0749014455,
+            "total": 761,
+            "volume": 57
+        },
+        {
+            "category": "Eye care",
+            "ingredient": "Acanthopanax",
+            "rase": 0.0486202365,
+            "total": 761,
+            "volume": 37
+        },
+        {
+            "category": "Eyebrow total",
+            "ingredient": "Acanthopanax",
+            "rase": 0.0315374507,
+            "total": 761,
+            "volume": 24
+        },
+        {
+            "category": "Mask",
+            "ingredient": "Acanthopanax",
+            "rase": 0.0262812089,
+            "total": 761,
+            "volume": 20
+        }
     ]
 };
 

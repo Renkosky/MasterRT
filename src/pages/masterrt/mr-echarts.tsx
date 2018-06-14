@@ -109,21 +109,21 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
                 <header>MrEcharts <small>v0.1.26-b4</small></header>
                 <ins>由data直接快速生成echarts图表，并有setting进行精细控制</ins>
 
-                <MrEcharts style={{height: 300}}
-                           chartTypes={'pie'}
-                           data={dataSource.base}
+                {/*<MrEcharts style={{height: 300}}*/}
+                           {/*chartTypes={'pie'}*/}
+                           {/*data={dataSource.base}*/}
 
-                           transform={[
-                               {'@group': 'type'},
-                               (data) => {
-                                   return mu.map(data, (items) => {
-                                       let item = items[0];
-                                       item.value = _.reduce(items, (sum, item) => sum + item.volume, 0);
-                                       item.name = item.type;
-                                       return item;
-                                   });
-                               }
-                           ]}></MrEcharts>
+                           {/*transform={[*/}
+                               {/*{'@group': 'type'},*/}
+                               {/*(data) => {*/}
+                                   {/*return mu.map(data, (items) => {*/}
+                                       {/*let item = items[0];*/}
+                                       {/*item.value = _.reduce(items, (sum, item) => sum + item.volume, 0);*/}
+                                       {/*item.name = item.type;*/}
+                                       {/*return item;*/}
+                                   {/*});*/}
+                               {/*}*/}
+                           {/*]}></MrEcharts>*/}
 
                 {/*<MrEcharts style={{height: 300}}*/} {/*chartTypes={'line'}*/} {/*setting={{*/} {/*'grid.right': 160,*/} {/*'grid.width': '95%'*/} {/*}}*/} {/*data={dataSource.base} transform={[*/} {/*{*/} {/*'@convert': {*/} {/*value: 'volume',*/} {/*name: 'type',*/} {/*x: 'date'*/} {/*}*/} {/*}*/} {/*]*/} {/*}></MrEcharts>*/}
 
@@ -133,18 +133,37 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
 
                 {/*<details className="mt-16">*/} {/*<summary>数据源</summary>*/} {/*<MrsCode code={_data}></MrsCode>*/} {/*</details>*/}
 
+                {/*<section style={{*/}
+                    {/*height: 300,*/}
+                    {/*width: '100%'*/}
+                {/*}}>*/}
+                    {/*<MrEcharts*/}
+                        {/*chartTypes="radar::radarCoaxial"*/}
+                        {/*data={dataSource.radar2}*/}
+                        {/*transform={[*/}
+                            {/*{*/}
+                                {/*'@convert': {*/}
+                                    {/*'value': 'volume',*/}
+                                    {/*'x': 'benefit',*/}
+                                    {/*'name': 'ingredient'*/}
+                                {/*}*/}
+                            {/*}*/}
+                        {/*]}*/}
+                    {/*/>*/}
+                {/*</section>*/}
+
                 <section style={{
                     height: 300,
                     width: '100%'
                 }}>
                     <MrEcharts
-                        chartTypes="radar::radarCoaxial"
-                        data={dataSource.radar2}
+                        chartTypes="bar::polar"
+                        data={dataSource.polar}
                         transform={[
                             {
                                 '@convert': {
                                     'value': 'volume',
-                                    'x': 'benefit',
+                                    'x': 'category',
                                     'name': 'ingredient'
                                 }
                             }

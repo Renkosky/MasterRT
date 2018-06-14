@@ -10,6 +10,9 @@
  *
  * @uodate mizi.lin@v0.2.0-b8.2o18o614
  * :: => 添加 ::radarCoaxial 雷达各坐标轴同轴（相同的min, max）
+ *
+ * @uodate mizi.lin@v0.2.0-b.2o18o614
+ * :: => 添加极坐标 ::bar:polar 的支持
  */
 
 import * as _ from 'lodash';
@@ -43,8 +46,30 @@ export const defOptions = {
         yAxis: [{}],
         dataset: {},
         series: [],
-        xAxis: [{type: 'category', boundaryGap: true}]
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: true
+            }
+        ]
     },
+
+    // polar: {
+    //     grid: {
+    //         left: 'left',
+    //         right: 20,
+    //         bottom: 20,
+    //         width: '98%',
+    //         containLabel: true
+    //     },
+    //     legend: {},
+    //     tooltip: {
+    //         trigger: 'axis'
+    //     },
+    //     yAxis: [{}],
+    //     dataset: {},
+    //     xAxis: [{type: 'category'}]
+    // },
 
     line: {
         grid: {
@@ -119,7 +144,10 @@ export const defOptions = {
             max: 200,
             left: 'left',
             top: 'bottom',
-            text: ['高', '低'],
+            text: [
+                '高',
+                '低'
+            ],
             calculable: false
         },
         geo: {
@@ -310,6 +338,29 @@ export function subSetting(_colors) {
             }
         },
 
+        'bar::polar': [
+            {'legend.show': false},
+            {'$$series[*].coordinateSystem': 'polar'},
+            {'**polar': (options) => {
+                    let {xAxis, yAxis} = options;
+                    delete options['xAxis'];
+                    delete options['yAxis'];
+                    _.set(xAxis, '[0].axisLabel.interval', 0);
+                    options.angleAxis = xAxis;
+                    options.radiusAxis = {
+                        axisLine: {
+                            show: true,
+                            lineStyle: {
+                                color: "#dedede",
+                                width: 1,
+                                type: "solid"
+                            },
+                        }
+                    };
+                    return {};
+                }}
+        ],
+
         // 柱形阶梯瀑布图
         // 默认拾级上升
         '::ladder': {
@@ -336,13 +387,19 @@ export function subSetting(_colors) {
         },
 
         pie: {
-            '$$series[*].center': ['50%', '55%']
+            '$$series[*].center': [
+                '50%',
+                '55%'
+            ]
         },
 
         // 饼图 => 环形
         'pie::ring': [
             {
-                '$$series[*].radius': ['50%', '75%']
+                '$$series[*].radius': [
+                    '50%',
+                    '75%'
+                ]
             }
         ],
 
@@ -350,7 +407,10 @@ export function subSetting(_colors) {
             '$$series[*].avoidLabelOverlap': false,
             '$$series[*].selectedMode': 'single',
             '$$series[*].label': {
-                normal: {show: false, position: 'center'},
+                normal: {
+                    show: false,
+                    position: 'center'
+                },
                 emphasis: {
                     show: true,
                     lineHeight: 56,
@@ -370,7 +430,10 @@ export function subSetting(_colors) {
         'pie::rose': [
             {'$$series[*].roseType': 'area'},
             {
-                '$$series[*].radius': ['10%', '75%']
+                '$$series[*].radius': [
+                    '10%',
+                    '75%'
+                ]
             },
             {'$$series[*].label.normal.show': true}
         ],
@@ -378,7 +441,10 @@ export function subSetting(_colors) {
         'pie::ring::rose': [
             {'series[0].roseType': 'area'},
             {
-                'series[0].radius': ['10%', '65%']
+                'series[0].radius': [
+                    '10%',
+                    '65%'
+                ]
             },
             {'series[0].label.normal.show': false},
             // 'series[0].itemStyle.color': _colors[0],
@@ -387,10 +453,16 @@ export function subSetting(_colors) {
             {'series[1].hoverAnimation': false},
             {'series[1].zlevel': -2},
             {
-                'series[1].radius': ['66%', '75%']
+                'series[1].radius': [
+                    '66%',
+                    '75%'
+                ]
             },
             {
-                'series[1].center': ['50%', '55%']
+                'series[1].center': [
+                    '50%',
+                    '55%'
+                ]
             },
             // 'series[1].itemStyle.color': '#CFD7D9'},
             {'series[1].itemStyle.borderWidth': 1},
@@ -408,7 +480,10 @@ export function subSetting(_colors) {
         ],
 
         map: {
-            'visualMap.inRange.color': ['#ffffff', _.get(_colors, 'base[0]')],
+            'visualMap.inRange.color': [
+                '#ffffff',
+                _.get(_colors, 'base[0]')
+            ],
             'geo.itemStyle.emphasis.areaColor': _.get(_colors, 'base[1]')
         },
 
@@ -489,7 +564,6 @@ export function subSetting(_colors) {
             '$$radar.indicator[*].min': 0
         },
 
-
         // @deprecated
         '::radarMaximum': {
             '**$$radar.indicator[*].max': (options, data) => {
@@ -536,8 +610,14 @@ export function subSetting(_colors) {
             '$$series[*].shape': 'circle',
             '$$series[*].width': '95%',
             '$$series[*].height': '90%',
-            '$$series[*].sizeRange': [14, 42],
-            '$$series[*].rotationRange': [-45, 90]
+            '$$series[*].sizeRange': [
+                14,
+                42
+            ],
+            '$$series[*].rotationRange': [
+                -45,
+                90
+            ]
         },
 
         'wordCloud::random': {
