@@ -1,6 +1,4 @@
 import * as React from 'react';
-import * as mu from 'mzmu';
-import * as _ from 'lodash';
 import MrPanel from '../../lib/mr-panel/mr-panel.component';
 import MrCode from '../../lib/mr-code/mr-code.component';
 import {MrResource} from '../../lib'
@@ -18,11 +16,35 @@ export default class MrsMrResources extends React.Component<MrsMrResourcesProps,
     //    });
     // }
 
+    down() {
+        let a = MrResource.pool('/services/select-templates/cii_basedata_select/')
+
+        a.mrdown({
+            downloadName: 'CII_20180621.xlsx',
+            directDownload: true
+        }, {
+            "paramMap": {
+                "datetype": "quarter",
+                "thisDate": "2018Q1",
+                "categorys": [],
+                "types": [],
+                "brands": [],
+                "nasty": []
+            }
+        }, {
+            headers: {
+                'X-TOKEN': '0fbb709f8dbab4b8fa92ea3876821fa6c2e002be16420f9da5416426203654',
+                'X-ORIGIN': 'test.loreal.visualmaster.com.cn/ciidashboard'
+            },
+
+            // responseType: 'blob'
+        })
+    }
 
     render() {
         return (
             <article className="mrs-article">
-                <header>MrResource <small>RESUful</small></header>
+                <header onClick={this.down.bind(this)}>MrResource <small>RESUful</small></header>
                 <ins className="block">基于MrRequest的RESEful接口请求协议</ins>
 
                 <aside className="mt-16">
@@ -39,7 +61,7 @@ export default class MrsMrResources extends React.Component<MrsMrResourcesProps,
                 </aside>
 
                 <main>
-<MrCode code={`
+                    <MrCode code={`
     let pool = MrResource.pool(api: string);
 
     /**

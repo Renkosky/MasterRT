@@ -11,6 +11,9 @@
  * @update mizi.lin@0.1.27-b1.2018o6o6
  * ::=> clear UrlSearchParams
  * ::=> method.get 添加默认 ContentType
+ *
+ * @update mizi.lin@0.2.1-b10.2o18o621
+ * ::=> fixed bugs: mrdown no download then add axios.options.responseType: blob
  */
 
 import * as mu from 'mzmu';
@@ -217,18 +220,23 @@ class MrResource {
 
             download(search: any, options?: any) {
                 const args: any = Array.from(arguments);
+                options = options || {};
+                options.responseType = 'blob';
                 args.unshift(url);
                 return vm.get.apply(vm, args).then((rst) => {
                     MrServices.download(rst, search.downloadName);
                 });
             },
 
-            mrdown(search: any = {}, data?: any, options?: any) {
+            mrdown(search: any, data?: any, options?: any) {
                 if (!search.downloadName) {
                     console.error('downloadName 未设置');
                     return false;
                 }
                 search['directDownload'] = true;
+                options = options || {};
+                options.responseType = 'blob';
+
                 const args: any = Array.from(arguments);
                 args.unshift(url);
                 return vm.post.apply(vm, args).then((rst) => {

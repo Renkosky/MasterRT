@@ -8,10 +8,7 @@ export default {
             pathRewrite: {'^/services': ''}
         }
     },
-    alias: {
-        components: resolve(__dirname, './components')
-    },
-
+   
     theme: {
         'primary-color': '#1890ff'
     },

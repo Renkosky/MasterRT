@@ -135,6 +135,11 @@ export default {
                 _.set(options, 'legend.show', _show);
                 _.set(options, 'grid.top', _show ? 60 : 10);
                 return options;
+            },
+
+            // deleteKey
+            deleteKey: (options) => {
+                
             }
         };
 
