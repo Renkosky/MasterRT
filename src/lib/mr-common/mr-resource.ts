@@ -229,17 +229,16 @@ class MrResource {
             },
 
             mrdown(search: any, data?: any, options?: any) {
+                search = search || {};
+                data = data || {};
+                options = options || {};
                 if (!search.downloadName) {
                     console.error('downloadName 未设置');
                     return false;
                 }
                 search['directDownload'] = true;
-                options = options || {};
-                options.responseType = 'blob';
-
-                const args: any = Array.from(arguments);
-                args.unshift(url);
-                return vm.post.apply(vm, args).then((rst) => {
+                options['responseType'] = 'blob';
+                return vm.post(url, search, data, options).then((rst) => {
                     MrServices.download(rst, search.downloadName);
                 });
             }
