@@ -18,6 +18,7 @@
 import * as _ from 'lodash';
 import * as mu from 'mzmu';
 
+
 /**
  * 各种chart基础option配置
  */
@@ -631,6 +632,6 @@ export function subSetting(_colors) {
                 let len = _baseColors.length;
                 return _baseColors[mu.randomInt(0, len - 1)];
             }
-        }
+        },
     };
 }

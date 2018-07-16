@@ -157,6 +157,16 @@ class MrServices {
         return this._mrEchartsColors;
     }
 
+    _mrEchartsSubTypes: any = {};
+
+    setEchartsSubTypes(subTypes): any {
+        return {...this._mrEchartsSubTypes, ...subTypes};
+    }
+
+    getEchartsSubTypes(): any {
+        return this._mrEchartsSubTypes;
+    }
+
     _noDataComponent: any;
 
     setNoDataComponent(component) {

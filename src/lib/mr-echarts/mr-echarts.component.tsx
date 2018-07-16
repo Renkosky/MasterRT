@@ -124,7 +124,6 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
         });
 
         // 使用 noMerge 避免两次 options变化产生冲突
-
         console.debug('::::::: options => ~~', options);
 
         try {
@@ -216,9 +215,6 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
     componentWillReceiveProps(props: MrEchartsProps) {
         // 判断两次 props 是否一致
         // 避免 react 本身机制问题，每次setState 重新渲染页面
-
-
-
         if (!_.isEqual(props, this.props)) {
             this.drawCharts(props);
         }
