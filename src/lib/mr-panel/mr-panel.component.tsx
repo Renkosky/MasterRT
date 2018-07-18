@@ -30,6 +30,14 @@ interface MrPanelProps {
 
 export default class MrPanel extends React.Component<MrPanelProps, {}> {
 
+    runfn(fn: any) {
+        if(typeof fn === 'function'){
+            return fn();
+        } else {
+            return fn;
+        }
+    }
+
     render() {
 
         const {style, className = '', title = '', extra, bodyStyle, border = 'all', h100} = this.props;
@@ -57,7 +65,7 @@ export default class MrPanel extends React.Component<MrPanelProps, {}> {
                 <MrIf condition={prepend}>
                     <section className="mr-panel-prepend">
                         <div>
-                            {mu.run(prepend, (prepend) => prepend)}
+                            {this.runfn(prepend)}
                         </div>
                     </section>
                 </MrIf>
@@ -71,7 +79,7 @@ export default class MrPanel extends React.Component<MrPanelProps, {}> {
                 <MrIf condition={append}>
                     <section className="mr-panel-append">
                         <div>
-                            {mu.run(append, (append) => append)}
+                            {this.runfn(append)}
                         </div>
                     </section>
                 </MrIf>
