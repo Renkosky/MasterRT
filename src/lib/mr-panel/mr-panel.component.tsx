@@ -9,6 +9,7 @@
 
 import * as React from 'react';
 import {MrIf} from '../';
+import * as mu from 'mzmu';
 declare var require: any;
 require('../assets/styles/mr-panel.less');
 import {MrServices} from '..';
@@ -56,7 +57,7 @@ export default class MrPanel extends React.Component<MrPanelProps, {}> {
                 <MrIf condition={prepend}>
                     <section className="mr-panel-prepend">
                         <div>
-                            {prepend}
+                            {mu.run(prepend, (prepend) => prepend)}
                         </div>
                     </section>
                 </MrIf>
@@ -70,7 +71,7 @@ export default class MrPanel extends React.Component<MrPanelProps, {}> {
                 <MrIf condition={append}>
                     <section className="mr-panel-append">
                         <div>
-                            {append}
+                            {mu.run(append, (append) => append)}
                         </div>
                     </section>
                 </MrIf>
