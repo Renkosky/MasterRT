@@ -7,9 +7,9 @@
 // v4.2 adds semantic variable names, long (over 2MB) dataURL support, and hidden by default temp anchors
 // https://github.com/rndme/download
 
-
 /**
  * @update mizi.lin@v0.2.0-b4.20180608
+ * @update mizi.lin@v0.2.1.20180717 support chinese
  */
 
 var define = window.define;
@@ -112,8 +112,10 @@ var define = window.define;
 
         /**
          * 支持unicode中文字符
+         *
+         * @todo 之前为什么注释掉?  mizi 2017-07-17
          */
-        // blob = new Blob([String.fromCharCode(0xFEFF), blob], {type: blob.type});
+        blob = new Blob([String.fromCharCode(0xFEFF), blob], {type: blob.type});
 
 
         function dataUrlToBlob(strUrl) {

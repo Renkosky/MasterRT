@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import MrsCode from '../../components/MrsCode';
 import {default as dataSource} from '../../services/data-source';
 import * as mu from 'mzmu';
+import MrEchartsPanel from '../../lib/mr-echarts/mr-echarts-panel.component';
 
 interface MrsMrEchartsProps {
 }
@@ -184,7 +185,7 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
                     width: '100%'
                 }}>
 
-                    <MrEcharts data={this.cloud} chartTypes="wordCloud::random"></MrEcharts>
+                    <MrEchartsPanel title="test" data={this.cloud} chartTypes="wordCloud::random"></MrEchartsPanel>
                 </section>
 
                 <div onClick={() => {
