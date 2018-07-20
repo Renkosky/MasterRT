@@ -110,18 +110,14 @@ var define = window.define;
 
         blob = payload instanceof myBlob ? payload : new myBlob([payload], {type: mimeType});
 
-        /**
-         * 支持unicode中文字符
-         *
-         * @todo 之前为什么注释掉?  mizi 2017-07-17
-         */
-        blob = new Blob([String.fromCharCode(0xFEFF), blob], {type: blob.type});
 
         var ext = fileName.split('.').pop();
         if(ext === 'csv') {
             /**
              * utf-8编码的csv文件用excel打开时，中文乱码
              * 而excel以BOM编码方式，所以需要在文件开头添加0xFEFF来告知该csv的utf编码方式
+             *
+             * mizi@2018-720
              */
             blob = new Blob([String.fromCharCode(0xFEFF), blob], {type: blob.type});
         }
