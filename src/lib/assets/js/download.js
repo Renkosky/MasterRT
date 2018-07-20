@@ -10,11 +10,10 @@
 /**
  * @update mizi.lin@v0.2.0-b4.20180608
  * @update mizi.lin@v0.2.1.20180717 support chinese
- * @update mizi.lin@0.2.1-b3.20180720
- * ::=> 针对csv使用utf-8模式打开添加特殊处理
  */
 
-const define = window.define;
+var define = window.define;
+
 (function(root, factory) {
     if(typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
@@ -32,7 +31,7 @@ const define = window.define;
 
     return function download(data, strFileName, strMimeType) {
 
-        let self = window, // this script is only for browsers anyway...
+        var self = window, // this script is only for browsers anyway...
             defaultMime = 'application/octet-stream;charset=utf-8', // this default mime also triggers iframe downloads
             mimeType = strMimeType || defaultMime,
             payload = data,
@@ -52,8 +51,8 @@ const define = window.define;
             payload = payload[1];
         }
 
-    // if no filename and no mime, assume a url was passed as the only argument
-    if(url && url.length < 2048) {
+        // if no filename and no mime, assume a url was passed as the only argument
+        if(url && url.length < 2048) {
             fileName = url.split('/')
                 .pop()
                 .split('?')[0];
@@ -111,7 +110,14 @@ const define = window.define;
 
         blob = payload instanceof myBlob ? payload : new myBlob([payload], {type: mimeType});
 
-        let ext = fileName.split('.').pop();
+        /**
+         * 支持unicode中文字符
+         *
+         * @todo 之前为什么注释掉?  mizi 2017-07-17
+         */
+        blob = new Blob([String.fromCharCode(0xFEFF), blob], {type: blob.type});
+
+        var ext = fileName.split('.').pop();
         if(ext === 'csv') {
             /**
              * utf-8编码的csv文件用excel打开时，中文乱码
@@ -122,7 +128,7 @@ const define = window.define;
 
 
         function dataUrlToBlob(strUrl) {
-            let parts = strUrl.split(/[:;,]/),
+            var parts = strUrl.split(/[:;,]/),
                 type = parts[1],
                 decoder = parts[2] === 'base64' ? atob : decodeURIComponent,
                 binData = decoder(parts.pop()),
@@ -167,7 +173,7 @@ const define = window.define;
             }
 
             //do iframe dataURL download (old ch+FF):
-            let f = document.createElement('iframe');
+            var f = document.createElement('iframe');
 
             document.body.appendChild(f);
 

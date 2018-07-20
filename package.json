@@ -33,7 +33,6 @@
         "echarts-wordcloud": "^1.1.3",
         "hanabi": "^0.4.0",
         "lodash": "^4.17.5",
-        "masterrt": "^0.1.19-b4",
         "mobx": "^4.3.0",
         "mobx-react": "^5.1.2",
         "mzmu": "^1.8.15",
