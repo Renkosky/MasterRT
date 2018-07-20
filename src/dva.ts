@@ -14,8 +14,11 @@ export function config() {
         // 'Content-Type': 'text/json',
         // 'X-TOKEN': () => mu.storage('X-TOKEN')
 
-        'X-ORIGIN': 'test.new-socialx.visualmaster.com.cn',
-        'X-TOKEN': '4a7602d0dd985e64822851004456e5df8f8001381639191439316396b79f93'
+        // 'X-ORIGIN': 'test.new-socialx.visualmaster.com.cn',
+        // 'X-TOKEN': '4a7602d0dd985e64822851004456e5df8f8001381639191439316396b79f93'
+
+        'X-ORIGIN': 'test.loreal.visualmaster.com.cn/ksidashboard',
+        'X-TOKEN': 'c09332fed385bbd55a2cdc4b495e6e0bd0e002b1164a6eed39a16bfe9fff99'
     });
 
     MrServices.setRules({

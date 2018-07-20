@@ -19,8 +19,11 @@
  * @update mizi.lin@v0.1.25.20180525
  * ::=> 添加 force，默认MrEchartsPanel 在props未改变状态下，不重新渲染
  *
- * * @update mizi.lin@v0.1.27.20180606
+ * @update mizi.lin@v0.1.27.20180606
  * ::=> 添加 MrProcess 的特性属性，showLoading, showNodata, loading, nodata
+ *
+ * @update mizi.lin@0.2.1.20180717
+ * ::=> 移除 force 控制 MrEchartsPanel 是否重新渲染，是否重新渲染只控制在 MrReq 这一层
  */
 
 import * as React from 'react';
@@ -292,6 +295,7 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
         } else {
             return !_.isEqual(next, current) || !_.isEqual(nextState, this.state);
         }
+        return true;
     }
 
     render() {

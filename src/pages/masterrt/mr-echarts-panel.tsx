@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as mu from 'mzmu';
 import * as _ from 'lodash';
-import {MrCol, MrFill, MrPanel, MrEchartsPanel} from '../../lib';
+import {MrCol, MrFill, MrPanel, MrEchartsPanel, MrResource} from '../../lib';
 import JsxParser from 'react-jsx-parser';
 import MrsCode from '../../components/MrsCode';
 interface MrsEchartsPanelProps {
@@ -83,10 +83,17 @@ export default class MrsEchartsPanel extends React.Component<MrsEchartsPanelProp
     render() {
         let {pie} = this;
         let {req} = this.state;
+
+        let url = "/services/select-templates/ksi.all_index_list/?apiName=ksi.all_index_list&headers=kol::KOLName,gender::Gender,forcus_platform::KOLPlatform,ksi::KSI,ksiRank::KSIRank,searchIndex::SearchIndex,searchIndexRank::SearchIndexRank,brandIndexAvg::BrandIndex,brandIndexAvgRank::BrandIndexRank,purchaseIntention::PurchaseIntention,purchaseIntentionRank::PurchaseIntentionRank,socialIndex::SocialIndex,weibo_name::WeiboName,wechat_name::WeChatName,red_name::TheRedName,weibo_total_fans::WeiboTotalFans,weibo_fans_quality::WeiboFansQuality,red_fans::TheRedFans"
+
+        let abc = MrResource.pool(url);
+
         return (
             <article className="mrs-article mrs-MrFill">
                 <header>MrEchartsPanel <small>@v0.1.24.20180523</small></header>
-                <ins>一个基于MrPanel, MrReq, MrEcharts 集成的显示UI，支持各种激活Echarts方式，以及使用Tool控制Echarts显示方式</ins>
+                <ins onClick={() => (abc.mrdown({
+                    downloadName: 'ksi-1532068145056.xlsx'
+                }, {"paramMap":{"date":["2018-04"]},"sample":false}))}>一个基于MrPanel, MrReq, MrEcharts 集成的显示UI，支持各种激活Echarts方式，以及使用Tool控制Echarts显示方式</ins>
                 <main>
                     <JsxParser
                         bindings={{pie, req, click: (e) => {
