@@ -342,6 +342,7 @@ export default {
                 d.$colRate = mu.format(d.value / sum, ':4');
                 d.$colPercent = mu.format(d.value / sum, '::');
                 d.$colPercent2 = mu.format(d.value / sum, '::2');
+                d.$value = d.value;
                 return d;
             });
         });
@@ -364,6 +365,7 @@ export default {
                 d.$rowRate = mu.format(d.value / sum, ':4');
                 d.$rowPercent = mu.format(d.value / sum, '::');
                 d.$rowPercent2 = mu.format(d.value / sum, '::2');
+                d.$value = d.value;
                 return d;
             });
         } else if (dataModel = 'group') {

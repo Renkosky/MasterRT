@@ -68,16 +68,10 @@ export default class MrsEchartsPanel extends React.Component<MrsEchartsPanelProp
         <MrEchartsPanel
                 title="Use Data"
                 style={{height: 400}} chartTypes={'pie::ring::ringLabel'} data={pie} 
+                transform={[{'@convert': {'value': '$rowRate'}}]} 
                 append={<div>在饼图底部插入内容</div>} />
 
-        <MrEchartsPanel
-            chartClick={click}
-            title="Use Req"
-            style={{height: 400}} 
-            chartTypes={'line'} 
-            req={req} 
-            transform={[{'@convert': {'__names': 'name'}}]} 
-        />
+        
     `;
 
     render() {
@@ -108,6 +102,13 @@ export default class MrsEchartsPanel extends React.Component<MrsEchartsPanelProp
                     <summary>查看源码</summary>
                     <MrsCode code={(this.code)}></MrsCode>
                 </details>
+
+                <MrEchartsPanel
+                    title="Use Req"
+                    style={{height: 400}}
+                    chartTypes={'bar::::percent100'}
+                    req={req}
+                />
 
                 <aside className="mt-16">
 

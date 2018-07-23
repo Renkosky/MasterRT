@@ -8,11 +8,14 @@
  * ::=> 添加 randomAll
  * ::=> wordCloud 添加 width 和 height
  *
- * @uodate mizi.lin@v0.2.0-b8.2o18o614
+ * @update mizi.lin@v0.2.0-b8.2o18o614
  * :: => 添加 ::radarCoaxial 雷达各坐标轴同轴（相同的min, max）
  *
- * @uodate mizi.lin@v0.2.0-b.2o18o614
+ * @update mizi.lin@v0.2.0-b.2o18o614
  * :: => 添加极坐标 ::bar:polar 的支持
+ *
+ * @update mizi.lin@0.2.1-b6.20180723
+ * :: => 添加percent100（按比例100%显示）显示
  */
 
 import * as _ from 'lodash';
@@ -325,6 +328,36 @@ export function subSetting(_colors) {
                 data._value = data.value;
                 data.value = -data.value;
                 return data;
+            }
+        },
+
+        '::percent100': {
+            '$$series[*].stack': 'one',
+
+            '**$$series[*].data': (obj, series)=> {
+                let data = series.data;
+                return mu.map(data, (item) => {
+                    item.value = item.$colRate;
+                    return item;
+                });
+            },
+
+            '$$yAxis[*].max': 1,
+
+            '$$yAxis[*].axisLabel.formatter': (value) => {
+                return mu.format(value, '::');
+            },
+
+            'tooltip.formatter': (obj, item) => {
+                obj = obj || [];
+                let formatter = [];
+                formatter = mu.map(obj, (item) => {
+                    return `${item.marker} ${item.data.name}: ${item.data.$colPercent2} (${item.data.$value})`
+                });
+
+                formatter.unshift(_.get(obj[0], 'data.x'));
+
+                return formatter.join('<br />');
             }
         },
 
