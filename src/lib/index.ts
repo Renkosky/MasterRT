@@ -19,5 +19,3 @@ export {default as MrProcess} from './mr-process/mr-process.component';
 export {default as MrLoader} from './mr-process/mr-loader.component';
 export {default as MrHtml} from './mr-code/mr-html.component';
 export {default as MrComponent} from './mr-component/mr-component.component';
-
-
