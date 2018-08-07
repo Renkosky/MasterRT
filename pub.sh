@@ -38,7 +38,7 @@ cd ..
 echo "::::: 推送到NPM $_ov -> $_version"
 
 echo ":::::: 推送到NPM"
-    npm publish
+    npm publish pub
 
 if [ $? -eq 0 ]; then
 

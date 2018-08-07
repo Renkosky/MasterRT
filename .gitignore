@@ -10,6 +10,7 @@ package-lock.json
 
 pub/
 .umi/
+.umi-production/
 
 #---------------------------------
 # Extensions
