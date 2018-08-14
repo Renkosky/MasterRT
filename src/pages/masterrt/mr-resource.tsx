@@ -8,37 +8,55 @@ interface MrsMrResourcesProps {
 
 export default class MrsMrResources extends React.Component<MrsMrResourcesProps, {}> {
 
-    // componentWillMount() {
-    //    let a =  MrResource.pool('/abc');
-    //
-    //    a.post({}, {a:111, b: '江山如此多娇'}, {}).then(() => {
-    //        console.debug(1111111);
-    //    });
-    // }
+    componentWillMount() {
+        // let a = MrResource.pool('/abc{/:id}{/:name}{/:key}');
+        //
+        // let b = MrResource.pool('/bbb/{id}/{name}');
+        //
+        // a.get({
+        //     id: 2222,
+        //     name: 'jiang'
+        // }, {
+        //     a: 111,
+        //     key: '江山如此多娇'
+        // }, {holdParams: false}).then(() => {
+        //     console.debug(1111111);
+        // });
+        //
+        // b.post({
+        //     id: 2222,
+        //     name: 'jiang'
+        // }, {
+        //     a: 111,
+        //     b: '江山如此多娇'
+        // }, {holdParams: true}).then(() => {
+        //     console.debug(1111111);
+        // });
+    }
 
     down() {
         let a = MrResource.pool('/services/select-templates/cii_basedata_select/')
 
-        a.mrdown({
-            downloadName: 'CII_20180621.xlsx',
-            directDownload: true
-        }, {
-            "paramMap": {
-                "datetype": "quarter",
-                "thisDate": "2018Q1",
-                "categorys": [],
-                "types": [],
-                "brands": [],
-                "nasty": []
-            }
-        }, {
-            headers: {
-                'X-TOKEN': '0fbb709f8dbab4b8fa92ea3876821fa6c2e002be16420f9da5416426203654',
-                'X-ORIGIN': 'test.loreal.visualmaster.com.cn/ciidashboard'
-            },
-
-            // responseType: 'blob'
-        })
+        // a.mrdown({
+        //     downloadName: 'CII_20180621.xlsx',
+        //     directDownload: true
+        // }, {
+        //     "paramMap": {
+        //         "datetype": "quarter",
+        //         "thisDate": "2018Q1",
+        //         "categorys": [],
+        //         "types": [],
+        //         "brands": [],
+        //         "nasty": []
+        //     }
+        // }, {
+        //     headers: {
+        //         'X-TOKEN': '0fbb709f8dbab4b8fa92ea3876821fa6c2e002be16420f9da5416426203654',
+        //         'X-ORIGIN': 'test.loreal.visualmaster.com.cn/ciidashboard'
+        //     },
+        //
+        //     // responseType: 'blob'
+        // })
     }
 
     render() {

@@ -23,46 +23,62 @@ import * as _ from 'lodash';
 
 // todo support /abc/efg{/id} 路径格式
 class MrResource {
+
+    private getParams(mapping: string, params: object): any {
+        let str: string = mapping.replace(/^{(.*)}$/, '$1');
+        let [front, key, behind] = str.split(':');
+        let value = params[key];
+        if (mu.isExist(value)) {
+            front = mu.ifnvl(front, '');
+            behind = mu.ifnvl(behind, '');
+            value = [front, value, behind].join('');
+        }
+        value = mu.ifnvl(value, '');
+
+        return {
+            key,
+            value
+        }
+    }
+
     /**
      * URL to REST_URL
      * @param url
      * @param params
-     * @param isReplace | true : 是否将不存在的占位符转为''(空)
+     * @param options
      */
-    private restful(url: string, params: any, isReplace: boolean = true): any {
+    private restful(url: string, params: any, options = {}): any {
         let fullUrl: string;
 
         url = url || '';
         let sp: any = mu.clone(params || {});
         const restParams: any = {};
 
+        // support {/:id}
+        let ms = url.match(/{(.*?)(:.+?)}/g);
+
+        if (ms && ms.length) {
+            mu.each(ms, (item) => {
+                let mapping = this.getParams(item, params);
+                if (mapping.key) {
+                    options['holdParams'] || delete params[mapping.key];
+                    url = url.replace(item, mapping.value);
+                }
+            })
+        }
+
+        // 向下兼容直接使用 {key} 来做替换数据
+        // 0.2.22 以下
         url = url.replace(/\{(.+?)\}/g, (m: string, key: string) => {
-            return mu.run(sp[key], (v: string) => {
+            let value =  mu.run(sp[key], (v: string) => {
                 restParams[key] = v;
                 sp = mu.remove(sp, key);
+                options['holdParams'] || delete params[key];
                 return v;
-            }) || (isReplace ? '' : m);
+            });
+
+            return mu.ifnvl(value, '');
         });
-
-        // url = url.replace(/\/$/, '');
-
-        // axios 支持直接使用params
-
-        // mu.run(sp, () => {
-        //     let arr: any = mu.map(sp, (o, key) => {
-        //         return `${key}=${o}`;
-        //     }, []);
-        //
-        //     let searchStr = arr.join('&');
-        //
-        //     // let searchStr = new URLSearchParams(arr).toString();
-        //
-        //     if(url.indexOf('?') > -1){
-        //         fullUrl = url + '&' + searchStr;
-        //     } else {
-        //         fullUrl = url + '?' + searchStr;
-        //     }
-        // });
 
         return {
             url: url,
@@ -74,7 +90,7 @@ class MrResource {
     }
 
     get(url: string, search?: any, options?: any) {
-        const rest = this.restful(url, search);
+        const rest = this.restful(url, search, options);
         let fullUrl = rest.fullUrl;
 
         options = mu.extend(true, {
@@ -103,7 +119,7 @@ class MrResource {
                 break;
         }
 
-        const rest = this.restful(url, search, false);
+        const rest = this.restful(url, search, options);
         let headers: any = MrServices.getHeaders();
         // const restdata = this.restful(rest.url, data, true);
 
@@ -140,8 +156,8 @@ class MrResource {
                 break;
         }
 
-        const rest = this.restful(url, search, false);
-        const restdata = this.restful(rest.url, data, true);
+        const rest = this.restful(url, search, options);
+        const restdata = this.restful(rest.url, data, options);
 
         options = mu.extend(true, {
             method: 'patch',
@@ -158,7 +174,7 @@ class MrResource {
 
     delete(url: string, search?: any, options?: any) {
 
-        const rest = this.restful(url, search);
+        const rest = this.restful(url, search, options);
         let fullUrl = rest.fullUrl;
 
         options = mu.extend(true, {
@@ -177,10 +193,10 @@ class MrResource {
 
             // hack, 支持三参数 与 post 等模式调用方式一致
             // 提高判断method时，提交使用效率
-            get(search?: any, hack?: any, options?: any) {
+            get(search?: any, params?: any, options?: any) {
 
-                mu.run(hack, () => {
-                    search = mu.extend(true, search, hack);
+                mu.run(params, () => {
+                    search = mu.extend(true, search, params);
                 });
 
                 return vm.get(url, search, options);
