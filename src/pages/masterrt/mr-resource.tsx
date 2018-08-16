@@ -11,7 +11,10 @@ export default class MrsMrResources extends React.Component<MrsMrResourcesProps,
     componentWillMount() {
         // let a = MrResource.pool('/abc{/:id}{/:name}{/:key}');
         //
-        // let b = MrResource.pool('/bbb/{id}/{name}');
+        let b = MrResource.pool('/bbb');
+
+        b.post();
+
         //
         // a.get({
         //     id: 2222,
