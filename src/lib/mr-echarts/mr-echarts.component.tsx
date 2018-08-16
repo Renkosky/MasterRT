@@ -59,21 +59,67 @@ export interface MrEchartsProps {
 }
 
 export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
-    _chart: any;
+
+    // 待Echarts渲染的dom元素
     _chartRef: any;
+
+    _chart: any;
+
     _width: number;
     _height: number;
+
+
+    getCharts(ref) {
+        return this._chart || mu.run(ref, () => {
+            let {theme = 'customed', renderType = 'canvas'} = this.props;
+            return echarts.init(ref, theme, {
+                renderer:  renderType
+            });
+        });
+    }
 
     /**
      * 绘制Echarts图表
      * @type {Function}
      */
     drawCharts = _.debounce((props: any) => {
+
+        let _chart = this.getCharts(this._chartRef);
+        let {data, dataType, dataModel, chartTypes} = props;
+        let {options} = props;
+
+        if(!_chart){
+            return void 0;
+        }
+
+        /**
+         * 针对词云图，做一次画布清理,
+         *
+         * 如果不做词云的画布清理，画布可以重绘时，
+         * 可能会残留上次词云痕迹
+         */
+        mu.run(chartTypes.indexOf('wordCloud') > -1, () => {
+            _chart.clear();
+        });
+
+        /**
+         * 数据获取可能来自上层元素'遗传'
+         */
+        data = mu.ifnvl(data, _.get(props, '_gene.data'));
+
+        /**
+         * 空数据不做渲染，委托给 MasterRT NoDataComponent
+         */
+        if(mu.isEmpty(data) && mu.isEmpty(options)){
+            return void 0;
+        }
+
+
         let {_gene = {}} = props;
 
-        let {data, dataType, dataModel, chartTypes} = props;
+
         let {transform = [], setting = {}, optionsSetting} = props;
-        let {options, renderType, theme} = props;
+        let {renderType, theme} = props;
         let {result} = props;
         let _dom = this._chartRef;
         // data 或 options 转换过程中的结果集
@@ -133,8 +179,6 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
             console.error(e);
         }
 
-
-
         this.registerEvents(props, options, rst);
 
         // call back info
@@ -173,38 +217,6 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
             chartGlobalOut && chartGlobalOut(e, props, options, result);
         });
     });
-
-    /**
-     * 获取最终图表数据解析方式
-     * @param type
-     * @param sourceType: dataSource, dataSet, dataGroup
-     * @return {string}
-     */
-    getSourceType(type: string, sourceType: string) {
-        if (sourceType) {
-            return sourceType;
-        }
-
-        switch (type) {
-            case 'wordCloud':
-            case 'treemap':
-            case 'radar':
-                return 'dataSource';
-            case 'line':
-            case 'bar':
-            case 'pie':
-            case 'scatter':
-            case 'effectScatter':
-            case 'parallel':
-            case 'candlestick':
-            case 'map':
-            case 'funnel':
-            case 'custom':
-                return 'dataSet';
-            default:
-                return 'data';
-        }
-    }
 
     windowResize = mu.bind(() => {
         try {

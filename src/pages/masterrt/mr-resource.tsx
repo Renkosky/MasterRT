@@ -32,6 +32,15 @@ export default class MrsMrResources extends React.Component<MrsMrResourcesProps,
         // }, {holdParams: true}).then(() => {
         //     console.debug(1111111);
         // });
+
+
+
+
+
+
+
+
+
     }
 
     down() {
@@ -118,6 +127,20 @@ export default class MrsMrResources extends React.Component<MrsMrResourcesProps,
     pool.mrdown(search: any, payload: any, options?: any): Promise;
 
 
+
+    let pool = MrResource.pool('/users{/:id}{/:type:year}');
+
+    pool.get({id: 1});
+    // -> /users/1
+
+    pool.get({type: 'birthday'});
+    // -> /users/birthday/year
+
+    pool.get({id: 1})
+    // -> /users/1
+
+    pool.get({type: 'birthday', id: 1001}, {}, {holdParams: true});
+    // -> /users/1001/birthday/year?id=1001&type=birthday
 
 
 `}></MrCode>
