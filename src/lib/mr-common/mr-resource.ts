@@ -24,7 +24,7 @@ import * as _ from 'lodash';
 // todo support /abc/efg{/id} 路径格式
 class MrResource {
 
-    private getParams(mapping: string, params: object): any {
+    private getParams(mapping: string = '', params: object = {}): any {
         let str: string = mapping.replace(/^{(.*)}$/, '$1');
         let [front, key, behind] = str.split(':');
         let value = params[key];
@@ -47,7 +47,7 @@ class MrResource {
      * @param params
      * @param options
      */
-    private restful(url: string, params: any, options = {}): any {
+    private restful(url: string, params: any = {}, options: any = {}): any {
         let fullUrl: string;
 
         url = url || '';
