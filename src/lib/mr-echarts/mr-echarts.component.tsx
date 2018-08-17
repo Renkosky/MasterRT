@@ -38,16 +38,15 @@ export interface MrEchartsProps {
      */
     setting?: any;
     options?: any;
-    /**
-     * optionsSetting?: boolean = false;
-     * 默认setting不作用在options中
-     */
-    optionsSetting?: boolean;
+
     theme?: string;
     renderType?: string;
     style?: any;
     result?: any;
     _gene?: any;
+
+    // 是否每次都刷新
+    force?: boolean
 
     chartClick?: any;
     chartDblClick?: any;
@@ -87,9 +86,15 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
         let _chart = this.getCharts(this._chartRef);
         let {data, dataType, dataModel, chartTypes} = props;
         let {options} = props;
+        let {result, setting, transform} = props;
+
+        // data 与 setting 的计算结果
+        let rst: any;
 
         if(!_chart){
             return void 0;
+        } else {
+            this._chart = _chart;
         }
 
         /**
@@ -108,73 +113,40 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
         data = mu.ifnvl(data, _.get(props, '_gene.data'));
 
         /**
-         * 空数据不做渲染，委托给 MasterRT NoDataComponent
+         * 空数据不做渲染，委托给 MasterRT NoDataComponent, 显示无数据状态
          */
         if(mu.isEmpty(data) && mu.isEmpty(options)){
             return void 0;
         }
 
-
-        let {_gene = {}} = props;
-
-
-        let {transform = [], setting = {}, optionsSetting} = props;
-        let {renderType, theme} = props;
-        let {result} = props;
-        let _dom = this._chartRef;
-        // data 或 options 转换过程中的结果集
-        let rst: any = {};
-
-        // _dom 不存在时不渲染
-        if (!_dom) return;
-
-        // todo 继承基因算法
-        data = mu.ifnvl(data, _.get(props, '_gene.data'));
-
-       // 判断 Echart DOM 是否已经初始化
-        mu.empty(
-            this._chart,
-            () => {
-                this._chart = echarts.init(_dom, theme || MrEchartsServices._theme() || 'customed', {
-                    renderer: renderType || MrEchartsServices.CHART_RENDER_TYPE
-                });
-            },
-            () => {
-                // 确保 wordcloud 清理的缓存
-                // 但可能会造成内存消耗过大
-                if (chartTypes.indexOf('wordCloud') > -1) {
-                    this._chart.clear();
-                }
-            }
-        );
-
-        // set empty option for no data
-        if (_.isEmpty(data) && _.isEmpty(options)) {
-            try {
-                this._chart.setOption({}, true);
-                this._chart.resize();
-            } catch (e) {
-                console.error(e);
-            }
-
-            return;
+        /**
+         * data 和 options  二者只支持其中一个，两个全有退出
+         */
+        if(mu.isNotEmpty(data) && mu.isNotEmpty(options)){
+            console.error('data 与 options 不能同时设置');
+            return void 0;
         }
 
-        if(mu.isNotEmpty(options) && optionsSetting) {
-            options = MrEchartsServices.reOptions(options, setting, chartTypes);
-        }
-
-        mu.empty(options, () => {
+        /**
+         * 通过 data + setting, 获得最终的 options
+         */
+        mu.run(data, () => {
             rst = MrEchartsServices.getOptions(data, dataType, dataModel, chartTypes, setting, transform);
             options = rst.options;
+        });
+
+        /**
+         * 通过 options + setting，获得最终的 options
+         */
+        mu.run(options, () => {
+            options = MrEchartsServices.reOptions(options, setting, chartTypes);
         });
 
         // 使用 noMerge 避免两次 options变化产生冲突
         console.debug('::::::: options => ~~', options);
 
         try {
-            this._chart.setOption(options, true);
-            this._chart.resize();
+            _chart.setOption(options, true, false);
         } catch (e) {
             console.error(e);
         }
@@ -183,6 +155,7 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
 
         // call back info
         result && result(options, rst);
+
     }, 300);
 
     /**
@@ -227,14 +200,28 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
     componentWillReceiveProps(props: MrEchartsProps) {
         // 判断两次 props 是否一致
         // 避免 react 本身机制问题，每次setState 重新渲染页面
-        if (!_.isEqual(props, this.props)) {
-            this.drawCharts(props);
-        }
+        this.shouldComponentUpdate(props) && this.drawCharts(props);
     }
 
     componentDidMount() {
         this.drawCharts(this.props);
         window.addEventListener('resize', this.windowResize);
+    }
+
+    shouldComponentUpdate(nextProps): boolean {
+        let {force = false, data, options, setting, chartTypes} = this.props;
+        let {data: nextData, options: nextOptions, setting: nextSetting, chartTypes: nextChartTypes} = nextProps;
+
+        switch (true) {
+            case force:
+            case chartTypes !== nextChartTypes:
+            case !_.isEqual(data, nextData):
+            case JSON.stringify(setting) !== JSON.stringify(nextSetting):
+            case JSON.stringify(options) !== JSON.stringify(nextOptions):
+                return true;
+            default:
+                return false;
+        }
     }
 
     // componentWillUpdate() {
@@ -243,7 +230,7 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
     // }
 
     componentDidUpdate() {
-        this.windowResize();
+        // this.windowResize();
 
         // // 监测 DOM 的宽高变化
         // let {offsetWidth, offsetHeight} = this._chartRef;
@@ -251,15 +238,13 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
         // if(this._width !== offsetWidth || this._height !== offsetHeight) {
         //     this.windowResize();
         // }
-
-
     }
 
     componentWillUnmount() {
-        window.removeEventListener('reszie', this.windowResize.bind(this));
-        mu.run(this._chart, () => {
-            this._chart.dispose();
-        });
+        // window.removeEventListener('reszie', this.windowResize.bind(this));
+        // mu.run(this._chart, () => {
+        //     this._chart.dispose();
+        // });
     }
 
     render() {

@@ -1204,19 +1204,19 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
                     height: 300,
                     width: '100%'
                 }}>
-                    <MrEcharts
-                        chartTypes="bar::polar"
-                        data={dataSource.polar}
-                        transform={[
-                            {
-                                '@convert': {
-                                    'value': 'volume',
-                                    'x': 'category',
-                                    'name': 'ingredient'
-                                }
-                            }
-                        ]}
-                    />
+                    {/*// <MrEcharts*/}
+                    {/*//     chartTypes="bar::polar"*/}
+                    {/*//     data={dataSource.polar}*/}
+                    {/*//     transform={[*/}
+                    {/*//         {*/}
+                    {/*//             '@convert': {*/}
+                    {/*//                 'value': 'volume',*/}
+                    {/*//                 'x': 'category',*/}
+                    {/*//                 'name': 'ingredient'*/}
+                    {/*//             }*/}
+                    {/*//         }*/}
+                    {/*//     ]}*/}
+                    {/*// />*/}
 
                 </section>
 
@@ -1231,7 +1231,7 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
                 </section>
 
                 <div onClick={() => {
-                    console.debug(22222222);
+                    // console.debug(22222222);
                     this.cloud = mu.clone(this.cloud1);
                     this.setState({
                         'a': + new Date()
