@@ -133,6 +133,22 @@ interface MrEchartsPanelProps extends MrEchartsProps {
 @MrAutoBind
 export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
 
+    static defaultProps = {
+        showToolbar: 'toggle',
+        omitTools: [],
+        force: false
+    };
+
+    state = {
+        fullScreen: false,
+        xyExchange: false,
+        xAxisShowAll: false,
+        legendShow: false,
+        dataView: false,
+        lineBarExchange: false,
+        setting: _mrEchartServices.serialize(this.props.setting)
+    };
+
     // 缓存dataView数据
     _dataView: any = [];
 
@@ -222,7 +238,8 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
     fullScreen() {
         let {fullScreen} = this.state;
         this.setState({
-            fullScreen: !fullScreen
+            fullScreen: !fullScreen,
+            force: true
         });
     }
 
@@ -238,10 +255,6 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
     download() {
         let {title = '', downloadName} = this.props;
         downloadName = downloadName || `${title}_${+new Date()}`;
-        // console.debug(this._dataView, this._dataView.join('\n'));
-
-        console.debug(this._dataView);
-
         _mrServices.download(this._dataView.join('\n'), downloadName + '.csv');
     }
 
@@ -269,20 +282,7 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
         result && result(options, rst);
     }
 
-    static defaultProps = {
-        showToolbar: 'toggle',
-        omitTools: []
-    };
 
-    state = {
-        fullScreen: false,
-        xyExchange: false,
-        xAxisShowAll: false,
-        legendShow: false,
-        dataView: false,
-        lineBarExchange: false,
-        setting: _mrEchartServices.serialize(this.props.setting)
-    };
 
     shouldComponentUpdate(nextProps, nextState) {
         // @todo 过滤掉 props 中的 function
@@ -295,7 +295,6 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
         } else {
             return !_.isEqual(next, current) || !_.isEqual(nextState, this.state);
         }
-        return true;
     }
 
     render() {
@@ -363,9 +362,11 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
                 prepend={prepend}
                 border={border}>
                 <MrReq req={req} data={{data}} force={true} transmit="data" {..._process}>
-                    {dataView
+                    {
+                        dataView
                         ? <MrEchartsDataView dataView={this._dataView} />
-                        :  <MrEcharts {...echartsProps} {...chartsEvent} result={this.getResult.bind(this)} />}
+                        : <MrEcharts {...echartsProps} {...chartsEvent} className={'full-sreen-' + fullScreen} result={this.getResult.bind(this)} />
+                    }
                 </MrReq>
             </MrPanel>
         );

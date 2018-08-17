@@ -11,6 +11,8 @@ import 'echarts-wordcloud';
 import '../assets/js/china.js';
 import '../assets/js/theme.customed.js';
 import MrEchartsServices from './mr-echarts.services';
+import {MrServices} from '../index';
+
 declare var require: any;
 require('../assets/styles/mr-echarts.component.less');
 
@@ -42,11 +44,15 @@ export interface MrEchartsProps {
     theme?: string;
     renderType?: string;
     style?: any;
+    className?: string;
     result?: any;
     _gene?: any;
 
     // 是否每次都刷新
-    force?: boolean
+    force?: boolean;
+
+    // resize
+    resize?: boolean;
 
     chartClick?: any;
     chartDblClick?: any;
@@ -59,22 +65,51 @@ export interface MrEchartsProps {
 
 export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
 
+    static THEME = 'customed';
+    static RENDER_TYPE = 'canvas';
+    static defaultProps = {
+        force: false
+    };
+
     // 待Echarts渲染的dom元素
     _chartRef: any;
-
     _chart: any;
+    _theme: any;
 
     _width: number;
     _height: number;
 
-
+    /**
+     * 获得 echarts instance
+     * @param ref
+     */
     getCharts(ref) {
         return this._chart || mu.run(ref, () => {
             let {theme = 'customed', renderType = 'canvas'} = this.props;
             return echarts.init(ref, theme, {
-                renderer:  renderType
+                renderer: renderType
             });
         });
+    }
+
+    /**
+     * 获得当前echart theme
+     *
+     * MrCharts.theme > MrEchartsServices.theme > static.theme
+     */
+    getTheme() {
+        let prev = this._theme;
+        let {theme} = this.props;
+        theme = theme || MrEchartsServices._theme() || MrEcharts.THEME;
+        let first = !mu.isExist(prev);
+        let change = first ? false :  prev !== theme;
+        this._theme = theme;
+        return {
+            first,
+            change,
+            prev,
+            current: theme
+        };
     }
 
     /**
@@ -91,7 +126,7 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
         // data 与 setting 的计算结果
         let rst: any;
 
-        if(!_chart){
+        if (!_chart) {
             return void 0;
         } else {
             this._chart = _chart;
@@ -115,14 +150,14 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
         /**
          * 空数据不做渲染，委托给 MasterRT NoDataComponent, 显示无数据状态
          */
-        if(mu.isEmpty(data) && mu.isEmpty(options)){
+        if (mu.isEmpty(data) && mu.isEmpty(options)) {
             return void 0;
         }
 
         /**
          * data 和 options  二者只支持其中一个，两个全有退出
          */
-        if(mu.isNotEmpty(data) && mu.isNotEmpty(options)){
+        if (mu.isNotEmpty(data) && mu.isNotEmpty(options)) {
             console.error('data 与 options 不能同时设置');
             return void 0;
         }
@@ -146,7 +181,7 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
         console.debug('::::::: options => ~~', options);
 
         try {
-            _chart.setOption(options, true, false);
+            _chart.setOption(options, true);
         } catch (e) {
             console.error(e);
         }
@@ -160,12 +195,21 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
 
     /**
      * 注册Echart事件
+     * 只执行一次
      * @param props
      * @param options
      * @param result
      */
     registerEvents = _.once((props, options, result) => {
         let {chartClick, chartDblClick, chartMouseDown, chartMouseUp, chartMouseOver, chartMouseOut, chartGlobalOut} = props;
+
+        this._chart.off('click');
+        this._chart.off('dblClick');
+        this._chart.off('mousedown');
+        this._chart.off('mouseup');
+        this._chart.off('mouseover');
+        this._chart.off('mouseout');
+        this._chart.off('globalout');
 
         this._chart.on('click', (e: any) => {
             chartClick && chartClick(e, props, options, result);
@@ -191,16 +235,20 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
         });
     });
 
-    windowResize = mu.bind(() => {
+    resize = mu.bind(() => {
         try {
             this._chart && this._chart.resize && this._chart.resize();
-        } catch (e) {}
+        } catch (e) {
+        }
     }, this);
 
-    componentWillReceiveProps(props: MrEchartsProps) {
-        // 判断两次 props 是否一致
-        // 避免 react 本身机制问题，每次setState 重新渲染页面
-        this.shouldComponentUpdate(props) && this.drawCharts(props);
+    windowResize = mu.debounce(this.resize, 300);
+
+    dispose() {
+        mu.run(this._chart, () => {
+            this._chart.dispose();
+            this._chart = void 0;
+        });
     }
 
     componentDidMount() {
@@ -208,48 +256,61 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
         window.addEventListener('resize', this.windowResize);
     }
 
-    shouldComponentUpdate(nextProps): boolean {
-        let {force = false, data, options, setting, chartTypes} = this.props;
-        let {data: nextData, options: nextOptions, setting: nextSetting, chartTypes: nextChartTypes} = nextProps;
+    componentDidUpdate(prevProps) {
 
+        const theme = this.getTheme();
+        const {style, className} = this.props;
+        let {data, options, setting, chartTypes} = prevProps;
+        let {force, data: nextData, options: nextOptions, setting: nextSetting, chartTypes: nextChartTypes} = this.props;
+
+        /**
+         * 样式产生变化 resize
+         */
+        if(!_.isEqual(prevProps.style, style) || !_.isEqual(prevProps.className, className)) {
+            this.resize();
+        }
+
+        /**
+         * 渲染主题产生变化
+         * 需要 dispose 后 instance
+         */
+        if(theme.change) {
+            this.dispose();
+            this.drawCharts(this.props);
+        }
+
+        // break 分开写，方便调试
         switch (true) {
             case force:
             case chartTypes !== nextChartTypes:
+                this.drawCharts(this.props);
+                break;
             case !_.isEqual(data, nextData):
+                this.drawCharts(this.props);
+                break;
             case JSON.stringify(setting) !== JSON.stringify(nextSetting):
+                this.drawCharts(this.props);
+                break;
             case JSON.stringify(options) !== JSON.stringify(nextOptions):
-                return true;
-            default:
-                return false;
+                this.drawCharts(this.props);
+                break;
         }
     }
 
-    // componentWillUpdate() {
-    //     this._width = this._chartRef.offsetWidth;
-    //     this._height = this._chartRef.offsetHeight;
-    // }
-
-    componentDidUpdate() {
-        // this.windowResize();
-
-        // // 监测 DOM 的宽高变化
-        // let {offsetWidth, offsetHeight} = this._chartRef;
-        //
-        // if(this._width !== offsetWidth || this._height !== offsetHeight) {
-        //     this.windowResize();
-        // }
-    }
-
     componentWillUnmount() {
-        // window.removeEventListener('reszie', this.windowResize.bind(this));
-        // mu.run(this._chart, () => {
-        //     this._chart.dispose();
-        // });
+        // 组件销货，释放内存
+        this.dispose();
+        // 注销注册事件
+        window.removeEventListener('reszie', this.windowResize);
     }
 
     render() {
-        return <div className={'mr-echarts'} style={this.props.style} ref={(div) => (this._chartRef = div)} />;
-    }
+        let {className} = this.props;
+        let panelClass = MrServices.cls({
+            'mr-echarts': true,
+        }, className);
 
+        return <div className={panelClass} style={this.props.style} ref={(div) => (this._chartRef = div)} />;
+    }
 
 }
