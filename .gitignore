@@ -11,6 +11,7 @@ package-lock.json
 pub/
 .umi/
 .umi-production/
+.docz
 
 #---------------------------------
 # Extensions
@@ -36,3 +37,4 @@ pub/
 __MACOSX/
 .DS_Store
 Thumbs.db
+src/globe/
