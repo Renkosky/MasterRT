@@ -33,6 +33,8 @@ export function config() {
         return Promise.reject(res);
     });
 
+    MrServices.setEchartsTheme('abcded');
+
     MrServices.setNoDataComponent(NodataComponent);
 
     return {

@@ -85,8 +85,12 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
      */
     getCharts(ref) {
         return this._chart || mu.run(ref, () => {
-            let {theme = 'customed', renderType = 'canvas'} = this.props;
-            return echarts.init(ref, theme, {
+            let {renderType = 'canvas'} = this.props;
+            let theme = this.getTheme();
+
+            console.debug(theme, theme.current);
+
+            return echarts.init(ref, theme.current, {
                 renderer: renderType
             });
         });
@@ -273,6 +277,10 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
         /**
          * 渲染主题产生变化
          * 需要 dispose 后 instance
+         *
+         * 暂时不对 renderType 变化做追踪，极小概率事件
+         * 暂时不对 event 变化做追踪
+         * 若一定要做变化，使用 force 模式修改
          */
         if(theme.change) {
             this.dispose();
@@ -282,6 +290,9 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
         // break 分开写，方便调试
         switch (true) {
             case force:
+                this.dispose();
+                this.drawCharts(this.props);
+                break;
             case chartTypes !== nextChartTypes:
                 this.drawCharts(this.props);
                 break;
