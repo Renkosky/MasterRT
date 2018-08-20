@@ -35,6 +35,8 @@ export function config() {
 
     MrServices.setNoDataComponent(NodataComponent);
 
+    MrServices.setEchartsTheme('aaaaaa');
+
     return {
         onError(err) {
             err.preventDefault();
