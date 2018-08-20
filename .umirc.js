@@ -1,6 +1,6 @@
 export default {
-    plugins: ['umi-plugin-dva'],
-    hashHistory: true,
+    // plugins: ['umi-plugin-dva'],
+    hash: true,
 
     proxy: {
         '/services': {
@@ -8,5 +8,12 @@ export default {
             changeOrigin: true,
             pathRewrite: {'^/services': ''}
         }
-    }
+    },
+
+    theme: {
+        'primary-color': '#1890ff'
+    },
+
+    // publicPath: '.',
+    disableCSSModules: true
 };

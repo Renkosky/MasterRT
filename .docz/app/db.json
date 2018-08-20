@@ -1,0 +1,184 @@
+{
+  "config": {
+    "title": "Masterrt.pool",
+    "description": "My awesome app using docz",
+    "themeConfig": {},
+    "ordering": "descending",
+    "version": "1.0.0",
+    "repository": "https://github.com/amily4555/MasterRT",
+    "typescript": true,
+    "plugins": [
+      {}
+    ]
+  },
+  "entries": {
+    "mri-cli/index.mdx": {
+      "name": "MRI-CLI",
+      "menu": "MRI-CLI",
+      "route": "/cli",
+      "order": 1,
+      "id": "32972054db501709e6240363df31a05f",
+      "filepath": "mri-cli/index.mdx",
+      "link": "https://github.com/amily4555/MasterRT/edit/master/mri-cli/index.mdx",
+      "slug": "mri-cli-index",
+      "headings": [
+        {
+          "depth": 1,
+          "slug": "mri-cli",
+          "value": "Mri cli"
+        },
+        {
+          "depth": 1,
+          "slug": "install",
+          "value": "Install"
+        }
+      ]
+    },
+    "mri-cli/mri-build.mdx": {
+      "name": "MRI BUILD",
+      "menu": "MRI-CLI",
+      "route": "/cli/mri-build",
+      "sort": 3,
+      "id": "331959f204c6c8fc3e06544a181b9645",
+      "filepath": "mri-cli/mri-build.mdx",
+      "link": "https://github.com/amily4555/MasterRT/edit/master/mri-cli/mri-build.mdx",
+      "slug": "mri-cli-mri-build",
+      "order": 0,
+      "headings": [
+        {
+          "depth": 1,
+          "slug": "mri-build-theme",
+          "value": "Mri build theme"
+        }
+      ]
+    },
+    "mri-cli/mri-dev.mdx": {
+      "name": "MRI DEV",
+      "menu": "MRI-CLI",
+      "route": "/cli/mri-dev",
+      "sort": 2,
+      "id": "aa1bb73be9daaa552c40e9fdfd1a9026",
+      "filepath": "mri-cli/mri-dev.mdx",
+      "link": "https://github.com/amily4555/MasterRT/edit/master/mri-cli/mri-dev.mdx",
+      "slug": "mri-cli-mri-dev",
+      "order": 0,
+      "headings": [
+        {
+          "depth": 1,
+          "slug": "mri-dev-theme",
+          "value": "Mri dev theme"
+        },
+        {
+          "depth": 3,
+          "slug": "环境变量",
+          "value": "环境变量"
+        }
+      ]
+    },
+    "mri-cli/mri-prod.mdx": {
+      "name": "MRI PROD",
+      "menu": "MRI-CLI",
+      "route": "/cli/mri-prod",
+      "sort": 4,
+      "id": "d8254c42cc2fcf1dc37b89ee3357f503",
+      "filepath": "mri-cli/mri-prod.mdx",
+      "link": "https://github.com/amily4555/MasterRT/edit/master/mri-cli/mri-prod.mdx",
+      "slug": "mri-cli-mri-prod",
+      "order": 0,
+      "headings": [
+        {
+          "depth": 1,
+          "slug": "mri-prod-theme",
+          "value": "Mri prod theme"
+        }
+      ]
+    },
+    "src/demo/alert.mdx": {
+      "name": "Alert",
+      "menu": "Components",
+      "id": "b966d5e29d60b47dbfeca257665ee6cd",
+      "filepath": "src/demo/alert.mdx",
+      "link": "https://github.com/amily4555/MasterRT/edit/master/src/demo/alert.mdx",
+      "slug": "src-demo-alert",
+      "route": "/src-demo-alert",
+      "order": 0,
+      "headings": [
+        {
+          "depth": 1,
+          "slug": "alert",
+          "value": "Alert"
+        },
+        {
+          "depth": 2,
+          "slug": "properties",
+          "value": "Properties"
+        },
+        {
+          "depth": 2,
+          "slug": "basic-usage",
+          "value": "Basic usage"
+        },
+        {
+          "depth": 2,
+          "slug": "using-different-kinds",
+          "value": "Using different kinds"
+        },
+        {
+          "depth": 2,
+          "slug": "use-with-children-as-a-function",
+          "value": "Use with children as a function"
+        }
+      ]
+    },
+    "src/demo/demo.mdx": {
+      "0": "n",
+      "1": "a",
+      "2": "m",
+      "3": "e",
+      "4": " ",
+      "5": "D",
+      "6": "e",
+      "7": "m",
+      "8": "o",
+      "9": "C",
+      "10": "o",
+      "11": "m",
+      "12": "p",
+      "13": "o",
+      "14": "n",
+      "15": "e",
+      "16": "n",
+      "17": "t",
+      "18": " ",
+      "19": "m",
+      "20": "e",
+      "21": "n",
+      "22": "u",
+      "23": " ",
+      "24": "D",
+      "25": "E",
+      "26": "M",
+      "27": "O",
+      "id": "61e5abb475f037c1d1fc121771ad13b7",
+      "filepath": "src/demo/demo.mdx",
+      "link": "https://github.com/amily4555/MasterRT/edit/master/src/demo/demo.mdx",
+      "slug": "src-demo-demo",
+      "route": "/src-demo-demo",
+      "name": "Demo",
+      "order": 0,
+      "menu": null,
+      "headings": [
+        {
+          "depth": 1,
+          "slug": "democomponent",
+          "value": "Democomponent"
+        },
+        {
+          "depth": 2,
+          "slug": "basic-usage",
+          "value": "Basic usage"
+        }
+      ]
+    }
+  }
+}

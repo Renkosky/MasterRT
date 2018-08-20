@@ -34,7 +34,7 @@ import _mrServices from '../mr-common/mr.services';
 import * as _ from 'lodash';
 import * as mu from 'mzmu';
 import {MrEchartsDataView} from './mr-echarts-dataView.component';
-import * as classNames from 'classnames';
+import {default as classNames} from 'classnames';
 
 declare var require: any;
 require('../assets/styles/mr-echarts-panel.less');
