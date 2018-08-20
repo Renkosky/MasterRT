@@ -1,0 +1,34 @@
+---
+name: MrEcharts
+menu: MasterRT
+route: /mrt/mr-echarts
+---
+
+import { Playground, PropsTable } from 'docz';
+import MrEcharts from './mr-echarts.component';
+
+# MrEcharts
+
+> 快速构建Echarts图表
+
+
+
+## Basic usage
+
+<Playground>
+    <section style={{height: 300}}>
+        <MrEcharts data={[
+                {name: 'A', value: 80},
+                {name: 'B', value: 150},
+                {name: 'c', value: 120},
+                {name: 'd', value: 190},
+            ]} chartTypes="pie" />
+
+    </section>
+</Playground>
+
+## SubTypes
+
+
+## Properties
+<PropsTable of={MrEcharts} />

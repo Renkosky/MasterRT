@@ -17,8 +17,6 @@
 import * as download from '../assets/js/download';
 import * as mu from 'mzmu';
 import {default as classNames} from 'classnames';
-
-declare var require: any;
 require('../assets/styles/common.less');
 
 /**

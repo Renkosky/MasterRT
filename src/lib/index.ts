@@ -5,7 +5,7 @@ export {default as MrAutoBind} from './mr-common/mr-auto-bind';
 export {default as MrPurRender} from './mr-common/mr-pur-render';
 export {default as MrPanel} from './mr-panel/mr-panel.component';
 export {default as MrEcharts} from './mr-echarts/mr-echarts.component';
-export {default as MrEchartsPanel} from './mr-echarts/mr-echarts-panel.component';
+export {default as MrEchartsPanel} from './mr-echarts-panel/mr-echarts-panel.component';
 export {default as MrIf} from './mr-condition/mr-if.component';
 export {default as MrThen} from './mr-condition/mr-then.component';
 export {default as MrElse} from './mr-condition/mr-else.component';

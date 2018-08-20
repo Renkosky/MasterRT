@@ -3,6 +3,11 @@
  * ::=> try echart setOption && resize
  */
 
+// mark
+// 监听dom变化
+// element-resize-detector
+// const erd = elementResizeDetectorMaker({strategy: "scroll"});
+
 import * as React from 'react';
 import * as echarts from 'echarts';
 import * as _ from 'lodash';
@@ -10,60 +15,114 @@ import * as mu from 'mzmu';
 import 'echarts-wordcloud';
 import '../assets/js/china.js';
 import '../assets/js/theme.customed.js';
+import '../assets/styles/mr-echarts.component.less';
 import MrEchartsServices from './mr-echarts.services';
-import {MrServices} from '../index';
-
-declare var require: any;
-require('../assets/styles/mr-echarts.component.less');
-
-// mark
-// 监听dom变化
-// element-resize-detector
-// const erd = elementResizeDetectorMaker({strategy: "scroll"});
+import {default as MrServices} from '../mr-common/mr.services';
 
 export interface MrEchartsProps {
+
+    /**
+     * 传入数据(推荐):
+     * - 与 options 二者存其一；
+     */
     data?: any[];
+
+    /**
+     * 数据类型:
+     * - 仅在 data 存在时生效
+     * @default 'dataSource'
+     * @values 'dataSet, dataSource'
+     */
     dataType?: string;
+
+    /**
+     * 数据模型:
+     * - 仅在 data 存在时生效
+     *
+     * @default 'multiple'
+     * @values 'single, multiple'
+     * */
     dataModel?: string;
 
     /**
-     * transform?: any[]
      * 对data进行数据处理
+     *
+     * @deprecated
      */
-    transform?: any;
+    transform?: Function;
 
+    /**
+     * 图表类型；
+     * - 支持子类型(setting or plugin)；
+     *
+     * @example pie::ring::rose
+     */
     chartTypes?: string;
 
     /**
      * setting
-     * 对options值进行配置处理
+     * - 对options值进行配置处理
+     * - plugin 针对chartsType的插件注册方案
      */
     setting?: any;
+
+    /**
+     * EchartOptions
+     * - 不是推荐方案，but 支持直接传递EchartOptions生成图表
+     */
     options?: any;
 
+    /**
+     * Echart 主题方案
+     * - 需要实现引入
+     * @default 'customed'
+     */
     theme?: string;
+
+    /**
+     * Echart 渲染类型
+     * - values: canvas, svg
+     *
+     * @default 'canvas'
+     */
     renderType?: string;
-    style?: any;
+
+
+    style?: React.CSSProperties;
+
     className?: string;
-    result?: any;
+
+    /**
+     * 渲染结束，回调方法
+     * - 不推荐使用
+     */
+    result?: Function;
+
+    /**
+     * 隐藏基因遗传对象
+     */
     _gene?: any;
 
-    // 是否每次都刷新
+    /**
+     * 是否每次都渲染组件
+     *
+     * @default false
+     */
     force?: boolean;
 
-    // resize
-    resize?: boolean;
-
-    chartClick?: any;
-    chartDblClick?: any;
-    chartMouseDown?: any;
-    chartMouseUp?: any;
-    chartMouseOver?: any;
-    chartMouseOut?: any;
-    chartGlobalOut?: any;
+    /**
+     * 绑定关联 Echarts 方法
+     */
+    chartClick?: Function;
+    chartDblClick?: Function;
+    chartMouseDown?: Function;
+    chartMouseUp?: Function;
+    chartMouseOver?: Function;
+    chartMouseOut?: Function;
+    chartGlobalOut?: Function;
 }
 
-export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
+class MrEcharts extends React.Component<MrEchartsProps, {}> {
 
     static THEME = 'customed';
     static RENDER_TYPE = 'canvas';
@@ -103,7 +162,7 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
         let {theme} = this.props;
         theme = theme || MrEchartsServices._theme() || MrEcharts.THEME;
         let first = !mu.isExist(prev);
-        let change = first ? false :  prev !== theme;
+        let change = first ? false : prev !== theme;
         this._theme = theme;
         return {
             first,
@@ -267,7 +326,7 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
         /**
          * 样式产生变化 resize
          */
-        if(!_.isEqual(prevProps.style, style) || !_.isEqual(prevProps.className, className)) {
+        if (!_.isEqual(prevProps.style, style) || !_.isEqual(prevProps.className, className)) {
             this.resize();
         }
 
@@ -279,7 +338,7 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
          * 暂时不对 event 变化做追踪
          * 若一定要做变化，使用 force 模式修改
          */
-        if(theme.change) {
+        if (theme.change) {
             this.dispose();
             this.drawCharts(this.props);
         }
@@ -322,3 +381,5 @@ export default class MrEcharts extends React.Component<MrEchartsProps, {}> {
     }
 
 }
+
+export default MrEcharts;

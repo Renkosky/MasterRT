@@ -1,18 +1,24 @@
 import * as React from 'react';
-import * as mu from 'mzmu';
-import * as _ from 'lodash';
 
-interface MrComponentProps {
-    component: any;
+export interface MrComponentProps {
+    /**
+     * 动态调用component
+     */
+    component: React.ComponentClass | React.SFC;
+
+    /**
+     * 所调用component的props
+     */
     [propName: string]: any
 }
 
-export default class MrComponent extends React.Component<any, {}> {
+class MrComponent extends React.Component<MrComponentProps, {}> {
 
     render() {
-
         let {component, children, ...props} = this.props;
-
         return React.createElement(component, {...props}, children);
     }
 }
+
+export {MrComponent};
+export default MrComponent;
