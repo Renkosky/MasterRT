@@ -1,4 +1,4 @@
-export default {
+let umirc = {
     plugins: ['umi-plugin-dva'],
     hashHistory: true,
 
@@ -10,3 +10,5 @@ export default {
         }
     }
 };
+
+export default umirc;
