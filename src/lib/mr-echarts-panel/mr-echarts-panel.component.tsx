@@ -27,16 +27,14 @@
  */
 
 import * as React from 'react';
-import {MrEchartsProps} from './mr-echarts.component';
-import {MrIcon, MrPanel, MrServices, MrEcharts, MrAutoBind, MrReq} from '../';
-import _mrEchartServices from './mr-echarts.services';
+import {MrEchartsProps} from '../mr-echarts/mr-echarts.component';
+import {MrIcon, MrPanel, MrServices, MrEcharts, MrAutoBind, MrReq} from '../index';
+import _mrEchartServices from '../mr-echarts/mr-echarts.services';
 import _mrServices from '../mr-common/mr.services';
 import * as _ from 'lodash';
 import * as mu from 'mzmu';
 import {MrEchartsDataView} from './mr-echarts-dataView.component';
-import * as classNames from 'classnames';
-
-declare var require: any;
+import {default as classNames} from 'classnames';
 require('../assets/styles/mr-echarts-panel.less');
 
 interface MrEchartsPanelProps extends MrEchartsProps {

@@ -33,9 +33,9 @@ export function config() {
         return Promise.reject(res);
     });
 
-    MrServices.setEchartsTheme('abcded');
-
     MrServices.setNoDataComponent(NodataComponent);
+
+    MrServices.setEchartsTheme('aaaaaa');
 
     return {
         onError(err) {

@@ -1,12 +1,14 @@
 import * as React from 'react';
-import * as mu from 'mzmu';
-import * as _ from 'lodash';
 
-interface MrHtmlProps {
+export interface MrHtmlProps {
+    /**
+     * 待输出的HTML文本
+     * @default ''
+     */
     html: string;
 }
 
-export default class MrHtml extends React.Component<MrHtmlProps, {}> {
+class MrHtml extends React.Component<MrHtmlProps, {}> {
 
     render() {
         let rawHTML: any = {
@@ -16,3 +18,6 @@ export default class MrHtml extends React.Component<MrHtmlProps, {}> {
         return (<span dangerouslySetInnerHTML={rawHTML}></span>);
     }
 }
+
+export {MrHtml};
+export default MrHtml;
