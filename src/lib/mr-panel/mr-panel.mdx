@@ -1,0 +1,25 @@
+---
+name: MrPanel
+menu: MasterRT
+route: /mrt/mr-panel
+---
+
+import { Playground, PropsTable } from 'docz';
+import MrPanel from './mr-panel.component';
+
+# MrPanel
+
+## Basic usage
+
+<Playground>
+    <MrPanel title="静夜思::李白" append={<aside>--- 摘自《唐诗三百首》</aside>}>
+        床前明月光<br />
+        疑是地上霜<br />
+        举头望明月<br />
+        低头思故乡
+    </MrPanel>
+</Playground>
+
+## Properties
+
+<PropsTable of={MrPanel} />

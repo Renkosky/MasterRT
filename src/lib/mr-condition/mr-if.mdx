@@ -11,18 +11,54 @@ import MrThen from './mr-then.component';
 
 # MrIf
 
+> 条件判断语句
+
+> MrIf 中可以可以包含多个 MrElse 语句，条件判断向下 && 计算
+
+> MrThen 必须放置在 MrElse 后；若放在前面，则后续的MrElse失效
+
+> 若 MrIf 中只有一个 MrElse 且 condition === void 0 时， MrElse 与 MrThen 等效
+
 ## Basic usage
 
 <Playground>
-    <MrIf condition={false}>
-        <div> 如果为true, 我就显示 </div>
+{() => {
+    // 可以再此修改数值，进行测试
+    const i = 1000;
+    return (
+        <MrIf condition={i % 2 === 0}>
+            <div> -- 如果 i 是偶数我就显示 </div>
 
-        <MrThen>
-            如果是 false, 我就出现
-        </MrThen>
-    </MrIf>
+            <MrElse condition={i > 100}>
+               <div> -- 如果 i 是奇数，同时 i > 100 我就显示 </div>
+            </MrElse>
+
+            <MrElse condition={i > 1000}>
+               <div> -- 如果 i 是奇数，同时 i > 1000 我就显示 </div>
+            </MrElse>
+
+            <MrThen>
+                <div> -- 如果 i 是奇数， 同时 i {'<'} = 100 我就显示 </div>
+            </MrThen>
+
+            <MrThen>
+                <div> -- MrThen 可以调用多次 </div>
+            </MrThen>
+
+            <MrElse condition={i > 100}>
+               <div> -- 在 MrThen 后，此处MrElse失效</div>
+            </MrElse>
+       </MrIf>
+    )
+}}
 </Playground>
 
-## Properties
+## MrIf
 
 <PropsTable of={MrIf} />
+
+## MrElse
+<PropsTable of={MrElse} />
+
+## MrThen
+<PropsTable of={MrThen} />

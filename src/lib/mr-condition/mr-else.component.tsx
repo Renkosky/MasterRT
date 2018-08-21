@@ -17,6 +17,8 @@ export interface MrElseProps {
 
 class MrElse extends React.Component<MrElseProps, {}> {
 
+    static DISPLAY_NAME = 'MrElse';
+
     /**
      * 根据transmit遗传信息
      * 并且生成隐性基因传递

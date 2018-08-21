@@ -9,7 +9,6 @@ import * as mu from 'mzmu';
 import {ReactNode} from 'react';
 
 export interface MrThenProps {
-    condition?: boolean | any,
     _gene?: any
 }
 
@@ -19,22 +18,26 @@ export interface MrThenProps {
  */
 class MrThen extends React.Component<MrThenProps, {}> {
 
+    static DISPLAY_NAME = 'MrThen';
+
     transmit(): ReactNode {
-        let {children, _gene, condition, ...props} = this.props;
-        let _geneCondition = !_gene.condition;
-        let _condition = mu.isExist(condition) ? (condition && _geneCondition) : _geneCondition;
+        let {children, _gene} = this.props;
 
-        console.debug(_condition);
-
-        if(typeof children === 'function'){
-            return _condition ? (children as Function)() : null;
+        if(mu.isEmpty(_gene)){
+            console.error('MrThen不能单独使用 或 它只能保护在MrIf里');
+            return null;
         }
 
-        return _condition ? children : null;
+        let condition = _gene.condition;
+
+        if(typeof children === 'function'){
+            return condition ? (children as Function)() : null;
+        }
+
+        return condition ? children : null;
     }
 
     render(): ReactNode {
-        console.debug(11111111111);
         let children = this.transmit();
         return (children);
     }

@@ -71,37 +71,46 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
                 <main>
                     <Button type="primary" onClick={this.showPanel.bind(this)}>{showPanel ? '显示::悯农' : '显示::静夜思'}</Button>
 
-                    <JsxParser
-                        bindings={{
-                            showPanel,
-                            jingyesi: ()=>(
-                                <MrPanel title="静夜思::李白">
-                                    床前明月光<br />
-                                    疑是地上霜<br />
-                                    举头望明月<br />
-                                    低头思故乡<br />
-                                </MrPanel>
-                            ),
-                            minnong: ()=>(
-                                <MrPanel title="悯农::李绅">
-                                    锄禾日当午 汗滴禾下土<br />
-                                    谁知盘中餐 粒粒皆辛苦<br />
-                                </MrPanel>
-                            )
-                        }}
+                    {/*<JsxParser*/}
+                        {/*bindings={{*/}
+                            {/*showPanel,*/}
+                            {/*jingyesi: ()=>(*/}
+                                {/*<MrPanel title="静夜思::李白">*/}
+                                    {/*床前明月光<br />*/}
+                                    {/*疑是地上霜<br />*/}
+                                    {/*举头望明月<br />*/}
+                                    {/*低头思故乡<br />*/}
+                                {/*</MrPanel>*/}
+                            {/*),*/}
+                            {/*minnong: ()=>(*/}
+                                {/*<MrPanel title="悯农::李绅">*/}
+                                    {/*锄禾日当午 汗滴禾下土<br />*/}
+                                    {/*谁知盘中餐 粒粒皆辛苦<br />*/}
+                                {/*</MrPanel>*/}
+                            {/*)*/}
+                        {/*}}*/}
 
-                        components={{
-                            MrIf,
-                            MrElse,
-                            MrThen,
-                            MrRules,
-                            MrPanel,
-                            MrFill,
-                            MrCol,
-                            MrCode
-                        }}
-                        jsx={this.code}
-                    ></JsxParser>
+                        {/*components={{*/}
+                            {/*MrIf,*/}
+                            {/*MrElse,*/}
+                            {/*MrThen,*/}
+                            {/*MrRules,*/}
+                            {/*MrPanel,*/}
+                            {/*MrFill,*/}
+                            {/*MrCol,*/}
+                            {/*MrCode*/}
+                        {/*}}*/}
+                        {/*jsx={this.code}*/}
+                    {/*></JsxParser>*/}
+
+
+                    <MrIf condition={showPanel}>
+                        <div> 如果为true, 我就显示 </div>
+
+                        <MrThen>
+                            如果是 false, 我就出现
+                        </MrThen>
+                    </MrIf>
 
 
                 </main>
@@ -149,27 +158,27 @@ static defaultProps: any = {
 
                 <MrPanel title="使用指南" className="mt-16">
 <MrCode code={`
-/**
- * 在使用MrIf中，若碰到condition成立前，子元素内变量未赋值情况
- * React会报错，因为在React机制中会预先执行变量环境，
- * 若变量未申明，则报错
- * 当这样的情况时，可以将子元素包裹在匿名函数里，待condition成立时执行
- *
- * @Mark 所有的条件组件均如此，如MrElse, MrRules 等
- */
-
-// 若MrIf中没有其他元素的时候可以直接使用匿名函数
-<MrIf condition={conditon}>
-    {() => (<div>...</div>)}
-</MrIf>
-
-// 若有其他元素时，请将匿名函数包裹在MrThen下面
-<MrIf condition={conditon}>
-    <MrThen>
-        {() => (<div>...</div>)}
-    </MrThen>
-    <MrElse>...</MrElse>
-</MrIf>
+            <!--/**-->
+             <!--* 在使用MrIf中，若碰到condition成立前，子元素内变量未赋值情况-->
+             <!--* React会报错，因为在React机制中会预先执行变量环境，-->
+             <!--* 若变量未申明，则报错-->
+             <!--* 当这样的情况时，可以将子元素包裹在匿名函数里，待condition成立时执行-->
+             <!--*-->
+             <!--* @Mark 所有的条件组件均如此，如MrElse, MrRules 等-->
+             <!--*/-->
+            <!---->
+            <!--// 若MrIf中没有其他元素的时候可以直接使用匿名函数-->
+            <!--<MrIf condition={conditon}>-->
+                <!--{() => (<div>...</div>)}-->
+            <!--</MrIf>-->
+            <!---->
+            <!--// 若有其他元素时，请将匿名函数包裹在MrThen下面-->
+            <!--<MrIf condition={conditon}>-->
+                <!--<MrThen>-->
+                    <!--{() => (<div>...</div>)}-->
+                <!--</MrThen>-->
+                <!--<MrElse>...</MrElse>-->
+            <!--</MrIf>-->
 
 `} />
                 </MrPanel>

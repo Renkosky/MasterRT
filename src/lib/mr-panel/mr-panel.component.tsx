@@ -8,27 +8,55 @@
  */
 
 import * as React from 'react';
-import {MrIf} from '../';
 import * as mu from 'mzmu';
-declare var require: any;
-require('../assets/styles/mr-panel.less');
-import {MrServices} from '..';
+import {default as MrServices} from '../mr-common/mr.services';
+import MrIf from '../mr-condition/mr-if.component';
+import '../assets/styles/mr-panel.less';
 
-interface MrPanelProps {
-    style?: any;
-    bodyStyle?: any;
+export interface MrPanelProps {
+
+    /**
+     * title
+     * - 子标题用'::'来区分
+     */
     title?: string;
-    extra?: any;
-    className?: string;
-    // wrapper, title, all
-    border?: string;
-    h100?: string;
 
-    prepend?: any;
-    append?: any;
+    /**
+     * panel 顶部额外添加
+     * - 常用于操作icon 等
+     */
+    extra?: JSX.Element | React.Component;
+
+    /**
+     * Panel 边框样式
+     * - @values wrapper, title, all
+     * @default all
+     */
+    border?: string;
+
+    /**
+     * Panel 高度，为true时100%父元素高度
+     *
+     * @default false
+     */
+    h100?: boolean;
+
+    /**
+     * Panel body 顶部插入
+     */
+    prepend?: JSX.Element | React.Component;
+
+    /**
+     * Panel body 底部插入
+     */
+    append?: JSX.Element | React.Component;
+
+    className?: string;
+    style?: React.CSSProperties;
+    bodyStyle?: React.CSSProperties;
 }
 
-export default class MrPanel extends React.Component<MrPanelProps, {}> {
+class MrPanel extends React.Component<MrPanelProps, {}> {
 
     runfn(fn: any) {
         if(typeof fn === 'function'){
@@ -87,3 +115,5 @@ export default class MrPanel extends React.Component<MrPanelProps, {}> {
         );
     }
 }
+
+export default MrPanel;
