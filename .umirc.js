@@ -1,4 +1,4 @@
-export default {
+let umirc =  {
     // plugins: ['umi-plugin-dva'],
     hash: true,
     proxy: {
