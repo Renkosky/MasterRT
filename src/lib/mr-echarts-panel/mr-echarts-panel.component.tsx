@@ -35,6 +35,7 @@ import * as _ from 'lodash';
 import * as mu from 'mzmu';
 import {MrEchartsDataView} from './mr-echarts-dataView.component';
 import {default as classNames} from 'classnames';
+declare const require: any;
 require('../assets/styles/mr-echarts-panel.less');
 
 interface MrEchartsPanelProps extends MrEchartsProps {
@@ -122,10 +123,10 @@ interface MrEchartsPanelProps extends MrEchartsProps {
     loading?: string | React.Component;
 
     /**
-     * nodata?: string | React.Component
+     * nodata?: React.Component
      * @extend MrProcessProps
      */
-    nodata?: string | React.Component;
+    nodata?: React.Component;
 }
 
 @MrAutoBind

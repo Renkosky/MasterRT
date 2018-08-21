@@ -29,12 +29,16 @@ interface MrProcessProps extends MrInterface {
     end?: number | boolean;
     type?: string;
     data?: any;
-    nodata?: string | React.Component;
+
+    nodata?: React.Component | React.SFC;
+
     loader?: string | React.Component;
+
     content?: string | React.Component;
     /**
      * showLoading?: boolean = true
      * 是否显示 loading
+     *
      */
     showLoading?: boolean;
 
@@ -49,7 +53,6 @@ export default class MrProcess extends React.Component<MrProcessProps, {}> {
 
     static defaultProps = {
         start: 0,
-        nodata: NoDateComponent,
         showLoading: true,
         showNodata: true
     };
@@ -64,7 +67,7 @@ export default class MrProcess extends React.Component<MrProcessProps, {}> {
         let {data, nodata, children, showLoading, showNodata} = this.props;
         // console.debug('..process start', start);
 
-        nodata = MrServices.getNoDataComponent() || nodata;
+        let noDataComponent: React.ComponentClass | React.SFC = nodata || MrServices.getNoDataComponent() || NoDateComponent;
 
         return (
             <section className="mr-process">
@@ -78,7 +81,7 @@ export default class MrProcess extends React.Component<MrProcessProps, {}> {
                 {
                     start > 99 && mu.isEmpty(data) && showNodata ?
                     <section className="mr-process-nodata">
-                        <MrComponent component={nodata}></MrComponent>
+                        <MrComponent component={noDataComponent}></MrComponent>
                     </section> : children
                 }
             </section>

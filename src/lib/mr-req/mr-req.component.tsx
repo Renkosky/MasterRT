@@ -164,10 +164,10 @@ interface MrReqProps {
     loading?: string | React.Component;
 
     /**
-     * nodata?: string | React.Component
+     * nodata?: React.Component
      * @extend MrProcessProps
      */
-    nodata?: string | React.Component;
+    nodata?: React.Component;
 }
 
 export default class MrReq extends React.Component<MrReqProps, {}> {
