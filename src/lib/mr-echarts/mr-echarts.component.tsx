@@ -111,10 +111,17 @@ export interface MrEchartsProps {
     force?: boolean;
 
     /**
-     * 绑定关联 Echarts 方法
+     * 绑定关联 Echarts 事件方法
+     * - 点击
      */
     chartClick?: Function;
+    /**
+     * - 双击
+     */
     chartDblClick?: Function;
+    /**
+     * - 鼠标下按
+     */
     chartMouseDown?: Function;
     chartMouseUp?: Function;
     chartMouseOver?: Function;

@@ -29,6 +29,18 @@ import MrEcharts from './mr-echarts.component';
 
 ## SubTypes
 
+<Playground>
+    <section style={{height: 300}}>
+        <MrEcharts data={[
+                {name: 'A', value: 80},
+                {name: 'B', value: 150},
+                {name: 'c', value: 120},
+                {name: 'd', value: 190},
+            ]} chartTypes="pie::ring::rose" />
+
+    </section>
+</Playground>
+
 
 ## Properties
 <PropsTable of={MrEcharts} />
