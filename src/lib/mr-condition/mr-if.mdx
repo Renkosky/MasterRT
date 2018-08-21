@@ -1,0 +1,28 @@
+---
+name: MrIf
+menu: MasterRT
+route: /mrt/mr-if
+---
+
+import { Playground, PropsTable } from 'docz';
+import MrIf from './mr-if.component';
+import MrElse from './mr-else.component';
+import MrThen from './mr-then.component';
+
+# MrIf
+
+## Basic usage
+
+<Playground>
+    <MrIf condition={false}>
+        <div> 如果为true, 我就显示 </div>
+
+        <MrThen>
+            如果是 false, 我就出现
+        </MrThen>
+    </MrIf>
+</Playground>
+
+## Properties
+
+<PropsTable of={MrIf} />

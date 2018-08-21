@@ -15,6 +15,7 @@ import * as React from 'react';
 import * as mu from 'mzmu';
 import MrElse from './mr-else.component';
 import MrThen from './mr-then.component';
+import * as  _ from 'lodash';
 
 export interface MrIfProps extends MrInterface {
     /**
@@ -26,23 +27,28 @@ export interface MrIfProps extends MrInterface {
 
     /**
      * falseType?: string = 'if'
-     * 假值类型
+     * - 假值类型
      *
-     * @creator mizi.lin
-     * 我认为, 在JS的世界里没有绝对的"真 true"和"假 false"（也许真实的世界也是如此）
-     * 我对某一种特性进行区分其真假值
+     * - 在JS的世界里没有绝对的"真 true"和"假 false"（也许真实的世界也是如此）
+     * - 可以对某一种特性进行区分其真假值
      *
-     * 1. exist: 存在为真，不存在为假
-     * ::=> 即在 null, undefined 为 false, 其他情况为真
-     * 2. if 使用 if 运算符判断的假为 false, 其他为真
-     * ::=> if(condition) 或 !condition 或 三元
-     * 3. empty: 所有我们认为空或没有都未false
-     * ::=> [] 空数组，{} 空对象，noop 空函数，0，' ' 空字符串， undefined, null
+     * - 1. exist: 存在为真，不存在为假
+     * - ::=> 即在 null, undefined 为 false, 其他情况为真
+     *
+     * - 2. if 使用 if 运算符判断的假为 false, 其他为真
+     * - ::=> if(condition) 或 !condition 或 三元
+     *
+     * - 3. empty: 所有我们认为空或没有都未false
+     * - ::=> [] 空数组，{} 空对象，noop 空函数，0，' ' 空字符串， undefined, null
      */
     falseType?: string;
 }
 
-export default class MrIf extends React.Component<MrIfProps, {}> {
+class MrIf extends React.Component<MrIfProps, {}> {
+
+    static defaultProps: any = {
+        falseType: 'if'
+    };
 
     /**
      * 根据transmit遗传信息
@@ -76,13 +82,13 @@ export default class MrIf extends React.Component<MrIfProps, {}> {
          * 若子元素有且仅有一个function
          */
         if(typeof children === 'function'){
-            return condition ? (children as any)(condition, _gene) : null;
+            return condition ? (children as Function)(condition, _gene) : null;
         }
 
         /**
          * 遍历子元素，按规则遗传相应的基因信息
          */
-        return React.Children.map(children as any, (child: any) => {
+        return React.Children.map(children, (child: React.ReactElement<Node>) => {
             let type: any, _props: any = {};
 
             if (!child) {
@@ -94,16 +100,13 @@ export default class MrIf extends React.Component<MrIfProps, {}> {
             if (type === MrElse || type === MrThen) {
                 _gene['condition'] = condition;
                 _props['_gene'] = _gene;
-                return React.cloneElement(child, {..._props, ...(child.props || {})});
+                console.debug(type);
+                return React.cloneElement(child, {..._props, ...(child['prop'] || {})});
             } else {
                 return condition ? child : null;
             }
         });
     }
-
-    static defaultProps: any = {
-        falseType: 'if'
-    };
 
     render() {
         // console.debug(this.props);
@@ -111,3 +114,5 @@ export default class MrIf extends React.Component<MrIfProps, {}> {
         return <React.Fragment>{children}</React.Fragment>;
     }
 }
+
+export default MrIf;

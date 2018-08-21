@@ -10,12 +10,12 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import * as mu from 'mzmu';
 
-interface MrElseProps {
+export interface MrElseProps {
     condition?: boolean | any
     _gene?: any
 }
 
-export default class MrElse extends React.Component<MrElseProps, {}> {
+class MrElse extends React.Component<MrElseProps, {}> {
 
     /**
      * 根据transmit遗传信息
@@ -73,3 +73,5 @@ export default class MrElse extends React.Component<MrElseProps, {}> {
         return <React.Fragment>{children}</React.Fragment>;
     }
 }
+
+export default MrElse;

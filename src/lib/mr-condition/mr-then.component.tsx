@@ -6,32 +6,38 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import * as mu from 'mzmu';
+import {ReactNode} from 'react';
 
-interface MrThenProps {
+export interface MrThenProps {
     condition?: boolean | any,
     _gene?: any
 }
 
-export default class MrThen extends React.Component<MrThenProps, {}> {
+/**
+ * MrThen是条件判断中的最后一层
+ * 它没有子条件
+ */
+class MrThen extends React.Component<MrThenProps, {}> {
 
-    transmit(): any {
-        let {children, _gene, ...props} = this.props;
+    transmit(): ReactNode {
+        let {children, _gene, condition, ...props} = this.props;
+        let _geneCondition = !_gene.condition;
+        let _condition = mu.isExist(condition) ? (condition && _geneCondition) : _geneCondition;
+
+        console.debug(_condition);
 
         if(typeof children === 'function'){
-            return _gene.condition ? (children as any)(_gene) : null;
+            return _condition ? (children as Function)() : null;
         }
 
-        if (React.Children.count(children)) {
-            return React.Children.map(children, (col: any) => {
-                return _.get(col, 'props') ? React.cloneElement(col, props) : col;
-            });
-        }
-
-        return null;
+        return _condition ? children : null;
     }
 
-    render() {
+    render(): ReactNode {
+        console.debug(11111111111);
         let children = this.transmit();
         return (children);
     }
 }
+
+export default MrThen;

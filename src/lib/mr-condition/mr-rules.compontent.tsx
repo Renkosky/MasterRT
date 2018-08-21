@@ -9,7 +9,7 @@ import * as React from 'react';
 import {MrIf, MrServices} from '../';
 import * as mu from 'mzmu';
 
-interface MrRulesProps extends MrInterface {
+export interface MrRulesProps extends MrInterface {
     /**
      * keys: string | string[];
      * 权限的规则条件
@@ -40,7 +40,7 @@ interface MrRulesProps extends MrInterface {
 /**
  * MrRules keys=['!a.b.c', '!a.e.f']
  */
-export default class MrRules extends React.Component<MrRulesProps, {}> {
+class MrRules extends React.Component<MrRulesProps, {}> {
 
     static calc(keys: string | string[], rules: any, defaultValue: boolean): boolean {
         let ruleGroup: boolean[], _rule: boolean = false;
@@ -88,3 +88,5 @@ export default class MrRules extends React.Component<MrRulesProps, {}> {
         return (<MrIf condition={condition} _gene={_gene}>{this.props.children}</MrIf>);
     }
 }
+
+export default MrRules;

@@ -14,9 +14,7 @@
         "docz:build": "docz build"
     },
     "private": false,
-    "author": [
-        "Mizi Lin<amily4555@gmail.com>"
-    ],
+    "author": "Mizi Lin<amily4555@gmail.com>",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/amily4555/MasterRT.git"
