@@ -80,15 +80,15 @@ class MrPanel extends React.Component<MrPanelProps, {}> {
 
         return (
             <article style={style} className={classString}>
-                <header>
-                    <div className={'mr-panel-header'}>
+                {(title || extra) && <header>
+                    <div className={'mr-panel-header'} key={'header'}>
                         <span className={'mr-panel-title'}>{_title}</span>
-                        <MrIf condition={_subTitle}>
+                        <MrIf condition={_subTitle} key={'subTitle'}>
                             <small className={'mr-panel-subTitle'}>{_subTitle}</small>
                         </MrIf>
-                        <div className={'mr-panel-headerExtra'}>{extra}</div>
+                        {extra && <div className={'mr-panel-headerExtra'} key={'extra'}>{extra}</div>}
                     </div>
-                </header>
+                </header>}
 
                 <MrIf condition={prepend}>
                     <section className="mr-panel-prepend">
