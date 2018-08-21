@@ -2,9 +2,9 @@ import * as  React from 'react';
 import {MrFill, MrCol, MrIcon, MrPanel} from '../../lib';
 import './masterrt.less';
 
-import MrsCode from '../../components/MrsCode';
 
 import JsxParser from 'react-jsx-parser';
+import MrCode from '../../lib/mr-code/mr-code.component';
 
 interface MrsMrFillProps {
     location: any;
@@ -98,7 +98,7 @@ export default class MrsMrFill extends React.Component<MrsMrFillProps, {}> {
 
                 <details className="mt-16">
                     <summary>查看源码</summary>
-                    <MrsCode code={(this.code)}></MrsCode>
+                    <MrCode code={(this.code)}></MrCode>
                 </details>
 
                 <aside className="mt-16">

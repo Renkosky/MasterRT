@@ -1,6 +1,6 @@
-export default {
+let umirc = {
     // plugins: ['umi-plugin-dva'],
-    // hash: true,
+    hash: true,
     proxy: {
         '/services': {
             target: 'http://58.215.174.164:16800/',

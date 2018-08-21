@@ -2,10 +2,10 @@ import * as  React from 'react';
 import {MrCol, MrFill, MrIcon, MrIf, MrElse, MrThen, MrPanel, MrServices, MrRules} from '../../lib';
 import './masterrt.less';
 
-import MrsCode from '../../components/MrsCode';
 
 import JsxParser from 'react-jsx-parser';
 import {Button} from 'antd';
+import MrCode from '../../lib/mr-code/mr-code.component';
 
 interface MrsPanelProps {
 }
@@ -98,7 +98,7 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
                             MrPanel,
                             MrFill,
                             MrCol,
-                            MrsCode
+                            MrCode
                         }}
                         jsx={this.code}
                     ></JsxParser>
@@ -108,11 +108,11 @@ export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
 
                 <details className="mt-16">
                     <summary>查看源码</summary>
-                    <MrsCode code={this.code}></MrsCode>
+                    <MrCode code={this.code}></MrCode>
                 </details>
 
                 <MrPanel title="接口 Interface" className="mt-16">
-<MrsCode code={`
+<MrCode code={`
 export interface MrIfProps extends MrInterface {
     /**
      * condition: any
@@ -148,7 +148,7 @@ static defaultProps: any = {
                 </MrPanel>
 
                 <MrPanel title="使用指南" className="mt-16">
-<MrsCode code={`
+<MrCode code={`
 /**
  * 在使用MrIf中，若碰到condition成立前，子元素内变量未赋值情况
  * React会报错，因为在React机制中会预先执行变量环境，

@@ -2,7 +2,7 @@ import * as  React from 'react';
 import {MrCol, MrFill, MrIcon, MrIf, MrElse, MrThen, MrPanel, MrServices, MrRules} from '../../lib';
 import './masterrt.less';
 
-import MrsCode from '../../components/MrsCode';
+import MrCode from '../../lib/mr-code/mr-code.component';
 
 import JsxParser from 'react-jsx-parser';
 import {Button, Select} from 'antd';
@@ -101,7 +101,7 @@ export default class MrsRules extends React.Component<MrsRulesProps, {}> {
                             MrPanel,
                             MrFill,
                             MrCol,
-                            MrsCode
+                            MrCode
                         }}
                         jsx={this.code}
                     ></JsxParser>
@@ -109,11 +109,11 @@ export default class MrsRules extends React.Component<MrsRulesProps, {}> {
 
                 <details className="mt-16">
                     <summary>查看源码</summary>
-                    <MrsCode code={this.code}></MrsCode>
+                    <MrCode code={this.code}></MrCode>
                 </details>
 
                 <aside className="mt-16">
-<MrsCode code="
+<MrCode code="
 interface MrRulesProps extends MrInterface {
     /**
      * keys: string | string[];
@@ -140,7 +140,7 @@ interface MrRulesProps extends MrInterface {
      * @match 就近原则 >> MrServices.setRuleValue(val: boolean)
      */
     defNoRuleValue?: boolean;
-}"></MrsCode>
+}"></MrCode>
                 </aside>
             </article>
         );

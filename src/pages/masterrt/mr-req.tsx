@@ -11,7 +11,7 @@ import { shallowEqualImmutable } from 'react-immutable-render-mixin';
 
 import './masterrt.less';
 
-import MrsCode from '../../components/MrsCode';
+import MrCode from '../../lib/mr-code/mr-code.component';
 
 import JsxParser from 'react-jsx-parser';
 import Test from '../../components/test';
@@ -172,12 +172,12 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
 
                 <details className="mt-16">
                     <summary>查看源码</summary>
-                    <MrsCode code={(this.code)}></MrsCode>
+                    <MrCode code={(this.code)}></MrCode>
                 </details>
 
                 <aside className="mt-16">
                     <MrPanel title="MrIResource && MrReqProps">
-                        <MrsCode code={`
+                        <MrCode code={`
 interface MrIResource {
 
     /**
@@ -270,7 +270,7 @@ interface MrReqProps {
     result?: any;
 }
 
-                        `}></MrsCode>
+                        `}></MrCode>
                     </MrPanel>
                 </aside>
             </article>

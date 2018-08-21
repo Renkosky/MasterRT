@@ -3,7 +3,7 @@ import * as mu from 'mzmu';
 import * as _ from 'lodash';
 import {MrCol, MrFill, MrPanel, MrEchartsPanel, MrResource} from '../../lib';
 import JsxParser from 'react-jsx-parser';
-import MrsCode from '../../components/MrsCode';
+import MrCode from '../../lib/mr-code/mr-code.component';
 interface MrsEchartsPanelProps {
 }
 
@@ -100,7 +100,7 @@ export default class MrsEchartsPanel extends React.Component<MrsEchartsPanelProp
 
                 <details className="mt-16">
                     <summary>查看源码</summary>
-                    <MrsCode code={(this.code)}></MrsCode>
+                    <MrCode code={(this.code)}></MrCode>
                 </details>
 
                 <MrEchartsPanel

@@ -2,9 +2,8 @@ import * as  React from 'react';
 import {MrPanel, MrIcon} from '../../lib';
 import './masterrt.less';
 
-import MrsCode from '../../components/MrsCode';
-
 import JsxParser from 'react-jsx-parser';
+import MrCode from '../../lib/mr-code/mr-code.component';
 
 interface MrsMrIconProps {
 }
@@ -107,11 +106,11 @@ interface MrIconProps {
 
                 <details className="mt-16">
                     <summary>查看源码</summary>
-                    <MrsCode code={(this.code)}></MrsCode>
+                    <MrCode code={(this.code)}></MrCode>
                 </details>
 
                 <aside className="mt-16">
-                    <MrsCode code={this.interface}></MrsCode>
+                    <MrCode code={this.interface}></MrCode>
                 </aside>
             </article>
         );

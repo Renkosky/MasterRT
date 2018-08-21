@@ -1,7 +1,7 @@
 import * as  React from 'react';
 import {MrPanel, MrEcharts, MrEchartsPanel} from '../../lib';
 import './masterrt.less';
-import MrsCode from '../../components/MrsCode';
+import MrCode from '../../lib/mr-code/mr-code.component';
 import {default as dataSource} from '../../services/data-source';
 import * as mu from 'mzmu';
 
@@ -1225,7 +1225,7 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
 
                 </section>
 
-                {/*<details className="mt-16">*/} {/*<summary>雷达图</summary>*/} {/*<MrsCode code={`*/} {/*<MrEcharts chartTypes="radar" data="{dataSource.radar}/">*/} {/*`}></MrsCode>*/} {/*</details>*/}
+                {/*<details className="mt-16">*/} {/*<summary>雷达图</summary>*/} {/*<MrCode code={`*/} {/*<MrEcharts chartTypes="radar" data="{dataSource.radar}/">*/} {/*`}></MrCode>*/} {/*</details>*/}
 
                 <aside className="mt-16">
                     <table>
@@ -1301,7 +1301,7 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
 
                 <aside className="mt-16">
 
-                    <MrPanel title={'setting配置指南'}> <MrsCode code={`
+                    <MrPanel title={'setting配置指南'}> <MrCode code={`
 // setting 有一组 key/value 组成
 setting = {
     'grid.top': 10,
@@ -1333,9 +1333,9 @@ setting = {
 
 // 当 @@, 则 xyExchange 为系统默认的处理方法, 其值为改方法函数的参数
 '@@xyExchange': true
-                        `}></MrsCode> </MrPanel>
+                        `}></MrCode> </MrPanel>
 
-                    <MrPanel title={'Echarts Theme 主题以及颜色配置'}> <MrsCode code={`
+                    <MrPanel title={'Echarts Theme 主题以及颜色配置'}> <MrCode code={`
 
 MrServices.setEchartsTheme(theme: string);
 
@@ -1344,7 +1344,7 @@ MrServices.setEchartsColors(colors: any = {
     names: any = {[name: string]: color}
 });
 
-                        `}></MrsCode>
+                        `}></MrCode>
 
                     </MrPanel>
 
