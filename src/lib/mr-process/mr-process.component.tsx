@@ -18,38 +18,50 @@
 
 import * as React from 'react';
 import * as mu from 'mzmu';
-import * as _ from 'lodash';
 import '../assets/styles/mr-process.less';
-import {MrIf, MrElse, MrFill, MrCol, MrAutoBind, MrReq, MrPanel, MrComponent, MrServices} from '..';
 import MrLoader from './mr-loader.component';
-import NoDateComponent from './nodate.component';
+import MrNodataComponent from './mr-nodata.component';
+import MrComponent from '../mr-component/mr-component.component';
+import MrServices from '../mr-common/mr.services';
 
-interface MrProcessProps extends MrInterface {
+export interface MrProcessProps extends MrInterface {
+
+    /**
+     * MrLoader.start
+     */
     start?: number | boolean;
-    end?: number | boolean;
+
+    /**
+     * MrLoader.type
+     */
     type?: string;
+
     data?: any;
 
-    nodata?: React.Component | React.SFC;
+    /**
+     * nodata 显示模板
+     *
+     * MrServices.getNodataComponent中读取
+     * @default MrNodataComponent
+     */
+    nodata?: React.ComponentClass | React.SFC;
 
-    loader?: string | React.Component;
-
-    content?: string | React.Component;
     /**
      * showLoading?: boolean = true
      * 是否显示 loading
-     *
+     * @default true
      */
     showLoading?: boolean;
 
     /**
      * showLoading?: boolean = true
      * 是否显示 loading
+     * @default true
      */
     showNodata?: boolean;
 }
 
-export default class MrProcess extends React.Component<MrProcessProps, {}> {
+class MrProcess extends React.Component<MrProcessProps, {}> {
 
     static defaultProps = {
         start: 0,
@@ -65,26 +77,30 @@ export default class MrProcess extends React.Component<MrProcessProps, {}> {
 
         let {start, type} = this.props;
         let {data, nodata, children, showLoading, showNodata} = this.props;
-        // console.debug('..process start', start);
 
-        let noDataComponent: React.ComponentClass | React.SFC = nodata || MrServices.getNoDataComponent() || NoDateComponent;
+        let nodataComponent: React.ComponentClass | React.SFC;
+        nodataComponent = nodata || MrServices.getNoDataComponent() || MrNodataComponent;
 
         return (
             <section className="mr-process">
                 {
-                    start >= 0 && start < 100 && showLoading &&
-                    <section className="mr-process-loader">
-                        <MrLoader start={start} type={type} />
-                    </section>
+                    (start >= 0 && start < 100 && showLoading) && (
+                        <section className="mr-process-loader">
+                            <MrLoader start={start} type={type} />
+                        </section>
+                    )
                 }
 
                 {
-                    start > 99 && mu.isEmpty(data) && showNodata ?
-                    <section className="mr-process-nodata">
-                        <MrComponent component={noDataComponent}></MrComponent>
-                    </section> : children
+                    (start > 99 && mu.isEmpty(data) && showNodata) ? (
+                        <section className="mr-process-nodata">
+                            <MrComponent component={nodataComponent}></MrComponent>
+                        </section>
+                    ) : children
                 }
             </section>
         );
     }
 }
+
+export default MrProcess;

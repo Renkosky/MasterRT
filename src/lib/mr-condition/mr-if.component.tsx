@@ -84,7 +84,6 @@ class MrIf extends React.Component<MrIfProps, {}> {
             return condition ? (children as Function)(condition, _gene) : null;
         }
 
-
         /**
          * 遍历子元素，按规则遗传相应的基因信息
          */

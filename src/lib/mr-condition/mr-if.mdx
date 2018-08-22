@@ -53,6 +53,21 @@ import MrThen from './mr-then.component';
 }}
 </Playground>
 
+## 函数表现形式
+<Playground>
+{() => {
+    // 可以再此修改数值，进行测试
+    const i = 1000;
+    return (
+        <MrIf condition={i % 2 === 0}>
+            {() => (
+                <div>显示结果</div>
+            )}
+       </MrIf>
+    )
+}}
+</Playground>
+
 ## MrIf
 
 <PropsTable of={MrIf} />

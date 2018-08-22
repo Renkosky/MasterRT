@@ -44,7 +44,7 @@ import MrServices from '../mr-common/mr.services';
 import * as _ from 'lodash';
 import MrProcess from '../mr-process/mr-process.component';
 
-interface MrIResource {
+export interface IMrResource {
 
     /**
      * resource: Pool<MrResource>
@@ -86,14 +86,16 @@ interface MrIResource {
     transform?: any,
 }
 
-interface MrReqProps {
+export interface MrReqProps {
     /**
      * MrResource
      * 请求接口
      *
      * 与data二者存一，若共存 req > data
+     *
+     * OneOnly(req, data)
      */
-    req?: MrIResource | MrIResource[];
+    req?: IMrResource | IMrResource[];
 
     /**
      * pool?: MrResource
@@ -117,6 +119,8 @@ interface MrReqProps {
      * @values {string}
      * ::=> child.prop:_.get({res}, path)
      * ::=> 要传递给子元素的 prop : 取值路径
+     *
+     * @default 'data:res.data'
      */
     transmit?: string | string[];
 
@@ -131,9 +135,7 @@ interface MrReqProps {
     /**
      * force?: boolean = ifnvl(null, false)
      * 是否解除 MrReq设计req未产生变化阻止渲染的行为
-     *
-     * @values true ::-> 解除阻止渲染
-     * @v0.1.20.20180515
+     * @default false
      */
     force?: boolean;
 
@@ -148,12 +150,16 @@ interface MrReqProps {
     /**
      * showLoading?: boolean = true
      * @extend MrProcessProps
+     *
+     * @default true
      */
     showLoading?: boolean;
 
     /**
      * showNodata?: boolean = true
      * @extend MrProcessProps
+     *
+     * @default true
      */
     showNodata?: boolean;
 
@@ -166,23 +172,13 @@ interface MrReqProps {
     /**
      * nodata?: React.Component
      * @extend MrProcessProps
+     *
+     * @default MrNodataComponent
      */
-    nodata?: React.Component;
+    nodata?: React.Component | React.SFC;
 }
 
-export default class MrReq extends React.Component<MrReqProps, {}> {
-    render() {
-        let {children, ...props} = this.props;
-        /**
-         * props clone 方便在MrReqInner进行req比较
-         * 阻止 MrReqInner 多次渲染，而造成多次Ajax请求
-         */
-        props = mu.clone(props);
-        return (
-            <MrReqInner {...props}>{children}</MrReqInner>
-        );
-    }
-}
+
 
 /**
  * 仅对 MrResource 支持的一种异步加载方式
@@ -391,3 +387,19 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
         </React.Fragment>);
     }
 }
+
+class MrReq extends React.Component<MrReqProps, {}> {
+    render() {
+        let {children, ...props} = this.props;
+        /**
+         * props clone 方便在MrReqInner进行req比较
+         * 阻止 MrReqInner 多次渲染，而造成多次Ajax请求
+         */
+        props = mu.clone(props);
+        return (
+            <MrReqInner {...props}>{children}</MrReqInner>
+        );
+    }
+}
+
+export default MrReq;

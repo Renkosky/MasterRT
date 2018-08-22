@@ -1,0 +1,31 @@
+---
+name: MrIcon
+menu: MasterRT
+route: /mrt/mr-icon
+---
+
+import { Playground, PropsTable } from 'docz';
+import MrIcon from './mr-icon.component';
+
+# MrIcon
+
+## Basic usage
+
+<Playground>
+    <section>
+        <MrIcon type="xiazai" family="mricon" />
+        <MrIcon type="chrome" size={64} style={{background: '#ccc', color: '#fff'}} />
+        <MrIcon type="table" size={48} shape="circle" style={{background: '#ccc', color: '#fff'}} />
+        <MrIcon type="user" size={128} shape="circle" style={{background: '#ccc', color: '#fff', fontSize: 56}} />
+        <span className="ml-4">江山如此多娇</span>
+    </section>
+
+     <section>
+        <MrIcon type="share-alt" family="simpleicon" />
+        <MrIcon type="share" family="simpleicon" className="ml-4" />
+    </section>
+</Playground>
+
+## Properties
+
+<PropsTable of={MrIcon} />

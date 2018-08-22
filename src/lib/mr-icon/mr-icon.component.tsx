@@ -7,15 +7,14 @@
  */
 
 import * as React from 'react';
-import {MrServices} from '..';
 import {Icon} from 'antd';
 import * as mu from 'mzmu';
 
-declare var require: any;
-require('../assets/styles/mr-icon.less');
-require('../assets/styles/mr-simple-line-icon.less');
+import '../assets/styles/mr-icon.less';
+import '../assets/styles/mr-simple-line-icon.less';
+import {default as MrServices} from '../mr-common/mr.services';
 
-interface MrIconProps {
+export interface MrIconProps {
     /**
      * type?: string
      * 图标类型
@@ -75,7 +74,7 @@ interface MrIconProps {
     onClick?: React.MouseEventHandler<any>;
 }
 
-export default class MrIcon extends React.Component<MrIconProps, {}> {
+class MrIcon extends React.Component<MrIconProps, {}> {
 
     render() {
         let {type, className = '', shape = '', size, children, onClick, family, base64} = this.props;
@@ -131,3 +130,5 @@ export default class MrIcon extends React.Component<MrIconProps, {}> {
         return (<Icon {...iconProps}>{children}</Icon>);
     }
 }
+
+export default MrIcon;

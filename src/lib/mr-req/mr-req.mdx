@@ -1,0 +1,31 @@
+---
+name: MrReq
+menu: MasterRT
+route: /mrt/mr-req
+---
+
+import { Playground, PropsTable } from 'docz';
+import MrReq from './mr-req.component';
+import MrResource from '../mr-common/mr-resource';
+
+# MrReq
+
+## Basic usage
+
+<Playground>
+    {() => {
+
+        let demo = MrResource.pool('/assets/pie.json')
+        let $pool = {demo};
+
+        return (
+            <MrReq req={{api: 'demo'}} pool={$pool}>
+
+            </MrReq>
+        );
+    }}
+</Playground>
+
+## Properties
+
+<PropsTable of={MrReq} />

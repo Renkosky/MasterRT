@@ -5,17 +5,23 @@
  */
 
 import * as React from 'react';
-import * as mu from 'mzmu';
-import * as _ from 'lodash';
 import {Spin} from 'antd';
 
-interface MrLoaderComponentProps {
+export interface MrLoaderComponentProps {
+    /**
+     * loader 载入
+     *
+     * @values 0-100 | boolean
+     */
     start: number | boolean;
+
+    /**
+     * 进度条类型，目前仅支持 antd spin
+     */
     type: string;
 }
 
-export default class MrLoader extends React.Component<MrLoaderComponentProps, {}> {
-
+class MrLoader extends React.Component<MrLoaderComponentProps, {}> {
 
     render() {
 
@@ -29,3 +35,5 @@ export default class MrLoader extends React.Component<MrLoaderComponentProps, {}
         </React.Fragment>);
     }
 }
+
+export default MrLoader;
