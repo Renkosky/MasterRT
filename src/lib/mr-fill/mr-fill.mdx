@@ -12,16 +12,84 @@ import './mr-fill.mdx.less';
 
 # MrFill
 
+满格化布局
+
+- 区别于antd的Row
+- Row 是24格， 所有的 col.span === 24，那占整行； '< 24' 不满行；'> 24' 分行显示
+- 而 MrFill 的核心概念是 不管 col.span 是多少，它始终是满行；
+- 即使 col.span = 1 或 col.span  = 999 都满行显示
+- 单个 col 的宽度 即 单个 col.span 占所有百分比，就是该单元格所占宽度比
+
+
+
 ## Basic usage
 
 <Playground>
     <MrFill gutter={16} style={{height: 100}} className='mdx-mrfill'>
         <MrCol span={2}>2</MrCol>
+        <MrCol span={6}>6</MrCol>
+        <MrCol span={8}>8</MrCol>
+    </MrFill>
+
+    <MrFill gutter={16} style={{height: 100}} className='mdx-mrfill mt-16'>
+        <MrCol span={6}>6</MrCol>
+        <MrCol span={16}>16</MrCol>
+        <MrCol span={8}>8</MrCol>
+    </MrFill>
+
+    <MrFill gutter={16} style={{height: 100}} className='mdx-mrfill mt-16'>
         <MrCol span={4}>4</MrCol>
+        <MrCol style={{width: 300}}>200px</MrCol>
         <MrCol span={8}>8</MrCol>
     </MrFill>
 </Playground>
 
-## Properties
+## Col Scroll
+
+<Playground>
+    <MrFill gutter={8} style={{height: 100, marginTop: 8}} className='mdx-mrfill'>
+        <MrCol span={1}>
+            静夜思<br />
+            床前明月光<br />
+            疑是地上霜<br />
+            举头望明月<br />
+            低头思故乡<br />
+        </MrCol>
+
+        <MrCol span={1} scroll={true}>
+            静夜思<br />
+            床前明月光<br />
+            疑是地上霜<br />
+            举头望明月<br />
+            低头思故乡<br />
+        </MrCol>
+
+        <MrCol span={1}>
+            静夜思<br />
+            <div style={{width: 500}}>
+                床前明月光
+                疑是地上霜
+                举头望明月
+                低头思故乡
+            </div>
+
+        </MrCol>
+
+        <MrCol span={1} scroll={true}>
+            静夜思<br />
+            <div style={{width: 500}}>
+                床前明月光
+                疑是地上霜
+                举头望明月
+                低头思故乡
+            </div>
+        </MrCol>
+    </MrFill>
+</Playground>
+
+## MrFill
 
 <PropsTable of={MrFill} />
+
+## MrCol
+<PropsTable of={MrCol} />

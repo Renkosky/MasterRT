@@ -9,12 +9,29 @@ import '../assets/styles/mr-fill.less';
 export interface MrFillProps {
     className?: string;
     style?: React.CSSProperties;
+
+    /**
+     * 栅格宽度
+     * 单位(px)
+     */
     gutter?: number;
-    // 子元素呈现类型 （fill: 100%高度, auto: 自适应高度)
+    /**
+     * 子元素呈现类型
+     * @values fill 100%高度, auto 自适应高度
+     *
+     * @default fill
+     */
     type?: string;
+
+    /**
+     * 是否基于父元素100%高度
+     *
+     * @default false
+     */
     h100?: boolean;
+
     // todo 设定子元素为空时，父元素显示规则
-    empty?: string;
+    // empty?: string;
 }
 
 class MrFill extends React.Component<MrFillProps, {}> {

@@ -5,14 +5,24 @@ import * as mu from 'mzmu';
 import '../assets/styles/mr-fill.less';
 
 export interface MrColProps {
-    span?: number;
     className?: string;
     style?: React.CSSProperties;
-    // 是否可以在区块内滚动，默认不滚动
+
+    /**
+     * 单元格宽度占比值
+     *
+     * - 单元格宽度占比值 并不是 antd(24), bootstrap(12) 或其他栅格 有个满值概念
+     * - 单元格宽度占比值 + width 合起来才是 100%
+     */
+    span?: number;
+
+    /**
+     * 是否可以再区块内滚动
+     *
+     * @default false
+     */
     scroll?: boolean;
     onClick?: React.MouseEventHandler<any>;
-    test?: any;
-    contentType?: string;
     contentClassName?: string;
     h100?: boolean;
     _gutter?: number;
