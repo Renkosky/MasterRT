@@ -1,0 +1,118 @@
+---
+name: MrResource
+menu: MasterRT
+route: /mrt/mr-resource
+---
+
+import { Playground, PropsTable, PropType } from 'docz';
+import MrResource from './mr-resource';
+
+# MrResource
+
+基于MrRequest的RESEful接口请求协议
+
+## Basic usage
+
+```javascript
+    let pool = MrResource.pool(api: string);
+
+    /**
+     * 使用get方法向服务器请求api资源
+     * @params search: any: api 请求参数
+     * @params extraSearch: any: 额外请求参数，合并至 search
+     * @params options: MrRequestOptions fetch 请求options
+     * @return Promise
+     */
+
+    // pool.get(search)
+    // pool.get(search, extraSearch, options) 若要使用options, 请补全所有参数
+    pool.get(search: any, extraSearch?: any, options?: AxiosOptions): Promise;
+
+    /**
+     * 使用post方法向服务器请求api资源
+     * @params search: any: api 请求参数
+     * @params payload: any: body request payload
+     * @params options: MrRequestOptions fetch 请求options
+     * @return Promise
+     */
+
+    // pool.post(payload) 若只有一个参数，该参数默认为payload(data)
+    // pool.post(search, payload)
+    // 若要使用options, 请补全所有参数
+    pool.post(search: any, payload: any, options?: AxiosOptions): Promise;
+
+    /**
+     * mrdown, 向服务器器请求二进制资源，并按照 search.downloadName 设置的文件类型下载文件
+     * MRI 默认下载配置，默认post请求，并添加相应配置参数，若其他请使用 download
+     * @params search: any: api 请求参数（其中 downloadName 为必填）
+     * @params payload: any: body request payload
+     * @params options: MrRequestOptions fetch 请求options
+     * @return Promise
+     */
+    pool.mrdown(search: any, payload: any, options?: AxiosOptions): Promise;
+
+```
+
+```javascript
+
+    // let $pool = MrResource.pool(api: string);
+    // api 路径接受动态参数配置, 依据RESUful语义解释
+
+    let $pool = MrResource.pool('/users{/:id}/works{/:name}');
+
+    // 参数为空
+    // api = /users/works
+    // RESUful 表述为: 所有用户的所有工作
+    $pool.get({});
+
+    // api = /users/1234/works
+    // RESUful 表述为: ID为1234的用户的所有工作
+    $pool.get({id: 1234});
+
+    // api = /users/1234/works/engineer
+    // RESUful 表述为: ID为1234的用户的工程师工作信息
+    $pool.get({id: 1234, name: 'engineer'});
+
+```
+
+## 占位符 {} 使用方法
+
+1. 占位符只支持属性占位，不支持索引值占位
+2. ':name:' 两个冒号间':'的name为当前匹配的属性值
+3. ':name' 若name为结尾，则可以省略最后面的冒号':'
+4. ':' 冒号为区分属性值和占位值的标识符
+
+```javascript
+
+// 下面例子为 api {} 占位符的等效表示
+
+'{user/:name}' === `user/${name}`;
+
+'{user:name}' === `user${name}`;
+
+'{:name}' === `${name}`;
+
+'{:name:/}' === `${name}/`;
+
+// 注意下列是不等于
+// 所有的属性值表示前面必须加冒号 ':'
+
+'{name}' !== `${name}`;
+
+'{name:/info}' !== `${name}/info`;
+
+```
+
+
+## Properties
+
+| Property | type | Description |
+|:---------|:-----|:------------|
+|MrResource.pool(api: string)|mrpool|返回一个基于一个MrResource的一个连接池|
+|mrpool.get(search?: object, params: object, options?: AxiosOptions)|Promise\<any\>|发起一个get请求，返回一个Promise对象 - Content-Type ='application/json';|
+|mrpool.post(search?: object, payload: object, options?: AxiosOptions)|Promise\<any\>|发起一个post请求，返回一个Promise对象 - Content-Type ='application/json';|
+|mrpool.upload(search?: object, payload: object, options?: AxiosOptions)|Promise\<any\>|发起一个post请求，返回一个Promise对象, - Content-Type ='multipart/form-data';|
+|mrpool.download(search?: object, params: object, options?: AxiosOptions)|Promise\<any\>|发起一个get请求，返回一个Promise对象, 并自动下载 - Content-Type ='application/json';|
+|mrpool.mrdown(search?: object, payload: object, options?: AxiosOptions)|Promise\<any\>|基于mri协议，发起一个post请求，返回一个Promise对象, 并自动下载 - Content-Type ='application/json';|
+
+
