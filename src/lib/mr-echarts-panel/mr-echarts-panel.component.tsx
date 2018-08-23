@@ -27,18 +27,20 @@
  */
 
 import * as React from 'react';
-import {MrEchartsProps} from '../mr-echarts/mr-echarts.component';
-import {MrIcon, MrPanel, MrServices, MrEcharts, MrAutoBind, MrReq} from '../index';
+import MrEcharts, {MrEchartsProps} from '../mr-echarts/mr-echarts.component';
 import _mrEchartServices from '../mr-echarts/mr-echarts.services';
 import _mrServices from '../mr-common/mr.services';
 import * as _ from 'lodash';
 import * as mu from 'mzmu';
 import {MrEchartsDataView} from './mr-echarts-dataView.component';
 import {default as classNames} from 'classnames';
-declare const require: any;
-require('../assets/styles/mr-echarts-panel.less');
+import '../assets/styles/mr-echarts-panel.less';
+import MrIcon from '../mr-icon/mr-icon.component';
+import {default as MrServices} from '../mr-common/mr.services';
+import MrPanel from '../mr-panel/mr-panel.component';
+import MrReq from '../mr-req/mr-req.component';
 
-interface MrEchartsPanelProps extends MrEchartsProps {
+export interface MrEchartsPanelProps extends MrEchartsProps {
     /**
      * chartTypes: string
      * 图标类型
@@ -129,8 +131,7 @@ interface MrEchartsPanelProps extends MrEchartsProps {
     nodata?: React.Component;
 }
 
-@MrAutoBind
-export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
+class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
 
     static defaultProps = {
         showToolbar: 'toggle',
@@ -155,26 +156,50 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
         let {fullScreen, xyExchange, xAxisShowAll, legendShow, dataView, lineBarExchange} = this.state;
         return {
             'download': <MrIcon family="mricon" type="xiazai" onClick={this.download} />,
-            'dataView': <MrIcon family="mricon" type="table" onClick={this.dataView} className={classNames({selected: dataView})} />,
-            'xyExchange': <MrIcon family="mricon" type="rotate" onClick={this.toolSetFn.bind(this, 'xyExchange', true)} className={classNames({selected: xyExchange})} />,
-            'lineBarExchange': <MrIcon family="mricon" type="bar" onClick={this.toolSetFn.bind(this, 'lineBarExchange', true)} className={classNames({selected: lineBarExchange})} />,
-            'xAxisShowAll': <MrIcon family="mricon" type="liebiaodanchu" onClick={this.toolSetFn.bind(this, 'xAxisShowAll', true)} className={classNames({selected: xAxisShowAll})} />,
-            'legendShow': <MrIcon family="mricon" type="yincang" onClick={this.toolSetFn.bind(this, 'legendShow', true)} className={classNames({selected: legendShow})} />,
+            'dataView': <MrIcon family="mricon"
+                                type="table"
+                                onClick={this.dataView}
+                                className={classNames({selected: dataView})} />,
+            'xyExchange': <MrIcon family="mricon"
+                                  type="rotate"
+                                  onClick={this.toolSetFn.bind(this, 'xyExchange', true)}
+                                  className={classNames({selected: xyExchange})} />,
+            'lineBarExchange': <MrIcon family="mricon"
+                                       type="bar"
+                                       onClick={this.toolSetFn.bind(this, 'lineBarExchange', true)}
+                                       className={classNames({selected: lineBarExchange})} />,
+            'xAxisShowAll': <MrIcon family="mricon"
+                                    type="liebiaodanchu"
+                                    onClick={this.toolSetFn.bind(this, 'xAxisShowAll', true)}
+                                    className={classNames({selected: xAxisShowAll})} />,
+            'legendShow': <MrIcon family="mricon"
+                                  type="yincang"
+                                  onClick={this.toolSetFn.bind(this, 'legendShow', true)}
+                                  className={classNames({selected: legendShow})} />,
             'reload': <MrIcon family="mricon" type="shuaxin" onClick={this.reload} />,
-            'fullScreen': <MrIcon family="mricon" type={fullScreen ? 'suoxiao' : 'fangda'} onClick={this.fullScreen} className={classNames({selected: fullScreen})} />,
+            'fullScreen': <MrIcon family="mricon"
+                                  type={fullScreen ? 'suoxiao' : 'fangda'}
+                                  onClick={this.fullScreen}
+                                  className={classNames({selected: fullScreen})} />,
         }
     }
 
     typeTools: any = {
-        line: ['download', 'dataView', 'xyExchange', 'lineBarExchange', 'xAxisShowAll', 'legendShow', 'reload', 'fullScreen'],
-        bar: ['download', 'dataView', 'xyExchange', 'lineBarExchange', 'xAxisShowAll', 'legendShow', 'reload', 'fullScreen'],
+        line: [
+            'download', 'dataView', 'xyExchange', 'lineBarExchange', 'xAxisShowAll', 'legendShow', 'reload',
+            'fullScreen'
+        ],
+        bar: [
+            'download', 'dataView', 'xyExchange', 'lineBarExchange', 'xAxisShowAll', 'legendShow', 'reload',
+            'fullScreen'
+        ],
         pie: ['download', 'dataView', 'legendShow', 'reload', 'fullScreen'],
         wordCloud: ['download', 'dataView', 'reload', 'fullScreen'],
         map: ['download', 'dataView', 'reload', 'fullScreen'],
         gauge: ['download', 'dataView', 'legendShow', 'reload', 'fullScreen'],
         radar: ['download', 'dataView', 'legendShow', 'reload', 'fullScreen'],
         scatter: ['download', 'dataView', 'legendShow', 'reload', 'fullScreen'],
-        treemap: ['download', 'dataView',  'reload', 'fullScreen'],
+        treemap: ['download', 'dataView', 'reload', 'fullScreen'],
     };
 
     tools() {
@@ -184,13 +209,13 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
         let tools = this.typeTools[type];
 
         // 不显示工具条
-        if(showToolbar === 'hide') {
+        if (showToolbar === 'hide') {
             return null;
         }
 
         // 移除小工具
         mu.run(omitTools, () => {
-            if(omitTools === '__all__') {
+            if (omitTools === '__all__') {
                 tools = [];
             } else {
                 mu.each(omitTools, (tool) => {
@@ -281,15 +306,13 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
         result && result(options, rst);
     }
 
-
-
     shouldComponentUpdate(nextProps, nextState) {
         // @todo 过滤掉 props 中的 function
         let {children, append, chartClick, ...next} = nextProps;
-        let {children:a, append:b, chartClick:c, ...current} = this.props;
+        let {children: a, append: b, chartClick: c, ...current} = this.props;
 
         let {force} = nextProps;
-        if(force) {
+        if (force) {
             return true;
         } else {
             return !_.isEqual(next, current) || !_.isEqual(nextState, this.state);
@@ -301,8 +324,14 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
         const {chartTypes, data, dataType, dataModel} = this.props;
         const {options, renderType, theme} = this.props;
 
-        let {chartClick, chartDblClick, chartMouseDown, chartMouseUp, chartMouseOver, chartMouseOut, chartGlobalOut} = this.props;
-        let chartsEvent = {chartClick, chartDblClick, chartMouseDown, chartMouseUp, chartMouseOver, chartMouseOut, chartGlobalOut};
+        let chartsEvent = _.omit(this.props,
+            'chartClick',
+            'chartDblClick',
+            'chartMouseDown',
+            'chartMouseUp',
+            'chartMouseOver',
+            'chartMouseOut',
+            'chartGlobalOut');
 
         let {req: mrReqReq, mrReq = {}} = this.props;
 
@@ -314,9 +343,9 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
 
         // 默认在MrEchartsPanel中多重数组处理，合并data信息
         // todo 多轴处理
-        if(req && !mrReqTransform) {
+        if (req && !mrReqTransform) {
             mrReqTransform = (res) => {
-                if(res.length > 1) {
+                if (res.length > 1) {
                     let ds = mu.map(res, (res) => res.data);
                     return _.concat([], ...ds);
                 } else {
@@ -348,7 +377,12 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
         }, className);
 
         let {showLoading, showNodata, nodata, loading} = this.props;
-        let _process = {showLoading, showNodata, nodata, loading};
+        let _process = {
+            showLoading,
+            showNodata,
+            nodata,
+            loading
+        };
 
         return (
             <MrPanel
@@ -363,11 +397,16 @@ export default class MrEchartsPanel extends React.Component<MrEchartsPanelProps,
                 <MrReq req={req} data={{data}} force={true} transmit="data" {..._process}>
                     {
                         dataView
-                        ? <MrEchartsDataView dataView={this._dataView} />
-                        : <MrEcharts {...echartsProps} {...chartsEvent} className={'full-sreen-' + fullScreen} result={this.getResult.bind(this)} />
+                            ? <MrEchartsDataView dataView={this._dataView} />
+                            : <MrEcharts {...echartsProps}
+                                         {...chartsEvent}
+                                         className={'full-sreen-' + fullScreen}
+                                         result={this.getResult.bind(this)} />
                     }
                 </MrReq>
             </MrPanel>
         );
     }
 }
+
+export default MrEchartsPanel;

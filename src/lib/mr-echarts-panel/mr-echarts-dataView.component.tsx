@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as mu from 'mzmu';
 
-interface MrEchartsDataViewProps {
+export interface MrEchartsDataViewProps {
     dataView: any[]
 }
 
