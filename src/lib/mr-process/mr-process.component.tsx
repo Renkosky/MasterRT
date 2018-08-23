@@ -44,7 +44,7 @@ export interface MrProcessProps extends MrInterface {
      * MrServices.getNodataComponent中读取
      * @default MrNodataComponent
      */
-    nodata?: React.ComponentClass | React.SFC;
+    nodata?: any | React.ComponentClass | React.SFC;
 
     /**
      * showLoading?: boolean = true

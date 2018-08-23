@@ -178,8 +178,6 @@ export interface MrReqProps {
     nodata?: React.Component | React.SFC;
 }
 
-
-
 /**
  * 仅对 MrResource 支持的一种异步加载方式
  */
@@ -218,7 +216,7 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
         let {req, pool, result, transmit, data} = props;
         let $promises: Promise<any>[];
 
-        if(mu.isEmpty(req)){
+        if (mu.isEmpty(req)) {
             this._data = data;
             this._start = 100;
             return void 0;
@@ -278,6 +276,7 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
      * 获取基因信息
      */
     _gene: any;
+
     getGene(res) {
         let wrapper = {res};
         return mu.map(this._transmit, (transmit) => {
@@ -289,7 +288,7 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
         }, {});
     }
 
-        // 暗暗的传给子元素，实现父元素reload
+    // 暗暗的传给子元素，实现父元素reload
     _childEmitReload: any = mu.bind((fn) => {
         let res = fn();
         if (res === true) {
@@ -301,7 +300,7 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
     inheritance(res) {
 
         // 数据不存在不予传递信息
-        if(mu.isNotExist(res)) {
+        if (mu.isNotExist(res)) {
             return null;
         }
 
@@ -312,24 +311,25 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
         // todo 重新梳理gene传递信息值得计算
         this._gene = gene;
 
-        if(mu.isNotExist(children)) {
+        if (mu.isNotExist(children)) {
             return null;
         }
 
         if (typeof children === 'function') {
-            return (children as any)(gene);
+            this.transmit();
+            return (children as any)(this._transmit[0].data);
         }
 
-        if(!React.Children.count(children)){
+        if (!React.Children.count(children)) {
             return null;
         }
 
         return React.Children.map(children, (col: any) => {
-            if(!col) {
+            if (!col) {
                 return null;
             }
 
-            if(typeof col.type === 'function'){
+            if (typeof col.type === 'function') {
                 let props: any = {};
                 props = mu.extend(true, {}, props, gene);
                 props._gene = gene;
@@ -347,8 +347,7 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
         return force || !_.isEqual(nextProps.req, this.props.req) || !_.isEqual(nextState, this.state);
     }
 
-    state: any = {
-    };
+    state: any = {};
 
     componentWillMount() {
         this.getRequests(this.props);
@@ -378,7 +377,12 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
         let data = this._transmit ? (datas.length === 1 ? datas[0] : datas) : this._data;
 
         let {showLoading, showNodata, nodata, loading} = this.props;
-        let _process = {showLoading, showNodata, nodata, loading};
+        let _process = {
+            showLoading,
+            showNodata,
+            nodata,
+            loading
+        };
 
         return (<React.Fragment>
             <MrProcess start={this._start} data={data} {..._process}>
