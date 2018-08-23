@@ -1,11 +1,10 @@
 import * as React from 'react';
-import {MrServices} from '..';
+import MrServices from '../mr-common/mr.services';
 import * as mu from 'mzmu';
 
-declare var require: any;
-require('../assets/styles/mr-fill.less');
+import '../assets/styles/mr-fill.less';
 
-interface MrColProps {
+export interface MrColProps {
     span?: number;
     className?: string;
     style?: React.CSSProperties;
@@ -18,10 +17,11 @@ interface MrColProps {
     h100?: boolean;
     _gutter?: number;
     _gene?: number;
-
 }
 
-export default class MrCol extends React.Component<MrColProps, {}> {
+class MrCol extends React.Component<MrColProps, {}> {
+
+    static DISPLAY_NAME: string = 'MrCol';
 
     render() {
         const {children, span, scroll = false, onClick} = this.props;
@@ -51,3 +51,5 @@ export default class MrCol extends React.Component<MrColProps, {}> {
         </div>);
     }
 }
+
+export default MrCol;

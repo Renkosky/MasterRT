@@ -1,0 +1,27 @@
+---
+name: MrFill
+menu: MasterRT
+route: /mrt/mr-fill
+---
+
+import { Playground, PropsTable } from 'docz';
+import MrFill from './mr-fill.component';
+import MrCol from './mr-col.component';
+import './mr-fill.mdx.less';
+
+
+# MrFill
+
+## Basic usage
+
+<Playground>
+    <MrFill gutter={16} style={{height: 100}} className='mdx-mrfill'>
+        <MrCol span={2}>2</MrCol>
+        <MrCol span={4}>4</MrCol>
+        <MrCol span={8}>8</MrCol>
+    </MrFill>
+</Playground>
+
+## Properties
+
+<PropsTable of={MrFill} />

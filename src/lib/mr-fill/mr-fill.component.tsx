@@ -2,13 +2,11 @@ import * as React from 'react';
 import {Children, cloneElement} from 'react';
 import MrServices from '../mr-common/mr.services';
 import MrCol from './mr-col.component';
-import {MrElse, MrIf, MrRules} from '../';
-import * as _ from 'lodash';
+import * as mu from 'mzmu';
 
-declare var require: any;
-require('../assets/styles/mr-fill.less');
+import '../assets/styles/mr-fill.less';
 
-interface MrFillProps {
+export interface MrFillProps {
     className?: string;
     style?: React.CSSProperties;
     gutter?: number;
@@ -19,10 +17,10 @@ interface MrFillProps {
     empty?: string;
 }
 
-export default class MrFill extends React.Component<MrFillProps, {}> {
+class MrFill extends React.Component<MrFillProps, {}> {
 
-    isConditional (type: any) {
-        return typeof type === 'function' && (type === MrIf || type === MrElse  || type === MrRules);
+    isConditional(type: any) {
+        return typeof type === 'function' && (mu.or(type['DISPLAY_NAME'], 'MrIf', 'MrElse', 'MrRules'));
     }
 
     // 向子组件传递基因信息
@@ -64,7 +62,7 @@ export default class MrFill extends React.Component<MrFillProps, {}> {
             }
 
             // 子元素不能包裹非MrCol 和 条件组件 MrIf
-            if (!(type === MrCol || this.isConditional(type))) {
+            if (!(type['DISPLAY_NAME'] === 'MrCol' || this.isConditional(type))) {
                 console.error('MrFill与MrCol是父子组件，只允许条件组件(MrIf, MrFor等)包裹MrCol');
                 return null;
             } else {
@@ -76,3 +74,5 @@ export default class MrFill extends React.Component<MrFillProps, {}> {
         return (<div style={style} className={classString}>{cols}</div>);
     }
 }
+
+export default MrFill;
