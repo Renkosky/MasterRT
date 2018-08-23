@@ -158,7 +158,7 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
             'download': <MrIcon family="mricon" type="xiazai" onClick={this.download} />,
             'dataView': <MrIcon family="mricon"
                                 type="table"
-                                onClick={this.dataView}
+                                onClick={this.dataView.bind(this)}
                                 className={classNames({selected: dataView})} />,
             'xyExchange': <MrIcon family="mricon"
                                   type="rotate"
@@ -176,10 +176,10 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
                                   type="yincang"
                                   onClick={this.toolSetFn.bind(this, 'legendShow', true)}
                                   className={classNames({selected: legendShow})} />,
-            'reload': <MrIcon family="mricon" type="shuaxin" onClick={this.reload} />,
+            'reload': <MrIcon family="mricon" type="shuaxin" onClick={this.reload.bind(this)} />,
             'fullScreen': <MrIcon family="mricon"
                                   type={fullScreen ? 'suoxiao' : 'fangda'}
-                                  onClick={this.fullScreen}
+                                  onClick={this.fullScreen.bind(this)}
                                   className={classNames({selected: fullScreen})} />,
         }
     }
