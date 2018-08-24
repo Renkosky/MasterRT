@@ -1,0 +1,44 @@
+---
+name: components
+menu: MRI
+route: /mri/components
+---
+
+import { Playground, PropsTable } from 'docz';
+
+# components
+
+#### 文件结构之 -- components (src/components)
+
+pages 的组成
+
+mri 的基本元素，每个路由对应一个 component
+
+## 创建
+
+```bash
+
+# 默认路径 src/components
+mri component ${component}
+
+# 自定义路径
+mri component ${component} ${targetPath}
+
+```
+
+## 组成
+
+- ** 文件夹名 ** 每个单词以'-'分开 social-trigger-info
+
+- ** 文件组成 ** 每个 tsx 文件, 对应一个 less 样式文件
+
+```
++ social-trigger-info
+    - social-trigger-info.tsx
+    - social-trigger-info.less
+```
+
+- ** 类名 ** 帕斯卡命名方式 SocialTriggerInfo;
+
+定义 interface: SocialTriggerInfoProps, SocialTriggerInfoState
+

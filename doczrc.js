@@ -16,6 +16,7 @@ export default {
     },
 
     typescript: true,
+    hashHistory: false,
     plugins: [
         css({
             preprocessor: 'less',
