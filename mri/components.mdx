@@ -36,6 +36,11 @@ mri component ${component} ${targetPath}
 + social-trigger-info
     - social-trigger-info.tsx
     - social-trigger-info.less
+
+    // 在React中，在许多场景下会使用高阶函数来包装Component；
+    // 一旦使用高阶函数，那么大多数的编辑器就不会智能的import到该Component
+    // 所以index.ts用来辅助编辑器或IDE智能import文件
+    - index.ts
 ```
 
 - ** 类名 ** 帕斯卡命名方式 SocialTriggerInfo;
