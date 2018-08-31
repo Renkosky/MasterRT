@@ -15,6 +15,8 @@ export default {
         }
     },
 
+    dest: 'dist/docz',
+
     typescript: true,
     hashHistory: false,
     plugins: [
