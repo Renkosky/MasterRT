@@ -1,2 +1,10 @@
 export {default as DemoServices} from './demo.services';
 export {IDemoServices} from './demo.services';
+export {default as Test2Services} from './test2.services';
+export {ITest2Services} from './test2.services';
+export {default as Test3Services} from './test3.services';
+export {ITest3Services} from './test3.services';
+export {default as Test4Services} from './test4.services';
+export {ITest4Services} from './test4.services';
+export {default as Test5Services} from './test5.services';
+export {ITest5Services} from './test5.services';

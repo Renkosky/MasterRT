@@ -1,0 +1,2 @@
+interface IDemoConst any;
+
