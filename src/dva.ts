@@ -1,8 +1,6 @@
 import {message} from 'antd';
 import {MrServices} from './lib';
 import {default as brp} from './services/base-resource-pool';
-import {default as mu} from 'mzmu';
-import NodataComponent from './components/nodata.component';
 
 /**
  * 系统初始化配置设置页面
@@ -28,12 +26,10 @@ export function config() {
 
     MrServices.setResourcePool(brp);
 
-    MrServices.reqCatch ( (res) => {
+    MrServices.reqCatch((res) => {
         // console.debug('::::::::::', res);
         return Promise.reject(res);
     });
-
-    MrServices.setNoDataComponent(NodataComponent);
 
     MrServices.setEchartsTheme('aaaaaa');
 
