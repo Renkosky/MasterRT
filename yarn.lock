@@ -8399,6 +8399,22 @@ marked@^0.3.17:
   version "0.3.19"
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.19.tgz#5d47f709c4c9fc3c216b6d46127280f40b39d790"
 
+masterrt@^0.2.24-beta.4:
+  version "0.2.24-beta.5"
+  resolved "https://registry.yarnpkg.com/masterrt/-/masterrt-0.2.24-beta.5.tgz#e7b9607bfb0b4d522cea497151759b0d070f223a"
+  dependencies:
+    autobind-decorator "^2.1.0"
+    axios "^0.18.0"
+    classnames "^2.2.5"
+    downloadjs "^1.4.7"
+    echarts "^4.1.0"
+    echarts-wordcloud "^1.1.3"
+    hanabi "^0.4.0"
+    lodash "^4.17.5"
+    mzmu "^1.8.15"
+    react-immutable-render-mixin "^0.9.7"
+    simple-line-icons "^2.4.1"
+
 match-sorter@^2.2.3:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/match-sorter/-/match-sorter-2.3.0.tgz#99eaf386689f75bf976f6bbf7f49afb9a7ffecc8"
