@@ -131,6 +131,7 @@ export interface MrEchartsProps {
 
 class MrEcharts extends React.Component<MrEchartsProps, {}> {
 
+    static DISPLAY_NAME = 'MrEcharts';
     static THEME = 'customed';
     static RENDER_TYPE = 'canvas';
     static defaultProps = {

@@ -31,7 +31,7 @@ export function config() {
         return Promise.reject(res);
     });
 
-    MrServices.setEchartsTheme('aaaaaa');
+    // MrServices.setEchartsTheme('aaaaaa');
 
     return {
         onError(err) {
