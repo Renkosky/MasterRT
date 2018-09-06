@@ -1,1 +1,0 @@
-export {default as DemoConst} from './demo.const';
