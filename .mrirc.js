@@ -1,6 +1,6 @@
 let mrirc = {
     'saves': {
-        'masterrt': '0.2.24-beta.4'
+        'masterrt': '0.2.24-beta.5'
     },
 
     'devs': {
