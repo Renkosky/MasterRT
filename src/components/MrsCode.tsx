@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as hanabi from 'hanabi';
+import hanabi from 'hanabi';
 import * as _ from 'lodash';
 
 interface MrsCodeProps {

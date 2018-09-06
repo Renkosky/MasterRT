@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([[1],{MU8w:function(e,n,t){"use strict";Object.defineProperty(n,"__esModule",{value:!0}),n.default=void 0;var u={namespace:"count",state:0,reducers:{increase:function(e){return e+1},decrease:function(e){return e-1}}};n.default=u}}]);
