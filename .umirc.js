@@ -3,7 +3,11 @@ const _ = require('lodash');
 const theme = process.env.THEME;
 const env = process.env.MRI_ENV;
 const device = process.env.MRI_DEVICE;
+
+// console.log('::::::::---:::::: \n\n\n', process.env);
+
 const themePath = `./src/theme/${theme}/${theme}`;
+
 const config = require(`${themePath}-umi.js`);
 const {mri, params = {}, ..._config} = config;
 
@@ -38,9 +42,9 @@ let umirc =  {
     /**
      * 路由守卫地址
      */
-    pages: {
-        '/': {Route: './src/theme/route-guard.tsx'}
-    },
+    // pages: {
+    //     '/': {Route: './src/theme/route-guard.tsx'}
+    // },
 
 
     /**
@@ -91,8 +95,8 @@ let umirc =  {
     // webpack-defined
     define: {
         'process.env.THEME': theme,
-        'process.env.MRI_ENV': process.env.MRI_ENV,
-        'process.env.MRI_DEVICE': process.env.MRI_DEVICE
+        'process.env.MRI_ENV': env,
+        'process.env.MRI_DEVICE': device
     },
 
     // 禁用Css Modules 模式

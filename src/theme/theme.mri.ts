@@ -35,8 +35,13 @@ class ThemeMri {
 		}
 
 		// 获取注入器
-		getProviders(key?: string): any | never {
+		getProviders(key?: string): any {
 				let config = this.config;
+
+				if(!config) {
+					return void 0;
+				}
+
 				if (key) {
 						let provider = _.get(config, `providers.${key}`);
 						if (provider) {

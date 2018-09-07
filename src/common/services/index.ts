@@ -1,5 +1,9 @@
+export {default as BaseServices} from './base.services';
+export {IBaseServices} from './base.services';
 export {default as DemoServices} from './demo.services';
 export {IDemoServices} from './demo.services';
+export {default as StoreServices} from './store.services';
+export {IStoreServices} from './store.services';
 export {default as Test2Services} from './test2.services';
 export {ITest2Services} from './test2.services';
 export {default as Test3Services} from './test3.services';
