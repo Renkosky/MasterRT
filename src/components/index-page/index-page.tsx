@@ -8,28 +8,24 @@
  */
 import * as React from 'react';
 import * as mu from 'mzmu';
-import * as _ from 'lodash';
-import {MrIf, MrElse, MrFill, MrCol, MrAutoBind, MrReq, MrPanel} from 'masterrt';
-import {Button, Input, Icon} from 'antd';
-import {$pool, $intl} from '../../services';
 import './index-page.less';
 import Link from 'umi/link';
 import $theme from '../../theme';
 
-interface IndexPageProps {}
-interface IndexPageState {}
+interface IndexPageProps {
+}
+
+interface IndexPageState {
+}
 
 export default class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
 
-    Test5Services = $theme.getProviders('Test5Services');
-
-    render () {
+    render() {
         return (<div className="p-16 index-page">
 
             <header>
                 IndexPage Component
             </header>
-
 
             <div>
                 {

@@ -4,5 +4,5 @@
  * 用于初始化信息
  */
 
-import dva from 'src/theme/test5/test5-dva';
+import dva from 'src/theme/demo/demo-dva';
 export default dva;
