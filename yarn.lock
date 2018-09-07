@@ -12811,7 +12811,7 @@ umi-utils@^0.2.2:
   dependencies:
     slash2 "^2.0.0"
 
-umi@^2.0.2:
+umi@2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/umi/-/umi-2.0.3.tgz#393bb2e4e62dcacc8c5e66fab4a24eef863c38f8"
   dependencies:

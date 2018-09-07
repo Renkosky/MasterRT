@@ -34,7 +34,7 @@
         "cross-env": "^5.2.0",
         "docz": "^0.10.3",
         "docz-plugin-css": "^0.10.3",
-        "umi": "^2.0.2",
+        "umi": "2.0.3",
         "umi-plugin-react": "^1.0.2"
     }
 }
