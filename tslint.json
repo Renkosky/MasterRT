@@ -1,5 +1,5 @@
 {
-    "rulesDirectory": ["tslint", "tslint-react"],
+    "rulesDirectory": ["tslint"],
     "rules": {
         /**
          * TS 专用

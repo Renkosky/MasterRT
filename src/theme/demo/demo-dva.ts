@@ -7,15 +7,15 @@
  */
 
 import $theme from 'src/theme';
-import { MrServices } from 'masterrt';
+import {MrServices} from 'masterrt';
 import * as mu from 'mzmu';
-import { $pool, $utils, $intl } from 'src/services';
+import {$pool} from 'src/services';
 
 export default function config() {
     let DemoConst = $theme.getProviders('DemoConst');
 
     console.debug('init::-> dva demo');
-    
+
     MrServices.setHeaders({
         'X-TOKEN': () => mu.storage(DemoConst.STORAGE_X_TOKEN) || '',
         'X-LANG': () => mu.storage(DemoConst.STORAGE_LOCALE) || DemoConst.LOCALE,

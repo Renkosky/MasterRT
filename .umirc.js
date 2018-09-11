@@ -34,7 +34,7 @@ let umirc =  {
 
                 pwa: true,
 
-                // title: 'mri pro',
+                title: 'Loading',
             }
         ]
     ],

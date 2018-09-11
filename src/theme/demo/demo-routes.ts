@@ -48,12 +48,14 @@ const DemoRoutes = {
         component: IndexPage,
         path: ['/', '/index'],
         layout: NoneLayout,
+        title: 'DEMO INDEX PAGE',
         token: false,
     },
 
     404: {
         component: P404,
         path: ['/404'],
+        title: 'PAGE NO FOUND',
         token: false,
         layout: NoneLayout,
     }

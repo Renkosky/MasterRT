@@ -11,6 +11,8 @@ import * as mu from 'mzmu';
 import './index-page.less';
 import Link from 'umi/link';
 import $theme from '../../theme';
+import router from 'umi/router';
+import {withRouter} from 'react-router';
 
 interface IndexPageProps {
 }
@@ -19,7 +21,6 @@ interface IndexPageState {
 }
 
 export default class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
-
     render() {
         return (<div className="p-16 index-page">
 
