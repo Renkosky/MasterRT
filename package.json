@@ -24,6 +24,7 @@
     },
     "dependencies": {
         "masterrt": "^0.2.24-beta.4",
+        "moment": "^2.22.2",
         "mzmu": "^1.8.18"
     },
     "devDependencies": {
