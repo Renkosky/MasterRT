@@ -39,7 +39,29 @@ let umirc =  {
     },
 
     // publicPath: '.',
-    disableCSSModules: true
+    disableCSSModules: true,
+
+    // ant design Icon 支持自定义图标
+    urlLoaderExcludes: [/assets(.*)\.svg$/],
+
+    chainWebpack(config) {
+        config.module
+            .rule('svg')
+            .test(/.svg(\?v=\d+.\d+.\d+)?$/)
+            .use([
+                {
+                    loader: 'babel-loader'
+                },
+                {
+                    loader: '@svgr/webpack',
+                    options: {
+                        babel: false,
+                        icon: true
+                    }
+                }
+            ])
+            .loader(require.resolve('@svgr/webpack'));
+    }
 };
 
 export default umirc;

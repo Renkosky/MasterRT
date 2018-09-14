@@ -65,9 +65,9 @@ export interface MrIconProps {
     family?: string;
 
     /**
-     * base64 资源，使用背景显示
+     * Ant Design 3.9 新支持特性
      */
-    base64?: string;
+    component?: React.ComponentClass;
 
     style?: React.CSSProperties;
     className?: string;
@@ -77,7 +77,7 @@ export interface MrIconProps {
 class MrIcon extends React.Component<MrIconProps, {}> {
 
     render() {
-        let {type, className = '', shape = '', size, children, onClick, family, base64} = this.props;
+        let {type, className = '', shape = '', size, children, onClick, family} = this.props;
 
         let classString, cls;
 
@@ -108,16 +108,6 @@ class MrIcon extends React.Component<MrIconProps, {}> {
             style.borderRadius = '50%';
         });
 
-        mu.run(base64, () => {
-            type = '___usebase64___';
-
-            style.backgroundImage = `url(${base64})`;
-            style.backgroundRepeat = 'no-repeat';
-            style.backgroundPosition = 'center center';
-
-            cls['base64'] = true;
-        });
-
         classString = MrServices.cls(cls, className);
 
         const iconProps = {
@@ -127,7 +117,12 @@ class MrIcon extends React.Component<MrIconProps, {}> {
             onClick
         };
 
-        return (<Icon {...iconProps}>{children}</Icon>);
+        if(family) {
+            iconProps.className = 'anticon -mri ' + classString;
+            return (<i {...iconProps}>{children}</i>);
+        } else {
+            return (<Icon {...iconProps}>{children}</Icon>);
+        }
     }
 }
 

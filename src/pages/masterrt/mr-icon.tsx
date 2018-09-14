@@ -4,6 +4,12 @@ import './masterrt.less';
 
 import JsxParser from 'react-jsx-parser';
 import MrCode from '../../lib/mr-code/mr-code.component';
+import {Icon} from 'antd';
+
+// @ts-ignore
+import BbsSvg from '../../assets/bbs.svg';
+
+console.debug(BbsSvg);
 
 interface MrsMrIconProps {
 }
@@ -18,13 +24,6 @@ export default class MrsMrIcon extends React.Component<MrsMrIconProps, {}> {
             <MrIcon type="user" size={128} shape="circle" style={{background: '#ccc', color: '#fff', fontSize: 56}} /> 
             <span>江山如此多娇</span>
         </section>
-        
-         <section>
-            <MrIcon type="share-alt" family="simpleicon" /> 
-            <MrIcon type="share" family="simpleicon" /> 
-        </section>
-        
-        
     `;
 
     interface: string = `
@@ -90,7 +89,7 @@ interface MrIconProps {
 
     render() {
         return (
-            <article className="mrs-article mrs-MrFill">
+            <article className="mrs-article mrs-MrFill p-32" style={{paddingLeft: 100}}>
                 <header>MrIcon <small>v0.1.22.20180521</small></header>
                 <ins>字体文件托管在iconfont, 也可自定义配置自己的icon组件库</ins>
                 <main>
@@ -101,8 +100,19 @@ interface MrIconProps {
                 </main>
 
                 <section>
-                    <MrIcon type="base64" base64={require('../../assets/Admaster Sharing.svg')} />
+                    <MrIcon type="user" family="simpleicon" />
+                    <MrIcon type="share" family="simpleicon"></MrIcon>
                 </section>
+
+                - || <i className="simpleicon simpleicon-user-following"></i>
+
+                <br />
+
+                {/*::: <img src="assets/bbs.svg" />*/}
+
+                <br />
+
+                <Icon component={BbsSvg} />
 
                 <details className="mt-16">
                     <summary>查看源码</summary>
