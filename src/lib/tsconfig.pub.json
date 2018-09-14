@@ -16,6 +16,9 @@
         "typeRoots": [
             "node_modules/@types"
         ],
+        "paths": {
+            "react": ["node_modules/@types/react"]
+        },
         "lib": [
             "es2016",
             "dom"
