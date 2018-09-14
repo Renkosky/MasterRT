@@ -13,6 +13,22 @@ import Link from 'umi/link';
 import $theme from '../../theme';
 import router from 'umi/router';
 import {withRouter} from 'react-router';
+import {Icon} from 'antd';
+import AntdIcon from '@ant-design/icons-react';
+import { AntDesignOutline, DashboardOutline, TwitterOutline } from '@ant-design/icons';
+
+// @ts-ignore
+import bbsSvg from '../../assets/bbs.svg';
+
+console.debug(bbsSvg);
+
+bbsSvg.width = '2em';
+bbsSvg.height = '2em';
+
+
+
+// console.dir(ReactIcon, BbsFill);
+// import BbsSvg from 'src/common/svgs/svg/bbs.svg';
 
 interface IndexPageProps {
 }
@@ -21,12 +37,17 @@ interface IndexPageState {
 }
 
 export default class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
-    render() {
+    render(): JSX.Element {
         return (<div className="p-16 index-page">
 
             <header>
                 IndexPage Component
             </header>
+
+            <Icon type="step-forward"  />
+            <Icon type="fast-backward" theme="outlined" />
+
+            <Icon component={bbsSvg}></Icon>
 
             <div>
                 {

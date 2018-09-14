@@ -2,12 +2,23 @@
 # yarn lockfile v1
 
 
+"@ant-design/icons-react@^1.1.1", "@ant-design/icons-react@~1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@ant-design/icons-react/-/icons-react-1.1.1.tgz#6b58eb7cc5612392a2c4347d27d85e599d130661"
+  dependencies:
+    ant-design-palettes "^1.1.3"
+    babel-runtime "^6.26.0"
+
 "@ant-design/icons-react@~1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@ant-design/icons-react/-/icons-react-1.0.0.tgz#f28b298c8cfb1b59b1035a6cf8bc269cd479fccf"
   dependencies:
     ant-design-palettes "^1.1.3"
     babel-runtime "^6.26.0"
+
+"@ant-design/icons@^1.1.8", "@ant-design/icons@~1.1.5":
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/@ant-design/icons/-/icons-1.1.8.tgz#a95dbe1e32928500ab130fb35f77e2ca447ec0aa"
 
 "@ant-design/icons@~1.0.0":
   version "1.0.3"
@@ -1644,6 +1655,28 @@
     escape-string-regexp "^1.0.5"
     lodash.deburr "^4.1.0"
 
+"@svgr/core@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@svgr/core/-/core-2.2.0.tgz#59219d92b4c372bb925c4ad3ebc66ccd04e9d5c3"
+  dependencies:
+    cosmiconfig "^5.0.6"
+    h2x-core "^1.0.0"
+    h2x-plugin-jsx "^1.0.0"
+    lodash "^4.17.10"
+    prettier "^1.14.2"
+    svgo "^1.0.5"
+
+"@svgr/webpack@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@svgr/webpack/-/webpack-2.3.0.tgz#3b688cbdf8a57cbed2e3bb4bd90abbafbbcb7e34"
+  dependencies:
+    "@babel/core" "^7.0.0"
+    "@babel/plugin-transform-react-constant-elements" "^7.0.0"
+    "@babel/preset-env" "^7.0.0"
+    "@babel/preset-react" "^7.0.0"
+    "@svgr/core" "^2.2.0"
+    loader-utils "^1.1.0"
+
 "@types/commander@^2.11.0":
   version "2.12.2"
   resolved "https://registry.yarnpkg.com/@types/commander/-/commander-2.12.2.tgz#183041a23842d4281478fa5d23c5ca78e6fd08ae"
@@ -1653,6 +1686,12 @@
 "@types/echarts@0.0.12":
   version "0.0.12"
   resolved "https://registry.yarnpkg.com/@types/echarts/-/echarts-0.0.12.tgz#68f1bf9270017036b88106da174b826620b05228"
+
+"@types/fs-extra@^5.0.4":
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-5.0.4.tgz#b971134d162cc0497d221adde3dbb67502225599"
+  dependencies:
+    "@types/node" "*"
 
 "@types/history@*":
   version "4.7.0"
@@ -2121,6 +2160,61 @@ antd-mobile@^2.2.3:
     rmc-steps "~1.0.0"
     rmc-tabs "~1.2.0"
     rmc-tooltip "~1.0.0"
+
+antd@3.9.2:
+  version "3.9.2"
+  resolved "https://registry.yarnpkg.com/antd/-/antd-3.9.2.tgz#7f1007da4fc746e8a0d9bb6846b70b6001374ed9"
+  dependencies:
+    "@ant-design/icons" "~1.1.5"
+    "@ant-design/icons-react" "~1.1.1"
+    array-tree-filter "^2.0.0"
+    babel-runtime "6.x"
+    classnames "~2.2.0"
+    create-react-class "^15.6.0"
+    create-react-context "0.2.2"
+    css-animation "^1.2.5"
+    dom-closest "^0.2.0"
+    enquire.js "^2.1.1"
+    intersperse "^1.0.0"
+    lodash "^4.17.5"
+    moment "^2.19.3"
+    omit.js "^1.0.0"
+    prop-types "^15.5.7"
+    raf "^3.4.0"
+    rc-animate "^2.4.1"
+    rc-calendar "~9.7.3"
+    rc-cascader "~0.16.0"
+    rc-checkbox "~2.1.5"
+    rc-collapse "~1.10.0"
+    rc-dialog "~7.2.0"
+    rc-drawer "~1.7.3"
+    rc-dropdown "~2.2.0"
+    rc-editor-mention "^1.0.2"
+    rc-form "^2.1.0"
+    rc-input-number "~4.0.0"
+    rc-menu "~7.4.1"
+    rc-notification "~3.2.0"
+    rc-pagination "~1.17.0"
+    rc-progress "~2.2.2"
+    rc-rate "~2.4.0"
+    rc-select "~8.2.6"
+    rc-slider "~8.6.0"
+    rc-steps "~3.3.0"
+    rc-switch "~1.7.0"
+    rc-table "~6.3.2"
+    rc-tabs "~9.4.0"
+    rc-time-picker "~3.4.0"
+    rc-tooltip "~3.7.0"
+    rc-tree "~1.14.5"
+    rc-tree-select "~2.2.0"
+    rc-trigger "^2.5.4"
+    rc-upload "~2.5.0"
+    rc-util "^4.0.4"
+    react-lazy-load "^3.0.12"
+    react-lifecycles-compat "^3.0.2"
+    react-slick "~0.23.1"
+    shallowequal "^1.0.1"
+    warning "~4.0.1"
 
 antd@^3.8.1:
   version "3.9.1"
@@ -3740,7 +3834,7 @@ cosmiconfig@^4.0.0:
     parse-json "^4.0.0"
     require-from-string "^2.0.1"
 
-cosmiconfig@^5.0.0, cosmiconfig@^5.0.2, cosmiconfig@^5.0.5:
+cosmiconfig@^5.0.0, cosmiconfig@^5.0.2, cosmiconfig@^5.0.5, cosmiconfig@^5.0.6:
   version "5.0.6"
   resolved "https://registry.yarnpkg.com/cosmiconfig/-/cosmiconfig-5.0.6.tgz#dca6cf680a0bd03589aff684700858c81abeeb39"
   dependencies:
@@ -5939,6 +6033,43 @@ gzip-size@^4.1.0:
     duplexer "^0.1.1"
     pify "^3.0.0"
 
+h2x-core@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/h2x-core/-/h2x-core-1.0.0.tgz#5135fda1a8688ebc8ce2450d89f1dc6837511e7b"
+  dependencies:
+    h2x-generate "^1.0.0"
+    h2x-parse "^1.0.0"
+    h2x-traverse "^1.0.0"
+
+h2x-generate@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/h2x-generate/-/h2x-generate-1.0.0.tgz#72e8020ecede3e589f7acab81e85a8346cc54126"
+  dependencies:
+    h2x-traverse "^1.0.0"
+
+h2x-parse@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/h2x-parse/-/h2x-parse-1.0.0.tgz#3d377642d6d5f5e3fa9940e3620f11ba2d072e99"
+  dependencies:
+    h2x-types "^1.0.0"
+    jsdom "^11.10.0"
+
+h2x-plugin-jsx@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/h2x-plugin-jsx/-/h2x-plugin-jsx-1.0.0.tgz#9307cc58d75bd241f6c25aef152501fda2bdf43d"
+  dependencies:
+    h2x-types "^1.0.0"
+
+h2x-traverse@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/h2x-traverse/-/h2x-traverse-1.0.0.tgz#6f651d41f14e3b4362ea2a909213a43511982de1"
+  dependencies:
+    h2x-types "^1.0.0"
+
+h2x-types@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/h2x-types/-/h2x-types-1.0.0.tgz#4822816ffddf51e4a383aa00594770e8ce230d1f"
+
 hammerjs@^2.0.8:
   version "2.0.8"
   resolved "https://registry.yarnpkg.com/hammerjs/-/hammerjs-2.0.8.tgz#04ef77862cff2bb79d30f7692095930222bf60f1"
@@ -7400,7 +7531,7 @@ jsbn@~0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
 
-jsdom@^11.12.0, jsdom@^11.5.1:
+jsdom@^11.10.0, jsdom@^11.12.0, jsdom@^11.5.1:
   version "11.12.0"
   resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-11.12.0.tgz#1a80d40ddd378a1de59656e9e6dc5a3ba8657bc8"
   dependencies:
@@ -9726,7 +9857,7 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-prettier@^1.14.0:
+prettier@^1.14.0, prettier@^1.14.2:
   version "1.14.2"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.14.2.tgz#0ac1c6e1a90baa22a62925f41963c841983282f9"
 
@@ -10231,6 +10362,23 @@ rc-rate@~2.4.0:
 rc-select@~8.2.3:
   version "8.2.6"
   resolved "https://registry.yarnpkg.com/rc-select/-/rc-select-8.2.6.tgz#ffa987440660d8a28c77a5a46b1d80e10523d3f8"
+  dependencies:
+    babel-runtime "^6.23.0"
+    classnames "2.x"
+    component-classes "1.x"
+    dom-scroll-into-view "1.x"
+    prop-types "^15.5.8"
+    raf "^3.4.0"
+    rc-animate "2.x"
+    rc-menu "^7.3.0"
+    rc-trigger "^2.5.4"
+    rc-util "^4.0.4"
+    react-lifecycles-compat "^3.0.2"
+    warning "^4.0.2"
+
+rc-select@~8.2.6:
+  version "8.2.8"
+  resolved "https://registry.yarnpkg.com/rc-select/-/rc-select-8.2.8.tgz#3cfbce3d3128d47f2af0b74150dc54870828e3ee"
   dependencies:
     babel-runtime "^6.23.0"
     classnames "2.x"
@@ -12245,7 +12393,7 @@ supports-color@^5.1.0, supports-color@^5.3.0, supports-color@^5.4.0:
   dependencies:
     has-flag "^3.0.0"
 
-svgo@^1.0.0:
+svgo@^1.0.0, svgo@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/svgo/-/svgo-1.0.5.tgz#7040364c062a0538abacff4401cea6a26a7a389a"
   dependencies:

@@ -11,8 +11,7 @@ const themePath = `./src/theme/${theme}/${theme}`;
 const config = require(`${themePath}-umi.js`);
 const {mri, params = {}, ..._config} = config;
 
-let umirc =  {
-
+let umirc = {
     /**
      * umi 插件配置
      */
@@ -21,7 +20,7 @@ let umirc =  {
             'umi-plugin-react',
             {
                 dva: {
-                    immer: true,
+                    immer: true
                 },
 
                 antd: true,
@@ -29,12 +28,12 @@ let umirc =  {
                 polyfills: ['ie9'],
 
                 dynamicImport: {
-                    webpackChunkName: true,
+                    webpackChunkName: true
                 },
 
                 pwa: true,
 
-                title: 'Loading',
+                title: 'Loading'
             }
         ]
     ],
@@ -45,7 +44,6 @@ let umirc =  {
     // pages: {
     //     '/': {Route: './src/theme/route-guard.tsx'}
     // },
-
 
     /**
      * 使用#， hash形式显示路径
@@ -105,6 +103,26 @@ let umirc =  {
     // 忽略momentjs 的本地化文件
     ignoreMomentLocale: true,
 
+    urlLoaderExcludes: [/assets(.*)\.svg$/],
+
+    chainWebpack(config) {
+        config.module
+            .rule('svg')
+            .test(/.svg(\?v=\d+.\d+.\d+)?$/)
+            .use([
+                {
+                    loader: 'babel-loader'
+                },
+                {
+                    loader: '@svgr/webpack',
+                    options: {
+                        babel: false,
+                        icon: true
+                    }
+                }
+            ])
+            .loader(require.resolve('@svgr/webpack'));
+    }
 };
 
 export default umirc;
