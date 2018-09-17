@@ -68,6 +68,10 @@ class MrFill extends React.Component<MrFillProps, {}> {
 
             let type: any = col.type;
 
+            if(type) {
+                return col;
+            }
+
             // 子元素不能包裹非组件
             if (typeof type === 'string') {
                 console.error('MrFill与MrCol是父子组件，只允许条件组件(MrIf, MrFor等)包裹MrCol', type);

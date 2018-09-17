@@ -56,7 +56,7 @@ export interface MrEchartsPanelProps extends MrEchartsProps {
     dataModel?: any;
     req?: any | any[];
 
-    title?: string;
+    title?: JSX.Element | string;
     border?: any;
     bodyStyle?: any;
     h100?: boolean;
@@ -155,7 +155,7 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
     icons() {
         let {fullScreen, xyExchange, xAxisShowAll, legendShow, dataView, lineBarExchange} = this.state;
         return {
-            'download': <MrIcon family="mricon" type="xiazai" onClick={this.download} />,
+            'download': <MrIcon family="mricon" type="xiazai" onClick={this.download.bind(this)} />,
             'dataView': <MrIcon family="mricon"
                                 type="table"
                                 onClick={this.dataView.bind(this)}
@@ -279,6 +279,7 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
     download() {
         let {title = '', downloadName} = this.props;
         downloadName = downloadName || `${title}_${+new Date()}`;
+        console.debug(this._dataView.join('\n'));
         _mrServices.download(this._dataView.join('\n'), downloadName + '.csv');
     }
 

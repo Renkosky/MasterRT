@@ -88,9 +88,9 @@ class MrIf extends React.Component<MrIfProps, {}> {
          * 遍历子元素，按规则遗传相应的基因信息
          */
 
-        // !! docz 不支持使用 type === Component 来判断子元素是调用该 component
-        // 所以使用在 Component 中添加static属性DISPLAY_NAME来标明该component
-        // https://github.com/pedronauck/docz/issues/133
+            // !! docz 不支持使用 type === Component 来判断子元素是调用该 component
+            // 所以使用在 Component 中添加static属性DISPLAY_NAME来标明该component
+            // https://github.com/pedronauck/docz/issues/133
 
         let isThen = false;
         let elseCondition = false;
@@ -103,10 +103,12 @@ class MrIf extends React.Component<MrIfProps, {}> {
         /**
          * else 只能有一个true
          */
-
         children = React.Children.toArray(children);
 
-        let _children =  mu.map(children, (child: React.ReactElement<Node>, index) => {
+        // let _children = mu.map(children, (child: React.ReactElement<Node>, index) => {
+        // 如果不使用 React.Children.map 则会触发
+        // Each child in an array or iterator should have a unique "key" prop
+        let _children = React.Children.map(children, (child: React.ReactElement<Node>, index) => {
 
             let type: any, props: any;
 
@@ -115,37 +117,50 @@ class MrIf extends React.Component<MrIfProps, {}> {
             }
 
             type = child.type;
+
+            if (!type) {
+                return child;
+            }
+
+            // console.debug(child);
+
             props = child.props || {};
 
-            if(typeof type === 'string') {
+            if (typeof type === 'string') {
                 return condition ? child : null;
             }
 
             // MrThen 执行过，后续的 MrElse 失效
-            if(isThen && mu.or(type.DISPLAY_NAME, 'MrElse')) {
+            if (isThen && mu.or(type.DISPLAY_NAME, 'MrElse')) {
                 return null;
             }
 
-            if(!isThen && mu.or(type.DISPLAY_NAME, 'MrElse')) {
+            if (!isThen && mu.or(type.DISPLAY_NAME, 'MrElse')) {
                 elseCondition = !condition && mu.ifnvl(mu.prop(child, 'props.condition'), true);
                 elseTrue.use[index] = true;
-                if(elseCondition) {
+                if (elseCondition) {
                     elseTrue.time += 1;
                     elseTrue.index = index;
                 }
-                return React.cloneElement(child, {...props, condition: elseCondition});
+                return React.cloneElement(child, {
+                    ...props,
+                    condition: elseCondition
+                });
             }
 
-            if(mu.or(type.DISPLAY_NAME, 'MrThen')) {
+            if (mu.or(type.DISPLAY_NAME, 'MrThen')) {
                 isThen = true;
-                return React.cloneElement(child, {...props, _gene: {condition: !condition && !elseCondition} });
+                return React.cloneElement(child, {
+                    ...props,
+                    _gene: {condition: !condition && !elseCondition}
+                });
             }
 
             return child;
 
         });
 
-        if(elseTrue.time > 1) {
+        if (elseTrue.time > 1) {
             _children = React.Children.map(_children, (child: React.ReactElement<Node>, index) => {
                 return (elseTrue.use[index] && (elseTrue.index !== index)) ? null : child;
             });
@@ -156,7 +171,6 @@ class MrIf extends React.Component<MrIfProps, {}> {
     }
 
     render() {
-        // console.debug(this.props);
         let children = this.inheritance();
         return <React.Fragment>{children}</React.Fragment>;
     }

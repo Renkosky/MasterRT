@@ -11,42 +11,35 @@ interface MrsPanelProps {
 
 export default class MrsPanel extends React.Component<MrsPanelProps, {}> {
 
-    code: string = `
-        <section>
-            <MrPanel title="静夜思::李白" border="title" prepend={<div>我的第一首诗</div>}>
-                床前明月光<br />
-                疑是地上霜<br />
-                举头望明月<br />
-                低头思故乡<br />
-            </MrPanel>
-            
-            <MrPanel title="春晓::孟浩然" extra={<MrIcon type="xiazai" />}>
-                春眠不觉晓<br />
-                处处闻啼鸟<br />
-                夜来风雨声<br />
-                花落知多少<br />
-            </MrPanel>
-        </section>
-    `;
-
-
-
     render() {
         return (
             <article className="mrs-article mrs-MrFill">
                 <header>MrPanel <small>v0.1.21.20180516</small></header>
                 <ins>一个集成的盒子, 一个拥有标题，子标题，工具条的容器</ins>
                 <main>
-                    <JsxParser
-                        components={{MrPanel, MrIcon}}
-                        jsx={this.code}
-                    ></JsxParser>
-                </main>
+                    <section>
+                        <MrPanel title="静夜思::李白" border="title" prepend={<div>我的第一首诗</div>}>
+                            床前明月光<br />
+                            疑是地上霜<br />
+                            举头望明月<br />
+                            低头思故乡<br />
+                        </MrPanel>
 
-                <details className="mt-16">
-                    <summary>查看源码</summary>
-                    <MrCode code={(this.code)}></MrCode>
-                </details>
+                        <MrPanel title="春晓::孟浩然" extra={<MrIcon type="xiazai" />}>
+                            春眠不觉晓<br />
+                            处处闻啼鸟<br />
+                            夜来风雨声<br />
+                            花落知多少<br />
+                        </MrPanel>
+
+                        <MrPanel title={<span>使用JSX.Element则subtitle失效</span>}>
+                            春眠不觉晓<br />
+                            处处闻啼鸟<br />
+                            夜来风雨声<br />
+                            花落知多少<br />
+                        </MrPanel>
+                    </section>
+                </main>
 
                 <aside className="mt-16">
                     <MrPanel title="MrPanel" border="none">

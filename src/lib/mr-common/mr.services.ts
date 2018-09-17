@@ -14,7 +14,7 @@
  * ::=> 添加 MrService.setNoDataComponent
  */
 
-import * as download from '../assets/js/download';
+import download from '../assets/js/download';
 import * as mu from 'mzmu';
 import {default as classNames} from 'classnames';
 import '../assets/styles/common.less';

@@ -19,7 +19,7 @@ export interface MrPanelProps {
      * title
      * - 子标题用'::'来区分
      */
-    title?: string;
+    title?: JSX.Element | string;
 
     /**
      * panel 顶部额外添加
@@ -70,7 +70,7 @@ class MrPanel extends React.Component<MrPanelProps, {}> {
 
         const {style, className = '', title = '', extra, bodyStyle, border = 'all', h100} = this.props;
         const {prepend, append} = this.props;
-        const [_title, _subTitle] = title.split('::');
+
 
         const classString = MrServices.cls({
             'mr-panel': true,
@@ -80,15 +80,20 @@ class MrPanel extends React.Component<MrPanelProps, {}> {
 
         return (
             <article style={style} className={classString}>
-                {(title || extra) && <header>
+                {(title || extra) && (<header>
                     <div className={'mr-panel-header'} key={'header'}>
-                        <span className={'mr-panel-title'}>{_title}</span>
-                        <MrIf condition={_subTitle} key={'subTitle'}>
-                            <small className={'mr-panel-subTitle'}>{_subTitle}</small>
-                        </MrIf>
+                        {mu.run(typeof title === 'string', () => {
+                            const [_title, _subTitle] = (title as string).split('::');
+                            return (<React.Fragment>
+                                <span className={'mr-panel-title'}>{_title}</span>
+                                <MrIf condition={_subTitle} key={'subTitle'}>
+                                    <small className={'mr-panel-subTitle'}>{_subTitle}</small>
+                                </MrIf>
+                            </React.Fragment>);
+                        }, () => title)}
                         {extra && <div className={'mr-panel-headerExtra'} key={'extra'}>{extra}</div>}
                     </div>
-                </header>}
+                </header>)}
 
                 <MrIf condition={prepend}>
                     <section className="mr-panel-prepend">
