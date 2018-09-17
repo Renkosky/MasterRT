@@ -68,7 +68,7 @@ class MrFill extends React.Component<MrFillProps, {}> {
 
             let type: any = col.type;
 
-            if(type) {
+            if(!type) {
                 return col;
             }
 
