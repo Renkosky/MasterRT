@@ -17,7 +17,8 @@ export interface MrPanelProps {
 
     /**
      * title
-     * - 子标题用'::'来区分
+     * - {string} 子标题用'::'来区分
+     * - {JSX.Element} 使用JSX, 则无子标题概念
      */
     title?: JSX.Element | string;
 

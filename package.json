@@ -27,7 +27,7 @@
         "autobind-decorator": "^2.1.0",
         "axios": "^0.18.0",
         "classnames": "^2.2.6",
-        "docz": "^0.10.3",
+        "docz": "^0.11.2",
         "docz-plugin-css": "^0.10.3",
         "downloadjs": "^1.4.7",
         "dva": "^2.4.0",
