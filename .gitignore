@@ -13,6 +13,17 @@ pub/
 .umi-production/
 .docz
 
+src/theme/config.mri.ts
+src/theme/const-env.mri.ts
+src/theme/dva.mri.ts
+src/theme/route-guard.mri.ts
+src/theme/index.ts
+src/common/const/interface-mri
+src/common/const/index.ts
+src/common/services/index.ts
+pages/
+.theme
+
 #---------------------------------
 # Extensions
 #---------------------------------
