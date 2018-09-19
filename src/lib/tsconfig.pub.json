@@ -12,6 +12,7 @@
         "moduleResolution": "node",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
+        "skipLibCheck": true,
         "baseUrl": ".",
         "typeRoots": [
             "node_modules/@types"
