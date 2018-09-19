@@ -2,7 +2,6 @@ export {default as MrServices} from './mr-common/mr.services';
 export {default as MrRequest} from './mr-common/mr-request';
 export {default as MrResource} from './mr-common/mr-resource';
 export {default as MrAutoBind} from './mr-common/mr-auto-bind';
-export {default as MrPurRender} from './mr-common/mr-pur-render';
 export {default as MrPanel} from './mr-panel/mr-panel.component';
 export {default as MrEcharts} from './mr-echarts/mr-echarts.component';
 export {default as MrEchartsPanel} from './mr-echarts-panel/mr-echarts-panel.component';

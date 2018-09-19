@@ -1,20 +1,17 @@
 import * as React from 'react';
 import * as mu from 'mzmu';
 import * as _ from 'lodash';
-import {MrResource, MrAutoBind, MrEcharts, MrPanel, MrIf, MrFill, MrIcon, MrReq, MrPurRender} from '../../lib';
+import {MrAutoBind, MrEcharts, MrPanel, MrIf, MrFill, MrIcon, MrReq} from '../../lib';
 import {Button} from 'antd';
 import {default as $pool} from '../../services/base-resource-pool';
 
-import {immutableRenderDecorator} from 'react-immutable-render-mixin';
-import { shallowEqualImmutable } from 'react-immutable-render-mixin';
-
+import {immutableRenderDecorator, shallowEqualImmutable} from 'react-immutable-render-mixin';
 
 import './masterrt.less';
 
 import MrCode from '../../lib/mr-code/mr-code.component';
 
 import JsxParser from 'react-jsx-parser';
-import Test from '../../components/test';
 
 interface MrsReqProps {
 }
@@ -65,8 +62,11 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
     changeReq(type: string) {
         let req = this.req[type];
         let chartTypes = this.chartTypes[type];
-        mu.storage('X-TOKEN', + new Date());
-        this.setState({req, chartTypes});
+        mu.storage('X-TOKEN', +new Date());
+        this.setState({
+            req,
+            chartTypes
+        });
     }
 
     state: any = {
@@ -100,16 +100,15 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
         this.setState = () => void 0;
     }
 
-
     code: string = `
-        <Button type={'primary'} onClick={changeReqPie}> Pie </Button>
-        <Button type={'primary'} onClick={changeReqLine} className="ml-8"> Line </Button>
+        <Button type="{'primary'}" onClick={changeReqPie}> Pie </Button>
+        <Button type="{'primary'}" onClick={changeReqLine} className="ml-8"> Line </Button>
         
-        <MrPanel title="回调::通过setState进行重新渲染" bodyStyle={{height: 300}} className="mt-16">
-            <MrReq req={req} result={result}>
+        <MrPanel title="回调::通过setState进行重新渲染" bodyStyle="{{height:" 300}} className="mt-16">
+            <MrReq req="{req}" result="{result}">
                 <MrEcharts
-                    data={data}
-                    chartTypes={chartTypes}
+                    data="{data}"
+                    chartTypes="{chartTypes}"
                 ></MrEcharts>
             </MrReq>
         </MrPanel>
@@ -117,20 +116,20 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
         {/*// 典型的基因传递调用方案*/}
         {/*// 其中MrReq通过transmit向子组件MrEcharts传递基因data片段*/}
         {/*// 而MrEcharts无需做任何配置，自然而然的获得父组件的遗传的基因片段信息*/}
-        <MrPanel title="传递::通过transmit传递数据，局部渲染" bodyStyle={{height: 300}} className="mt-16">
-            <MrReq req={req} transmit="data:res.data">
+        <MrPanel title="传递::通过transmit传递数据，局部渲染" bodyStyle="{{height:" 300}} className="mt-16">
+            <MrReq req="{req}" transmit="data:res.data">
                 <MrEcharts
-                    chartTypes={chartTypes}
+                    chartTypes="{chartTypes}"
                 ></MrEcharts>
             </MrReq>
         </MrPanel>
         
-        <MrPanel title="函数调用，通过子元素进行函数调用" bodyStyle={{height: 300}} className="mt-16">
-            <MrReq req={req} transmit="data:res.data">{draw}</MrReq>
+        <MrPanel title="函数调用，通过子元素进行函数调用" bodyStyle="{{height:" 300}} className="mt-16">
+            <MrReq req="{req}" transmit="data:res.data">{draw}</MrReq>
         </MrPanel>
         
-        <MrPanel title="NoData Test" bodyStyle={{height: 100}} className="mt-16">
-            <MrReq req={nodataReq} transmit="data:res.data" style={{height: 300}}></MrReq>
+        <MrPanel title="NoData Test" bodyStyle="{{height:" 100}} className="mt-16">
+            <MrReq req="{nodataReq}" transmit="data:res.data" style={{height: 300}}></MrReq>
         </MrPanel>
     `;
 
@@ -138,7 +137,6 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
 
         let {data = {}, req, chartTypes, nodataReq} = this.state;
         let {changeReq, result} = this;
-
 
         return (
             <article className="mrs-article">
@@ -164,7 +162,15 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
                         }}
 
                         blacklistedAttrs={[]}
-                        components={{Button, MrEcharts, MrPanel, MrIf, MrFill, MrIcon, MrReq}}
+                        components={{
+                            Button,
+                            MrEcharts,
+                            MrPanel,
+                            MrIf,
+                            MrFill,
+                            MrIcon,
+                            MrReq
+                        }}
                         jsx={this.code}
                         onError={(err) => console.debug(err)}
                     ></JsxParser>
@@ -176,8 +182,7 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
                 </details>
 
                 <aside className="mt-16">
-                    <MrPanel title="MrIResource && MrReqProps">
-                        <MrCode code={`
+                    <MrPanel title="MrIResource && MrReqProps"> <MrCode code={`
 interface MrIResource {
 
     /**
@@ -270,8 +275,7 @@ interface MrReqProps {
     result?: any;
 }
 
-                        `}></MrCode>
-                    </MrPanel>
+                        `}></MrCode> </MrPanel>
                 </aside>
             </article>
         );
