@@ -23,7 +23,7 @@ export interface MrIconProps {
      * 相应图标的class name
      * ${family}-${type}, 如::: anticon-bar | mricon-user
      */
-    type: string;
+    type?: string;
 
     /**
      * spin?: boolean = false
@@ -77,7 +77,7 @@ export interface MrIconProps {
 class MrIcon extends React.Component<MrIconProps, {}> {
 
     render() {
-        let {type, className = '', shape = '', size, children, onClick, family} = this.props;
+        let {type, className = '', shape = '', size, children, onClick, family, component} = this.props;
 
         let classString, cls;
 
@@ -111,11 +111,19 @@ class MrIcon extends React.Component<MrIconProps, {}> {
         classString = MrServices.cls(cls, className);
 
         const iconProps = {
-            type,
             className: classString,
             style,
             onClick
         };
+
+        if(type) {
+            iconProps['type'] = type;
+        }
+
+        if(component) {
+            iconProps['component'] = component;
+        }
+
 
         if(family) {
             iconProps.className = 'anticon -mri ' + classString;
