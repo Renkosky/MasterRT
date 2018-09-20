@@ -9,11 +9,107 @@ import { Playground, PropsTable } from 'docz';
 
 # mri git
 
-基于前端团队项目GIT管理, 封装git部分命令：
+基于前端团队项目GIT管理, 封装git部分命令
 
-- release: mri git release
-- feature: mri git feature
-- hotfix: mri git hotfix
-- merge: mri git merge
-- push: mri git push
 
+## mri git release
+
+需求分支
+
+```bash
+mri git release <theme> [options]
+theme: 需要启动的主题名称
+options:
+  --force          强力开启
+  --start          创建release
+  --test           merge 到test
+  --finish         关闭release(只删除本地分支)
+  --ver [version]  当前版本号
+
+```
+
+```sh
+# 新建 release
+$ mri git release social --ver 0.0.1 --start
+> release/social/v0.0.1
+
+# 新建 release, 快捷方式
+$ mri git release social::0.0.1
+> release/social/v0.0.1
+
+# --> 新建 release 会自动跳转到master创建
+# --> 新建的 release 会自动推送到远程 remote
+# --> 若创建 release 的主题不存在，则不能创建该 release
+# --> 使用xyz版本格式制定版本
+# --> 若想要创建一个主题不存在的 release, 请使用强力模式 --force
+$ mri git release no-exist-theme::0.0.1 --force
+
+
+```
+
+## mri git feature
+
+任务分支
+
+```bash
+mri git feature <ver> [options]
+ver: 当前feature版本号
+options:
+  --start     创建release
+  --force     强力模式，无需在release下创建feature
+  --finish    关闭release(只删除本地分支)
+  --remote    是否推送到远程
+```
+
+```bash
+// 新建 feature
+$ mri git feature beta.1 --start
+> feature/social/v0.0.1-beta.1
+
+// 新建 feature, 快捷方式
+$ mri git feature beta.1::
+> feature/social/v0.0.1-beta.1
+
+# --> feature 只能在 release 下创建，其他地方不能创建 feature
+# --> feature 使用 beta.N 模式创建版本号
+# --> feature 默认不推送远程，若需要推送远程 --remote
+$ mri git feature beta.1:: --remote
+# --> 强力模式 --force 可以直接在feature中创建其他feature
+$ mri git feature beta.2:: --force
+> feature/social/v0.0.1-beta.2
+```
+
+## mri git hotfix
+
+临时修复分支
+
+```bash
+mri git hotfix <theme> [options]
+theme: 需要启动的主题名称
+options:
+  --force          强力开启
+  --start          创建 hotfix
+  --test           merge 到test
+  --finish         hotfix (只删除本地分支)
+  --ver [version]  当前版本号
+
+```
+
+```sh
+# 新建 release
+$ mri git hotfix social --ver 0.0.1-rc.1 --start
+> hotfix/social/v0.0.1-rc.1
+
+# 新建 release, 快捷方式
+$ mri git release social::0.0.1-rc.1
+> hotfix/social/v0.0.1-rc.1
+
+# --> hotfix 做为紧急修复分支, 其大概流程与 release 一致;
+# --> 新建 hotfix 会自动跳转到master创建
+# --> 新建的 hotfix 会自动推送到远程 remote
+# --> 若创建 hotfix 的主题不存在，则不能创建该 hotfix
+# --> 使用xyz版本格式制定版本
+# --> 若想要创建一个主题不存在的 hotfix, 请使用强力模式 --force
+$ mri git hotfix no-exist-theme::0.0.1-rc.1 --force
+
+```
