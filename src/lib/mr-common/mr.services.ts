@@ -14,10 +14,12 @@
  * ::=> 添加 MrService.setNoDataComponent
  */
 
-import download from '../assets/js/download';
+const download = require('../assets/js/download.js');
 import * as mu from 'mzmu';
 import {default as classNames} from 'classnames';
 import '../assets/styles/common.less';
+
+console.debug(download);
 
 /**
  * 通用方法

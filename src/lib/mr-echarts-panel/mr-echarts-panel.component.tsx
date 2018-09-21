@@ -279,7 +279,6 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
     download() {
         let {title = '', downloadName} = this.props;
         downloadName = downloadName || `${title}_${+new Date()}`;
-        console.debug(this._dataView.join('\n'));
         _mrServices.download(this._dataView.join('\n'), downloadName + '.csv');
     }
 
