@@ -2,9 +2,8 @@
 
 echo ':::编译文件'
 npm run tsd
-if [ $? -eq 0 ]; then
+if [ $? -ne 0 ]; then
     echo 编译错误
-    echo '$1'
     exit 1
 fi
 
@@ -43,4 +42,24 @@ cd ..
 echo "::::: 推送到NPM $_ov -> $_version"
 
 echo ":::::: 推送到NPM"
-    
+    npm publish pub
+
+if [ $? -eq 0 ]; then
+
+    echo '::::::::: 将package.json写回项目'
+        cp -R ./pub/package.json ./src/lib/package.json
+
+    echo '::::::::::: 删除临时目录 pub'
+        rm -rf ./pub
+
+    echo ":::::::::::: Git Mark 此次修改信息"
+    git pull
+    git add .
+    git commit -am "$_ov -> $_version :: $_commit"
+    git pull
+    git push
+
+    echo "::::::::::::::: Git Tag"
+    git tag $_version -m "$_ov -> $_version :: $_commit"
+    git push --tags
+fi

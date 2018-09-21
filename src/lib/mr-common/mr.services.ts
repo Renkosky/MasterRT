@@ -14,6 +14,7 @@
  * ::=> 添加 MrService.setNoDataComponent
  */
 
+declare const require: any;
 const download = require('../assets/js/download.js');
 import * as mu from 'mzmu';
 import {default as classNames} from 'classnames';
