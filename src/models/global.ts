@@ -1,5 +1,3 @@
-import api from '../services/server';
-
 // function delay(ms) {
 //   return new Promise(resolve => {
 //     setTimeout(resolve, ms);
@@ -17,8 +15,11 @@ export default {
         }
     },
     effects: {
-        *login({params}, {call, put}) {
+        * login({params}, {call, put}) {
             // yield call(api.getBrands, params);
         }
     }
 };
+
+
+
