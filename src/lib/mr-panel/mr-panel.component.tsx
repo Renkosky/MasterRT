@@ -5,16 +5,17 @@
  *
  * @update mizi.lin@v0.1.21.20180516
  * ::=> 添加 append && prepend
+ * * @update huao@v0.1.22.20181009
+ * ::=> 将style绑到main第一个div
  */
 
 import * as React from 'react';
 import * as mu from 'mzmu';
-import {default as MrServices} from '../mr-common/mr.services';
+import { default as MrServices } from '../mr-common/mr.services';
 import MrIf from '../mr-condition/mr-if.component';
 import '../assets/styles/mr-panel.less';
 
 export interface MrPanelProps {
-
     /**
      * title
      * - {string} 子标题用'::'来区分
@@ -58,9 +59,8 @@ export interface MrPanelProps {
 }
 
 class MrPanel extends React.Component<MrPanelProps, {}> {
-
     runfn(fn: any) {
-        if(typeof fn === 'function'){
+        if (typeof fn === 'function') {
             return fn();
         } else {
             return fn;
@@ -68,53 +68,61 @@ class MrPanel extends React.Component<MrPanelProps, {}> {
     }
 
     render() {
+        const { style, className = '', title = '', extra, bodyStyle, border = 'all', h100 } = this.props;
+        const { prepend, append } = this.props;
 
-        const {style, className = '', title = '', extra, bodyStyle, border = 'all', h100} = this.props;
-        const {prepend, append} = this.props;
-
-
-        const classString = MrServices.cls({
-            'mr-panel': true,
-            'h-100-i': h100,
-            [`mr-border-${border}`]: !!border
-        }, className);
-
+        const classString = MrServices.cls(
+            {
+                'mr-panel': true,
+                'h-100-i': h100,
+                [`mr-border-${border}`]: !!border
+            },
+            className
+        );
         return (
-            <article style={style} className={classString}>
-                {(title || extra) && (<header>
-                    <div className={'mr-panel-header'} key={'header'}>
-                        {mu.run(typeof title === 'string', () => {
-                            const [_title, _subTitle] = (title as string).split('::');
-                            return (<React.Fragment>
-                                <span className={'mr-panel-title'}>{_title}</span>
-                                <MrIf condition={_subTitle} key={'subTitle'}>
-                                    <small className={'mr-panel-subTitle'}>{_subTitle}</small>
-                                </MrIf>
-                            </React.Fragment>);
-                        }, () => title)}
-                        {extra && <div className={'mr-panel-headerExtra'} key={'extra'}>{extra}</div>}
-                    </div>
-                </header>)}
+            <article className={classString}>
+                {(title || extra) && (
+                    <header>
+                        <div className={'mr-panel-header'} key={'header'}>
+                            {mu.run(
+                                typeof title === 'string',
+                                () => {
+                                    const [_title, _subTitle] = (title as string).split('::');
+                                    return (
+                                        <React.Fragment>
+                                            <span className={'mr-panel-title'}>{_title}</span>
+                                            <MrIf condition={_subTitle} key={'subTitle'}>
+                                                <small className={'mr-panel-subTitle'}>{_subTitle}</small>
+                                            </MrIf>
+                                        </React.Fragment>
+                                    );
+                                },
+                                () => title
+                            )}
+                            {extra && (
+                                <div className={'mr-panel-headerExtra'} key={'extra'}>
+                                    {extra}
+                                </div>
+                            )}
+                        </div>
+                    </header>
+                )}
 
                 <MrIf condition={prepend}>
                     <section className="mr-panel-prepend">
-                        <div>
-                            {this.runfn(prepend)}
-                        </div>
+                        <div>{this.runfn(prepend)}</div>
                     </section>
                 </MrIf>
 
                 <main>
-                    <div style={bodyStyle} className={'mr-panel-body'}>
+                    <div style={style} className={'mr-panel-body'}>
                         {this.props.children}
                     </div>
                 </main>
 
                 <MrIf condition={append}>
                     <section className="mr-panel-append">
-                        <div>
-                            {this.runfn(append)}
-                        </div>
+                        <div>{this.runfn(append)}</div>
                     </section>
                 </MrIf>
             </article>
