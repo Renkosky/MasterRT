@@ -20,8 +20,6 @@ import * as mu from 'mzmu';
 import {default as classNames} from 'classnames';
 import '../assets/styles/common.less';
 
-console.debug(download);
-
 /**
  * 通用方法
  */

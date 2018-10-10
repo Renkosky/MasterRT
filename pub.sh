@@ -59,7 +59,9 @@ if [ $? -eq 0 ]; then
     git pull
     git push
 
+    _tag="masterrt.v$_version"
+
     echo "::::::::::::::: Git Tag"
-    git tag $_version -m "$_ov -> $_version :: $_commit"
+    git tag $_tag -m "$_ov -> $_version :: $_commit"
     git push --tags
 fi
