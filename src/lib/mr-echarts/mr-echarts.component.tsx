@@ -1,6 +1,8 @@
 /**
  * @update mizi.lin@0.1.25.20180523
  * ::=> try echart setOption && resize
+ * @update huao@v0.1.22.20181009
+ * ::=> 将图的height去掉padding长度
  */
 
 // mark
@@ -17,10 +19,9 @@ import '../assets/js/china.js';
 import '../assets/js/theme.customed.js';
 import '../assets/styles/mr-echarts.component.less';
 import MrEchartsServices from './mr-echarts.services';
-import {default as MrServices} from '../mr-common/mr.services';
+import { default as MrServices } from '../mr-common/mr.services';
 
 export interface MrEchartsProps {
-
     /**
      * 传入数据(推荐):
      * - 与 options 二者存其一；
@@ -87,7 +88,6 @@ export interface MrEchartsProps {
      */
     renderType?: string;
 
-
     style?: React.CSSProperties;
 
     className?: string;
@@ -130,7 +130,6 @@ export interface MrEchartsProps {
 }
 
 class MrEcharts extends React.Component<MrEchartsProps, {}> {
-
     static DISPLAY_NAME = 'MrEcharts';
     static THEME = 'customed';
     static RENDER_TYPE = 'canvas';
@@ -151,13 +150,16 @@ class MrEcharts extends React.Component<MrEchartsProps, {}> {
      * @param ref
      */
     getCharts(ref) {
-        return this._chart || mu.run(ref, () => {
-            let {renderType = 'canvas'} = this.props;
-            let theme = this.getTheme();
-            return echarts.init(ref, theme.current, {
-                renderer: renderType
-            });
-        });
+        return (
+            this._chart ||
+            mu.run(ref, () => {
+                let { renderType = 'canvas' } = this.props;
+                let theme = this.getTheme();
+                return echarts.init(ref, theme.current, {
+                    renderer: renderType
+                });
+            })
+        );
     }
 
     /**
@@ -167,7 +169,7 @@ class MrEcharts extends React.Component<MrEchartsProps, {}> {
      */
     getTheme() {
         let prev = this._theme;
-        let {theme} = this.props;
+        let { theme } = this.props;
         theme = theme || MrEchartsServices._theme() || MrEcharts.THEME;
         let first = !mu.isExist(prev);
         let change = first ? false : prev !== theme;
@@ -185,11 +187,10 @@ class MrEcharts extends React.Component<MrEchartsProps, {}> {
      * @type {Function}
      */
     drawCharts = _.debounce((props: any) => {
-
         let _chart = this.getCharts(this._chartRef);
-        let {data, dataType, dataModel, chartTypes} = props;
-        let {options} = props;
-        let {result, setting, transform} = props;
+        let { data, dataType, dataModel, chartTypes } = props;
+        let { options } = props;
+        let { result, setting, transform } = props;
 
         // data 与 setting 的计算结果
         let rst: any;
@@ -258,7 +259,6 @@ class MrEcharts extends React.Component<MrEchartsProps, {}> {
 
         // call back info
         result && result(options, rst);
-
     }, 300);
 
     /**
@@ -269,7 +269,7 @@ class MrEcharts extends React.Component<MrEchartsProps, {}> {
      * @param result
      */
     registerEvents = _.once((props, options, result) => {
-        let {chartClick, chartDblClick, chartMouseDown, chartMouseUp, chartMouseOver, chartMouseOut, chartGlobalOut} = props;
+        let { chartClick, chartDblClick, chartMouseDown, chartMouseUp, chartMouseOver, chartMouseOut, chartGlobalOut } = props;
 
         this._chart.off('click');
         this._chart.off('dblClick');
@@ -306,8 +306,7 @@ class MrEcharts extends React.Component<MrEchartsProps, {}> {
     resize = mu.bind(() => {
         try {
             this._chart && this._chart.resize && this._chart.resize();
-        } catch (e) {
-        }
+        } catch (e) {}
     }, this);
 
     windowResize = mu.debounce(this.resize, 300);
@@ -325,11 +324,10 @@ class MrEcharts extends React.Component<MrEchartsProps, {}> {
     }
 
     componentDidUpdate(prevProps) {
-
         const theme = this.getTheme();
-        const {style, className} = this.props;
-        let {data, options, setting, chartTypes} = prevProps;
-        let {force, data: nextData, options: nextOptions, setting: nextSetting, chartTypes: nextChartTypes} = this.props;
+        const { style, className } = this.props;
+        let { data, options, setting, chartTypes } = prevProps;
+        let { force, data: nextData, options: nextOptions, setting: nextSetting, chartTypes: nextChartTypes } = this.props;
 
         /**
          * 样式产生变化 resize
@@ -379,15 +377,33 @@ class MrEcharts extends React.Component<MrEchartsProps, {}> {
         window.removeEventListener('reszie', this.windowResize);
     }
 
-    render() {
-        let {className} = this.props;
-        let panelClass = MrServices.cls({
-            'mr-echarts': true,
-        }, className);
-
-        return <div className={panelClass} style={this.props.style} ref={(div) => (this._chartRef = div)} />;
+    /**
+     * 修改canvas的高度
+     * @param style object
+     */
+    getStyle(style: any): any {
+        if (!style) {
+            return void 0;
+        } else {
+            let newStyle = Object.assign({}, style);
+            if (style.height) {
+                newStyle.height = newStyle.height - 16;
+            }
+            return newStyle;
+        }
     }
 
+    render() {
+        let { className, style } = this.props;
+        let panelClass = MrServices.cls(
+            {
+                'mr-echarts': true
+            },
+            className
+        );
+
+        return <div className={panelClass} style={this.getStyle(style)} ref={(div) => (this._chartRef = div)} />;
+    }
 }
 
 export default MrEcharts;
