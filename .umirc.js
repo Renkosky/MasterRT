@@ -9,7 +9,7 @@ const device = process.env.MRI_DEVICE;
 const themePath = `./src/theme/${theme}/${theme}`;
 
 const config = require(`${themePath}-umi.js`);
-const {mri, params = {}, ..._config} = config;
+const {mri, adjust = {}, ...umi} = config;
 
 let umirc = {
     /**
@@ -25,8 +25,6 @@ let umirc = {
 
                 antd: true,
 
-                polyfills: ['ie9'],
-
                 dynamicImport: {
                     webpackChunkName: true
                 },
@@ -37,6 +35,14 @@ let umirc = {
             }
         ]
     ],
+
+    /**
+     * 驱动器支持
+     * + umi@2.1.0
+     */
+    targets: {
+        ie: 9
+    },
 
     /**
      * 路由守卫地址
@@ -124,5 +130,7 @@ let umirc = {
             .loader(require.resolve('@svgr/webpack'));
     }
 };
+
+umirc = _.extend({}, umirc, umi);
 
 export default umirc;

@@ -25,5 +25,5 @@
 //!-> layout 文件夹，该主题布局配置
 
 
-import {default as $config} from 'src/theme/demo/demo-theme-config';
+import {default as $config} from 'src/theme/house/house-theme-config';
 export default $config;

@@ -26,20 +26,6 @@ module.exports = {
      */
     theme: {
         'primary-color': '#1890ff',
-        // 'mri-header-color': '#242630',
-        // 'mri-sub-color': '#F7E6BA',
-        //
-        // 'font-size-base': '12px',
-        // 'mri-footer-color': '#404040',
-        // 'mri-side-color': '#404040',
-        // 'mri-main-color': '#fff',
-        // 'mri-main-width': '85%',
-        // 'mri-border-color': '#eee',
-        //
-        // 'success-color': '#61D9D5',
-        // 'error-color': '#FD7B72',
-        // 'warning-color': '#FEC491',
-        // 'info-color': '#8FD7FD'
     },
 
     /**
@@ -54,5 +40,11 @@ module.exports = {
 
         // dev 环境， web-server 启动端口
         PORT: '6001'
+    },
+
+    /**
+     * 修正参数
+     */
+    adjust: {
     }
 };

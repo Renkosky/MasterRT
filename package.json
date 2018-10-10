@@ -1,6 +1,6 @@
 {
     "name": "mri",
-    "version": "2.0.0",
+    "version": "2.2.0",
     "license": "MIT",
     "scripts": {
         "start": "PORT=7001 umi dev",
@@ -40,7 +40,7 @@
         "cross-env": "^5.2.0",
         "docz": "^0.10.3",
         "docz-plugin-css": "^0.10.3",
-        "umi": "2.0.3",
+        "umi": "2.1.2",
         "umi-plugin-react": "^1.0.2"
     }
 }

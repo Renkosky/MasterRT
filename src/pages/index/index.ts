@@ -1,5 +1,5 @@
 /**
- * title: DEMO INDEX PAGE
+ * 
  * Routes:
  *  - src/theme/route-guard.tsx
  *  
