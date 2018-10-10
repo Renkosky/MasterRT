@@ -4,15 +4,18 @@
  * @creator mizi.lin
  *
  * @update mizi.lin@v0.1.22.20180521 添加simpleicon
+ *
+ * @update huao@0.2.2.20181010 icon属性theme
+ *
  */
 
 import * as React from 'react';
-import {Icon} from 'antd';
+import { Icon } from 'antd';
 import * as mu from 'mzmu';
 
 import '../assets/styles/mr-icon.less';
 import '../assets/styles/mr-simple-line-icon.less';
-import {default as MrServices} from '../mr-common/mr.services';
+import { default as MrServices } from '../mr-common/mr.services';
 
 export interface MrIconProps {
     /**
@@ -68,6 +71,7 @@ export interface MrIconProps {
      * Ant Design 3.9 新支持特性
      */
     component?: React.ComponentClass;
+    theme?: string;
 
     style?: React.CSSProperties;
     className?: string;
@@ -75,18 +79,17 @@ export interface MrIconProps {
 }
 
 class MrIcon extends React.Component<MrIconProps, {}> {
-
     render() {
-        let {type, className = '', shape = '', size, children, onClick, family, component} = this.props;
+        let { type, className = '', shape = '', size, children, onClick, family, component, theme } = this.props;
 
         let classString, cls;
 
-        let {style = {}} = this.props;
+        let { style = {} } = this.props;
         let _style: any = {};
 
         cls = {
             [family]: !!family,
-            [`${family}-${type}`]: !!family,
+            [`${family}-${type}`]: !!family
         };
 
         _style.verticalAlign = 'middle';
@@ -116,20 +119,23 @@ class MrIcon extends React.Component<MrIconProps, {}> {
             onClick
         };
 
-        if(type) {
+        if (type) {
             iconProps['type'] = type;
         }
 
-        if(component) {
+        if (component) {
             iconProps['component'] = component;
         }
 
+        if (theme) {
+            iconProps['theme'] = theme;
+        }
 
-        if(family) {
+        if (family) {
             iconProps.className = 'anticon -mri ' + classString;
-            return (<i {...iconProps}>{children}</i>);
+            return <i {...iconProps}>{children}</i>;
         } else {
-            return (<Icon {...iconProps}>{children}</Icon>);
+            return <Icon {...iconProps}>{children}</Icon>;
         }
     }
 }

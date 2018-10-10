@@ -24,19 +24,22 @@
  *
  * @update mizi.lin@0.2.1.20180717
  * ::=> 移除 force 控制 MrEchartsPanel 是否重新渲染，是否重新渲染只控制在 MrReq 这一层
+ *
+ * @update huao@0.2.2.20181010
+ * ::=> 下载、表格增加行列转换
  */
 
 import * as React from 'react';
-import MrEcharts, {MrEchartsProps} from '../mr-echarts/mr-echarts.component';
+import MrEcharts, { MrEchartsProps } from '../mr-echarts/mr-echarts.component';
 import _mrEchartServices from '../mr-echarts/mr-echarts.services';
 import _mrServices from '../mr-common/mr.services';
 import * as _ from 'lodash';
 import * as mu from 'mzmu';
-import {MrEchartsDataView} from './mr-echarts-dataView.component';
-import {default as classNames} from 'classnames';
+import { MrEchartsDataView } from './mr-echarts-dataView.component';
+import { default as classNames } from 'classnames';
 import '../assets/styles/mr-echarts-panel.less';
 import MrIcon from '../mr-icon/mr-icon.component';
-import {default as MrServices} from '../mr-common/mr.services';
+import { default as MrServices } from '../mr-common/mr.services';
 import MrPanel from '../mr-panel/mr-panel.component';
 import MrReq from '../mr-req/mr-req.component';
 
@@ -132,7 +135,6 @@ export interface MrEchartsPanelProps extends MrEchartsProps {
 }
 
 class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
-
     static defaultProps = {
         showToolbar: 'toggle',
         omitTools: [],
@@ -146,6 +148,7 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
         legendShow: false,
         dataView: false,
         lineBarExchange: false,
+        rowColumnConversion: false,
         setting: _mrEchartServices.serialize(this.props.setting)
     };
 
@@ -153,57 +156,70 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
     _dataView: any = [];
 
     icons() {
-        let {fullScreen, xyExchange, xAxisShowAll, legendShow, dataView, lineBarExchange} = this.state;
+        let { fullScreen, xyExchange, xAxisShowAll, legendShow, dataView, lineBarExchange } = this.state;
         return {
-            'download': <MrIcon family="mricon" type="xiazai" onClick={this.download.bind(this)} />,
-            'dataView': <MrIcon family="mricon"
-                                type="table"
-                                onClick={this.dataView.bind(this)}
-                                className={classNames({selected: dataView})} />,
-            'xyExchange': <MrIcon family="mricon"
-                                  type="rotate"
-                                  onClick={this.toolSetFn.bind(this, 'xyExchange', true)}
-                                  className={classNames({selected: xyExchange})} />,
-            'lineBarExchange': <MrIcon family="mricon"
-                                       type="bar"
-                                       onClick={this.toolSetFn.bind(this, 'lineBarExchange', true)}
-                                       className={classNames({selected: lineBarExchange})} />,
-            'xAxisShowAll': <MrIcon family="mricon"
-                                    type="liebiaodanchu"
-                                    onClick={this.toolSetFn.bind(this, 'xAxisShowAll', true)}
-                                    className={classNames({selected: xAxisShowAll})} />,
-            'legendShow': <MrIcon family="mricon"
-                                  type="yincang"
-                                  onClick={this.toolSetFn.bind(this, 'legendShow', true)}
-                                  className={classNames({selected: legendShow})} />,
-            'reload': <MrIcon family="mricon" type="shuaxin" onClick={this.reload.bind(this)} />,
-            'fullScreen': <MrIcon family="mricon"
-                                  type={fullScreen ? 'suoxiao' : 'fangda'}
-                                  onClick={this.fullScreen.bind(this)}
-                                  className={classNames({selected: fullScreen})} />,
-        }
+            download: <MrIcon family="mricon" type="xiazai" onClick={this.download.bind(this)} />,
+            dataView: (
+                <MrIcon family="mricon" type="table" onClick={this.dataView.bind(this)} className={classNames({ selected: dataView })} />
+            ),
+            xyExchange: (
+                <MrIcon
+                    family="mricon"
+                    type="rotate"
+                    onClick={this.toolSetFn.bind(this, 'xyExchange', true)}
+                    className={classNames({ selected: xyExchange })}
+                />
+            ),
+            lineBarExchange: (
+                <MrIcon
+                    family="mricon"
+                    type="bar"
+                    onClick={this.toolSetFn.bind(this, 'lineBarExchange', true)}
+                    className={classNames({ selected: lineBarExchange })}
+                />
+            ),
+            xAxisShowAll: (
+                <MrIcon
+                    family="mricon"
+                    type="liebiaodanchu"
+                    onClick={this.toolSetFn.bind(this, 'xAxisShowAll', true)}
+                    className={classNames({ selected: xAxisShowAll })}
+                />
+            ),
+            legendShow: (
+                <MrIcon
+                    family="mricon"
+                    type="yincang"
+                    onClick={this.toolSetFn.bind(this, 'legendShow', true)}
+                    className={classNames({ selected: legendShow })}
+                />
+            ),
+            reload: <MrIcon family="mricon" type="shuaxin" onClick={this.reload.bind(this)} />,
+            fullScreen: (
+                <MrIcon
+                    family="mricon"
+                    type={fullScreen ? 'suoxiao' : 'fangda'}
+                    onClick={this.fullScreen.bind(this)}
+                    className={classNames({ selected: fullScreen })}
+                />
+            )
+        };
     }
 
     typeTools: any = {
-        line: [
-            'download', 'dataView', 'xyExchange', 'lineBarExchange', 'xAxisShowAll', 'legendShow', 'reload',
-            'fullScreen'
-        ],
-        bar: [
-            'download', 'dataView', 'xyExchange', 'lineBarExchange', 'xAxisShowAll', 'legendShow', 'reload',
-            'fullScreen'
-        ],
+        line: ['download', 'dataView', 'xyExchange', 'lineBarExchange', 'xAxisShowAll', 'legendShow', 'reload', 'fullScreen'],
+        bar: ['download', 'dataView', 'xyExchange', 'lineBarExchange', 'xAxisShowAll', 'legendShow', 'reload', 'fullScreen'],
         pie: ['download', 'dataView', 'legendShow', 'reload', 'fullScreen'],
         wordCloud: ['download', 'dataView', 'reload', 'fullScreen'],
         map: ['download', 'dataView', 'reload', 'fullScreen'],
         gauge: ['download', 'dataView', 'legendShow', 'reload', 'fullScreen'],
         radar: ['download', 'dataView', 'legendShow', 'reload', 'fullScreen'],
         scatter: ['download', 'dataView', 'legendShow', 'reload', 'fullScreen'],
-        treemap: ['download', 'dataView', 'reload', 'fullScreen'],
+        treemap: ['download', 'dataView', 'reload', 'fullScreen']
     };
 
     tools() {
-        let {chartTypes, omitTools, showToolbar} = this.props;
+        let { chartTypes, omitTools, showToolbar } = this.props;
         let [type] = chartTypes.split('::');
         let icons = this.icons();
         let tools = this.typeTools[type];
@@ -226,13 +242,9 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
 
         return (
             <div className="mr-echarts-panel-tools">
-                {
-                    mu.map(tools, (type) => {
-                        return <React.Fragment key={type}>
-                            {icons[type]}
-                        </React.Fragment>
-                    })
-                }
+                {mu.map(tools, (type) => {
+                    return <React.Fragment key={type}>{icons[type]}</React.Fragment>;
+                })}
             </div>
         );
     }
@@ -240,12 +252,12 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
     toolSetFn(key: string, value?: any) {
         let status = this.state[key];
         let fnName = `@@${key}`;
-        let {setting = []} = this.state;
+        let { setting = [] } = this.state;
 
         status = !status;
 
         if (status) {
-            setting.push({[fnName]: mu.ifnvl(value, true)});
+            setting.push({ [fnName]: mu.ifnvl(value, true) });
         } else {
             _.remove(setting, (o) => {
                 return _.keys(o)[0] === fnName;
@@ -260,7 +272,7 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
 
     // 全屏显示
     fullScreen() {
-        let {fullScreen} = this.state;
+        let { fullScreen } = this.state;
         this.setState({
             fullScreen: !fullScreen,
             force: true
@@ -269,22 +281,37 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
 
     // 查看DataView
     dataView() {
-        let {dataView} = this.state;
+        let { dataView } = this.state;
         this.setState({
             dataView: !dataView
         });
     }
 
+    // excel数据行列转换
+    getDataView(dataView: any[]): any {
+        let data = [];
+        _.forEach(dataView[0], (da, index) => {
+            data[index] = [];
+            _.forEach(dataView, (dv) => {
+                data[index].push(dv[index]);
+            });
+        });
+
+        return data;
+    }
+
     // download 下载数据
     download() {
-        let {title = '', downloadName} = this.props;
+        let { rowColumnConversion } = this.state;
+        let { title = '', downloadName } = this.props;
         downloadName = downloadName || `${title}_${+new Date()}`;
-        _mrServices.download(this._dataView.join('\n'), downloadName + '.csv');
+        let data = rowColumnConversion ? this.getDataView(this._dataView) : this._dataView;
+        _mrServices.download(data.join('\n'), downloadName + '.csv');
     }
 
     // 刷新数据
     reload() {
-        let {setting, req, data} = this.props;
+        let { setting, req, data } = this.props;
         setting = _mrEchartServices.serialize(setting);
         this.setState({
             req,
@@ -295,23 +322,24 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
             xAxisShowAll: false,
             legendShow: false,
             dataView: false,
-            lineBarExchange: false
+            lineBarExchange: false,
+            rowColumnConversion: false
         });
     }
 
     // 获得 echart callback data
     getResult(options, rst) {
-        let {result} = this.props;
+        let { result } = this.props;
         this._dataView = _.get(rst, 'data._dataView');
         result && result(options, rst);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
         // @todo 过滤掉 props 中的 function
-        let {children, append, chartClick, ...next} = nextProps;
-        let {children: a, append: b, chartClick: c, ...current} = this.props;
+        let { children, append, chartClick, ...next } = nextProps;
+        let { children: a, append: b, chartClick: c, ...current } = this.props;
 
-        let {force} = nextProps;
+        let { force } = nextProps;
         if (force) {
             return true;
         } else {
@@ -319,27 +347,34 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
         }
     }
 
-    render() {
-        const {title, style, className, h100, bodyStyle, border, showToolbar, transform, append, prepend} = this.props;
-        const {chartTypes, data, dataType, dataModel} = this.props;
-        const {options, renderType, theme} = this.props;
+    changeRowColumn(): void {
+        let { rowColumnConversion } = this.state;
+        this.setState({ rowColumnConversion: !rowColumnConversion });
+    }
 
-        let chartsEvent = _.omit(this.props,
+    render() {
+        const { title, style, className, h100, bodyStyle, border, showToolbar, transform, append, prepend } = this.props;
+        const { chartTypes, data, dataType, dataModel } = this.props;
+        const { options, renderType, theme } = this.props;
+
+        let chartsEvent = _.omit(
+            this.props,
             'chartClick',
             'chartDblClick',
             'chartMouseDown',
             'chartMouseUp',
             'chartMouseOver',
             'chartMouseOut',
-            'chartGlobalOut');
+            'chartGlobalOut'
+        );
 
-        let {req: mrReqReq, mrReq = {}} = this.props;
+        let { req: mrReqReq, mrReq = {} } = this.props;
 
         mu.run(mrReqReq, () => {
             mrReq['req'] = mrReqReq;
         });
 
-        let {transmit = 'data:res.data', req, transform: mrReqTransform, force} = mrReq;
+        let { transmit = 'data:res.data', req, transform: mrReqTransform, force } = mrReq;
 
         // 默认在MrEchartsPanel中多重数组处理，合并data信息
         // todo 多轴处理
@@ -351,10 +386,10 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
                 } else {
                     return res;
                 }
-            }
+            };
         }
 
-        let {fullScreen, dataView, setting} = this.state;
+        let { fullScreen, dataView, setting, rowColumnConversion } = this.state;
         setting = mu.clone(setting);
 
         const echartsProps = {
@@ -369,14 +404,17 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
             transform
         };
 
-        let panelClass = MrServices.cls({
-            'mr-full-screen': fullScreen,
-            'mr-echarts-panel': true,
-            'h-100-i': h100,
-            [`mr-echarts-panel-tools-${showToolbar}`]: true
-        }, className);
+        let panelClass = MrServices.cls(
+            {
+                'mr-full-screen': fullScreen,
+                'mr-echarts-panel': true,
+                'h-100-i': h100,
+                [`mr-echarts-panel-tools-${showToolbar}`]: true
+            },
+            className
+        );
 
-        let {showLoading, showNodata, nodata, loading} = this.props;
+        let { showLoading, showNodata, nodata, loading } = this.props;
         let _process = {
             showLoading,
             showNodata,
@@ -393,16 +431,23 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
                 bodyStyle={bodyStyle}
                 append={append}
                 prepend={prepend}
-                border={border}>
-                <MrReq req={req} data={{data}} force={true} transmit="data" {..._process}>
-                    {
-                        dataView
-                            ? <MrEchartsDataView dataView={this._dataView} />
-                            : <MrEcharts {...echartsProps}
-                                         {...chartsEvent}
-                                         className={'full-sreen-' + fullScreen}
-                                         result={this.getResult.bind(this)} />
-                    }
+                border={border}
+            >
+                <MrReq req={req} data={{ data }} force={true} transmit="data" {..._process}>
+                    {dataView ? (
+                        <MrEchartsDataView
+                            dataView={this._dataView}
+                            rowColumnConversion={rowColumnConversion}
+                            changeRowColumn={this.changeRowColumn.bind(this)}
+                        />
+                    ) : (
+                        <MrEcharts
+                            {...echartsProps}
+                            {...chartsEvent}
+                            className={'full-sreen-' + fullScreen}
+                            result={this.getResult.bind(this)}
+                        />
+                    )}
                 </MrReq>
             </MrPanel>
         );
