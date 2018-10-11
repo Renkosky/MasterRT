@@ -1,4 +1,5 @@
 import {css} from 'docz-plugin-css';
+const path = require('path');
 
 export default {
     themeConfig: {
@@ -25,6 +26,11 @@ export default {
             preprocessor: 'less',
             cssmodules: false
         })
-    ]
+    ],
+
+    // modifyBundlerConfig: (config) => {
+    //     config.output.publicPath = './public/';
+    //     return config;
+    // }
 };
 
