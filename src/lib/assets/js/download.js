@@ -12,201 +12,183 @@
  * @update mizi.lin@v0.2.1.20180717 support chinese
  */
 
-var define = window.define;
+let download = function(data, strFileName, strMimeType) {
+    var self = window, // this script is only for browsers anyway...
+        defaultMime = 'application/octet-stream;charset=utf-8', // this default mime also triggers iframe downloads
+        mimeType = strMimeType || defaultMime,
+        payload = data,
+        url = !strFileName && !strMimeType && payload,
+        anchor = document.createElement('a'),
+        toString = function(a) {return String(a);},
+        myBlob = (self.Blob || self.MozBlob || self.WebKitBlob || toString),
+        fileName = strFileName || 'download',
+        blob,
+        reader;
+    myBlob = myBlob.call ? myBlob.bind(self) : Blob;
 
-(function(root, factory) {
-    if(typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define([], factory);
-    } else if(typeof exports === 'object') {
-        // Node. Does not work with strict CommonJS, but
-        // only CommonJS-like environments that support module.exports,
-        // like Node.
-        module.exports = factory();
-    } else {
-        // Browser globals (root is window)
-        root.download = factory();
+
+    if(String(this) === 'true') { //reverse arguments, allowing download.bind(true, "text/xml", "export.xml") to act as a callback
+        payload = [payload, mimeType];
+        mimeType = payload[0];
+        payload = payload[1];
     }
-}(this, function() {
 
-    return function download(data, strFileName, strMimeType) {
+    // if no filename and no mime, assume a url was passed as the only argument
+    if(url && url.length < 2048) {
+        fileName = url.split('/')
+            .pop()
+            .split('?')[0];
+        url = encodeURI(decodeURI(url));
+        fileName = decodeURI(fileName);
+        // assign href prop to temp anchor
+        anchor.href = url;
+        // if the browser determines that it's a potentially valid url path:
+        if(anchor.href.indexOf(url) !== -1) {
+            var ajax = new XMLHttpRequest();
+            ajax.open('GET', url, true);
+            ajax.responseType = 'blob';
+            ajax.onload = function(e) {
+                /**
+                 * 校验文件不存在
+                 */
+                var status = e.target.status;
+                var response = e.target.response;
+                if(status >= 200 && status < 300) {
+                    download(response, fileName, defaultMime);
+                } else {
+                    console.error('文件不存在 || 请求错误 || 网络错误');
+                }
+            };
 
-        var self = window, // this script is only for browsers anyway...
-            defaultMime = 'application/octet-stream;charset=utf-8', // this default mime also triggers iframe downloads
-            mimeType = strMimeType || defaultMime,
-            payload = data,
-            url = !strFileName && !strMimeType && payload,
-            anchor = document.createElement('a'),
-            toString = function(a) {return String(a);},
-            myBlob = (self.Blob || self.MozBlob || self.WebKitBlob || toString),
-            fileName = strFileName || 'download',
-            blob,
-            reader;
-        myBlob = myBlob.call ? myBlob.bind(self) : Blob;
-
-
-        if(String(this) === 'true') { //reverse arguments, allowing download.bind(true, "text/xml", "export.xml") to act as a callback
-            payload = [payload, mimeType];
-            mimeType = payload[0];
-            payload = payload[1];
+            setTimeout(function() { ajax.send();}, 0); // allows setting custom ajax headers using the return:
+            return ajax;
         }
-
-        // if no filename and no mime, assume a url was passed as the only argument
-        if(url && url.length < 2048) {
-            fileName = url.split('/')
-                .pop()
-                .split('?')[0];
-            url = encodeURI(decodeURI(url));
-            fileName = decodeURI(fileName);
-            // assign href prop to temp anchor
-            anchor.href = url;
-            // if the browser determines that it's a potentially valid url path:
-            if(anchor.href.indexOf(url) !== -1) {
-                var ajax = new XMLHttpRequest();
-                ajax.open('GET', url, true);
-                ajax.responseType = 'blob';
-                ajax.onload = function(e) {
-                    /**
-                     * 校验文件不存在
-                     */
-                    var status = e.target.status;
-                    var response = e.target.response;
-                    if(status >= 200 && status < 300) {
-                        download(response, fileName, defaultMime);
-                    } else {
-                        console.error('文件不存在 || 请求错误 || 网络错误');
-                    }
-                };
-
-                setTimeout(function() { ajax.send();}, 0); // allows setting custom ajax headers using the return:
-                return ajax;
-            }
-        }
+    }
 
 
-        //go ahead and download dataURLs right away
-        if(/^data:([\w+-]+\/[\w+.-]+)?[,;]/.test(payload)) {
+    //go ahead and download dataURLs right away
+    if(/^data:([\w+-]+\/[\w+.-]+)?[,;]/.test(payload)) {
 
-            if(payload.length > (1024 * 1024 * 1.999) && myBlob !== toString) {
-                payload = dataUrlToBlob(payload);
-                mimeType = payload.type || defaultMime;
-            } else {
-                return navigator.msSaveBlob ?  // IE10 can't do a[download], only Blobs:
-                    navigator.msSaveBlob(dataUrlToBlob(payload), fileName) :
-                    saver(payload); // everyone else can save dataURLs un-processed
-            }
-
+        if(payload.length > (1024 * 1024 * 1.999) && myBlob !== toString) {
+            payload = dataUrlToBlob(payload);
+            mimeType = payload.type || defaultMime;
         } else {
-            // 处理中文字符
-            // 匹配用GBK (GB2312/GB18030)编码的所有汉字和标点符号
-            if(/([\x80-\xff])/.test(payload)) {
-                var i = 0, tempUiArr = new Uint8Array(payload.length), mx = tempUiArr.length;
-                for(i; i < mx; ++i) {
-                    tempUiArr[i] = payload.charCodeAt(i);
-                }
-                payload = new myBlob([tempUiArr], {type: mimeType});
-            }
+            return navigator.msSaveBlob ?  // IE10 can't do a[download], only Blobs:
+                navigator.msSaveBlob(dataUrlToBlob(payload), fileName) :
+                saver(payload); // everyone else can save dataURLs un-processed
         }
 
-        blob = payload instanceof myBlob ? payload : new myBlob([payload], {type: mimeType});
-
-
-        var ext = fileName.split('.').pop();
-        if(ext === 'csv') {
-            /**
-             * utf-8编码的csv文件用excel打开时，中文乱码
-             * 而excel以BOM编码方式，所以需要在文件开头添加0xFEFF来告知该csv的utf编码方式
-             *
-             * mizi@2018-720
-             */
-            blob = new Blob([String.fromCharCode(0xFEFF), blob], {type: blob.type});
-        }
-
-
-        function dataUrlToBlob(strUrl) {
-            var parts = strUrl.split(/[:;,]/),
-                type = parts[1],
-                decoder = parts[2] === 'base64' ? atob : decodeURIComponent,
-                binData = decoder(parts.pop()),
-                mx = binData.length,
-                i = 0,
-                uiArr = new Uint8Array(mx);
-
+    } else {
+        // 处理中文字符
+        // 匹配用GBK (GB2312/GB18030)编码的所有汉字和标点符号
+        if(/([\x80-\xff])/.test(payload)) {
+            var i = 0, tempUiArr = new Uint8Array(payload.length), mx = tempUiArr.length;
             for(i; i < mx; ++i) {
-                uiArr[i] = binData.charCodeAt(i);
+                tempUiArr[i] = payload.charCodeAt(i);
             }
+            payload = new myBlob([tempUiArr], {type: mimeType});
+        }
+    }
 
-            return new myBlob([uiArr], {type: type});
+    blob = payload instanceof myBlob ? payload : new myBlob([payload], {type: mimeType});
+
+
+    var ext = fileName.split('.').pop();
+    if(ext === 'csv') {
+        /**
+         * utf-8编码的csv文件用excel打开时，中文乱码
+         * 而excel以BOM编码方式，所以需要在文件开头添加0xFEFF来告知该csv的utf编码方式
+         *
+         * mizi@2018-720
+         */
+        blob = new Blob([String.fromCharCode(0xFEFF), blob], {type: blob.type});
+    }
+
+
+    function dataUrlToBlob(strUrl) {
+        var parts = strUrl.split(/[:;,]/),
+            type = parts[1],
+            decoder = parts[2] === 'base64' ? atob : decodeURIComponent,
+            binData = decoder(parts.pop()),
+            mx = binData.length,
+            i = 0,
+            uiArr = new Uint8Array(mx);
+
+        for(i; i < mx; ++i) {
+            uiArr[i] = binData.charCodeAt(i);
         }
 
-        function saver(url, winMode) {
+        return new myBlob([uiArr], {type: type});
+    }
 
-            if('download' in anchor) { //html5 A[download]
-                anchor.href = url;
-                anchor.setAttribute('download', fileName);
-                anchor.className = 'download-js-link';
-                anchor.innerHTML = 'downloading...';
-                anchor.style.display = 'none';
-                document.body.appendChild(anchor);
-                setTimeout(function() {
-                    anchor.click();
-                    document.body.removeChild(anchor);
-                    if(winMode === true) {setTimeout(function() { self.URL.revokeObjectURL(anchor.href);}, 250);}
-                }, 66);
+    function saver(url, winMode) {
 
-                return true;
-            }
+        if('download' in anchor) { //html5 A[download]
+            anchor.href = url;
+            anchor.setAttribute('download', fileName);
+            anchor.className = 'download-js-link';
+            anchor.innerHTML = 'downloading...';
+            anchor.style.display = 'none';
+            document.body.appendChild(anchor);
+            setTimeout(function() {
+                anchor.click();
+                document.body.removeChild(anchor);
+                if(winMode === true) {setTimeout(function() { self.URL.revokeObjectURL(anchor.href);}, 250);}
+            }, 66);
 
-            // handle non-a[download] safari as best we can:
-            if(/(Version)\/(\d+)\.(\d+)(?:\.(\d+))?.*Safari\//.test(navigator.userAgent)) {
-                if(/^data:/.test(url)) {
-                    url = 'data:' + url.replace(/^data:([\w\/\-\+]+)/, defaultMime);
-                }
-                if(!window.open(url)) { // popup blocked, offer direct download:
-                    if(window.confirm('Displaying New Document\n\nUse Save As... to download, then click back to return to this page.')) { window.location.href = url; }
-                }
-                return true;
-            }
+            return true;
+        }
 
-            //do iframe dataURL download (old ch+FF):
-            var f = document.createElement('iframe');
-
-            document.body.appendChild(f);
-
-            if(!winMode && /^data:/.test(url)) { // force a mime that will download:
+        // handle non-a[download] safari as best we can:
+        if(/(Version)\/(\d+)\.(\d+)(?:\.(\d+))?.*Safari\//.test(navigator.userAgent)) {
+            if(/^data:/.test(url)) {
                 url = 'data:' + url.replace(/^data:([\w\/\-\+]+)/, defaultMime);
             }
-
-            f.src = url;
-
-            setTimeout(function() { document.body.removeChild(f); }, 333);
-
-        }//end saver
-
-        if(navigator.msSaveBlob) { // IE10+ : (has Blob, but not a[download] or URL)
-            return navigator.msSaveBlob(blob, fileName);
-        }
-
-        if(self.URL) { // simple fast and modern way using Blob and URL:
-            saver(self.URL.createObjectURL(blob), true);
-        } else {
-            // handle non-Blob()+non-URL browsers:
-            if(typeof blob === 'string' || blob.constructor === toString) {
-                try {
-                    return saver('data:' + mimeType + ';base64,' + self.btoa(blob));
-                } catch(y) {
-                    return saver('data:' + mimeType + ',' + encodeURIComponent(blob));
-                }
+            if(!window.open(url)) { // popup blocked, offer direct download:
+                if(window.confirm('Displaying New Document\n\nUse Save As... to download, then click back to return to this page.')) { window.location.href = url; }
             }
-
-            // Blob but not URL support:
-            reader = new FileReader();
-            reader.onload = function(e) {
-                saver(this.result);
-            };
-            reader.readAsDataURL(blob);
+            return true;
         }
-        return true;
-    };
-    /* end download() */
-}));
+
+        //do iframe dataURL download (old ch+FF):
+        var f = document.createElement('iframe');
+
+        document.body.appendChild(f);
+
+        if(!winMode && /^data:/.test(url)) { // force a mime that will download:
+            url = 'data:' + url.replace(/^data:([\w\/\-\+]+)/, defaultMime);
+        }
+
+        f.src = url;
+
+        setTimeout(function() { document.body.removeChild(f); }, 333);
+
+    }//end saver
+
+    if(navigator.msSaveBlob) { // IE10+ : (has Blob, but not a[download] or URL)
+        return navigator.msSaveBlob(blob, fileName);
+    }
+
+    if(self.URL) { // simple fast and modern way using Blob and URL:
+        saver(self.URL.createObjectURL(blob), true);
+    } else {
+        // handle non-Blob()+non-URL browsers:
+        if(typeof blob === 'string' || blob.constructor === toString) {
+            try {
+                return saver('data:' + mimeType + ';base64,' + self.btoa(blob));
+            } catch(y) {
+                return saver('data:' + mimeType + ',' + encodeURIComponent(blob));
+            }
+        }
+
+        // Blob but not URL support:
+        reader = new FileReader();
+        reader.onload = function(e) {
+            saver(this.result);
+        };
+        reader.readAsDataURL(blob);
+    }
+    return true;
+};
+
+module.exports = download;
