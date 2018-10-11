@@ -69,6 +69,8 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
         });
     }
 
+    cancel = null;
+
     state: any = {
         data: [],
         req: this.req['pie'],
@@ -78,7 +80,16 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
 
     componentWillMount() {
 
-        // $pool.nodata.get({id: 111});
+        let aa = $pool.nodata.get({id: 111}, {}, {
+            cancelToken: (c) => (this.cancel = c)
+        }).then(() => {
+            console.debug('--------->')
+        }).catch((error) => {
+            console.debug(error);
+        });
+
+        // this.cancel('cancel reject');
+
 
         // $pool.nores.get({id: 111}).catch((error) => {
         //     error.$message.then((o) => console.debug(o));
@@ -86,6 +97,8 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
 
         // $pool.nodata.delete({id: 111}, {});
         // $pool.nodata.patch({id: 111}, {});
+
+        console.debug( this.cancel() );
 
     }
 
@@ -144,36 +157,6 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
                 <header>MrReq <small>v0.1.24.20180521</small></header>
                 <ins>一个可以异步请求的组件, 使用Resource Pool进行异步请求</ins>
                 <main>
-                    <JsxParser
-                        bindings={{
-                            data,
-                            req,
-                            nodataReq,
-                            chartTypes,
-                            result,
-                            changeReqPie: () => changeReq('pie'),
-                            changeReqLine: () => changeReq('line'),
-                            draw: (gene) => (
-                                <MrEcharts
-                                    data={gene.data}
-                                    chartTypes={chartTypes}
-                                ></MrEcharts>
-                            )
-                        }}
-
-                        blacklistedAttrs={[]}
-                        components={{
-                            Button,
-                            MrEcharts,
-                            MrPanel,
-                            MrIf,
-                            MrFill,
-                            MrIcon,
-                            MrReq
-                        }}
-                        jsx={this.code}
-                        onError={(err) => console.debug(err)}
-                    ></JsxParser>
                 </main>
 
                 <details className="mt-16">

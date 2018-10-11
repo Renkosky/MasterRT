@@ -13,9 +13,7 @@
  * @update mizi.lin@v0.1.23.20180521
  * ::=> 添加 MrService.setNoDataComponent
  */
-
-declare const require: any;
-const download = require('../assets/js/download.js');
+import {default as download} from '../assets/js/download.js';
 import * as mu from 'mzmu';
 import {default as classNames} from 'classnames';
 import '../assets/styles/common.less';

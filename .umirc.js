@@ -9,8 +9,6 @@ let umirc =  {
 
                 antd: true,
 
-                polyfills: ['ie9'],
-
                 dynamicImport: {
                     webpackChunkName: true,
                 },

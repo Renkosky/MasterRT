@@ -20,8 +20,6 @@ import * as mu from 'mzmu';
 import MrRequest from './mr-request';
 import MrServices from './mr.services';
 import * as _ from 'lodash';
-import { Playground, PropsTable } from 'docz';
-
 
 class MrResource {
 

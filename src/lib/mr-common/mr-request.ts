@@ -16,12 +16,17 @@
  *
  * @update mizi.lin@v0.2.0-b7.2o18o612
  * ::=> fixed bugs: catch error return value 没有判断是否为promise又外裹一层promise.reject
+ *
+ * @update mizi.lin@v1.0.3
+ * :: => 取消ajax请求, 仅支持取消单条请求
  */
 
 
 import MrServices from './mr.services';
 import * as mu from 'mzmu';
 import axios, {AxiosResponse} from 'axios';
+const CancelToken = axios.CancelToken;
+// const source = CancelToken.source();
 
 interface AxiosRequestConfig {
     resultType: string;
@@ -40,27 +45,44 @@ function responseHandler(response: AxiosResponse) {
 
 function errorHandler(err) {
 
-    const {response} = err;
+    // 取消请求
+    if (axios.isCancel(err)) {
+        // let self = MrServices._reqCatch;
+        // if(self) {
+        //     err = self(err);
+        // }
+        //
+        // return Promise.reject(err);
 
-    // 设置reject, 表示该 catch 后，不再接受 then
-    let {headers, status, statusText, data} = response;
+        /**
+         * 取消请求跳过全局配置中输出
+         * 只能在单个请求中配置catch信息
+         */
+        return Promise.reject(err);
+    } else {
+        const {response} = err;
 
-    // 兼容fetch使用promise获得信息
-    let $message: any = new Promise((resolve) => resolve(data));
+        // 设置reject, 表示该 catch 后，不再接受 then
+        let {headers, status, statusText, data} = response;
 
-    // 传递error信息
-    let error: any = {
-        headers, status, statusText, data, $message, response, error: err
-    };
+        // 兼容fetch使用promise获得信息
+        let $message: any = new Promise((resolve) => resolve(data));
+
+        // 传递error信息
+        let error: any = {
+            headers, status, statusText, data, $message, response, error: err
+        };
 
 
-    let self = MrServices._reqCatch;
+        let self = MrServices._reqCatch;
+        if(self) {
+            error = self(error);
+        }
 
-    if(self) {
-        error = self(error);
+        return Object.prototype.toString.call(error) === '[object Promise]' ? error : Promise.reject(error);
     }
 
-    return Object.prototype.toString.call(error) === '[object Promise]' ? error : Promise.reject(error);
+
 }
 
 /**
@@ -82,6 +104,12 @@ export default function MrRequest(url, options: any = {}) {
 
     options.headers = mu.extend(true, headers, options.headers);
     options.url = url;
+
+    // v1.0.3
+    // add cancel request
+    mu.run(typeof options.cancelToken === 'function', () => {
+        options.cancelToken = new CancelToken(options.cancelToken);
+    });
 
     return axios(options)
         .then(responseHandler)

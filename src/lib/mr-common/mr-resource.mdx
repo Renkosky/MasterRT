@@ -103,6 +103,31 @@ import MrResource from './mr-resource';
 
 ```
 
+### 取消请求（cancel)
+
+- 目前仅支持取消一个请求信息
+
+```javascript
+
+// 取消 ajax 请求例子
+
+const cancel;
+
+$pool.nodata.get({}, {}, {
+    cancelToken: (c) => (cancel = c)
+}).then(() => {
+}).catch((error) => {
+    console.debug(error);
+});
+
+// 取消请求
+// cancel(message?: any): message 非必须
+let rst = cancel('cancel ajax');
+
+// rst 为 Cancel对象时，取消请求成功
+// rst 为 undefined时，ajax请求已触发成功
+
+```
 
 ## Properties
 

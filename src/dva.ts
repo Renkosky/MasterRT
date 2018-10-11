@@ -27,7 +27,7 @@ export function config() {
     MrServices.setResourcePool(brp);
 
     MrServices.reqCatch((res) => {
-        // console.debug('::::::::::', res);
+        console.debug('::::::::::', res);
         return Promise.reject(res);
     });
 
@@ -35,9 +35,10 @@ export function config() {
 
     return {
         onError(err) {
-            err.preventDefault();
-            message.error(err.message);
+            // err.preventDefault();
+            // message.error(err.message);
         },
+
         initialState: {
             global: {
                 text: 'hi umi + dva',
