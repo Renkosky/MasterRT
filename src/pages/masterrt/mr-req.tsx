@@ -88,7 +88,7 @@ export default class MrsReq extends React.Component<MrsReqProps, {}> {
             console.debug(error);
         });
 
-        // this.cancel('cancel reject');
+        // this.cancel();
 
 
         // $pool.nores.get({id: 111}).catch((error) => {
