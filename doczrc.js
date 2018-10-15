@@ -1,5 +1,5 @@
 import {css} from 'docz-plugin-css';
-import {svgr} from 'docz-plugin-svgr';
+const path = require('path');
 
 export default {
     themeConfig: {
@@ -25,8 +25,12 @@ export default {
         css({
             preprocessor: 'less',
             cssmodules: false
-        }),
-        svgr()
-    ]
+        })
+    ],
+
+    // modifyBundlerConfig: (config) => {
+    //     config.output.publicPath = './public/';
+    //     return config;
+    // }
 };
 

@@ -108,10 +108,6 @@ interface MrIconProps {
 
                 <br />
 
-                {/*::: <img src="assets/bbs.svg" />*/}
-
-                <br />
-
                 <Icon component={BbsSvg} />
 
                 <details className="mt-16">

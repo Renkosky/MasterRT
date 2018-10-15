@@ -1,6 +1,7 @@
 import {message} from 'antd';
 import {MrServices} from './lib';
 import {default as brp} from './services/base-resource-pool';
+import * as moment from 'moment';
 
 /**
  * 系统初始化配置设置页面
@@ -27,17 +28,25 @@ export function config() {
     MrServices.setResourcePool(brp);
 
     MrServices.reqCatch((res) => {
-        // console.debug('::::::::::', res);
+        console.debug('::::::::::', res);
         return Promise.reject(res);
     });
 
     // MrServices.setEchartsTheme('aaaaaa');
 
+    moment.defineLocale('en-us', {
+        week : {
+            dow : 1, // Monday is the first day of the week.
+            doy : 4  // The week that contains Jan 4th is the first week of the year.
+        }
+    });
+
     return {
         onError(err) {
-            err.preventDefault();
-            message.error(err.message);
+            // err.preventDefault();
+            // message.error(err.message);
         },
+
         initialState: {
             global: {
                 text: 'hi umi + dva',

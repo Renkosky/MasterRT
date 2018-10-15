@@ -2,6 +2,7 @@ import React from 'react';
 import './index.less';
 import MrAutoBind from '../../lib/mr-common/mr-auto-bind';
 import {MrIf, MrPanel} from '../../lib';
+import {DatePicker} from 'antd';
 
 interface IndexProps {
 }
@@ -86,6 +87,8 @@ export default class MrsIndex extends React.Component<IndexProps, {}> {
                 {/*{ true? null : this.state[name].name }*/}
 
                 {/*<If condition={true}>*/} {/*aaaaaa*/} {/*</If>*/}
+
+                <DatePicker />
 
                 <MrIf condition={false}>
                     {() => <span>{this.state[name].name}</span>}
