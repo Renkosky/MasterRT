@@ -576,8 +576,8 @@ export default {
                                 return {
                                     name: _.get(o, '[0].name'),
                                     value: [
+                                        o[0].x,
                                         o[0].value,
-                                        o[0].x
                                     ]
                                 };
                             },
