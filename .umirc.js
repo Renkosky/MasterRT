@@ -1,15 +1,8 @@
 const path = require('path');
 const _ = require('lodash');
-const theme = process.env.THEME;
-const env = process.env.MRI_ENV;
-const device = process.env.MRI_DEVICE;
-
-// console.log('::::::::---:::::: \n\n\n', process.env);
-
-const themePath = `./src/theme/${theme}/${theme}`;
-
-const config = require(`${themePath}-umi.js`);
-const {mri, adjust = {}, ...umi} = config;
+const theme = process.env.THEME || 'aaa';
+const env = process.env.MRI_ENV || 'bbb';
+const device = process.env.MRI_DEVICE || 'ccc';
 
 let umirc = {
     /**
@@ -130,7 +123,5 @@ let umirc = {
             .loader(require.resolve('@svgr/webpack'));
     }
 };
-
-umirc = _.extend({}, umirc, umi);
 
 export default umirc;
