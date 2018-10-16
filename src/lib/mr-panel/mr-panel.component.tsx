@@ -14,6 +14,9 @@ import * as mu from 'mzmu';
 import { default as MrServices } from '../mr-common/mr.services';
 import MrIf from '../mr-condition/mr-if.component';
 import '../assets/styles/mr-panel.less';
+import MrElse from '../mr-condition/mr-else.component';
+import MrFill from '../mr-fill/mr-fill.component';
+import MrCol from '../mr-fill/mr-col.component';
 
 export interface MrPanelProps {
     /**
@@ -53,6 +56,13 @@ export interface MrPanelProps {
      */
     append?: JSX.Element | React.Component;
 
+    /**
+     * Panel 中间插入
+     */
+    leftSide?: JSX.Element | React.Component;
+
+    rightSide?: JSX.Element | React.Component;
+
     className?: string;
     style?: React.CSSProperties;
     bodyStyle?: React.CSSProperties;
@@ -69,7 +79,7 @@ class MrPanel extends React.Component<MrPanelProps, {}> {
 
     render() {
         const { style, className = '', title = '', extra, bodyStyle, border = 'all', h100 } = this.props;
-        const { prepend, append } = this.props;
+        const { prepend, append, leftSide, rightSide } = this.props;
 
         const classString = MrServices.cls(
             {
@@ -79,6 +89,7 @@ class MrPanel extends React.Component<MrPanelProps, {}> {
             },
             className
         );
+
         return (
             <article className={classString}>
                 {(title || extra) && (
@@ -98,7 +109,7 @@ class MrPanel extends React.Component<MrPanelProps, {}> {
                                     );
                                 },
                                 () => title
-                            )}
+                            )}{' '}
                             {extra && (
                                 <div className={'mr-panel-headerExtra'} key={'extra'}>
                                     {extra}
@@ -115,8 +126,24 @@ class MrPanel extends React.Component<MrPanelProps, {}> {
                 </MrIf>
 
                 <main>
-                    <div style={style} className={'mr-panel-body'}>
-                        {this.props.children}
+                    <div>
+                        <MrFill>
+                            {leftSide && (
+                                <MrCol>
+                                    {this.runfn(leftSide)}
+                                </MrCol>
+                            )}
+                            <MrCol order={1} span={2}>
+                                <div style={style} className={'mr-panel-body'}>
+                                    {this.props.children}
+                                </div>
+                            </MrCol>
+                            {rightSide && (
+                                <MrCol>
+                                    {this.runfn(rightSide)}
+                                </MrCol>
+                            )}
+                        </MrFill>
                     </div>
                 </main>
 
