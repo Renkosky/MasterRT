@@ -545,12 +545,9 @@
     return {
         base: colors,
         names: {
-            BBS: '#f00',
-            Blog: '#00f',
             POSITIVE: 'rgba(24,127,197,1)',
             NEGATIVE: 'rgba(255,135,31,1)',
             NEUTRAL: 'rgba(24,127,197,.5)',
-            SUV: '#aaa'
         }
     };
 }));

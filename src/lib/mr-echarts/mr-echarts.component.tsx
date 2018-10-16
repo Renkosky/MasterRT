@@ -50,7 +50,7 @@ export interface MrEchartsProps {
      *
      * @deprecated
      */
-    transform?: Function;
+    transform?: Function | any;
 
     /**
      * 图表类型；
