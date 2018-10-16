@@ -16,6 +16,8 @@ export interface MrColProps {
      */
     span?: number;
 
+    order?: number;
+
     /**
      * 是否可以再区块内滚动
      *

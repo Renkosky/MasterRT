@@ -107,6 +107,7 @@ export default class MrsEchartsPanel extends React.Component<MrsEchartsPanelProp
                     title="Use Req"
                     style={{height: 400}}
                     chartTypes={'bar::percent100'}
+                    leftSide={<div style={{width: 100}}>aaaa</div>}
                     req={req}
                 />
 

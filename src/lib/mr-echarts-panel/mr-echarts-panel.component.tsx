@@ -67,6 +67,8 @@ export interface MrEchartsPanelProps extends MrEchartsProps {
     style?: any;
     append?: any;
     prepend?: any;
+    leftSide?: any;
+    rightSide?: any;
 
     /**
      * mrReq?: MrReqProps
@@ -353,7 +355,8 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
     }
 
     render() {
-        const { title, style, className, h100, bodyStyle, border, showToolbar, transform, append, prepend } = this.props;
+        const { title, style, className, h100, bodyStyle, border, showToolbar, transform } = this.props;
+        const { append, prepend, leftSide, rightSide } = this.props;
         const { chartTypes, data, dataType, dataModel } = this.props;
         const { options, renderType, theme } = this.props;
 
@@ -431,6 +434,8 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
                 bodyStyle={bodyStyle}
                 append={append}
                 prepend={prepend}
+                leftSide={leftSide}
+                rightSide={rightSide}
                 border={border}
             >
                 <MrReq req={req} data={{ data }} force={true} transmit="data" {..._process}>
