@@ -127,7 +127,7 @@ class MrPanel extends React.Component<MrPanelProps, {}> {
 
                 <main>
                     <div>
-                        <MrFill>
+                        <MrFill h100={true}>
                             {leftSide && (
                                 <MrCol>
                                     {this.runfn(leftSide)}
