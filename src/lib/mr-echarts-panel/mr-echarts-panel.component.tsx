@@ -338,9 +338,10 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
+        // @todo 选择有用的进行对比（跟目前反选), _.equals 需要移除函数
+
         // @todo 过滤掉 props 中的 function
-        let { children, append, chartClick, ...next } = nextProps;
-        // @todo 选择有用的进行对比（跟目前反选）
+        let { children, append, chartClick, prepend, leftSide, rightSide, ...next } = nextProps;
         let { children: a, append: b, chartClick: c, prepend: d, leftSide: e, rightSide:f, ...current } = this.props;
 
         let { force } = nextProps;
