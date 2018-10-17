@@ -33,47 +33,47 @@ export default class MrsMrFill extends React.Component<MrsMrFillProps, {}> {
                 <MrCol span={2}>
                     2
                 </MrCol>
-                <MrCol style={{width: 202}}>
-                    width: 202px
-                </MrCol>
                 <MrCol span={7} h100={false}>
                      7
                 </MrCol>
+                <MrCol span={'201rem'}>
+                    width: 201px
+                </MrCol>
+                
                 <MrCol span={12}>
                      12
                 </MrCol>
             </MrFill>
 
             <MrFill gutter={8} style={{height: 100, marginTop: 8}}>
-                <MrCol span={1}>
-                    静夜思<br />
+                <MrCol span={1} order={2}>
+                    静夜思 <small>ORDER: 2</small><br />
                     床前明月光<br />
                     疑是地上霜<br />
                     举头望明月<br />
                     低头思故乡<br />
                 </MrCol>
                 
-                <MrCol span={1} scroll={true}>
-                    静夜思<br />
+                <MrCol span={1} order={1} scroll={true}>
+                    静夜思 <small>ORDER: 1</small><br />
                     床前明月光<br />
                     疑是地上霜<br />
                     举头望明月<br />
                     低头思故乡<br />
                 </MrCol>
                 
-                <MrCol span={1}>
-                    静夜思<br />
+                <MrCol span={1} order={3}>
+                    静夜思 <small>ORDER: 3</small><br />
                     <div style={{width: 500}}>
                         床前明月光 
                         疑是地上霜
                         举头望明月
                         低头思故乡
                     </div>
-                    
                 </MrCol>
                 
                 <MrCol span={1} scroll={true}>
-                    静夜思<br />
+                    静夜思 <small>ORDER: no set</small><br />
                     <div style={{width: 500}}>
                         床前明月光 
                         疑是地上霜
@@ -103,24 +103,6 @@ export default class MrsMrFill extends React.Component<MrsMrFillProps, {}> {
                     <summary>查看源码</summary>
                     <MrCode code={(this.code)}></MrCode>
                 </details>
-
-                <MrFill>
-
-                    <MrCol>
-                            2222
-                        <MrFill>
-
-                            <MrCol>
-                                111
-                            </MrCol>
-
-                        </MrFill>
-
-
-                    </MrCol>
-
-                </MrFill>
-
 
                 <aside className="mt-16">
 
