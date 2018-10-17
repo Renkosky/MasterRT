@@ -57,8 +57,6 @@ class MrIf extends React.Component<MrIfProps, {}> {
     inheritance(): any {
         let {children, condition, falseType, _gene = {}, ...props} = this.props;
 
-        console.debug('::::::::', condition, children);
-
         switch (falseType) {
             case 'if':
                 condition = !!condition;
