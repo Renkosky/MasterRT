@@ -91,7 +91,7 @@ class MrPanel extends React.Component<MrPanelProps, {}> {
         );
 
         return (
-            <article className={classString}>
+            <article className={classString} style={style}>
                 {(title || extra) && (
                     <header>
                         <div className={'mr-panel-header'} key={'header'}>

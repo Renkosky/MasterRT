@@ -65,6 +65,7 @@ export interface MrEchartsPanelProps extends MrEchartsProps {
     h100?: boolean;
     className?: string;
     style?: any;
+
     append?: any;
     prepend?: any;
     leftSide?: any;
@@ -339,7 +340,8 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
     shouldComponentUpdate(nextProps, nextState) {
         // @todo 过滤掉 props 中的 function
         let { children, append, chartClick, ...next } = nextProps;
-        let { children: a, append: b, chartClick: c, ...current } = this.props;
+        // @todo 选择有用的进行对比（跟目前反选）
+        let { children: a, append: b, chartClick: c, prepend: d, leftSide: e, rightSide:f, ...current } = this.props;
 
         let { force } = nextProps;
         if (force) {
