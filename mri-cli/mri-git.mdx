@@ -12,96 +12,84 @@ import { Playground, PropsTable } from 'docz';
 基于前端团队项目GIT管理, 封装git部分命令
 
 
-## mri git release
+## mri git release (mri gr)
 
 需求分支
 
 ```bash
-mri git release <theme> [options]
+mri git release <theme::version> [options]
+
 theme: 需要启动的主题名称
+version: 当前release的版本
 options:
   --force          强力开启
-  --start          创建release
-  --test           merge 到test
-  --finish         关闭release(只删除本地分支)
-  --ver [version]  当前版本号
-
 ```
 
 ```sh
 # 新建 release
-$ mri git release social --ver 0.0.1 --start
-> release/social/v0.0.1
-
-# 新建 release, 快捷方式
-$ mri git release social::0.0.1
-> release/social/v0.0.1
+$ mri git release social::0.1.0
+> release/social/v0.1.0
 
 # --> 新建 release 会自动跳转到master创建
 # --> 新建的 release 会自动推送到远程 remote
 # --> 若创建 release 的主题不存在，则不能创建该 release
 # --> 使用xyz版本格式制定版本
 # --> 若想要创建一个主题不存在的 release, 请使用强力模式 --force
-$ mri git release no-exist-theme::0.0.1 --force
 
+$ mri git release no-exist-theme::0.0.1 --force
+> release/no-exist-theme/v0.0.1
+
+# 使用简单模式创建 mri gr === mri git release
+$ mri gr csi::2.1.3
+> release/csi/v2.1.3
 
 ```
 
-## mri git feature
+## mri git feature (mri gf)
 
 任务分支
 
 ```bash
-mri git feature <ver> [options]
-ver: 当前feature版本号
+mri git feature name::version
+name: 任务发布类型(beta, alpha) 默认值 beta
+version: 当前feature版本号
 options:
-  --start     创建release
-  --force     强力模式，无需在release下创建feature
-  --finish    关闭release(只删除本地分支)
   --remote    是否推送到远程
 ```
 
 ```bash
 // 新建 feature
-$ mri git feature beta.1 --start
+// 必须在release分支
+$ release/social/v0.1.0
+# 默认可以忽略name
+$ mri git feature ::1
 > feature/social/v0.0.1-beta.1
 
-// 新建 feature, 快捷方式
-$ mri git feature beta.1::
-> feature/social/v0.0.1-beta.1
+$ release/social/v0.1.0
+$ mri gf alpha::2
+> feature/social/v0.0.1-alpha.2
 
 # --> feature 只能在 release 下创建，其他地方不能创建 feature
 # --> feature 使用 beta.N 模式创建版本号
 # --> feature 默认不推送远程，若需要推送远程 --remote
-$ mri git feature beta.1:: --remote
 # --> 强力模式 --force 可以直接在feature中创建其他feature
-$ mri git feature beta.2:: --force
-> feature/social/v0.0.1-beta.2
 ```
 
-## mri git hotfix
+## mri git hotfix (mr gh)
 
 临时修复分支
 
 ```bash
-mri git hotfix <theme> [options]
+mri git hotfix <theme::version> [options]
 theme: 需要启动的主题名称
+version: 版本需要自带rc版本
 options:
   --force          强力开启
-  --start          创建 hotfix
-  --test           merge 到test
-  --finish         hotfix (只删除本地分支)
-  --ver [version]  当前版本号
-
 ```
 
 ```sh
-# 新建 release
-$ mri git hotfix social --ver 0.0.1-rc.1 --start
-> hotfix/social/v0.0.1-rc.1
-
-# 新建 release, 快捷方式
-$ mri git release social::0.0.1-rc.1
+# 新建 hotfix
+$ mri git hotfix social::0.0.1-rc.1
 > hotfix/social/v0.0.1-rc.1
 
 # --> hotfix 做为紧急修复分支, 其大概流程与 release 一致;
@@ -111,5 +99,24 @@ $ mri git release social::0.0.1-rc.1
 # --> 使用xyz版本格式制定版本
 # --> 若想要创建一个主题不存在的 hotfix, 请使用强力模式 --force
 $ mri git hotfix no-exist-theme::0.0.1-rc.1 --force
+
+```
+
+## git gamp
+
+一组git命名的快捷方式
+
+```bash
+
+# mri gamp <message> [options]
+message: git commit -am message
+-n, --not-push: 不执行 git push
+-f, --force: 默认文件没有变化，不会git push; 若已存在commit，可使用该命令强制提交文件
+
+# ---
+
+$ git gamp 'this is a test'
+# 执行这条语句的git组合为
+# git pull && git status && git add . && git commit -am 'this is a test' && git push
 
 ```
