@@ -15,7 +15,7 @@ import MrRules from './mr-rules.compontent';
  * @param {boolean} defaultValue
  * @return {{then: (jsx) => (any | null)}}
  */
-export default function (keys: string | string[], rules: any, defaultValue: boolean) {
+export default function (keys: string | string[], rules?: any, defaultValue?: boolean) {
     keys = MrServices.upArray(keys) as string[];
     rules = mu.ifnvl(rules, MrServices.getRules());
     defaultValue = mu.ifnvl(defaultValue, MrServices.getRuleValue());

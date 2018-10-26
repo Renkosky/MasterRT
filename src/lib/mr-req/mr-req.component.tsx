@@ -43,6 +43,7 @@ import * as mu from 'mzmu';
 import MrServices from '../mr-common/mr.services';
 import * as _ from 'lodash';
 import MrProcess from '../mr-process/mr-process.component';
+import { valid } from 'semver';
 
 export interface IMrResource {
 
@@ -188,6 +189,11 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
 
     _start: number = 0;
 
+    result(data) {
+        let {result} = this.props;
+        result && result(data);
+    }
+
     /**
      * 单条Req数据处理
      */
@@ -236,7 +242,7 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
         Promise.all($promises).then((res) => {
             this._data = req.length == 1 ? res[0] : res;
             this._start = 100;
-            result && result(this._data);
+            this.result(this._data);
             this.transmit();
             this.forceUpdate();
         }).catch((error) => {
@@ -369,6 +375,8 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
         // 避免 unmounted 的时候 setState
         this.setState = () => void 0;
         this.forceUpdate = () => void 0;
+        this.result = () => void 0;
+        this.transmit = () => void 0;
     }
 
     render() {
