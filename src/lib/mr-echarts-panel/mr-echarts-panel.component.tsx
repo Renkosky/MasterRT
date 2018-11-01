@@ -342,7 +342,7 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
 
         // @todo 过滤掉 props 中的 function
         let { children, append, chartClick, prepend, leftSide, rightSide, ...next } = nextProps;
-        let { children: a, append: b, chartClick: c, prepend: d, leftSide: e, rightSide:f, ...current } = this.props;
+        let { children: a, append: b, chartClick: c, prepend: d, leftSide: e, rightSide: f, ...current } = this.props;
 
         let { force } = nextProps;
         if (force) {
@@ -363,8 +363,7 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
         const { chartTypes, data, dataType, dataModel } = this.props;
         const { options, renderType, theme } = this.props;
 
-        let chartsEvent = _.omit(
-            this.props,
+        let chartsEvents = _.pick(this.props, [
             'chartClick',
             'chartDblClick',
             'chartMouseDown',
@@ -372,7 +371,7 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
             'chartMouseOver',
             'chartMouseOut',
             'chartGlobalOut'
-        );
+        ]);
 
         let { req: mrReqReq, mrReq = {} } = this.props;
 
@@ -439,8 +438,7 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
                 prepend={prepend}
                 leftSide={leftSide}
                 rightSide={rightSide}
-                border={border}
-            >
+                border={border}>
                 <MrReq req={req} data={{ data }} force={true} transmit="data" {..._process}>
                     {dataView ? (
                         <MrEchartsDataView
@@ -451,7 +449,7 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
                     ) : (
                         <MrEcharts
                             {...echartsProps}
-                            {...chartsEvent}
+                            {...chartsEvents}
                             className={'full-sreen-' + fullScreen}
                             result={this.getResult.bind(this)}
                         />
