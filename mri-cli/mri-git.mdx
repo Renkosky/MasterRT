@@ -89,8 +89,8 @@ options:
 
 ```sh
 # 新建 hotfix
-$ mri git hotfix social::0.0.1-rc.1
-> hotfix/social/v0.0.1-rc.1
+$ mri git hotfix social::0.0.1-hotfix.1
+> hotfix/social/v0.0.1-hotfix.1
 
 # --> hotfix 做为紧急修复分支, 其大概流程与 release 一致;
 # --> 新建 hotfix 会自动跳转到master创建
@@ -98,7 +98,7 @@ $ mri git hotfix social::0.0.1-rc.1
 # --> 若创建 hotfix 的主题不存在，则不能创建该 hotfix
 # --> 使用xyz版本格式制定版本
 # --> 若想要创建一个主题不存在的 hotfix, 请使用强力模式 --force
-$ mri git hotfix no-exist-theme::0.0.1-rc.1 --force
+$ mri git hotfix no-exist-theme::0.0.1-hotfix.1 --force
 
 ```
 
@@ -120,3 +120,24 @@ $ git gamp 'this is a test'
 # git pull && git status && git add . && git commit -am 'this is a test' && git push
 
 ```
+
+### MRI 语义化版本管理
+
+### 遵从语义化版本管理规范(x.y.z)(Semantic Versioning])
+
+- 只使用最简式 x.y.z，放弃使用 x.y.z.w
+- 版本从 0.1.0 开始
+
+### 版本 :: git分支 :: 相应 tag
+
+| 版本 | git分支 | tag |
+| ------ | ----- | ------ |
+| 默认版本 release | release/theme/v0.1.0 | theme_v0.1.0 |
+| 紧急修复 hotfix | hotfix/theme/v0.1.0-hotfix.1 | theme_v0.1.0-hotfix.1 |
+| 预发布版本 feature beta | feature/theme/v0.1.0-beta.1 | theme_v0.1.0-beta.1 |
+
+PS: 尽量减少 **预发布版本 beta** 出现频率
+> feature beta 正常应该合并到release版本，进行发布
+
+> 只有特殊情况下 feature beta 才可以直接发布 （如 客户强烈要求）
+

@@ -133,7 +133,7 @@ class MrPanel extends React.Component<MrPanelProps, {}> {
                                     {this.runfn(leftSide)}
                                 </MrCol>
                             )}
-                            <MrCol order={1} span={2}>
+                            <MrCol span={2}>
                                 <div style={style} className={'mr-panel-body'}>
                                     {this.props.children}
                                 </div>
@@ -158,3 +158,5 @@ class MrPanel extends React.Component<MrPanelProps, {}> {
 }
 
 export default MrPanel;
+
+

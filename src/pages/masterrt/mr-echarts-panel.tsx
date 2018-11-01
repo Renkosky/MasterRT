@@ -64,16 +64,6 @@ export default class MrsEchartsPanel extends React.Component<MrsEchartsPanelProp
         req: this.req
     };
 
-    code = `
-        <MrEchartsPanel
-                title="Use Data"
-                style={{height: 400}} chartTypes={'pie::ring::ringLabel'} data={pie} 
-                transform={[{'@convert': {'value': '$rowRate'}}]} 
-                append={<div>在饼图底部插入内容</div>} />
-
-        
-    `;
-
     render() {
         let {pie} = this;
         let {req} = this.state;
@@ -88,20 +78,13 @@ export default class MrsEchartsPanel extends React.Component<MrsEchartsPanelProp
                 <ins onClick={() => (abc.mrdown({
                     downloadName: 'ksi-1532068145056.xlsx'
                 }, {"paramMap":{"date":["2018-04"]},"sample":false}))}>一个基于MrPanel, MrReq, MrEcharts 集成的显示UI，支持各种激活Echarts方式，以及使用Tool控制Echarts显示方式</ins>
-                <main>
-                    <JsxParser
-                        bindings={{pie, req, click: (e) => {
-                                console.debug(e);
-                            }}}
-                        components={{MrFill, MrCol, MrEchartsPanel}}
-                        jsx={this.code}
-                    ></JsxParser>
-                </main>
 
-                <details className="mt-16">
-                    <summary>查看源码</summary>
-                    <MrCode code={(this.code)}></MrCode>
-                </details>
+                <MrEchartsPanel
+                    title="Use Data"
+                    style={{height: 400}} chartTypes={'pie::ring::ringLabel'} data={pie}
+                    transform={[{'@convert': {'value': '$rowRate'}}]}
+                    chartClick={() => console.debug(2222222)}
+                    append={<div>在饼图底部插入内容</div>} />
 
                 <MrEchartsPanel
                     title="Use Req"

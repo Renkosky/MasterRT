@@ -9,6 +9,7 @@
         "compile": "tsc -p ./pub/tsconfig.pub.json",
         "tsd": "bash ./build.sh",
         "pub": "bash ./pub.sh",
+        "masterrt": "bash ./pub.sh",
         "doc": "typedoc --out ./docs",
         "docz:dev": "docz dev",
         "docz:build": "docz build"
