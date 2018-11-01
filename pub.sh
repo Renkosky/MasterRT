@@ -6,8 +6,6 @@ if [ $? -ne 0 ]; then
     exit 0
 fi
 
-exit 0
-
 git checkout master
 git pull
 
