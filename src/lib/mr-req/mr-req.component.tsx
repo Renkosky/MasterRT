@@ -248,7 +248,7 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
         }).catch((error) => {
             this._gene = null;
             this.forceUpdate();
-            result && result(null);
+            this.result(null);
             return Promise.reject(error);
         });
     }
