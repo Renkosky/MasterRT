@@ -43,10 +43,8 @@ import * as mu from 'mzmu';
 import MrServices from '../mr-common/mr.services';
 import * as _ from 'lodash';
 import MrProcess from '../mr-process/mr-process.component';
-import { valid } from 'semver';
 
 export interface IMrResource {
-
     /**
      * resource: Pool<MrResource>
      * 一个pool的资源
@@ -59,32 +57,32 @@ export interface IMrResource {
      * api?: string
      * resource.name
      */
-    api?: string,
+    api?: string;
 
     /**
      * method?: string = 'post'
      * resource.method
      * @values post, put, patch, get, delete, mrdown, download
      */
-    method?: string,
+    method?: string;
 
     /**
      * payload?: object
      * post request payload
      */
-    payload?: object,
+    payload?: object;
 
     /**
      * search?: object
      * get request params
      */
-    search?: any,
+    search?: any;
 
     /**
      * transform?: function(res)
      * 返回数据处理
      */
-    transform?: any,
+    transform?: any;
 }
 
 export interface MrReqProps {
@@ -184,13 +182,14 @@ export interface MrReqProps {
  */
 
 export class MrReqInner extends React.Component<MrReqProps, {}> {
-
     _data: any[];
 
     _start: number = 0;
 
+    cancel: any[] = [];
+
     result(data) {
-        let {result} = this.props;
+        let { result } = this.props;
         result && result(data);
     }
 
@@ -198,7 +197,8 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
      * 单条Req数据处理
      */
     oneRequest(pool, req): Promise<any> {
-        let {method = 'post', payload = {}, search = {}, transform, resource} = req;
+        let { method = 'post', payload = {}, search = {}, transform, resource, options = {} } = req;
+
         method = method.toLowerCase();
 
         // 调用距离越近，权限越大
@@ -207,7 +207,8 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
 
         return mu.run(resource, () => {
             let action = resource[method];
-            let $promise = action(search, payload);
+            options.cancelToken = (c) => this.cancel.push(c);
+            let $promise = action(search, payload, options);
             return $promise.then((res) => {
                 return transform ? transform(res) : res;
             });
@@ -219,7 +220,7 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
          * pool: Resource pool (resources)
          * resource: 单个资源 （single resource)
          */
-        let {req, pool, result, transmit, data} = props;
+        let { req, pool, result, transmit, data } = props;
         let $promises: Promise<any>[];
 
         if (mu.isEmpty(req)) {
@@ -239,18 +240,20 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
             return this.oneRequest(pool, one);
         });
 
-        Promise.all($promises).then((res) => {
-            this._data = req.length == 1 ? res[0] : res;
-            this._start = 100;
-            this.result(this._data);
-            this.transmit();
-            this.forceUpdate();
-        }).catch((error) => {
-            this._gene = null;
-            this.forceUpdate();
-            this.result(null);
-            return Promise.reject(error);
-        });
+        Promise.all($promises)
+            .then((res) => {
+                this._data = req.length == 1 ? res[0] : res;
+                this._start = 100;
+                this.result(this._data);
+                this.transmit();
+                this.forceUpdate();
+            })
+            .catch((error) => {
+                this._gene = null;
+                this.forceUpdate();
+                this.result(null);
+                return Promise.reject(error);
+            });
     }
 
     _transmit: any;
@@ -260,14 +263,14 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
      * @return {any}
      */
     transmit(): any {
-        let {transmit = ['data:res.data'], req} = this.props;
+        let { transmit = ['data:res.data'], req } = this.props;
         let res = this._data;
 
         let transmits = MrServices.upArray(transmit);
 
         transmits = mu.map(transmits, (item) => {
             let [name, path = 'res.data'] = item.split(':');
-            let data = _.get({res}, path);
+            let data = _.get({ res }, path);
             return {
                 name,
                 path,
@@ -284,14 +287,18 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
     _gene: any;
 
     getGene(res) {
-        let wrapper = {res};
-        return mu.map(this._transmit, (transmit) => {
-            let {name, path} = transmit;
-            return {
-                __key__: name,
-                __val__: _.get(wrapper, path)
-            };
-        }, {});
+        let wrapper = { res };
+        return mu.map(
+            this._transmit,
+            (transmit) => {
+                let { name, path } = transmit;
+                return {
+                    __key__: name,
+                    __val__: _.get(wrapper, path)
+                };
+            },
+            {}
+        );
     }
 
     // 暗暗的传给子元素，实现父元素reload
@@ -304,13 +311,12 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
 
     // 基因片段传递
     inheritance(res) {
-
         // 数据不存在不予传递信息
         if (mu.isNotExist(res)) {
             return null;
         }
 
-        let {children, transform} = this.props;
+        let { children, transform } = this.props;
         res = transform ? transform(res) : res;
         let gene = this.getGene(res);
 
@@ -349,7 +355,7 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
     }
 
     isRender(nextProps, nextState) {
-        let {force} = nextProps;
+        let { force } = nextProps;
         return force || !_.isEqual(nextProps.req, this.props.req) || !_.isEqual(nextState, this.state);
     }
 
@@ -377,6 +383,7 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
         this.forceUpdate = () => void 0;
         this.result = () => void 0;
         this.transmit = () => void 0;
+        this.cancel.forEach((cancel) => typeof cancel === 'function' && cancel());
     }
 
     render() {
@@ -384,7 +391,7 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
         let datas = mu.map(this._transmit || [], (o) => o.data);
         let data = this._transmit ? (datas.length === 1 ? datas[0] : datas) : this._data;
 
-        let {showLoading, showNodata, nodata, loading} = this.props;
+        let { showLoading, showNodata, nodata, loading } = this.props;
         let _process = {
             showLoading,
             showNodata,
@@ -392,25 +399,25 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
             loading
         };
 
-        return (<React.Fragment>
-            <MrProcess start={this._start} data={data} {..._process}>
-                {children}
-            </MrProcess>
-        </React.Fragment>);
+        return (
+            <React.Fragment>
+                <MrProcess start={this._start} data={data} {..._process}>
+                    {children}
+                </MrProcess>
+            </React.Fragment>
+        );
     }
 }
 
 class MrReq extends React.Component<MrReqProps, {}> {
     render() {
-        let {children, ...props} = this.props;
+        let { children, ...props } = this.props;
         /**
          * props clone 方便在MrReqInner进行req比较
          * 阻止 MrReqInner 多次渲染，而造成多次Ajax请求
          */
         props = mu.clone(props);
-        return (
-            <MrReqInner {...props}>{children}</MrReqInner>
-        );
+        return <MrReqInner {...props}>{children}</MrReqInner>;
     }
 }
 

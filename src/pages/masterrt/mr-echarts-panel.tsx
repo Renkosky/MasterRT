@@ -4,6 +4,8 @@ import * as _ from 'lodash';
 import {MrCol, MrFill, MrPanel, MrEchartsPanel, MrResource} from '../../lib';
 import JsxParser from 'react-jsx-parser';
 import MrCode from '../../lib/mr-code/mr-code.component';
+import { Button } from 'antd';
+
 interface MrsEchartsPanelProps {
 }
 
@@ -28,61 +30,79 @@ export default class MrsEchartsPanel extends React.Component<MrsEchartsPanelProp
     pie: any[] = [
         {
             value: 78499,
+            value1: 7849,
             name: '百日依山郡'
         },
         {
             value: 131536,
+            value1: 13153,
             name: '黄河如海浪'
         },
         {
             value: 246050,
+            value1: 24605,
             name: 'A Main'
         },
         {
             value: 284390,
+            value1: 28439,
             name: 'A Plus'
         },
         {
             value: 394088,
+            value1: 39408,
             name: 'B'
         },
         {
             value: 35022,
+            value1: 3502,
             name: 'C'
         },
         {
             value: 316762,
+            value1: 31676,
             name: 'SUV'
         },
         {
             value: 34069,
+            value1: 406,
             name: 'MPV'
         }
     ];
 
     state: any = {
-        req: this.req
+        req: this.req,
+        tfIndex: 0
     };
 
     render() {
         let {pie} = this;
         let {req} = this.state;
 
-        let url = "/services/select-templates/ksi.all_index_list/?apiName=ksi.all_index_list&headers=kol::KOLName,gender::Gender,forcus_platform::KOLPlatform,ksi::KSI,ksiRank::KSIRank,searchIndex::SearchIndex,searchIndexRank::SearchIndexRank,brandIndexAvg::BrandIndex,brandIndexAvgRank::BrandIndexRank,purchaseIntention::PurchaseIntention,purchaseIntentionRank::PurchaseIntentionRank,socialIndex::SocialIndex,weibo_name::WeiboName,wechat_name::WeChatName,red_name::TheRedName,weibo_total_fans::WeiboTotalFans,weibo_fans_quality::WeiboFansQuality,red_fans::TheRedFans"
+        let url = '/services/select-templates/ksi.all_index_list/?apiName=ksi.all_index_list&headers=kol::KOLName,gender::Gender,forcus_platform::KOLPlatform,ksi::KSI,ksiRank::KSIRank,searchIndex::SearchIndex,searchIndexRank::SearchIndexRank,brandIndexAvg::BrandIndex,brandIndexAvgRank::BrandIndexRank,purchaseIntention::PurchaseIntention,purchaseIntentionRank::PurchaseIntentionRank,socialIndex::SocialIndex,weibo_name::WeiboName,wechat_name::WeChatName,red_name::TheRedName,weibo_total_fans::WeiboTotalFans,weibo_fans_quality::WeiboFansQuality,red_fans::TheRedFans';
 
         let abc = MrResource.pool(url);
+
+
+        let tf: any = [{'@convert': {'value': 'value1'}}, {'@convert': {'value': 'value'}}];
+
+        tf = tf[this.state.tfIndex % 2];
 
         return (
             <article className="mrs-article mrs-MrFill">
                 <header>MrEchartsPanel <small>@v0.1.24.20180523</small></header>
                 <ins onClick={() => (abc.mrdown({
                     downloadName: 'ksi-1532068145056.xlsx'
-                }, {"paramMap":{"date":["2018-04"]},"sample":false}))}>一个基于MrPanel, MrReq, MrEcharts 集成的显示UI，支持各种激活Echarts方式，以及使用Tool控制Echarts显示方式</ins>
+                }, {'paramMap':{'date':['2018-04']},'sample':false}))}>一个基于MrPanel, MrReq, MrEcharts 集成的显示UI，支持各种激活Echarts方式，以及使用Tool控制Echarts显示方式</ins>
+
+                <Button htmlType={'button'} onClick={() => this.setState({
+                    tfIndex: this.state.tfIndex + 1
+                })}> 555555 </Button>
 
                 <MrEchartsPanel
                     title="Use Data"
                     style={{height: 400}} chartTypes={'pie::ring::ringLabel'} data={pie}
-                    transform={[{'@convert': {'value': '$rowRate'}}]}
+                    transform={[tf]}
                     chartClick={() => console.debug(2222222)}
                     append={<div>在饼图底部插入内容</div>} />
 
