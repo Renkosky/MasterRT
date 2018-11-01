@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 
 git status | grep 'nothing to commit, working directory clean'
+if [ $? -ne 0 ]; then
+    echo '当前分支尚有文件未处理，不能切换到Master分支'
+    exit 0
+fi
+
+exit 0
+
+git checkout master
+git pull
 
 echo ':::编译文件'
 npm run tsd
