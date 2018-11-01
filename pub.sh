@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+git checkout master
+
 echo ':::编译文件'
 npm run tsd
 if [ $? -ne 0 ]; then
