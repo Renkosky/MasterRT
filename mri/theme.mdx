@@ -49,6 +49,8 @@ $ mri prod themeName
     - ${theme}-routes.ts
     // umijs 和 mri-cli 的相关配置信息
     - ${theme}-umi.js
+    // 配置预加载数据
+    - ${theme}-preload.ts
 ```
 
 ### env
@@ -235,4 +237,30 @@ export default function config() {
         }
     };
 }
+```
+
+### ${theme}-preload.ts
+
+- 各theme设置preload，预加载数据
+- 在module.token(登录状态)时，系统预加载user信息
+
+```
+export default (module) => {
+
+    // ...
+    // 预加载数据在此处理，可存储值 StoreServices
+    // 并将promise放置与 promise.all
+
+    let $$test = $pool.test.get({});
+
+    $$test.then((result) => {
+        // 处理数据
+        // 将信息存储至 StoreServices
+        StoreServices.setValue('TEST', result);
+    })
+
+    return Promise.all([$$test]);
+
+}
+
 ```
