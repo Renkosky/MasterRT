@@ -345,10 +345,11 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
         let { children: a, append: b, chartClick: c, prepend: d, leftSide: e, rightSide: f, ...current } = this.props;
 
         let { force } = nextProps;
+
         if (force) {
             return true;
         } else {
-            return !_.isEqual(next, current) || !_.isEqual(nextState, this.state);
+            return _.isEqual(next, current) ? false : _.isEqual(nextState, this.state);
         }
     }
 
@@ -358,7 +359,7 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
     }
 
     render() {
-        const { title, style, className, h100, bodyStyle, border, showToolbar, transform } = this.props;
+        const { req, title, style, className, h100, bodyStyle, border, showToolbar, transform } = this.props;
         const { append, prepend, leftSide, rightSide } = this.props;
         const { chartTypes, data, dataType, dataModel } = this.props;
         const { options, renderType, theme } = this.props;
@@ -372,27 +373,6 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
             'chartMouseOut',
             'chartGlobalOut'
         ]);
-
-        let { req: mrReqReq, mrReq = {} } = this.props;
-
-        mu.run(mrReqReq, () => {
-            mrReq['req'] = mrReqReq;
-        });
-
-        let { transmit = 'data:res.data', req, transform: mrReqTransform, force } = mrReq;
-
-        // 默认在MrEchartsPanel中多重数组处理，合并data信息
-        // todo 多轴处理
-        if (req && !mrReqTransform) {
-            mrReqTransform = (res) => {
-                if (res.length > 1) {
-                    let ds = mu.map(res, (res) => res.data);
-                    return _.concat([], ...ds);
-                } else {
-                    return res;
-                }
-            };
-        }
 
         let { fullScreen, dataView, setting, rowColumnConversion } = this.state;
         setting = mu.clone(setting);

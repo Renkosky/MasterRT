@@ -50,7 +50,7 @@ export interface MrEchartsProps {
      *
      * @deprecated
      */
-    transform?: Function | any;
+    transform?: any;
 
     /**
      * 图表类型；
@@ -318,6 +318,22 @@ class MrEcharts extends React.Component<MrEchartsProps, {}> {
         });
     }
 
+    /**
+     * 修改canvas的高度
+     * @param style object
+     */
+    getStyle(style: any): any {
+        if (!style) {
+            return void 0;
+        } else {
+            let newStyle = Object.assign({}, style);
+            if (style.height) {
+                newStyle.height = newStyle.height - 16;
+            }
+            return newStyle;
+        }
+    }
+
     componentDidMount() {
         this.drawCharts(this.props);
         window.addEventListener('resize', this.windowResize);
@@ -325,7 +341,7 @@ class MrEcharts extends React.Component<MrEchartsProps, {}> {
 
     componentDidUpdate(prevProps) {
         const theme = this.getTheme();
-        const { style, className } = this.props;
+        const { style, className, transform} = this.props;
         let { data, options, setting, chartTypes } = prevProps;
         let { force, data: nextData, options: nextOptions, setting: nextSetting, chartTypes: nextChartTypes } = this.props;
 
@@ -352,6 +368,7 @@ class MrEcharts extends React.Component<MrEchartsProps, {}> {
         // break 分开写，方便调试
         switch (true) {
             case force:
+            case !_.isEqual(prevProps.transform, transform):
                 this.dispose();
                 this.drawCharts(this.props);
                 break;
@@ -377,21 +394,7 @@ class MrEcharts extends React.Component<MrEchartsProps, {}> {
         window.removeEventListener('reszie', this.windowResize);
     }
 
-    /**
-     * 修改canvas的高度
-     * @param style object
-     */
-    getStyle(style: any): any {
-        if (!style) {
-            return void 0;
-        } else {
-            let newStyle = Object.assign({}, style);
-            if (style.height) {
-                newStyle.height = newStyle.height - 16;
-            }
-            return newStyle;
-        }
-    }
+
 
     render() {
         let { className, style } = this.props;

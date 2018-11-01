@@ -30,13 +30,9 @@ export default class App extends React.Component {
     }
 
     componentWillUpdate() {
-        console.debug(333333333333);
     }
 
     render() {
-
-        console.debug(444444444444);
-
         return (
             <div>
                 <p>{newState.num}</p>
