@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-git status | grep 'nothing to commit, working directory clean' || echo '文件未提交，不能checkout到Master' && exit 0
+git status | grep 'nothing to commit, working directory clean'
 
 echo ':::编译文件'
 npm run tsd
