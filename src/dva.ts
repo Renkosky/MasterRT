@@ -1,14 +1,15 @@
-import {message} from 'antd';
-import {MrServices} from './lib';
-import {default as brp} from './services/base-resource-pool';
+import { message } from 'antd';
+import { MrServices } from './lib';
+import { default as brp } from './services/base-resource-pool';
 import * as moment from 'moment';
+import echartsTheme from './assets/csi.echarts-theme-new';
+// require('./assets/csi.echarts-theme.js');
 
 /**
  * 系统初始化配置设置页面
  */
 
 export function config() {
-
     MrServices.setHeaders({
         // 'Content-Type': 'text/json',
         // 'X-TOKEN': () => mu.storage('X-TOKEN')
@@ -22,7 +23,7 @@ export function config() {
 
     MrServices.setRules({
         'list.rose.ring': true,
-        'list.word.cloud': false,
+        'list.word.cloud': false
     });
 
     MrServices.setResourcePool(brp);
@@ -32,12 +33,13 @@ export function config() {
         return Promise.reject(res);
     });
 
-    // MrServices.setEchartsTheme('aaaaaa');
+    MrServices.setEchartsTheme(echartsTheme.themeName, echartsTheme.themeConfig);
+    // MrServices.setEchartsTheme('CSI-Loreal');
 
     moment.defineLocale('en-us', {
-        week : {
-            dow : 4, // Monday is the first day of the week.
-            doy : 4  // The week that contains Jan 4th is the first week of the year.
+        week: {
+            dow: 4, // Monday is the first day of the week.
+            doy: 4 // The week that contains Jan 4th is the first week of the year.
         }
     });
 
@@ -49,11 +51,8 @@ export function config() {
 
         initialState: {
             global: {
-                text: 'hi umi + dva',
-            },
-        },
+                text: 'hi umi + dva'
+            }
+        }
     };
 }
-
-
-
