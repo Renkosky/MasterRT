@@ -172,6 +172,19 @@ class MrServices {
     getNoDataComponent() {
         return this._noDataComponent;
     }
+
+    /**
+     * 所有设置的综合体————{theme}-preset
+     */
+    setConfig(config: any): any {
+        config.headers && (this._headers = config.headers);
+        config.resourcePool && (this._resourcePool = config.resourcePool);
+        config.mrEchartsTheme && (this._mrEchartsTheme = config.mrEchartsTheme);
+        config.mrEchartsColors && (this._mrEchartsColors = config.mrEchartsColors);
+        config.noDataComponent && (this._noDataComponent = config.noDataComponent);
+        config.reqCatch && (this._reqCatch = config.reqCatch);
+        config.rules && (this._rules = config.rules);
+    }
 }
 
 export default new MrServices();

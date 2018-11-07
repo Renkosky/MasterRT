@@ -10,7 +10,10 @@ import echartsTheme from './assets/csi.echarts-theme-new';
  */
 
 export function config() {
-    MrServices.setHeaders({
+    /* 
+    * 方式一--------------单独调用各配置方法
+    */
+    /*MrServices.setHeaders({
         // 'Content-Type': 'text/json',
         // 'X-TOKEN': () => mu.storage('X-TOKEN')
 
@@ -34,7 +37,29 @@ export function config() {
     });
 
     MrServices.setEchartsTheme(echartsTheme.themeName, echartsTheme.themeConfig);
-    // MrServices.setEchartsTheme('CSI-Loreal');
+    */
+    /**
+     * 方式二--------------所有配置方法一起
+     */
+    MrServices.setConfig({
+        headers: {
+            'X-ORIGIN': 'test.loreal.visualmaster.com.cn/ksidashboard',
+            'X-TOKEN': 'c09332fed385bbd55a2cdc4b495e6e0bd0e002b1164a6eed39a16bfe9fff99'
+        },
+        rules: {
+            'list.rose.ring': true,
+            'list.word.cloud': false
+        },
+        resourcePool: brp,
+        reqCatch: (res) => {
+            console.debug('::::::::::', res);
+            return Promise.reject(res);
+        },
+        mrEchartsTheme: echartsTheme,
+        mrEchartsColors: {
+            base: echartsTheme.themeConfig.color
+        }
+    });
 
     moment.defineLocale('en-us', {
         week: {

@@ -35,6 +35,10 @@ export default class MrsMrRequest extends React.Component<MrsMrRequestProps, {}>
             console.debug(Object.prototype.toString.call(res));
         })
 
+        // MrResource.pool('/services/select-templates/ksi.select.month/').post({"paramMap":{},"sample":false}).then((res)=> {
+        //     console.debug('res',res)
+        // })
+
     }
 
     render() {

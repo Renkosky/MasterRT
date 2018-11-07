@@ -1,5 +1,5 @@
 export default {
-    themeName: 'CSI-Loreal',
+    theme: 'CSI-Loreal',
     themeConfig: {
         color: ['#f684a2', '#bd84c1', '#a2b5fe', '#febaa8', '#fee3a8', '#a6e6f1', '#a99df9', '#db8dd0'],
         backgroundColor: 'rgba(0, 0, 0, 0)',
