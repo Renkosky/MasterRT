@@ -170,7 +170,8 @@ class MrEcharts extends React.Component<MrEchartsProps, {}> {
     getTheme() {
         let prev = this._theme;
         let { theme } = this.props;
-        theme = theme || MrEchartsServices._theme() || MrEcharts.THEME;
+        theme = theme || MrEchartsServices._theme().theme || MrEcharts.THEME;
+        !_.isEmpty(MrEchartsServices._theme().themeConfig) && echarts.registerTheme(theme, MrEchartsServices._theme().themeConfig);
         let first = !mu.isExist(prev);
         let change = first ? false : prev !== theme;
         this._theme = theme;
@@ -206,9 +207,29 @@ class MrEcharts extends React.Component<MrEchartsProps, {}> {
          *
          * 如果不做词云的画布清理，画布可以重绘时，
          * 可能会残留上次词云痕迹
+         * 处理词云图的data，将value为undefined 或 null 的设为0------胡奥20181106
          */
         mu.run(chartTypes.indexOf('wordCloud') > -1, () => {
             _chart.clear();
+        });
+
+        /**
+         *
+         * 处理词云图的data，将value为undefined 或 null 的设为0------胡奥20181106
+         */
+        mu.run(chartTypes.indexOf('wordCloud') > -1, () => {
+            data = mu.map(data, (d) => {
+                if (mu.isBaseType(d.value)) {
+                    console.log(isNaN(d.value));
+                    if (mu.isNull(d.value) || mu.isUndefined(d.value) || isNaN(d.value)) {
+                        d.value = 0;
+                    }
+                } else {
+                    d.value = 0;
+                }
+
+                return d;
+            });
         });
 
         /**
@@ -341,7 +362,7 @@ class MrEcharts extends React.Component<MrEchartsProps, {}> {
 
     componentDidUpdate(prevProps) {
         const theme = this.getTheme();
-        const { style, className, transform} = this.props;
+        const { style, className, transform } = this.props;
         let { data, options, setting, chartTypes } = prevProps;
         let { force, data: nextData, options: nextOptions, setting: nextSetting, chartTypes: nextChartTypes } = this.props;
 
@@ -393,8 +414,6 @@ class MrEcharts extends React.Component<MrEchartsProps, {}> {
         // 注销注册事件
         window.removeEventListener('reszie', this.windowResize);
     }
-
-
 
     render() {
         let { className, style } = this.props;
