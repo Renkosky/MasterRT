@@ -1319,7 +1319,7 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
                     MrEcharts <small>v0.1.26-b4</small>
                 </header>
                 <ins>由data直接快速生成echarts图表，并有setting进行精细控制</ins>
-                {/* <section
+                <section
                     style={{
                         height: 300,
                         width: '100%'
@@ -1337,51 +1337,14 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
                             }
                         ]}
                     />
-                </section> */}
+                </section>
                 <section
                     style={{
                         height: 300,
                         width: '100%'
                     }}>
-                    <MrEcharts
-                        chartTypes="scatter"
-                        data={[
-                            { brand: 'BBDC-Benz', date: 500730, name: 'BBDC-Benz', value: '[]', x: 500730 },
-                            { brand: 'BJ-Hyundai', date: 229913, name: 'BJ-Hyundai', value: '{}', x: 229913 },
-                            { brand: 'Brilliance-BMW', date: 616780, name: 'Brilliance-BMW', value: 'NaN', x: 616780 },
-                            { brand: 'Buick', date: 209163, name: 'Buick', value: [], x: 209163 },
-                            { brand: 'BYD', date: 222692, name: 'BYD', value: {}, x: 222692 },
-                            { brand: 'CA-Mazda', date: 40400, name: 'CA-Mazda', value: NaN, x: 40400 },
-                            { brand: 'Cadillac', date: 65633, name: 'Cadillac', value: '83.7', x: 65633 },
-                            { brand: 'Chery', date: 105680, name: 'Chery', value: '76.8', x: 105680 },
-                            { brand: 'Citroen', date: 78272, name: 'Citroen', value: '76.7', x: 78272 },
-                            { brand: 'DF-Honda', date: 286180, name: 'DF-Honda', value: '69.9', x: 286180 },
-                            { brand: 'DF-Nissan', date: 262018, name: 'DF-Nissan', value: '52.0', x: 262018 },
-                            { brand: 'DF-Peugeot', date: 140791, name: 'DF-Peugeot', value: '89.3', x: 140791 },
-                            { brand: 'FAW-Audi', date: 772129, name: 'FAW-Audi', value: '98.1', x: 772129 },
-                            { brand: 'FAW-Mazda', date: 49971, name: 'FAW-Mazda', value: '31.7', x: 49971 },
-                            { brand: 'FAW-Toyota', date: 215860, name: 'FAW-Toyota', value: '62.7', x: 215860 },
-                            { brand: 'FAW-VW', date: 210096, name: 'FAW-VW', value: '69.2', x: 210096 },
-                            { brand: 'Ford', date: 166006, name: 'Ford', value: '77.5', x: 166006 },
-                            { brand: 'Geely', date: 385134, name: 'Geely', value: '86.9', x: 385134 },
-                            { brand: 'GZ-Honda', date: 188251, name: 'GZ-Honda', value: '75.9', x: 188251 },
-                            { brand: 'GZ-Toyota', date: 202900, name: 'GZ-Toyota', value: '86.0', x: 202900 },
-                            { brand: 'Haval', date: 180569, name: 'Haval', value: '93.0', x: 180569 },
-                            { brand: 'Kia', date: 158788, name: 'Kia', value: '88.0', x: 158788 },
-                            { brand: 'Roewe', date: 75695, name: 'Roewe', value: '88.5', x: 75695 },
-                            { brand: 'SGM-Chevrolet', date: 153938, name: 'SGM-Chevrolet', value: '74.1', x: 153938 },
-                            { brand: 'SVW-Skoda', date: 137045, name: 'SVW-Skoda', value: '80.6', x: 137045 },
-                            { brand: 'SVW-VW', date: 428940, name: 'SVW-VW', value: '73.6', x: 428940 }
-                        ]}
-                    />
-                </section>
-                {/* <section
-                    style={{
-                        height: 300,
-                        width: '100%'
-                    }}>
                     <MrEchartsPanel data={this.cloud} chartTypes="wordCloud::random" chartClick={this.a.bind(this)} />
-                </section> */}
+                </section>
                 {/*<details className="mt-16">*/} {/*<summary>雷达图</summary>*/} {/*<MrCode code={`*/}{' '}
                 {/*<MrEcharts chartTypes="radar" data="{dataSource.radar}/">*/} {/*`}></MrCode>*/} {/*</details>*/}
                 <aside className="mt-16">
