@@ -10,7 +10,7 @@ git checkout master
 git pull
 
 echo ':::编译文件'
-# npm run tsd
+ npm run tsd
 if [ $? -ne 0 ]; then
     echo 编译错误
     exit 1
@@ -39,8 +39,6 @@ fi
 git add .
 git commit -am "$_commit"
 
-echo "::::-> $1 $_version"
-
 # 若不手动设置版本号，则自动增长
 cd ./pub
     if [ "$_version" == "" ]; then
@@ -49,10 +47,6 @@ cd ./pub
         npm version $_version --no-git-tag-version
     fi
 cd ..
-
-echo ":::::-> $_version"
-
-exit 0;
 
 echo "::::: 推送到NPM $_ov -> $_version"
 
