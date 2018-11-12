@@ -39,6 +39,8 @@ fi
 git add .
 git commit -am "$_commit"
 
+echo $_version
+
 # 若不手动设置版本号，则自动增长
 cd ./pub
     if [ "$_version" == "" ]; then
@@ -47,6 +49,10 @@ cd ./pub
         npm version $_version --no-git-tag-version
     fi
 cd ..
+
+echo $_version
+
+exit 0;
 
 echo "::::: 推送到NPM $_ov -> $_version"
 
