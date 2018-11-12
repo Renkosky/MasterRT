@@ -20,13 +20,14 @@
  *
  * @uodate mizi.lin@v0.2.0-b8.2o18o614
  * :: => fixed bugs: 雷达数据在计算雷达计算最大最小值时，源数据未进行transform, 从而造成 max, min 值计算错位
+ *
  */
 
 import * as mu from 'mzmu';
 import * as _ from 'lodash';
-import {defDataModel, defOptions, defSubType, subSetting} from './mr-echarts.setting';
+import { defDataModel, defOptions, defSubType, subSetting } from './mr-echarts.setting';
 import * as _colors from '../assets/js/theme.customed.js';
-import {default as MrServices} from '../mr-common/mr.services';
+import { default as MrServices } from '../mr-common/mr.services';
 
 // CHART_NAME 决定 legend
 const CHART_NAME = 'name';
@@ -54,9 +55,15 @@ export default {
      * @param setting
      */
     serialize(setting: any) {
-        return mu.type(setting, 'array') ? setting : mu.map(setting, (v, k) => {
-            return {[k]: v};
-        }, []);
+        return mu.type(setting, 'array')
+            ? setting
+            : mu.map(
+                  setting,
+                  (v, k) => {
+                      return { [k]: v };
+                  },
+                  []
+              );
     },
 
     /**
@@ -95,9 +102,7 @@ export default {
      * @return {*}
      */
     muSet(obj, key, value) {
-
         let fn = {
-
             // xy轴互换
             xyExchange: (options: any, isExhange) => {
                 let _opts = _.clone(options);
@@ -109,7 +114,7 @@ export default {
 
             // 线图和柱形图互换
             lineBarExchange: (options) => {
-                let {series, xAxis} = options;
+                let { series, xAxis } = options;
                 mu.each(series, (o) => {
                     if (o.type === 'line') {
                         o.type = 'bar';
@@ -138,9 +143,7 @@ export default {
             },
 
             // deleteKey
-            deleteKey: (options) => {
-                
-            }
+            deleteKey: (options) => {}
         };
 
         let _obj = mu.clone(obj);
@@ -210,7 +213,6 @@ export default {
     transform(data, transform = [], dataType = 'dataSource', dataModel = 'group', setting = {}) {
         // 复制原数据，作为返回数据比较使用
 
-
         mu.run(transform, () => {
             mu.each(transform, (handle, key) => {
                 if (typeof handle === 'function') {
@@ -220,7 +222,6 @@ export default {
                     mu.if(this[fnn], (fn) => {
                         data = fn(data, handle[fnn]);
                     });
-
                 }
             });
         });
@@ -232,26 +233,42 @@ export default {
 
         // 将数据按组显示
         // 过滤数据中重复数据
-        let _data = mu.run(dataModel === 'single', () => {
-            return mu.map(data, (o) => {
-                return {
-                    __key__: o[CHART_NAME],
-                    __val__: o
-                };
-            }, {});
-        }, () => {
-            return mu.groupArray(data, CHART_NAME);
-        });
+        let _data = mu.run(
+            dataModel === 'single',
+            () => {
+                return mu.map(
+                    data,
+                    (o) => {
+                        return {
+                            __key__: o[CHART_NAME],
+                            __val__: o
+                        };
+                    },
+                    {}
+                );
+            },
+            () => {
+                return mu.groupArray(data, CHART_NAME);
+            }
+        );
 
         // 获得 legend array
-        let _legend = mu.map(_data, (o, name) => {
-            return {name};
-        }, []);
+        let _legend = mu.map(
+            _data,
+            (o, name) => {
+                return { name };
+            },
+            []
+        );
 
         // 按 _legend 的顺序重新排列数据
-        let _series = mu.map(_legend, (legend) => {
-            return _data[mu.ifnvl(legend.name, legend)];
-        }, []);
+        let _series = mu.map(
+            _legend,
+            (legend) => {
+                return _data[mu.ifnvl(legend.name, legend)];
+            },
+            []
+        );
 
         // 统计并计算横向（经度）数据
         _series = this.rowCalc(_series, dataModel);
@@ -259,16 +276,22 @@ export default {
         // 统计并计算纬度信息
         _series = this.colCalc(_series, dataModel);
 
-        let _x = dataModel === 'single' ? mu.run(() => {
-            let xd = mu.map(data, (o) => {
-                return o[CHART_X];
-            });
+        let _x =
+            dataModel === 'single'
+                ? mu.run(() => {
+                      let xd = mu.map(data, (o) => {
+                          return o[CHART_X];
+                      });
 
-            return mu.isEmpty(_.compact(xd)) ? null : xd;
-
-        }) : mu.map(mu.groupArray(data, CHART_X), (o, name) => {
-            return name;
-        }, []);
+                      return mu.isEmpty(_.compact(xd)) ? null : xd;
+                  })
+                : mu.map(
+                      mu.groupArray(data, CHART_X),
+                      (o, name) => {
+                          return name;
+                      },
+                      []
+                  );
 
         let _dataView = this.getDataView(_series, _legend, _x);
 
@@ -283,7 +306,6 @@ export default {
     },
 
     getDataView(series, legend = [], x = []) {
-
         let _series = mu.clone(series);
         let _legend = mu.clone(legend);
         let _x = mu.clone(x);
@@ -292,21 +314,26 @@ export default {
             _series = [_series];
         }
 
-        let _dataView = mu.map(_series, (arr, inx) => {
-            let legend = _legend[inx] || {};
-            let legendName = legend.name || legend;
+        let _dataView =
+            mu.map(_series, (arr, inx) => {
+                let legend = _legend[inx] || {};
+                let legendName = legend.name || legend;
 
-            arr.unshift(mu.isEmpty(_x) ? '' : legendName);
-            arr = mu.map(arr, (o) => mu.ifnvl(mu.ifnvl(o.value, o), '-'));
-            return arr;
-        }) || [];
+                arr.unshift(mu.isEmpty(_x) ? '' : legendName);
+                arr = mu.map(arr, (o) => mu.ifnvl(mu.ifnvl(o.value, o), '-'));
+                return arr;
+            }) || [];
 
         if (mu.isEmpty(_x) && _dataView && _dataView[0] && _dataView[0].length) {
-            _x = mu.map(_dataView[0].length - 1, (i, inx) => {
-                let x = legend[inx] || 0;
-                x = x.name || x;
-                return x;
-            }, []);
+            _x = mu.map(
+                _dataView[0].length - 1,
+                (i, inx) => {
+                    let x = legend[inx] || 0;
+                    x = x.name || x;
+                    return x;
+                },
+                []
+            );
         }
 
         _x = mu.ifnvl(_x, []);
@@ -329,11 +356,19 @@ export default {
         // col length
         let colLen = series[0].length;
 
-        let sums = mu.map(colLen, (i, ii) => {
-            return _.reduce(series, (sum, d) => {
-                return sum + d[ii].value;
-            }, 0);
-        }, []);
+        let sums = mu.map(
+            colLen,
+            (i, ii) => {
+                return _.reduce(
+                    series,
+                    (sum, d) => {
+                        return sum + d[ii].value;
+                    },
+                    0
+                );
+            },
+            []
+        );
 
         return mu.map(series, (items) => {
             return mu.map(items, (d, inx) => {
@@ -355,11 +390,14 @@ export default {
      */
 
     rowCalc(series: any[] = [], dataModel: string = 'group') {
-
         if (dataModel === 'single') {
-            let sum: number = _.reduce(series, (sum, d) => {
-                return sum + d.value;
-            }, 0);
+            let sum: number = _.reduce(
+                series,
+                (sum, d) => {
+                    return sum + d.value;
+                },
+                0
+            );
             return mu.map(series, (d) => {
                 d.$rowSum = sum;
                 d.$rowRate = mu.format(d.value / sum, ':4');
@@ -368,9 +406,9 @@ export default {
                 d.$value = d.value;
                 return d;
             });
-        } else if (dataModel = 'group') {
+        } else if ((dataModel = 'group')) {
             return mu.map(series, (item) => {
-                return this.rowCalc(item, 'single')
+                return this.rowCalc(item, 'single');
             });
         }
     },
@@ -380,7 +418,7 @@ export default {
      * @param options
      */
     initOptions(options) {
-        let {names} = this._colors();
+        let { names } = this._colors();
 
         /**
          * 按series name名称匹配颜色
@@ -389,8 +427,7 @@ export default {
             let series = options.series;
 
             options.series = mu.map(series, (item) => {
-
-                let {name, type, data} = item;
+                let { name, type, data } = item;
                 let color = names[name];
 
                 if (mu.or(type, 'pie') || !color) {
@@ -455,10 +492,7 @@ export default {
                             let min_ = parseFloat(_.get(_maxmin[name], 'min.value'));
 
                             if (max_ < min_) {
-                                let tmp = [
-                                    max_,
-                                    min_
-                                ];
+                                let tmp = [max_, min_];
                                 max_ = tmp[1];
                                 min_ = tmp[0];
                             }
@@ -490,7 +524,9 @@ export default {
          * @type {*[]}
          */
 
-        mu.run(dataModel === 'single', () => {
+        mu.run(
+            dataModel === 'single',
+            () => {
                 options.series = [
                     {
                         type: chartType,
@@ -522,12 +558,16 @@ export default {
                         let max: any = _.maxBy(rst._series, (o: any) => o.value) || {};
                         options = _.set(options, 'visualMap.max', max.value);
 
-                        let dataMap = mu.map(rst._series, (o, name) => {
-                            return {
-                                name: _.get(o, '[0].name'),
-                                value: (mu.map(o, (oo) => oo.value, []) || [])[0]
-                            };
-                        }, []);
+                        let dataMap = mu.map(
+                            rst._series,
+                            (o, name) => {
+                                return {
+                                    name: _.get(o, '[0].name'),
+                                    value: (mu.map(o, (oo) => oo.value, []) || [])[0]
+                                };
+                            },
+                            []
+                        );
 
                         options.series = [
                             {
@@ -569,16 +609,12 @@ export default {
                         break;
 
                     case 'scatter':
-
                         data = mu.map(
                             rst._series,
                             (o, name) => {
                                 return {
                                     name: _.get(o, '[0].name'),
-                                    value: [
-                                        o[0].x,
-                                        o[0].value,
-                                    ]
+                                    value: [o[0].x, o[0].value]
                                 };
                             },
                             []
@@ -618,53 +654,93 @@ export default {
      * @return {*}
      */
     getSetting(chartTypes, setting) {
-
         chartTypes = defSubType[chartTypes] || chartTypes;
 
         let [_chartType, ..._subType] = chartTypes.split('::');
+        let paramSetting;
+        if (mu.type(setting, 'array')) {
+            /**
+             * setting=['::ring', '::rose({ borderWidth: 6 })'] 支持配置数组带参数
+             */
+            mu.each(setting, (set) => {
+                if (set.indexOf('::') !== -1) {
+                    let [tempChartType, ...tempSubType] = set.split('::');
+                    _subType = _subType.concat(tempSubType);
+                } else {
+                    paramSetting.push(set);
+                }
+            });
+        } else {
+            paramSetting = setting;
+        }
 
         /**
          * setting 配置的权重值
-         * subSetting[chartType] < subSetting[sub] < subSetting[subGroup] < subSetting[subType] < setting
+         * subSetting[chartType] < subSetting[sub] < subSetting[subGroup] < subSetting[subType] < setting(paramSetting)
          * subType = chartType::sub...
          */
 
         let _subSetting: any = subSetting(this._colors());
-
-        _subSetting = {..._subSetting, ...MrServices.getEchartsSubTypes()};
+        _subSetting = { ..._subSetting, ...MrServices.getEchartsSubTypes() };
 
         let _setting = mu.extend({}, this.flatDataSetting(_subSetting[_chartType]));
 
         mu.run(_subType, () => {
             mu.each(_subType, (sub) => {
-                _setting = mu.extend(_setting, this.flatDataSetting(_subSetting['::' + sub]));
+                let type = this.getSetType(sub);
+                _setting = mu.extend(_setting, this.flatDataSetting(_subSetting[`::${type.sub}`], type.param));
             });
-
             mu.each(_subType, (sub) => {
-                _setting = mu.extend(_setting, this.flatDataSetting(_subSetting[`${_chartType}::${sub}`]));
+                let type = this.getSetType(sub);
+                _setting = mu.extend(_setting, this.flatDataSetting(_subSetting[`${_chartType}::${type.sub}`], type.param));
             });
-
-            _setting = mu.extend(_setting, this.flatDataSetting(_subSetting[`${_chartType}::${_subType.join('::')}`]));
+            /**
+             * pie::ring::rose 整体调用模式
+             */
+            let type = this.getSetType(_subType[_subType.length - 1]);
+            _subType[_subType.length - 1] = type.sub;
+            _setting = mu.extend(_setting, this.flatDataSetting(_subSetting[`${_chartType}::${_subType.join('::')}`], type.param));
         });
-
-        _setting = mu.extend(_setting, this.flatDataSetting(setting));
+        _setting = mu.extend(_setting, this.flatDataSetting(paramSetting));
 
         return _setting;
+    },
+
+    /**
+     *
+     * @param sub  string 判断并处理sub字符串函数及所带参数
+     * 例子：将"::rose({borderWidth:4})" =>{sub: rose, param:{borderWidth:4}}
+     * 例子：将"::rose" =>{sub: rose}
+     */
+    getSetType(sub: string) {
+        let type = sub.split('(');
+        let param = [];
+        if (type[1]) {
+            param = type[1].split(')');
+        }
+        let subType: any = { sub: type[0] };
+        param[0] !== '' && (subType.param = eval('(' + param[0] + ')'));
+        return subType;
     },
 
     /**
      * 处理返回数组化的setting数据
      * @param setting
      */
-    flatDataSetting(setting) {
-        if (mu.type(setting, 'array')) {
-            let _setting = {};
-            mu.each(setting, (o) => {
-                _setting = mu.extend(_setting, o);
-            });
-            return _setting;
+    flatDataSetting(setting: any, param: any) {
+        if (setting) {
+            let set = _.isFunction(setting) ? setting(param && param) : setting;
+            if (mu.type(set, 'array')) {
+                let _set = {};
+                mu.each(set, (o) => {
+                    _set = mu.extend(_set, o);
+                });
+                return _set;
+            } else {
+                return set;
+            }
         } else {
-            return setting || {};
+            return {};
         }
     },
 

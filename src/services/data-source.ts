@@ -1,270 +1,269 @@
 const dataSource = {
-
     base: [
         {
-            "__type": "中性",
-            "date": "2018-05-28",
-            "mainRuleId": 137500,
-            "ruleId": 137500,
-            "ruleName": "stats相应规则",
-            "type": "Neutral",
-            "volume": 25
+            __type: '中性',
+            date: '2018-05-28',
+            mainRuleId: 137500,
+            ruleId: 137500,
+            ruleName: 'stats相应规则',
+            type: 'Neutral',
+            volume: 25
         },
         {
-            "__type": "正面",
-            "date": "2018-05-28",
-            "mainRuleId": 137500,
-            "ruleId": 137500,
-            "ruleName": "stats相应规则",
-            "type": "Positive",
-            "volume": 13
+            __type: '正面',
+            date: '2018-05-28',
+            mainRuleId: 137500,
+            ruleId: 137500,
+            ruleName: 'stats相应规则',
+            type: 'Positive',
+            volume: 13
         },
         {
-            "__type": "负面",
-            "date": "2018-05-28",
-            "type": "Negative",
-            "volume": 0
+            __type: '负面',
+            date: '2018-05-28',
+            type: 'Negative',
+            volume: 0
         },
         {
-            "__type": "中性",
-            "date": "2018-05-29",
-            "mainRuleId": 137500,
-            "ruleId": 137500,
-            "ruleName": "stats相应规则",
-            "type": "Neutral",
-            "volume": 30
+            __type: '中性',
+            date: '2018-05-29',
+            mainRuleId: 137500,
+            ruleId: 137500,
+            ruleName: 'stats相应规则',
+            type: 'Neutral',
+            volume: 30
         },
         {
-            "__type": "正面",
-            "date": "2018-05-29",
-            "mainRuleId": 137500,
-            "ruleId": 137500,
-            "ruleName": "stats相应规则",
-            "type": "Positive",
-            "volume": 11
+            __type: '正面',
+            date: '2018-05-29',
+            mainRuleId: 137500,
+            ruleId: 137500,
+            ruleName: 'stats相应规则',
+            type: 'Positive',
+            volume: 11
         },
         {
-            "__type": "负面",
-            "date": "2018-05-29",
-            "type": "Negative",
-            "volume": 0
+            __type: '负面',
+            date: '2018-05-29',
+            type: 'Negative',
+            volume: 0
         },
         {
-            "__type": "中性",
-            "date": "2018-05-30",
-            "mainRuleId": 137500,
-            "ruleId": 137500,
-            "ruleName": "stats相应规则",
-            "type": "Neutral",
-            "volume": 40
+            __type: '中性',
+            date: '2018-05-30',
+            mainRuleId: 137500,
+            ruleId: 137500,
+            ruleName: 'stats相应规则',
+            type: 'Neutral',
+            volume: 40
         },
         {
-            "__type": "正面",
-            "date": "2018-05-30",
-            "mainRuleId": 137500,
-            "ruleId": 137500,
-            "ruleName": "stats相应规则",
-            "type": "Positive",
-            "volume": 116
+            __type: '正面',
+            date: '2018-05-30',
+            mainRuleId: 137500,
+            ruleId: 137500,
+            ruleName: 'stats相应规则',
+            type: 'Positive',
+            volume: 116
         },
         {
-            "__type": "负面",
-            "date": "2018-05-30",
-            "type": "Negative",
-            "volume": 0
+            __type: '负面',
+            date: '2018-05-30',
+            type: 'Negative',
+            volume: 0
         },
         {
-            "__type": "中性",
-            "date": "2018-05-31",
-            "mainRuleId": 137500,
-            "ruleId": 137500,
-            "ruleName": "stats相应规则",
-            "type": "Neutral",
-            "volume": 93
+            __type: '中性',
+            date: '2018-05-31',
+            mainRuleId: 137500,
+            ruleId: 137500,
+            ruleName: 'stats相应规则',
+            type: 'Neutral',
+            volume: 93
         },
         {
-            "__type": "正面",
-            "date": "2018-05-31",
-            "mainRuleId": 137500,
-            "ruleId": 137500,
-            "ruleName": "stats相应规则",
-            "type": "Positive",
-            "volume": 17
+            __type: '正面',
+            date: '2018-05-31',
+            mainRuleId: 137500,
+            ruleId: 137500,
+            ruleName: 'stats相应规则',
+            type: 'Positive',
+            volume: 17
         },
         {
-            "__type": "负面",
-            "date": "2018-05-31",
-            "type": "Negative",
-            "volume": 0
+            __type: '负面',
+            date: '2018-05-31',
+            type: 'Negative',
+            volume: 0
         },
         {
-            "__type": "中性",
-            "date": "2018-06-01",
-            "mainRuleId": 137500,
-            "ruleId": 137500,
-            "ruleName": "stats相应规则",
-            "type": "Neutral",
-            "volume": 88
+            __type: '中性',
+            date: '2018-06-01',
+            mainRuleId: 137500,
+            ruleId: 137500,
+            ruleName: 'stats相应规则',
+            type: 'Neutral',
+            volume: 88
         },
         {
-            "__type": "正面",
-            "date": "2018-06-01",
-            "mainRuleId": 137500,
-            "ruleId": 137500,
-            "ruleName": "stats相应规则",
-            "type": "Positive",
-            "volume": 32
+            __type: '正面',
+            date: '2018-06-01',
+            mainRuleId: 137500,
+            ruleId: 137500,
+            ruleName: 'stats相应规则',
+            type: 'Positive',
+            volume: 32
         },
         {
-            "__type": "负面",
-            "date": "2018-06-01",
-            "type": "Negative",
-            "volume": 0
+            __type: '负面',
+            date: '2018-06-01',
+            type: 'Negative',
+            volume: 0
         },
         {
-            "__type": "中性",
-            "date": "2018-06-02",
-            "mainRuleId": 137500,
-            "ruleId": 137500,
-            "ruleName": "stats相应规则",
-            "type": "Neutral",
-            "volume": 21
+            __type: '中性',
+            date: '2018-06-02',
+            mainRuleId: 137500,
+            ruleId: 137500,
+            ruleName: 'stats相应规则',
+            type: 'Neutral',
+            volume: 21
         },
         {
-            "__type": "正面",
-            "date": "2018-06-02",
-            "mainRuleId": 137500,
-            "ruleId": 137500,
-            "ruleName": "stats相应规则",
-            "type": "Positive",
-            "volume": 6
+            __type: '正面',
+            date: '2018-06-02',
+            mainRuleId: 137500,
+            ruleId: 137500,
+            ruleName: 'stats相应规则',
+            type: 'Positive',
+            volume: 6
         },
         {
-            "__type": "负面",
-            "date": "2018-06-02",
-            "type": "Negative",
-            "volume": 0
+            __type: '负面',
+            date: '2018-06-02',
+            type: 'Negative',
+            volume: 0
         },
         {
-            "__type": "中性",
-            "date": "2018-06-03",
-            "mainRuleId": 137500,
-            "ruleId": 137500,
-            "ruleName": "stats相应规则",
-            "type": "Neutral",
-            "volume": 28
+            __type: '中性',
+            date: '2018-06-03',
+            mainRuleId: 137500,
+            ruleId: 137500,
+            ruleName: 'stats相应规则',
+            type: 'Neutral',
+            volume: 28
         },
         {
-            "__type": "正面",
-            "date": "2018-06-03",
-            "mainRuleId": 137500,
-            "ruleId": 137500,
-            "ruleName": "stats相应规则",
-            "type": "Positive",
-            "volume": 6
+            __type: '正面',
+            date: '2018-06-03',
+            mainRuleId: 137500,
+            ruleId: 137500,
+            ruleName: 'stats相应规则',
+            type: 'Positive',
+            volume: 6
         },
         {
-            "__type": "负面",
-            "date": "2018-06-03",
-            "type": "Negative",
-            "volume": 0
+            __type: '负面',
+            date: '2018-06-03',
+            type: 'Negative',
+            volume: 0
         },
         {
-            "__type": "中性",
-            "date": "2018-06-04",
-            "mainRuleId": 137500,
-            "ruleId": 137500,
-            "ruleName": "stats相应规则",
-            "type": "Neutral",
-            "volume": 14
+            __type: '中性',
+            date: '2018-06-04',
+            mainRuleId: 137500,
+            ruleId: 137500,
+            ruleName: 'stats相应规则',
+            type: 'Neutral',
+            volume: 14
         },
         {
-            "__type": "正面",
-            "date": "2018-06-04",
-            "mainRuleId": 137500,
-            "ruleId": 137500,
-            "ruleName": "stats相应规则",
-            "type": "Positive",
-            "volume": 1
+            __type: '正面',
+            date: '2018-06-04',
+            mainRuleId: 137500,
+            ruleId: 137500,
+            ruleName: 'stats相应规则',
+            type: 'Positive',
+            volume: 1
         },
         {
-            "__type": "负面",
-            "date": "2018-06-04",
-            "type": "Negative",
-            "volume": 0
+            __type: '负面',
+            date: '2018-06-04',
+            type: 'Negative',
+            volume: 0
         }
     ],
 
     radar2: [
         {
-            "benefit": "Long-lasting_face makeup",
-            "ingredient": "Acanthopanax",
-            "rase": 0.1656603623,
-            "total": 25009,
-            "volume": 4143
+            benefit: 'Long-lasting_face makeup',
+            ingredient: 'Acanthopanax',
+            rase: 0.1656603623,
+            total: 25009,
+            volume: 4143
         },
         {
-            "benefit": "Hydration",
-            "ingredient": "Acanthopanax",
-            "rase": 0.1420688552,
-            "total": 25009,
-            "volume": 3553
+            benefit: 'Hydration',
+            ingredient: 'Acanthopanax',
+            rase: 0.1420688552,
+            total: 25009,
+            volume: 3553
         },
         {
-            "benefit": "Anti-sensitivity",
-            "ingredient": "Acanthopanax",
-            "rase": 0.1213163261,
-            "total": 25009,
-            "volume": 3034
+            benefit: 'Anti-sensitivity',
+            ingredient: 'Acanthopanax',
+            rase: 0.1213163261,
+            total: 25009,
+            volume: 3034
         },
         {
-            "benefit": "Anti-aging",
-            "ingredient": "Acanthopanax",
-            "rase": 0.0858490943,
-            "total": 25009,
-            "volume": 2147
+            benefit: 'Anti-aging',
+            ingredient: 'Acanthopanax',
+            rase: 0.0858490943,
+            total: 25009,
+            volume: 2147
         },
         {
-            "benefit": "Whitening",
-            "ingredient": "Acanthopanax",
-            "rase": 0.0655364069,
-            "total": 25009,
-            "volume": 1639
+            benefit: 'Whitening',
+            ingredient: 'Acanthopanax',
+            rase: 0.0655364069,
+            total: 25009,
+            volume: 1639
         },
         {
-            "benefit": "Protection_face makeup",
-            "ingredient": "Acanthopanax",
-            "rase": 0.0598984366,
-            "total": 25009,
-            "volume": 1498
+            benefit: 'Protection_face makeup',
+            ingredient: 'Acanthopanax',
+            rase: 0.0598984366,
+            total: 25009,
+            volume: 1498
         },
         {
-            "benefit": "Hydrated & plumpy_face makeup",
-            "ingredient": "Acanthopanax",
-            "rase": 0.0540605382,
-            "total": 25009,
-            "volume": 1352
+            benefit: 'Hydrated & plumpy_face makeup',
+            ingredient: 'Acanthopanax',
+            rase: 0.0540605382,
+            total: 25009,
+            volume: 1352
         },
         {
-            "benefit": "Anti-oxidant",
-            "ingredient": "Acanthopanax",
-            "rase": 0.0420248710,
-            "total": 25009,
-            "volume": 1051
+            benefit: 'Anti-oxidant',
+            ingredient: 'Acanthopanax',
+            rase: 0.042024871,
+            total: 25009,
+            volume: 1051
         },
         {
-            "benefit": "Anti-aging_face makeup",
-            "ingredient": "Acanthopanax",
-            "rase": 0.0364268863,
-            "total": 25009,
-            "volume": 911
+            benefit: 'Anti-aging_face makeup',
+            ingredient: 'Acanthopanax',
+            rase: 0.0364268863,
+            total: 25009,
+            volume: 911
         },
         {
-            "benefit": "Anti-pollution",
-            "ingredient": "Acanthopanax",
-            "rase": 0.0347474909,
-            "total": 25009,
-            "volume": 869
+            benefit: 'Anti-pollution',
+            ingredient: 'Acanthopanax',
+            rase: 0.0347474909,
+            total: 25009,
+            volume: 869
         }
     ],
 
@@ -753,77 +752,87 @@ const dataSource = {
 
     polar: [
         {
-            "category": "Cosmetic water",
-            "ingredient": "Acanthopanax",
-            "rase": 0.1668856767,
-            "total": 761,
-            "volume": 127
+            category: 'Cosmetic water',
+            ingredient: 'Acanthopanax',
+            rase: 0.1668856767,
+            total: 761,
+            volume: 127
         },
         {
-            "category": "Body care",
-            "ingredient": "Acanthopanax",
-            "rase": 0.1235216820,
-            "total": 761,
-            "volume": 94
+            category: 'Body care',
+            ingredient: 'Acanthopanax',
+            rase: 0.123521682,
+            total: 761,
+            volume: 94
         },
         {
-            "category": "Cleanser",
-            "ingredient": "Acanthopanax",
-            "rase": 0.1077529566,
-            "total": 761,
-            "volume": 82
+            category: 'Cleanser',
+            ingredient: 'Acanthopanax',
+            rase: 0.1077529566,
+            total: 761,
+            volume: 82
         },
         {
-            "category": "Hair care product",
-            "ingredient": "Acanthopanax",
-            "rase": 0.0906701708,
-            "total": 761,
-            "volume": 69
+            category: 'Hair care product',
+            ingredient: 'Acanthopanax',
+            rase: 0.0906701708,
+            total: 761,
+            volume: 69
         },
         {
-            "category": "Lotion/cream/gel/essence",
-            "ingredient": "Acanthopanax",
-            "rase": 0.0880420499,
-            "total": 761,
-            "volume": 67
+            category: 'Lotion/cream/gel/essence',
+            ingredient: 'Acanthopanax',
+            rase: 0.0880420499,
+            total: 761,
+            volume: 67
         },
         {
-            "category": "Perfume",
-            "ingredient": "Acanthopanax",
-            "rase": 0.0827858081,
-            "total": 761,
-            "volume": 63
+            category: 'Perfume',
+            ingredient: 'Acanthopanax',
+            rase: 0.0827858081,
+            total: 761,
+            volume: 63
         },
         {
-            "category": "Total UV",
-            "ingredient": "Acanthopanax",
-            "rase": 0.0749014455,
-            "total": 761,
-            "volume": 57
+            category: 'Total UV',
+            ingredient: 'Acanthopanax',
+            rase: 0.0749014455,
+            total: 761,
+            volume: 57
         },
         {
-            "category": "Eye care",
-            "ingredient": "Acanthopanax",
-            "rase": 0.0486202365,
-            "total": 761,
-            "volume": 37
+            category: 'Eye care',
+            ingredient: 'Acanthopanax',
+            rase: 0.0486202365,
+            total: 761,
+            volume: 37
         },
         {
-            "category": "Eyebrow total",
-            "ingredient": "Acanthopanax",
-            "rase": 0.0315374507,
-            "total": 761,
-            "volume": 24
+            category: 'Eyebrow total',
+            ingredient: 'Acanthopanax',
+            rase: 0.0315374507,
+            total: 761,
+            volume: 24
         },
         {
-            "category": "Mask",
-            "ingredient": "Acanthopanax",
-            "rase": 0.0262812089,
-            "total": 761,
-            "volume": 20
+            category: 'Mask',
+            ingredient: 'Acanthopanax',
+            rase: 0.0262812089,
+            total: 761,
+            volume: 20
         }
+    ],
+
+    radarZero: [
+        { x: 'Brand Impact Index', value: 97, name: '邓伦' },
+        { x: 'Brand Impact Index', value: 76, name: 'Benchmark' },
+        { x: 'Media Index', value: 136, name: '邓伦' },
+        { x: 'Media Index', value: 82, name: 'Benchmark' },
+        { x: 'Search Index', value: 138, name: '邓伦' },
+        { x: 'Search Index', value: 93, name: 'Benchmark' },
+        { x: 'Social Index', value: 113, name: '邓伦' },
+        { x: 'Social Index', value: 107, name: 'Benchmark' }
     ]
 };
 
 export default dataSource;
-
