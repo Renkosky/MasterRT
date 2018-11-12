@@ -214,25 +214,6 @@ class MrEcharts extends React.Component<MrEchartsProps, {}> {
         });
 
         /**
-         *
-         * 处理词云图的data，将value为undefined 或 null 的设为0------胡奥20181106
-         */
-        mu.run(chartTypes.indexOf('wordCloud') > -1, () => {
-            data = mu.map(data, (d) => {
-                if (mu.isBaseType(d.value)) {
-                    console.log(isNaN(d.value));
-                    if (mu.isNull(d.value) || mu.isUndefined(d.value) || isNaN(d.value)) {
-                        d.value = 0;
-                    }
-                } else {
-                    d.value = 0;
-                }
-
-                return d;
-            });
-        });
-
-        /**
          * 数据获取可能来自上层元素'遗传'
          */
         data = mu.ifnvl(data, _.get(props, '_gene.data'));
@@ -251,6 +232,21 @@ class MrEcharts extends React.Component<MrEchartsProps, {}> {
             console.error('data 与 options 不能同时设置');
             return void 0;
         }
+
+        /**
+         *
+         * 处理data，将value为undefined 或 null 的设为0------胡奥20181109
+         */
+        data = mu.map(data, (d) => {
+            if (mu.isBaseType(d.value)) {
+                if (mu.isNull(d.value) || mu.isUndefined(d.value) || isNaN(d.value)) {
+                    d.value = 0;
+                }
+            } else {
+                d.value = 0;
+            }
+            return d;
+        });
 
         /**
          * 通过 data + setting, 获得最终的 options
