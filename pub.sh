@@ -39,7 +39,7 @@ fi
 git add .
 git commit -am "$_commit"
 
-echo $1 $_version
+echo "::::-> $1 $_version"
 
 # 若不手动设置版本号，则自动增长
 cd ./pub
@@ -50,7 +50,7 @@ cd ./pub
     fi
 cd ..
 
-echo $_version
+echo ":::::-> $_version"
 
 exit 0;
 
