@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
-git status | grep -q 'nothing to commit, working directory clean'
-if [ $? -ne 0 ]; then
-    echo '当前分支尚有文件未处理，不能切换到Master分支'
-    exit 0
-fi
+#git status | grep -q 'nothing to commit, working directory clean'
+#if [ $? -ne 0 ]; then
+#    echo '当前分支尚有文件未处理，不能切换到Master分支'
+#    exit 0
+#fi
 
 git checkout master
 git pull
 
 echo ':::编译文件'
-npm run tsd
+# npm run tsd
 if [ $? -ne 0 ]; then
     echo 编译错误
     exit 1
@@ -39,7 +39,7 @@ fi
 git add .
 git commit -am "$_commit"
 
-echo $_version
+echo $1 $_version
 
 # 若不手动设置版本号，则自动增长
 cd ./pub
