@@ -408,7 +408,7 @@ export function subSetting(_colors) {
 
         // 是否堆叠显示
         // @map bar, line
-        '::stack': ({isStack: boolean = true}) => {
+        '::stack': ({isStack = true} = {}) => {
             return {
                 '$$series[*].stack': isStack ? 'one' : void 0
             }
