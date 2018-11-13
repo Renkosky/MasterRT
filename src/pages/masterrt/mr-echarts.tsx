@@ -1324,19 +1324,7 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
                         height: 300,
                         width: '100%'
                     }}>
-                    <MrEcharts
-                        chartTypes="bar::polar"
-                        data={dataSource.polar}
-                        transform={[
-                            {
-                                '@convert': {
-                                    value: 'volume',
-                                    x: 'category',
-                                    name: 'ingredient'
-                                }
-                            }
-                        ]}
-                    />
+                    <MrEcharts chartTypes="pie" data={this.data.pie} setting={['::ring', '::rose({ borderWidth: 6 })']} />
                 </section>
                 <section
                     style={{
@@ -1345,7 +1333,7 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
                     }}>
                     <MrEchartsPanel data={this.cloud} chartTypes="wordCloud::random" chartClick={this.a.bind(this)} />
                 </section>
-                {/*<details className="mt-16">*/} {/*<summary>雷达图</summary>*/} {/*<MrCode code={`*/}{' '}
+                {/*<details className="mt-16">*/} {/*<summary>雷达图</summary>*/} {/*<MrCode code={`*/}
                 {/*<MrEcharts chartTypes="radar" data="{dataSource.radar}/">*/} {/*`}></MrCode>*/} {/*</details>*/}
                 <aside className="mt-16">
                     <table>
@@ -1421,7 +1409,6 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
                 </aside>
                 <aside className="mt-16">
                     <MrPanel title={'setting配置指南'}>
-                        {' '}
                         <MrCode
                             code={`
 // setting 有一组 key/value 组成
@@ -1456,11 +1443,10 @@ setting = {
 // 当 @@, 则 xyExchange 为系统默认的处理方法, 其值为改方法函数的参数
 '@@xyExchange': true
                         `}
-                        />{' '}
+                        />
                     </MrPanel>
 
                     <MrPanel title={'Echarts Theme 主题以及颜色配置'}>
-                        {' '}
                         <MrCode
                             code={`
 
