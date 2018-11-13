@@ -83,6 +83,11 @@ export interface IMrResource {
      * 返回数据处理
      */
     transform?: any;
+
+    /**
+     * options
+     */
+    options?: any;
 }
 
 export interface MrReqProps {

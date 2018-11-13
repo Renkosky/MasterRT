@@ -24,7 +24,7 @@
 import MrServices from './mr.services';
 import * as mu from 'mzmu';
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
-import Mock from 'mockjs';
+import * as Mock from 'mockjs';
 
 const CancelToken = axios.CancelToken;
 
@@ -81,6 +81,10 @@ function errorHandler(err) {
         return Promise.reject(err);
     } else {
         const { response } = err;
+
+        if(!response) {
+           return Promise.reject(err)
+        }
 
         // 设置reject, 表示该 catch 后，不再接受 then
         let { headers, status, statusText, data } = response;
