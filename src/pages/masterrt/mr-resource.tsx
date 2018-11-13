@@ -18,7 +18,7 @@ export default class MrsMrResources extends React.Component<MrsMrResourcesProps,
         });
 
 
-        b.post();
+        // b.post();
 
         //
         // a.get({

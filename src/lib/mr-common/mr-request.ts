@@ -23,15 +23,16 @@
 
 import MrServices from './mr.services';
 import * as mu from 'mzmu';
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 import Mock from 'mockjs';
 
 const CancelToken = axios.CancelToken;
 
 // const source = CancelToken.source();
 
-interface AxiosRequestConfig {
+interface MrAxiosRequestConfig extends AxiosRequestConfig {
     resultType: string;
+    mock: boolean;
 }
 
 /**
@@ -41,8 +42,8 @@ interface AxiosRequestConfig {
  * @return {Promise<any>}
  */
 function responseHandler(response: AxiosResponse) {
-    let { resultType } = response.config as AxiosRequestConfig;
-    let { headers: mock } = response;
+    let { resultType } = response.config as MrAxiosRequestConfig;
+    let { mock  } = response.config as MrAxiosRequestConfig;
     let rst;
 
     // @todo 编写文档的时候注明可以根据不同的resultType返回不同的类型
