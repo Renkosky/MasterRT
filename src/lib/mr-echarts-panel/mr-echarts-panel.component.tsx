@@ -285,6 +285,7 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
     // 查看DataView
     dataView() {
         let { dataView } = this.state;
+        console.debug(':::::::', dataView);
         this.setState({
             dataView: !dataView
         });
@@ -349,7 +350,16 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
         if (force) {
             return true;
         } else {
-            return _.isEqual(next, current) ? false : _.isEqual(nextState, this.state);
+
+            let isProps = _.isEqual(next, current);
+
+            if(!isProps) {
+                return true;
+            }
+
+            let isStates = _.isEqual(nextState, this.state);
+
+            return !isStates;
         }
     }
 

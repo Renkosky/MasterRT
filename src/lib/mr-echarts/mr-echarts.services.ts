@@ -657,17 +657,17 @@ export default {
         chartTypes = defSubType[chartTypes] || chartTypes;
 
         let [_chartType, ..._subType] = chartTypes.split('::');
-        let paramSetting;
+        let paramSetting = [];
         if (mu.type(setting, 'array')) {
             /**
              * setting=['::ring', '::rose({ borderWidth: 6 })'] 支持配置数组带参数
              */
-            mu.each(setting, (set) => {
-                if (set.indexOf('::') !== -1) {
-                    let [tempChartType, ...tempSubType] = set.split('::');
+            mu.each(setting, (rule) => {
+                if (typeof rule === 'string' && rule.indexOf('::') !== -1) {
+                    let [tempChartType, ...tempSubType] = rule.split('::');
                     _subType = _subType.concat(tempSubType);
                 } else {
-                    paramSetting.push(set);
+                    paramSetting.push(rule);
                 }
             });
         } else {
