@@ -21,11 +21,13 @@
  * :: => 取消ajax请求, 仅支持取消单条请求
  */
 
-
 import MrServices from './mr.services';
 import * as mu from 'mzmu';
-import axios, {AxiosResponse} from 'axios';
+import axios, { AxiosResponse } from 'axios';
+import Mock from 'mockjs';
+
 const CancelToken = axios.CancelToken;
+
 // const source = CancelToken.source();
 
 interface AxiosRequestConfig {
@@ -39,8 +41,25 @@ interface AxiosRequestConfig {
  * @return {Promise<any>}
  */
 function responseHandler(response: AxiosResponse) {
-    let {resultType} = response.config as AxiosRequestConfig;
-    return Promise.resolve( resultType === 'response' ? response : response.data);
+    let { resultType } = response.config as AxiosRequestConfig;
+    let { headers: mock } = response;
+    let rst;
+
+    // @todo 编写文档的时候注明可以根据不同的resultType返回不同的类型
+    switch (resultType) {
+        case 'response':
+            rst = response;
+            break;
+        default:
+            rst = response.data;
+            break;
+    }
+
+    if(mock && typeof rst === 'object') {
+        rst = Mock.mock(rst);
+    }
+
+    return Promise.resolve(rst);
 }
 
 function errorHandler(err) {
@@ -60,28 +79,32 @@ function errorHandler(err) {
          */
         return Promise.reject(err);
     } else {
-        const {response} = err;
+        const { response } = err;
 
         // 设置reject, 表示该 catch 后，不再接受 then
-        let {headers, status, statusText, data} = response;
+        let { headers, status, statusText, data } = response;
 
         // 兼容fetch使用promise获得信息
         let $message: any = new Promise((resolve) => resolve(data));
 
         // 传递error信息
         let error: any = {
-            headers, status, statusText, data, $message, response, error: err
+            headers,
+            status,
+            statusText,
+            data,
+            $message,
+            response,
+            error: err
         };
 
-
         let self = MrServices._reqCatch;
-        if(self) {
+        if (self) {
             error = self(error);
         }
 
         return Object.prototype.toString.call(error) === '[object Promise]' ? error : Promise.reject(error);
     }
-
 
 }
 
@@ -93,12 +116,12 @@ function errorHandler(err) {
  * @return {object}           An object containing either "data" or "err"
  */
 
- // @todo 接收option自定义值，配置可接受参数，控制报错流程
+// @todo 接收option自定义值，配置可接受参数，控制报错流程
 export default function MrRequest(url, options: any = {}) {
 
     let headers: any = MrServices.getHeaders();
 
-    headers = mu.map(headers || {}, (item)=> {
+    headers = mu.map(headers || {}, (item) => {
         return typeof item === 'function' ? item() : item;
     });
 
@@ -112,7 +135,7 @@ export default function MrRequest(url, options: any = {}) {
     });
 
     return axios(options)
-        .then(responseHandler)
-        .catch(errorHandler)
+    .then(responseHandler)
+    .catch(errorHandler);
 }
 

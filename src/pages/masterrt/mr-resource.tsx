@@ -11,7 +11,12 @@ export default class MrsMrResources extends React.Component<MrsMrResourcesProps,
     componentWillMount() {
         // let a = MrResource.pool('/abc{/:id}{/:name}{/:key}');
         //
-        let b = MrResource.pool('/bbb');
+        let b = MrResource.pool('/assets/mock.json');
+
+        b.get({}, {}, {mock: true}).then((rst) => {
+            console.debug(rst);
+        });
+
 
         b.post();
 
@@ -35,15 +40,6 @@ export default class MrsMrResources extends React.Component<MrsMrResourcesProps,
         // }, {holdParams: true}).then(() => {
         //     console.debug(1111111);
         // });
-
-
-
-
-
-
-
-
-
     }
 
     down() {

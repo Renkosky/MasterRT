@@ -408,9 +408,11 @@ export function subSetting(_colors) {
 
         // 是否堆叠显示
         // @map bar, line
-        '::stack': () => ({
-            '$$series[*].stack': 'one'
-        }),
+        '::stack': ({isStack: boolean = true}) => {
+            return {
+                '$$series[*].stack': isStack ? 'one' : void 0
+            }
+        },
 
         /**
          * 平铺呈现
