@@ -14,11 +14,16 @@
  * ::=> 添加 MrService.setNoDataComponent
  */
 import * as mu from 'mzmu';
-import { default as classNames } from 'classnames';
+import classNames from 'classnames';
 import * as Mock from 'mockjs';
-import {default as moment} from 'moment';
 import '../assets/styles/common.less';
 const download = require('../assets/js/download.js');
+
+/**
+ * fixed bug: umi 解析与 tsc 解析表现不一样
+ */
+const moment = require('moment');
+
 
 Mock.Random.extend({
     /**

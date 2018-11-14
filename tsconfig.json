@@ -1,20 +1,21 @@
 {
     "compilerOptions": {
-        "module": "es6",
         "target": "es6",
+        "module": "es6",
         "moduleResolution": "node",
         "jsx": "react",
         "baseUrl": ".",
-        "paths": {
-            "components": [
-                "components"
-            ],
-            "react": [
-                "node_modules/@types/react"
-            ]
-        },
+        "noImplicitAny": false,
+        "removeComments": true,
         "experimentalDecorators": true,
         "allowSyntheticDefaultImports": true,
-        "allowJs": true
+        "skipLibCheck": true,
+        "types": [
+            "node"
+        ],
+        "typeRoots": [
+            "./typings",
+            "node_modules/@types"
+        ]
     }
 }
