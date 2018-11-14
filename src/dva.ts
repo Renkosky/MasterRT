@@ -3,6 +3,8 @@ import { MrServices } from './lib';
 import { default as brp } from './services/base-resource-pool';
 import * as moment from 'moment';
 import echartsTheme from './assets/csi.echarts-theme-new';
+import * as Mock from 'mockjs';
+import * as mu from 'mzmu';
 // require('./assets/csi.echarts-theme.js');
 
 /**
@@ -67,6 +69,8 @@ export function config() {
             doy: 4 // The week that contains Jan 4th is the first week of the year.
         }
     });
+
+
 
     return {
         onError(err) {

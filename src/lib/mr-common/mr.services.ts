@@ -15,8 +15,31 @@
  */
 import * as mu from 'mzmu';
 import { default as classNames } from 'classnames';
+import * as Mock from 'mockjs';
+import {default as moment} from 'moment';
 import '../assets/styles/common.less';
 const download = require('../assets/js/download.js');
+
+Mock.Random.extend({
+    /**
+     * 返回自动增长的日期数组
+     * @param step 步长 '步长::单位'
+     * @param len
+     * @param format
+     * @param initDate
+     */
+    dateIncrements: (step: string = '1::d', len: number = 10, format: string = 'yyyy-MM-dd', initDate: any) => {
+        let momentFormat = format.replace('yyyy', 'YYYY').replace('dd', 'DD');
+        let date = moment(initDate || Mock.Random.date(format));
+        return mu.map(
+            len,
+            () => {
+                return date.add(...step.split('::')).format(momentFormat);
+            },
+            []
+        );
+    }
+});
 
 /**
  * 通用方法
@@ -184,6 +207,19 @@ class MrServices {
         config.noDataComponent && (this._noDataComponent = config.noDataComponent);
         config.reqCatch && (this._reqCatch = config.reqCatch);
         config.rules && (this._rules = config.rules);
+    }
+
+    /**
+     * 对 mockjs 进行提权
+     * @param mockJSON
+     */
+    mock(mockJSON: any) {
+        let jsonText = JSON.stringify(mockJSON);
+        jsonText = jsonText.replace(/\"?!@(.*?)\"/g, (a, b, c) => {
+            let rst = Mock.mock(`@${b}`);
+            return JSON.stringify(rst);
+        });
+        return Mock.mock(JSON.parse(jsonText));
     }
 }
 

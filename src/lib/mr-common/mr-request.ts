@@ -24,7 +24,7 @@
 import MrServices from './mr.services';
 import * as mu from 'mzmu';
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
-import * as Mock from 'mockjs';
+
 
 const CancelToken = axios.CancelToken;
 
@@ -57,7 +57,7 @@ function responseHandler(response: AxiosResponse) {
     }
 
     if(mock && typeof rst === 'object') {
-        rst = Mock.mock(rst);
+        rst = MrServices.mock(rst);
     }
 
     return Promise.resolve(rst);

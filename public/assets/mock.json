@@ -1,7 +1,8 @@
 {
-    "data": {
-        "list|1-10": [{
-            "id|+1": 1
-        }]
-    }
+    "data|3-10": [{
+        "value": "@integer(3, 66)",
+        "name": "@word(3, 5)",
+        "date": ["@date('yyyy-MM-dd')"],
+        "abc|+1": "!@dateIncrements('1::w')"
+    }]
 }

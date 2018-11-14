@@ -285,7 +285,6 @@ class MrEchartsPanel extends React.Component<MrEchartsPanelProps, {}> {
     // 查看DataView
     dataView() {
         let { dataView } = this.state;
-        console.debug(':::::::', dataView);
         this.setState({
             dataView: !dataView
         });
