@@ -1,8 +1,7 @@
 {
-    "data|3-10": [{
+    "data|11-60": [{
         "value": "@integer(3, 66)",
-        "name": "@word(3, 5)",
-        "date": ["@date('yyyy-MM-dd')"],
-        "abc|+1": "!@dateIncrements('1::w')"
+        "name|+1": "!@amplitude(5, 60)",
+        "x|+1": "!@dateIncrements('1::d', 5)"
     }]
 }

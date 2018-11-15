@@ -24,7 +24,6 @@ const download = require('../assets/js/download.js');
  */
 const moment = require('moment');
 
-
 Mock.Random.extend({
     /**
      * 返回自动增长的日期数组
@@ -43,6 +42,26 @@ Mock.Random.extend({
             },
             []
         );
+    },
+
+    /**
+     * 幅度脉冲              /\
+     * _____/\_____  ______/  \_____
+     *             \/
+     * 有点类似如图所示
+     */
+
+    amplitude(step: number = 5, len: number = 10) {
+        let rst: any[] = [];
+        let pulse = mu.map(Math.ceil(len / step), () => {
+            return Mock.mock(`@word(3, 8)`);
+        }, []);
+        let i = 0;
+        while (i < len) {
+            i++;
+            rst.push(pulse[Math.ceil(i / step) % pulse.length]);
+        }
+        return rst;
     }
 });
 
@@ -220,9 +239,15 @@ class MrServices {
      */
     mock(mockJSON: any) {
         let jsonText = JSON.stringify(mockJSON);
+
+        jsonText = jsonText.replace(/!!@(.*?\(.*?\))/g, (a, b, c) => {
+            let rst = Mock.mock(`@${b}`);
+            return typeof rst === 'object' ? JSON.stringify(rst) : rst;
+        });
+
         jsonText = jsonText.replace(/\"?!@(.*?)\"/g, (a, b, c) => {
             let rst = Mock.mock(`@${b}`);
-            return JSON.stringify(rst);
+            return typeof rst === 'object' ? JSON.stringify(rst) : rst;
         });
         return Mock.mock(JSON.parse(jsonText));
     }
