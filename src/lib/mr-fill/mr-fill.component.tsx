@@ -50,14 +50,16 @@ class MrFill extends React.Component<MrFillProps, {}> {
     render() {
         let {className = '', style = {}, children, gutter = 0, h100} = this.props;
 
+        let _style = mu.clone(style);
+
         const classString = MrServices.cls({
             'mr-fill': true,
             'h-100-i': h100
         }, className);
 
         if (gutter > 0) {
-            style['marginLeft'] = -gutter / 2;
-            style['marginRight'] = -gutter / 2;
+            _style['marginLeft'] = -gutter / 2;
+            _style['marginRight'] = -gutter / 2;
         }
 
         const cols = Children.map(children, (col: React.ReactElement<HTMLDivElement>) => {
@@ -92,7 +94,7 @@ class MrFill extends React.Component<MrFillProps, {}> {
 
         });
 
-        return (<div style={style} className={classString}>{cols}</div>);
+        return (<div style={_style} className={classString}>{cols}</div>);
     }
 }
 
