@@ -23,7 +23,7 @@ export default function(keys: string | string[], rules?: any, defaultValue?: boo
     let condition = MrRules.calc(keys, rules, defaultValue);
 
     return {
-        then: (pass: (keys, rules) => JSX.Element | JSX.Element, nopass?: (keys, rules) => JSX.Element | JSX.Element) => {
+        then: (pass: ((keys, rules) => JSX.Element) | JSX.Element, nopass?: ((keys, rules) => JSX.Element) | JSX.Element) => {
             return condition
                 ? typeof pass === 'function'
                     ? pass(keys, rules)
