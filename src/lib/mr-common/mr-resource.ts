@@ -271,7 +271,7 @@ class MrResource {
             put(search?: any, data?: any, options?: any) {
                 const args: any = Array.from(arguments);
                 args.unshift(url);
-                return vm.patch.apply(vm, args);
+                return vm.put.apply(vm, args);
             },
 
             save(search?: any, data?: any, options?: any) {
