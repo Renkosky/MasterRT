@@ -12,7 +12,8 @@
         "masterrt": "bash ./pub.sh",
         "doc": "typedoc --out ./docs",
         "docz:dev": "docz dev",
-        "docz:build": "docz build"
+        "docz:build": "docz build",
+        "tag": "git tag -l | grep 'masterrt'"
     },
     "private": false,
     "author": "Mizi Lin<amily4555@gmail.com>",

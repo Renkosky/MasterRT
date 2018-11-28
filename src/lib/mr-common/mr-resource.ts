@@ -21,6 +21,17 @@ import MrRequest from './mr-request';
 import MrServices from './mr.services';
 import * as _ from 'lodash';
 
+// HTTP协议中请求的8中方法
+//
+// OPTIONS获取服务器支持的HTTP请求方法；
+// HEAD跟get很像，但是不返回响应体信息，用于检查对象是否存在，并获取包含在响应消息头中的信息。
+// GET向特定的资源发出请求，得到资源。
+// POST向指定资源提交数据进行处理的请求，用于添加新的内容。
+// PUT向指定资源位置上传其最新的内容，用于修改某个内容。
+// DELETE请求服务器删除请求的URI所标识的资源，用于删除。
+// TRACE回馈服务器收到的请求，用于远程诊断服务器。
+// CONNECT用于代理进行传输，如使用ssl
+
 class MrResource {
 
     private getParams(mapping: string = '', params: object = {}): any {
@@ -171,6 +182,38 @@ class MrResource {
         return MrRequest(restdata.fullUrl, options);
     }
 
+    put(url: string, search?: any, data?: any, options?: any) {
+        switch (arguments.length) {
+            case 1:
+                search = {};
+                data = {};
+                options = {};
+                break;
+            case 2:
+                search = {};
+                data = arguments[1];
+                options = {};
+                break;
+            case 3:
+                options = {};
+                break;
+        }
+
+        const rest = this.restful(url, search, options);
+        const restdata = this.restful(rest.url, data, options);
+
+        options = mu.extend(true, {
+            method: 'put',
+            headers: {
+                'Content-Type': 'application/json;'
+            },
+            data,
+            params: search
+        }, options || {});
+
+        return MrRequest(restdata.fullUrl, options);
+    }
+
     delete(url: string, search?: any, options?: any) {
 
         const rest = this.restful(url, search, options);
@@ -220,6 +263,12 @@ class MrResource {
             },
 
             patch(search?: any, data?: any, options?: any) {
+                const args: any = Array.from(arguments);
+                args.unshift(url);
+                return vm.patch.apply(vm, args);
+            },
+
+            put(search?: any, data?: any, options?: any) {
                 const args: any = Array.from(arguments);
                 args.unshift(url);
                 return vm.patch.apply(vm, args);
