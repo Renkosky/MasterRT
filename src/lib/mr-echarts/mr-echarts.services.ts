@@ -430,7 +430,7 @@ export default {
                 let { name, type, data } = item;
                 let color = names[name];
 
-                if (mu.or(type, 'pie') || !color) {
+                if (mu.or(type, 'pie', 'radar') || !color) {
                     mu.each(data, (d) => {
                         let name = d.name;
                         let color = names[name];
