@@ -210,9 +210,14 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
         // prop.resource > pool[api]
         resource = mu.ifempty(resource, pool[req.api]);
 
+        let cancelToken: any = _.pick(options, 'cancelToken');
+
         return mu.run(resource, () => {
             let action = resource[method];
-            options.cancelToken = (c) => this.cancel.push(c);
+            options.cancelToken = (c) => {
+                cancelToken && cancelToken(c);
+                this.cancel.push(c)
+            };
             let $promise = action(search, payload, options);
             return $promise.then((res) => {
                 return transform ? transform(res) : res;
@@ -372,6 +377,7 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
 
     componentWillReceiveProps(nextProps, nextState) {
         if (this.isRender(nextProps, nextState)) {
+            this.cancel.length && this.cancel.forEach((cancel) => typeof cancel === 'function' && cancel());
             this.getRequests(nextProps);
         }
     }
@@ -388,7 +394,7 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
         this.forceUpdate = () => void 0;
         this.result = () => void 0;
         this.transmit = () => void 0;
-        this.cancel.forEach((cancel) => typeof cancel === 'function' && cancel());
+        this.cancel.length && this.cancel.forEach((cancel) => typeof cancel === 'function' && cancel());
     }
 
     render() {
