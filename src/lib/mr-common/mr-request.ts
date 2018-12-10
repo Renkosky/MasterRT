@@ -22,7 +22,7 @@
  */
 
 import MrServices from './mr.services';
-import * as mu from 'mzmu';
+import  mu from 'mzmu';
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 
 

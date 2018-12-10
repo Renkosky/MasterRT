@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as mu from 'mzmu';
+import  mu from 'mzmu';
 import * as _ from 'lodash';
 import MrPanel from '../../lib/mr-panel/mr-panel.component';
 import MrCode from '../../lib/mr-code/mr-code.component';

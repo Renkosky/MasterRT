@@ -5,7 +5,7 @@
 
 import * as React from 'react';
 import * as _ from 'lodash';
-import * as mu from 'mzmu';
+import  mu from 'mzmu';
 import {ReactNode} from 'react';
 
 export interface MrThenProps {

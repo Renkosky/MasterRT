@@ -12,7 +12,7 @@
  */
 
 import * as React from 'react';
-import * as mu from 'mzmu';
+import  mu from 'mzmu';
 
 export interface MrIfProps extends MrInterface {
     /**

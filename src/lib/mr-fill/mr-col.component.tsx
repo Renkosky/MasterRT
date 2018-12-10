@@ -1,6 +1,6 @@
 import * as React from 'react';
 import MrServices from '../mr-common/mr.services';
-import * as mu from 'mzmu';
+import  mu from 'mzmu';
 
 export interface MrColProps {
     className?: string;

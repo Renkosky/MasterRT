@@ -34,7 +34,7 @@ import MrEcharts, { MrEchartsProps } from '../mr-echarts/mr-echarts.component';
 import _mrEchartServices from '../mr-echarts/mr-echarts.services';
 import _mrServices from '../mr-common/mr.services';
 import * as _ from 'lodash';
-import * as mu from 'mzmu';
+import  mu from 'mzmu';
 import { MrEchartsDataView } from './mr-echarts-dataView.component';
 import { default as classNames } from 'classnames';
 import '../assets/styles/mr-echarts-panel.less';

@@ -10,7 +10,7 @@
  */
 
 import * as React from 'react';
-import * as mu from 'mzmu';
+import  mu from 'mzmu';
 import { default as MrServices } from '../mr-common/mr.services';
 import MrIf from '../mr-condition/mr-if.component';
 import '../assets/styles/mr-panel.less';

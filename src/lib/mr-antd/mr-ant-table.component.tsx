@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as mu from 'mzmu';
+import  mu from 'mzmu';
 import * as _ from 'lodash';
 import {Table} from 'antd';
 import {MrServices} from '..';

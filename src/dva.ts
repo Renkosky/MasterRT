@@ -4,7 +4,7 @@ import { default as brp } from './services/base-resource-pool';
 import * as moment from 'moment';
 import echartsTheme from './assets/csi.echarts-theme-new';
 import * as Mock from 'mockjs';
-import * as mu from 'mzmu';
+import  mu from 'mzmu';
 // require('./assets/csi.echarts-theme.js');
 
 /**

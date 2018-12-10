@@ -40,7 +40,7 @@
         "mobx-react": "5.2.8",
         "mockjs": "1.0.1-beta3",
         "moment": "2.22.2",
-        "mzmu": "1.8.18",
+        "mzmu": "^1.8.20",
         "ramda": "0.25.0",
         "react-immutable-render-mixin": "0.9.7",
         "react-jsx-parser": "1.5.1",

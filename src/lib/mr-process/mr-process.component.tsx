@@ -17,7 +17,7 @@
  */
 
 import * as React from 'react';
-import * as mu from 'mzmu';
+import  mu from 'mzmu';
 import '../assets/styles/mr-process.less';
 import MrLoader from './mr-loader.component';
 import MrNodataComponent from './mr-nodata.component';

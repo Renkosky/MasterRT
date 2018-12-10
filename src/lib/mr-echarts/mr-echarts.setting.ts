@@ -19,7 +19,7 @@
  */
 
 import * as _ from 'lodash';
-import * as mu from 'mzmu';
+import  mu from 'mzmu';
 
 const citys = {
     海门: [121.15, 31.89],

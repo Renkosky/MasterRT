@@ -5335,7 +5335,7 @@ dva-core@^1.5.0-beta.2:
     redux-saga "^0.16.0"
     warning "^3.0.0"
 
-dva-immer@^0.2.0, dva-immer@^0.2.3:
+dva-immer@^0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/dva-immer/-/dva-immer-0.2.3.tgz#c06c035e8c1b3a6b6ab2a8e186713b59f2083923"
   integrity sha512-tb9wYOnqt/hrkkOVnpx+uMz7TSoINiRxdjRp4TcQ/hii3wa2QqqfYQDn56Mz2y/Fu2vG1RjysmqFhM8MQiBV/Q==
@@ -5343,14 +5343,14 @@ dva-immer@^0.2.0, dva-immer@^0.2.3:
     "@babel/runtime" "7.0.0-beta.46"
     immer "^1.2.1"
 
-dva-loading@^2.0.0, dva-loading@^2.0.5:
+dva-loading@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/dva-loading/-/dva-loading-2.0.5.tgz#b9dd0e722f70dcc60f0539d1cc73945432a913ae"
   integrity sha512-5iuzzCUZxXFhUsJuqYgGV5P6Q+Mem3g+wkFE+0RVQvr+Jloi3gnDbF2PDMHFHtwuIVyeZ5ap9gNTernM5FXjRw==
   dependencies:
     "@babel/runtime" "7.0.0-beta.46"
 
-dva@2.4.0, dva@^2.2.2:
+dva@2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/dva/-/dva-2.4.0.tgz#57a29288dde0163cdaf2a2a955c8ec51cfccdea5"
   integrity sha512-upewv+3a3WotUSjFh92mOOj8nNgtLwSMGviO+ZydDu9DJrgISGmIR3dLIQjCXTVg5vFs7M5enGFpcZ0/oMZNFQ==
@@ -10052,10 +10052,10 @@ mz@^2.6.0, mz@^2.7.0:
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
 
-mzmu@1.8.18:
-  version "1.8.18"
-  resolved "https://registry.yarnpkg.com/mzmu/-/mzmu-1.8.18.tgz#05950127f2561d522d48e0a7a3052a3e9cde2621"
-  integrity sha512-5zThO69hE6pWsGdcx+9Rx9NbUeBV8dJxalHSNLInmESr5ac1LRKPiDrqA5EbETc8nh/+uxXc0TCAWsqa+D8QaA==
+mzmu@^1.8.20:
+  version "1.8.20"
+  resolved "https://registry.yarnpkg.com/mzmu/-/mzmu-1.8.20.tgz#d995c3897ee3d4b66e8464b3265510d356ac55e5"
+  integrity sha512-mJ1bTXrEt3aoQXIPdJm89HpgGGWv9kKeaDkfxa7RqItjIKPJBxUfMBDpnyoRQt95+bpzt5LMsR8MxIImaZwAMQ==
 
 nan@^2.10.0, nan@^2.9.2:
   version "2.11.1"
@@ -15192,21 +15192,6 @@ umi-plugin-dll@^1.0.1:
     lodash.uniq "^4.5.0"
     rimraf "^2.6.2"
     serve-static "^1.13.2"
-
-umi-plugin-dva@0.9.1:
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/umi-plugin-dva/-/umi-plugin-dva-0.9.1.tgz#b35aa738670f0e6c9d9487b1758c04eb5e095eb9"
-  integrity sha512-quj9GozAHN9+UkoPyuIfIpQIldGKjCJvjxstvNkHgZyzUAB11Zkzv1sxV7JqmvS4dBMdZbPr4SEJUGy60tJZ5A==
-  dependencies:
-    dva "^2.2.2"
-    dva-immer "^0.2.0"
-    dva-loading "^2.0.0"
-    globby "^7.1.1"
-    lodash.uniq "^4.5.0"
-    object-assign "^4.1.1"
-    path-is-root "^0.1.0"
-    path-to-regexp "^1.7.0"
-    slash2 "^2.0.0"
 
 umi-plugin-dva@^1.1.1:
   version "1.1.1"

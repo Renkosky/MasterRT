@@ -13,7 +13,7 @@
 import * as React from 'react';
 import * as echarts from 'echarts';
 import * as _ from 'lodash';
-import * as mu from 'mzmu';
+import  mu from 'mzmu';
 import 'echarts-wordcloud';
 import '../assets/js/china.js';
 import '../assets/js/theme.customed.js';

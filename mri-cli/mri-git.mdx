@@ -102,7 +102,24 @@ $ mri git hotfix no-exist-theme::0.0.1-hotfix.1 --force
 
 ```
 
-## git gamp
+## mri git conflict
+
+解决 本地分支与受保护分支 test 与 master 冲突问题
+
+```sh
+
+# 当提交merge request 时，发现本地分支与 受保护分支产生冲突的时候
+
+$ mri git conflict test
+
+$ mri git conflict master
+
+# --> mri git conflict test --force 会覆盖当前已创建的临时分支副本
+
+```
+
+
+## mri git gamp
 
 一组git命名的快捷方式
 

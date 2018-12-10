@@ -5,7 +5,7 @@
  */
 
 import { MrServices } from '..';
-import * as mu from 'mzmu';
+import  mu from 'mzmu';
 import MrRules from './mr-rules.compontent';
 
 /**

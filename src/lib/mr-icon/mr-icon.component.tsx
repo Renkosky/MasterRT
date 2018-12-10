@@ -11,7 +11,7 @@
 
 import * as React from 'react';
 import { Icon } from 'antd';
-import * as mu from 'mzmu';
+import  mu from 'mzmu';
 
 import '../assets/styles/mr-icon.less';
 import '../assets/styles/mr-simple-line-icon.less';

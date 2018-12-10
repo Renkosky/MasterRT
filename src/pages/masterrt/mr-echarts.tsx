@@ -3,7 +3,7 @@ import { MrPanel, MrEcharts, MrEchartsPanel } from '../../lib';
 import './masterrt.less';
 import MrCode from '../../lib/mr-code/mr-code.component';
 import { default as dataSource } from '../../services/data-source';
-import * as mu from 'mzmu';
+import  mu from 'mzmu';
 
 interface MrsMrEchartsProps {}
 

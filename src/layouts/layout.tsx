@@ -6,7 +6,7 @@ import Link from 'umi/link';
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 const {Header, Footer, Sider, Content} = Layout;
-import * as mu from 'mzmu';
+import  mu from 'mzmu';
 
 interface MrsLayoutProps {
     location: any;

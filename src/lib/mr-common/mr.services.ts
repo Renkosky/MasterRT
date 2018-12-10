@@ -13,7 +13,7 @@
  * @update mizi.lin@v0.1.23.20180521
  * ::=> 添加 MrService.setNoDataComponent
  */
-import * as mu from 'mzmu';
+import  mu from 'mzmu';
 import classNames from 'classnames';
 import * as Mock from 'mockjs';
 import '../assets/styles/common.less';

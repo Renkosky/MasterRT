@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Children, cloneElement} from 'react';
 import MrServices from '../mr-common/mr.services';
 import MrCol from './mr-col.component';
-import * as mu from 'mzmu';
+import  mu from 'mzmu';
 
 import '../assets/styles/mr-fill.less';
 
