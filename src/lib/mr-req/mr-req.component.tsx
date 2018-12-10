@@ -210,7 +210,7 @@ export class MrReqInner extends React.Component<MrReqProps, {}> {
         // prop.resource > pool[api]
         resource = mu.ifempty(resource, pool[req.api]);
 
-        let cancelToken: any = _.pick(options, 'cancelToken');
+        let {cancelToken} = options;
 
         return mu.run(resource, () => {
             let action = resource[method];
