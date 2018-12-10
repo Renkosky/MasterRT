@@ -6,7 +6,7 @@
 
 import * as React from 'react';
 import { Spin } from 'antd';
-import '../assets/mr-loader.less';
+import '../assets/styles/mr-loader.less';
 
 export interface MrLoaderComponentProps {
     /**
