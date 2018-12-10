@@ -44,7 +44,8 @@
         "ramda": "0.25.0",
         "react-immutable-render-mixin": "0.9.7",
         "react-jsx-parser": "1.5.1",
-        "simple-line-icons": "2.4.1"
+        "simple-line-icons": "2.4.1",
+        "antd": "3.10.3"
     },
     "devDependencies": {
         "@types/echarts": "0.0.12",
