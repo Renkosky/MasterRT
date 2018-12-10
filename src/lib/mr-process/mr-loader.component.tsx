@@ -6,6 +6,7 @@
 
 import * as React from 'react';
 import {Spin} from 'antd';
+import "~antd/lib/button/style/index.less";
 
 export interface MrLoaderComponentProps {
     /**
