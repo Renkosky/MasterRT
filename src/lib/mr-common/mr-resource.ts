@@ -16,7 +16,7 @@
  * ::=> fixed bugs: mrdown no download then add axios.options.responseType: blob
  */
 
-import  mu from 'mzmu';
+import mu from 'mzmu';
 import MrRequest from './mr-request';
 import MrServices from './mr.services';
 import * as _ from 'lodash';
