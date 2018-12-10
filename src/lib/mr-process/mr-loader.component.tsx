@@ -5,8 +5,8 @@
  */
 
 import * as React from 'react';
-import {Spin} from 'antd';
-import "~antd/lib/button/style/index.less";
+import { Spin } from 'antd';
+import '../assets/mr-loader.less';
 
 export interface MrLoaderComponentProps {
     /**
@@ -23,17 +23,10 @@ export interface MrLoaderComponentProps {
 }
 
 class MrLoader extends React.Component<MrLoaderComponentProps, {}> {
-
     render() {
+        let { start } = this.props;
 
-        let {start} = this.props;
-
-        return (<React.Fragment>
-            {
-                (start >= 0 && start < 100) ?
-                    <Spin></Spin> : null
-            }
-        </React.Fragment>);
+        return <React.Fragment>{start >= 0 && start < 100 ? <Spin /> : null}</React.Fragment>;
     }
 }
 
