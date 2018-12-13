@@ -4,24 +4,29 @@ const path = require('path');
 
 export default {
     themeConfig: {
+        themeConfig: {
+            mode: 'dark'
+        },
+
         styles: {
             container: {
                 width: '80%',
                 minWidth: 920,
                 padding: ['20px 30px', '0 40px 40px']
-            },
-
-            blockquote: {
-                background: '#7D899C',
-                borderLeft: '1px solid #0B5FFF'
             }
+
+            //     blockquote: {
+            //         background: '#7D899C',
+            //         borderLeft: '1px solid #0B5FFF'
+            //     }
+            // }
         }
     },
 
     dest: 'dist/docz',
 
     typescript: true,
-    hashHistory: false,
+    hashHistory: true,
     plugins: [
         css({
             preprocessor: 'less',
@@ -30,7 +35,7 @@ export default {
                 javascriptEnabled: true
             }
         })
-    ],
+    ]
 
     // modifyBundlerConfig: (config) => {
     //     config.module.rules.push({
