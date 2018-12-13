@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import './layout.less';
 import {Layout, Menu, Icon} from 'antd';
 import _ from 'lodash';

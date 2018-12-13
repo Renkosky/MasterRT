@@ -119,7 +119,7 @@ $ mri git conflict master
 ```
 
 
-## mri git gamp
+## mri gamp
 
 一组git命名的快捷方式
 
@@ -135,6 +135,38 @@ message: git commit -am message
 $ git gamp 'this is a test'
 # 执行这条语句的git组合为
 # git pull && git status && git add . && git commit -am 'this is a test' && git push
+
+```
+
+## mri gco
+
+一组git命名的快捷方式
+快速切换分支
+
+```bash
+
+# mri gco <branch|index>
+# branch 需要切换的分支
+# index 历史切换分支记录中的索引值
+
+# ---
+
+$ mri gco
+
+最近打开过的Branch:
+
+0 'release/social/v1.4.0'
+1 'release/mri/v2.6.0'
+2 'master'
+3 'aaaaaaaa'
+4 'test'
+
+$ mri gco release/social/v1.4.0
+
+# 或
+$  mri gco 0
+
+# 均可以快速切换到 release/social/v1.4.0 分支
 
 ```
 

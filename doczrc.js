@@ -1,4 +1,5 @@
-import {css} from 'docz-plugin-css';
+import { css } from 'docz-plugin-css';
+const _ = require('lodash');
 const path = require('path');
 
 export default {
@@ -7,7 +8,7 @@ export default {
             container: {
                 width: '80%',
                 minWidth: 920,
-                padding: ['20px 30px', '0 40px 40px'],
+                padding: ['20px 30px', '0 40px 40px']
             },
 
             blockquote: {
@@ -24,13 +25,18 @@ export default {
     plugins: [
         css({
             preprocessor: 'less',
-            cssmodules: false
+            cssmodules: false,
+            loaderOpts: {
+                javascriptEnabled: true
+            }
         })
     ],
 
     // modifyBundlerConfig: (config) => {
-    //     config.output.publicPath = './public/';
+    //     config.module.rules.push({
+    //         loader: 'less-loader',
+    //         options: { javascriptEnabled: true }
+    //     });
     //     return config;
     // }
 };
-

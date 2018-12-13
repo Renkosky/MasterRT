@@ -1,0 +1,7 @@
+{
+    "data|11-60": [{
+        "value": "@integer(3, 66)",
+        "name|+1": "!@amplitude(5, 60)",
+        "x|+1": "!@dateIncrements('1::d', 5)"
+    }]
+}
