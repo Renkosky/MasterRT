@@ -26,7 +26,8 @@ export default {
     dest: 'dist/docz',
 
     typescript: true,
-    hashHistory: true,
+    hashRouter: true,
+    codeSandbox: false,
     plugins: [
         css({
             preprocessor: 'less',
