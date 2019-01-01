@@ -22,7 +22,7 @@ let umirc = {
                     webpackChunkName: true
                 },
 
-                pwa: true,
+                pwa: false,
 
                 title: 'Loading'
             }
@@ -60,7 +60,7 @@ let umirc = {
         '/services': {
             target: 'http://58.215.174.164:16800/',
             changeOrigin: true,
-            pathRewrite: {'^/services': ''}
+            pathRewrite: { '^/services': '' }
         }
     },
 
@@ -103,6 +103,10 @@ let umirc = {
     ignoreMomentLocale: true,
 
     urlLoaderExcludes: [/assets(.*)\.svg$/],
+
+    // externals: {
+    //     './mzmu': 'mzmu'
+    // },
 
     chainWebpack(config) {
         config.module

@@ -287,7 +287,7 @@ class MrResource {
                 options = options || {};
                 options.responseType = 'blob';
                 args.unshift(url);
-                return vm.get.apply(vm, args).then((rst) => {
+                return vm.get(search, {}, options).then((rst) => {
                     MrServices.download(rst, search.downloadName);
                 });
             },

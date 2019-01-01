@@ -28,7 +28,8 @@
         "simple-line-icons": "2.4.1",
         "classnames": "^2.2.6",
         "mockjs": "^1.0.1-beta3",
-        "antd": "^3.10.3"
+        "antd": "^3.10.3",
+        "d3-dsv": "^1.0.10"
     },
     "devDependencies": {
         "@types/echarts": "0.0.12",
