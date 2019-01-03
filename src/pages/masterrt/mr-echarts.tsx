@@ -3,7 +3,7 @@ import { MrPanel, MrEcharts, MrEchartsPanel } from '../../lib';
 import './masterrt.less';
 import MrCode from '../../lib/mr-code/mr-code.component';
 import { default as dataSource } from '../../services/data-source';
-import  mu from 'mzmu';
+import mu from 'mzmu';
 
 interface MrsMrEchartsProps {}
 
@@ -1297,6 +1297,405 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
         }
     ];
 
+    mapData = [
+        {
+            province: '其他',
+            volume: 643844,
+            value: 643844,
+            name: '其他',
+            $rowSum: 3021140,
+            $rowRate: '0.2131',
+            $rowPercent: '21%',
+            $rowPercent2: '21.31%',
+            $value: 643844
+        },
+        {
+            province: '广东',
+            volume: 240196,
+            value: 240196,
+            name: '广东',
+            $rowSum: 3021140,
+            $rowRate: '0.0795',
+            $rowPercent: '8%',
+            $rowPercent2: '7.95%',
+            $value: 240196
+        },
+        {
+            province: '北京',
+            volume: 180757,
+            value: 180757,
+            name: '北京',
+            $rowSum: 3021140,
+            $rowRate: '0.0598',
+            $rowPercent: '6%',
+            $rowPercent2: '5.98%',
+            $value: 180757
+        },
+        {
+            province: '江苏',
+            volume: 145417,
+            value: 145417,
+            name: '江苏',
+            $rowSum: 3021140,
+            $rowRate: '0.0481',
+            $rowPercent: '5%',
+            $rowPercent2: '4.81%',
+            $value: 145417
+        },
+        {
+            province: '山东',
+            volume: 134669,
+            value: 134669,
+            name: '山东',
+            $rowSum: 3021140,
+            $rowRate: '0.0446',
+            $rowPercent: '4%',
+            $rowPercent2: '4.46%',
+            $value: 134669
+        },
+        {
+            province: '浙江',
+            volume: 124988,
+            value: 124988,
+            name: '浙江',
+            $rowSum: 3021140,
+            $rowRate: '0.0414',
+            $rowPercent: '4%',
+            $rowPercent2: '4.14%',
+            $value: 124988
+        },
+        {
+            province: '河南',
+            volume: 117026,
+            value: 117026,
+            name: '河南',
+            $rowSum: 3021140,
+            $rowRate: '0.0387',
+            $rowPercent: '4%',
+            $rowPercent2: '3.87%',
+            $value: 117026
+        },
+        {
+            province: '四川',
+            volume: 108598,
+            value: 108598,
+            name: '四川',
+            $rowSum: 3021140,
+            $rowRate: '0.0359',
+            $rowPercent: '4%',
+            $rowPercent2: '3.59%',
+            $value: 108598
+        },
+        {
+            province: '上海',
+            volume: 87237,
+            value: 87237,
+            name: '上海',
+            $rowSum: 3021140,
+            $rowRate: '0.0289',
+            $rowPercent: '3%',
+            $rowPercent2: '2.89%',
+            $value: 87237
+        },
+        {
+            province: '河北',
+            volume: 81399,
+            value: 81399,
+            name: '河北',
+            $rowSum: 3021140,
+            $rowRate: '0.0269',
+            $rowPercent: '3%',
+            $rowPercent2: '2.69%',
+            $value: 81399
+        },
+        {
+            province: '湖北',
+            volume: 81323,
+            value: 81323,
+            name: '湖北',
+            $rowSum: 3021140,
+            $rowRate: '0.0269',
+            $rowPercent: '3%',
+            $rowPercent2: '2.69%',
+            $value: 81323
+        },
+        {
+            province: '湖南',
+            volume: 79648,
+            value: 79648,
+            name: '湖南',
+            $rowSum: 3021140,
+            $rowRate: '0.0264',
+            $rowPercent: '3%',
+            $rowPercent2: '2.64%',
+            $value: 79648
+        },
+        {
+            province: '福建',
+            volume: 74150,
+            value: 74150,
+            name: '福建',
+            $rowSum: 3021140,
+            $rowRate: '0.0245',
+            $rowPercent: '2%',
+            $rowPercent2: '2.45%',
+            $value: 74150
+        },
+        {
+            province: '海外',
+            volume: 73829,
+            value: 73829,
+            name: '海外',
+            $rowSum: 3021140,
+            $rowRate: '0.0244',
+            $rowPercent: '2%',
+            $rowPercent2: '2.44%',
+            $value: 73829
+        },
+        {
+            province: '安徽',
+            volume: 73591,
+            value: 73591,
+            name: '安徽',
+            $rowSum: 3021140,
+            $rowRate: '0.0244',
+            $rowPercent: '2%',
+            $rowPercent2: '2.44%',
+            $value: 73591
+        },
+        {
+            province: '辽宁',
+            volume: 71811,
+            value: 71811,
+            name: '辽宁',
+            $rowSum: 3021140,
+            $rowRate: '0.0238',
+            $rowPercent: '2%',
+            $rowPercent2: '2.38%',
+            $value: 71811
+        },
+        {
+            province: '陕西',
+            volume: 69053,
+            value: 69053,
+            name: '陕西',
+            $rowSum: 3021140,
+            $rowRate: '0.0229',
+            $rowPercent: '2%',
+            $rowPercent2: '2.29%',
+            $value: 69053
+        },
+        {
+            province: '广西',
+            volume: 52922,
+            value: 52922,
+            name: '广西',
+            $rowSum: 3021140,
+            $rowRate: '0.0175',
+            $rowPercent: '2%',
+            $rowPercent2: '1.75%',
+            $value: 52922
+        },
+        {
+            province: '重庆',
+            volume: 52838,
+            value: 52838,
+            name: '重庆',
+            $rowSum: 3021140,
+            $rowRate: '0.0175',
+            $rowPercent: '2%',
+            $rowPercent2: '1.75%',
+            $value: 52838
+        },
+        {
+            province: '黑龙江',
+            volume: 52584,
+            value: 52584,
+            name: '黑龙江',
+            $rowSum: 3021140,
+            $rowRate: '0.0174',
+            $rowPercent: '2%',
+            $rowPercent2: '1.74%',
+            $value: 52584
+        },
+        {
+            province: '云南',
+            volume: 51796,
+            value: 51796,
+            name: '云南',
+            $rowSum: 3021140,
+            $rowRate: '0.0171',
+            $rowPercent: '2%',
+            $rowPercent2: '1.71%',
+            $value: 51796
+        },
+        {
+            province: '山西',
+            volume: 51253,
+            value: 51253,
+            name: '山西',
+            $rowSum: 3021140,
+            $rowRate: '0.017',
+            $rowPercent: '2%',
+            $rowPercent2: '1.7%',
+            $value: 51253
+        },
+        {
+            province: '江西',
+            volume: 49904,
+            value: 49904,
+            name: '江西',
+            $rowSum: 3021140,
+            $rowRate: '0.0165',
+            $rowPercent: '2%',
+            $rowPercent2: '1.65%',
+            $value: 49904
+        },
+        {
+            province: '贵州',
+            volume: 41115,
+            value: 41115,
+            name: '贵州',
+            $rowSum: 3021140,
+            $rowRate: '0.0136',
+            $rowPercent: '1%',
+            $rowPercent2: '1.36%',
+            $value: 41115
+        },
+        {
+            province: '吉林',
+            volume: 40746,
+            value: 40746,
+            name: '吉林',
+            $rowSum: 3021140,
+            $rowRate: '0.0135',
+            $rowPercent: '1%',
+            $rowPercent2: '1.35%',
+            $value: 40746
+        },
+        {
+            province: '内蒙古',
+            volume: 39358,
+            value: 39358,
+            name: '内蒙古',
+            $rowSum: 3021140,
+            $rowRate: '0.013',
+            $rowPercent: '1%',
+            $rowPercent2: '1.3%',
+            $value: 39358
+        },
+        {
+            province: '天津',
+            volume: 34377,
+            value: 34377,
+            name: '天津',
+            $rowSum: 3021140,
+            $rowRate: '0.0114',
+            $rowPercent: '1%',
+            $rowPercent2: '1.14%',
+            $value: 34377
+        },
+        {
+            province: '甘肃',
+            volume: 34136,
+            value: 34136,
+            name: '甘肃',
+            $rowSum: 3021140,
+            $rowRate: '0.0113',
+            $rowPercent: '1%',
+            $rowPercent2: '1.13%',
+            $value: 34136
+        },
+        {
+            province: '新疆',
+            volume: 28744,
+            value: 28744,
+            name: '新疆',
+            $rowSum: 3021140,
+            $rowRate: '0.0095',
+            $rowPercent: '1%',
+            $rowPercent2: '0.95%',
+            $value: 28744
+        },
+        {
+            province: '香港',
+            volume: 21866,
+            value: 21866,
+            name: '香港',
+            $rowSum: 3021140,
+            $rowRate: '0.0072',
+            $rowPercent: '1%',
+            $rowPercent2: '0.72%',
+            $value: 21866
+        },
+        {
+            province: '海南',
+            volume: 20069,
+            value: 20069,
+            name: '海南',
+            $rowSum: 3021140,
+            $rowRate: '0.0066',
+            $rowPercent: '1%',
+            $rowPercent2: '0.66%',
+            $value: 20069
+        },
+        {
+            province: '宁夏',
+            volume: 16196,
+            value: 16196,
+            name: '宁夏',
+            $rowSum: 3021140,
+            $rowRate: '0.0054',
+            $rowPercent: '1%',
+            $rowPercent2: '0.54%',
+            $value: 16196
+        },
+        {
+            province: '台湾',
+            volume: 13729,
+            value: 13729,
+            name: '台湾',
+            $rowSum: 3021140,
+            $rowRate: '0.0045',
+            $rowPercent: '0%',
+            $rowPercent2: '0.45%',
+            $value: 13729
+        },
+        {
+            province: '青海',
+            volume: 13610,
+            value: 13610,
+            name: '青海',
+            $rowSum: 3021140,
+            $rowRate: '0.0045',
+            $rowPercent: '0%',
+            $rowPercent2: '0.45%',
+            $value: 13610
+        },
+        {
+            province: '西藏',
+            volume: 11233,
+            value: 11233,
+            name: '西藏',
+            $rowSum: 3021140,
+            $rowRate: '0.0037',
+            $rowPercent: '0%',
+            $rowPercent2: '0.37%',
+            $value: 11233
+        },
+        {
+            province: '澳门',
+            volume: 7128,
+            value: 7128,
+            name: '澳门',
+            $rowSum: 3021140,
+            $rowRate: '0.0024',
+            $rowPercent: '0%',
+            $rowPercent2: '0.24%',
+            $value: 7128
+        }
+    ];
+
     state = {
         d: 1
     };
@@ -1325,6 +1724,9 @@ export default class MrsMrEcharts extends React.Component<MrsMrEchartsProps, {}>
                         width: '100%'
                     }}>
                     <MrEcharts chartTypes="pie" data={this.data.pie} setting={['::ring', '::rose({ borderWidth: 6 })']} />
+                </section>
+                <section style={{ height: 400 }}>
+                    <MrEcharts chartTypes="map::china" data={this.mapData}  />
                 </section>
                 <section
                     style={{

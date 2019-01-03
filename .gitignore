@@ -12,6 +12,7 @@ pub/
 .umi/
 .umi-production/
 .docz
+.theme
 
 src/theme/config.mri.ts
 src/theme/const-env.mri.ts
