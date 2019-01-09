@@ -25,6 +25,8 @@ export default {
 
     dest: 'dist/docz',
 
+    public: '/public',
+
     typescript: true,
     hashRouter: true,
     codeSandbox: false,
