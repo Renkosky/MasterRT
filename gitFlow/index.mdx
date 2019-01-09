@@ -94,10 +94,16 @@ mri git conflict具体请参照： [mri git conflict](http://localhost:3000/#/cl
 
 ---
 
-### release合并至master：
+### release合并至master&冲突处理：
 
-测试人员功能测试完毕后，合并`release`分支至`master`
+测试人员功能测试完毕后，合并`release`分支至`master`,如果有冲突，创建`copy-master`分支用来处理冲突，随后把`copy-master`推送并合并至`master`。
 <br/>
+
+```sh
+ mri git conflict master
+```
+
+[mri git conflict](http://localhost:3000/#/cli/mri-git#mri-git-conflict)
 
 ---
 
