@@ -1,16 +1,16 @@
 ---
-name: GitFlow
-menu: GitFlow
-route: /GitFlow
+name: mri-gitflow
+menu: MRI-GITFLOW
+route: /mri-gitflow
 order: 1
 ---
 
-# GitFlow介绍
-GitFlow是一套项目中git的操作流程与规范，用于规范项目中git操作的工作流程，提升多人协作的效率
+# MRI-GITFLOW介绍
+mri-gitflow是一套基于GitFlow并针对于本项目的git操作流程与规范，用于规范项目中git操作的工作流程，提升多人协作的效率。
 
-<img src={require('./assets/gitflow.png')} />
+<img src={require('./assets/mri-gitflow.png')} />
 
-## GitFlow中的分支
+## MRI-GITFLOW中的分支
 
 GitFlow中拥有多个代码分支，每个分支的权限以及功能各不相同。
 
@@ -30,19 +30,16 @@ release分支是开发分支，日常的开发工作都在此进行，默认版�
 hotfix主要用于紧急修复线上版本的错误，从master分支创建，修改完毕后合并到`master`上。
 
 
-<img src={require('./assets/hotfix-master.png')} />
-
 - test
 
 test分支用来进行功能的测试，待测新功能的代码都会合并到这里，不能直接进行`commit&push`，必须从`release`分支中合并。`test`分支也不能合到`master`分支上。
-
-<img src={require('./assets/release-test.png')} />
 
 - copy-test
 
 由`mri git conflict test` 创建而来，主要用于当`release`分支合并`test`有代码冲突时的处理，建议处理完后删除
 
-注意：copy-test ***绝对不能*** 合并到`master`分支中
+<font color="red">注意：copy-test 绝对不能 合并到 master 分支中</font>
+
 
 ## 代码开发&发布流程
 
@@ -60,28 +57,21 @@ yarn install/npm install
 ---
 
  ### 开发新功能：
- 从`master`分支中创建新的release分支，默认版本号为`V0.1.0`，并把分支推到远端。
+ 从`master`分支中创建新的release分支，默认版本号为`V0.1.0`，并把分支推到远端。在本地release分支中开发，完成后`commit`&`push`
 
-<img src={require('./assets/gitrelease.png')} />
 
 ```sh
- mri git release themeName::0.1.0
+ mri git release themeName::0.1.0//创建新分支并推送至远端
 ```
-mri git release会自动创建分支并推送具体请参照：
+mri git release会自动创建分支并推送到远端，具体请参照：
 
 [mri git release](http://doc.masterrt.com/#/cli/mri-git#mri-git-release-mri-gr)
 
-<img src={require('./assets/gitrelease.png')} />
+<img src={require('./assets/release-master.png')} />
 
 <br/>
 
----
 
-### 本地分支开发：
-
-在本地release分支中开发，完成后`commit`&`push`
-
-<br/>
 
 ---
 
@@ -90,13 +80,14 @@ mri git release会自动创建分支并推送具体请参照：
 把`release`分支合并到`test`分支中去，如果有冲突，创建`copy-test`分支用来处理冲突，随后把`copy-test`推送并合并至`test`。
 
 ```sh
-mri git conflict test
+mri git conflict test//创建copy-test分支处理冲突
 ```
 mri git conflict具体请参照： [mri git conflict](http://localhost:3000/#/cli/mri-git#mri-git-conflict)
 
 
 <img src={require('./assets/release-test.png')} />
 
+<img src={require('./assets/copy-test.png')} />
 <br/>
 
 ---
@@ -107,8 +98,9 @@ mri git conflict具体请参照： [mri git conflict](http://localhost:3000/#/cl
 <br/>
 
 ```sh
- mri git conflict master
+ mri git conflict master//创建copy-master处理冲突
 ```
+> 一般来说，除非误操作把test合并到master上，master上不会有冲突
 
 [mri git conflict](http://localhost:3000/#/cli/mri-git#mri-git-conflict)
 
@@ -121,5 +113,7 @@ mri git conflict具体请参照： [mri git conflict](http://localhost:3000/#/cl
 ```ssh
 mri git hotfix <theme::version> [options]
 ```
+<img src={require('./assets/hotfix-master.png')} />
+
 mri-hotfix具体请参照：
 [mri-hotfix](http://doc.masterrt.com/#/cli/mri-git#mri-git-hotfix-mr-gh)
